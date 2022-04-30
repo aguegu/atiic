@@ -1,0 +1,23 @@
+{
+  "name": "atiic",
+  "version": "0.1.0",
+  "description": "js libraries for i2c devices with sourcekit atiic serial-to-i2c bridge",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aguegu/atiic.git"
+  },
+  "keywords": [
+    "i2c"
+  ],
+  "type": "module",
+  "author": "aGuegu <weihong.guan@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aguegu/atiic/issues"
+  },
+  "homepage": "https://github.com/aguegu/atiic#readme"
+}
