@@ -1,8 +1,8 @@
-import config from 'config';
+import { autoDetect } from '@serialport/bindings-cpp';
 import { timeout } from '../utils.js';
 
-class BindingCppAdapter {
-  constructor(spBase, path, logger, timeout = 100) {
+class SerialportBindingCppAdapter {
+  constructor(path, logger = console, timeout = 100) {
     this.conf = {
       path,
       baudRate: 115200,
@@ -11,7 +11,7 @@ class BindingCppAdapter {
       stopBits: 1,
     };
     this.logger = logger;
-    // this.spBase = spBase;
+    this.spBase = autoDetect();
     this.timeout = timeout;
   }
 
@@ -26,7 +26,7 @@ class BindingCppAdapter {
       const { bytesRead } = await sp.read(recv, offset, len - offset);
       offset += bytesRead;
       const res = recv.toString().slice(0, offset);
-      this.logger.debug({ rx: res, hex: res.toString('hex'), ttl: Date.now() - startAt });
+      this.logger?.debug({ rx: res, hex: res.toString('hex'), ttl: Date.now() - startAt });
 
       if (res.endsWith('OK\r\n')) {
         const payload = Buffer.from(res.split('\r\n')[1], 'hex');
@@ -42,7 +42,7 @@ class BindingCppAdapter {
 
     const txBuffer = Buffer.from(`${txString}\r\n`);
     sp.write(txBuffer);
-    this.logger.debug({ tx: txBuffer.toString(), hex: txBuffer.toString('hex') });
+    this.logger?.debug({ tx: txBuffer.toString(), hex: txBuffer.toString('hex') });
 
     return timeout(this.timeout, read(), () => {
       if (sp.isOpen) {
@@ -52,4 +52,4 @@ class BindingCppAdapter {
   }
 }
 
-export default BindingCppAdapter;
+export default SerialportBindingCppAdapter;

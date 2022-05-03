@@ -1,7 +1,7 @@
 class Spl06 {
-  constructor(adapter) {
+  constructor(adapter, address = '76') {
     this.adapter = adapter;
-    this.address = '76';
+    this.address = address;
     this.coefs = {};
   }
 
