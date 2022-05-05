@@ -1,9 +1,7 @@
-import assert from 'assert/strict';
 import { crc8 } from '../utils.js';
 
 class Sht30 {
   constructor(adapter, address) {
-    assert(['44', '45'].includes(address));
     this.adapter = adapter;
     this.address = address;
   }

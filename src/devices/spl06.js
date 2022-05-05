@@ -1,9 +1,7 @@
-import assert from 'assert/strict';
 import { delay } from '../utils.js';
 
 class Spl06 {
   constructor(adapter, address = '76') {
-    assert(['76', '77'].includes(address));
     this.adapter = adapter;
     this.address = address;
     this.coefs = {};
