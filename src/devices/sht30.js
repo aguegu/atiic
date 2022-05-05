@@ -12,8 +12,9 @@ class Sht30 {
 
   async seed() {
     const payload = await this.adapter.transmit(`AT+TR=${this.address}2c0d06`);
-    assert(!crc8(payload.slice(0, 3)));
-    assert(!crc8(payload.slice(3, 6)));
+    if (crc8(payload.slice(0, 3)) || crc8(payload.slice(3, 6))) {
+      throw new Error('crc8 mismatch');
+    }
 
     return Promise.resolve({
       temperature: -45 + (175 * payload.readUInt16BE()) / 65535,
