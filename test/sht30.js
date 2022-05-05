@@ -1,24 +1,23 @@
 import chai from 'chai';
 import config from 'config';
-import Spl06 from '../src/devices/spl06.js';
+import Sht30 from '../src/devices/sht30.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 chai.should();
 
-describe('spl06', () => {
+describe('sht30', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'), null, 200);
-    this.spl06 = new Spl06(adapter, config.get('slaves.spl06'));
+    this.sht30 = new Sht30(adapter, config.get('slaves.sht30'));
   });
 
   it('should init', async function () {
-    this.timeout(10000);
-    return this.spl06.init();
+    return this.sht30.init();
   });
 
   it('should seed', async function () {
-    const { pressure, temperature } = await this.spl06.seed();
+    const { temperature, humidity } = await this.sht30.seed();
     temperature.should.be.a('number');
-    pressure.should.be.a('number');
+    humidity.should.be.a('number');
   });
 });

@@ -47,8 +47,8 @@ class Spl06 {
     const pressure = this.coefs.c00
       + pSc * (this.coefs.c10 + pSc * (this.coefs.c20 + pSc * this.coefs.c30))
       + tSc * this.coefs.c01 + tSc * pSc * (this.coefs.c11 + pSc * this.coefs.c21);
-    const celsius = this.coefs.c0 * 0.5 + this.coefs.c1 * tSc;
-    return Promise.resolve({ pressure, celsius });
+    const temperature = this.coefs.c0 * 0.5 + this.coefs.c1 * tSc;
+    return Promise.resolve({ pressure, temperature });
   }
 }
 

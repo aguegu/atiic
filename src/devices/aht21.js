@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 import assert from 'assert/strict';
 import { delay, crc8 } from '../utils.js';
 
