@@ -12,7 +12,6 @@ describe('spl06', () => {
   });
 
   it('should init', async function () {
-    this.timeout(10000);
     return this.spl06.init();
   });
 

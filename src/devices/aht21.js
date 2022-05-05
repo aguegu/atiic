@@ -24,11 +24,11 @@ class Aht21 {
 
     const humidity = ((payload[1] << 12) + (payload[2] << 4) + ((payload[3] & 0xf0) >> 4))
       / (1 << 20);
-    const celsius = ((((payload[3] & 0x0f) << 16) + (payload[4] << 8) + payload[5])
+    const temperature = ((((payload[3] & 0x0f) << 16) + (payload[4] << 8) + payload[5])
       / (1 << 20)) * 200 - 50;
 
     assert.equal(crc8(payload), 0);
-    return Promise.resolve({ humidity, celsius });
+    return Promise.resolve({ humidity, temperature });
   }
 }
 
