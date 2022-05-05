@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { delay } from './utils.js';
+import { delay } from '../utils.js';
 
 // P7: d7
 // P6: d6
@@ -59,6 +59,10 @@ class Pcf8574Hd44780 {
       ((dt << 4) & 0xf0) | 0x00 | rs | this.backlight,
     ]);
     return this.adapter.transmit(`AT+TX=${this.address}${buff.toString('hex')}`);
+  }
+
+  async clear() {
+    return this.write(0x01, 0);
   }
 
   async setDDRam(address) {

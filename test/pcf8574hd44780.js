@@ -1,5 +1,6 @@
-import Lcd from '../src/pcf8574_hd44780.js';
-import SerialportBindingCppAdapter from '../src/adapters/serialport-bindingscpp.js';
+import { delay } from '../src/utils.js';
+import Lcd from '../src/devices/pcf8574_hd44780.js';
+import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 describe.only('pcf8574_hd44780', () => {
   before(async function() {
@@ -9,17 +10,25 @@ describe.only('pcf8574_hd44780', () => {
   });
 
   it('should init', async function () {
-    // this.timeout(10000);
     return this.lcd.init();
   });
 
-  it('should print Hello', async function() {
+  it('should print Hello1', async function() {
+    this.timeout(10000);
     await this.lcd.setDDRam(0);
-    await this.lcd.print('Hello, Ricky.');
+    await this.lcd.print('Liquid Crystal');
+    await this.lcd.setDDRam(0x40);
+    await this.lcd.print('1602 on Atiic');
+    await delay(2000);
+  });
+
+  it('should print Hello', async function() {
+    await this.lcd.clear();
+    await this.lcd.setDDRam(0);
+    await this.lcd.print('Follow @BG5USN');
   });
 
   it('should print CG RAM', async function() {
-    // this.timeout(3000);
     await this.lcd.setCGRam(0, Buffer.from([
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 00000000
       0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 11000000

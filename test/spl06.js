@@ -1,5 +1,5 @@
-import Spl06 from '../src/spl06.js';
-import SerialportBindingCppAdapter from '../src/adapters/serialport-bindingscpp.js';
+import Spl06 from '../src/devices/spl06.js';
+import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 describe('spl06', () => {
   before(async function() {
