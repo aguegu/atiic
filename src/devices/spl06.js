@@ -1,3 +1,5 @@
+import { delay } from '../utils.js';
+
 class Spl06 {
   constructor(adapter, address = '76') {
     this.adapter = adapter;
