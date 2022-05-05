@@ -1,5 +1,5 @@
 import { autoDetect } from '@serialport/bindings-cpp';
-import { timeout } from '../utils.js';
+import { timeoutify } from '../utils.js';
 
 class SerialportBindingCppAdapter {
   constructor(path, logger = console, timeout = 100) {
@@ -44,7 +44,7 @@ class SerialportBindingCppAdapter {
     sp.write(txBuffer);
     this.logger?.debug({ tx: txBuffer.toString(), hex: txBuffer.toString('hex') });
 
-    return timeout(this.timeout, read(), () => {
+    return timeoutify(this.timeout, read(), () => {
       if (sp.isOpen) {
         sp.close();
       }

@@ -1,7 +1,8 @@
-import { promisify } from 'util';
-const delay = promisify(setTimeout);
+const delay = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
 
-const timeout = (ms, promise, cb) => new Promise((resolve, reject) => {
+const timeoutify = (ms, promise, cb) => new Promise((resolve, reject) => {
   const timer = setTimeout(() => {
     cb();
     reject(new Error('timeout'));
@@ -29,4 +30,4 @@ const crc8 = (buffer, polynomial = 0x31, initialization = 0xff) => buffer.reduce
   return crc;
 }, initialization);
 
-export { delay, timeout, crc8 };
+export { delay, timeoutify, crc8 };

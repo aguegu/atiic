@@ -3,7 +3,7 @@ import assert from 'assert/strict';
 import { delay, crc8 } from '../utils.js';
 
 class Aht21 {
-  constructor(adapter, device) {
+  constructor(adapter) {
     this.adapter = adapter;
     this.address = '38';
   }
