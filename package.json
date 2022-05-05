@@ -3,6 +3,10 @@
   "version": "0.1.5",
   "description": "js libraries for i2c devices with sourcekit atiic serial-to-i2c bridge",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./adapters/serialport_bindingscpp": "./src/adapters/serialport_bindingscpp.js"
+  },
   "scripts": {
     "lint": "eslint --ext .js src --fix",
     "test": "mocha --recursive --exit test/"
