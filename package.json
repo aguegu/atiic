@@ -21,7 +21,7 @@
   ],
   "type": "module",
   "author": "aGuegu <weihong.guan@gmail.com>",
-  "license": "ISC",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/aguegu/atiic/issues"
   },
