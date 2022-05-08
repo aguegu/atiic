@@ -36,7 +36,7 @@ class Spl06 {
     this.coefs.c30 = coef.readInt16BE(0x10);
   }
 
-  async seed() {
+  async measure() {
     const payload = await this.adapter.transmit(`AT+TR=${this.address}0006`);
     const pRaw = payload.readInt32BE() >> 8;
     const tRaw = (payload.readInt32BE(2) << 8) >>> 8;

@@ -10,7 +10,7 @@ class Sht30 {
     return this.adapter.transmit(`AT+TX=${this.address}30A2`);
   }
 
-  async seed() {
+  async measure() {
     const payload = await this.adapter.transmit(`AT+TR=${this.address}2c0d06`);
     if (crc8(payload.slice(0, 3)) || crc8(payload.slice(3, 6))) {
       throw new Error('crc8 mismatch');

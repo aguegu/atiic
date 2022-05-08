@@ -16,7 +16,7 @@ class Aht21 {
     }
   }
 
-  async seed() {
+  async measure() {
     await this.adapter.transmit(`AT+TX=${this.address}ac3308`); // measure
     await delay(80);
     const payload = await this.adapter.transmit(`AT+TR=${this.address}07`); // measure

@@ -5,7 +5,7 @@ import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.
 
 chai.should();
 
-describe.only('sht30', () => {
+describe('sht30', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'), null, 200);
     this.sht30 = new Sht30(adapter, config.get('slaves.sht30'));
@@ -15,8 +15,8 @@ describe.only('sht30', () => {
     return this.sht30.init();
   });
 
-  it('should seed', async function () {
-    const { temperature, humidity } = await this.sht30.seed();
+  it('should measure', async function () {
+    const { temperature, humidity } = await this.sht30.measure();
     temperature.should.be.a('number');
     humidity.should.be.a('number');
   });

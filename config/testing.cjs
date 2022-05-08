@@ -4,5 +4,6 @@ module.exports = {
   slaves: {
     spl06: '77',
     sht30: '44',
+    bme280: '76',
   },
 };
