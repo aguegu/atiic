@@ -18,7 +18,7 @@ class Sht30 {
 
     return Promise.resolve({
       temperature: -45 + (175 * payload.readUInt16BE()) / 65535,
-      humidity: (10 * payload.readUInt16BE(3)) / 65535,
+      humidity: (100 * payload.readUInt16BE(3)) / 65535,
     });
   }
 }

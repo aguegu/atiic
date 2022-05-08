@@ -5,7 +5,7 @@ import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.
 
 chai.should();
 
-describe('sht30', () => {
+describe.only('sht30', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'), null, 200);
     this.sht30 = new Sht30(adapter, config.get('slaves.sht30'));
