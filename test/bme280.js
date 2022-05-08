@@ -1,6 +1,6 @@
 import chai from 'chai';
 import config from 'config';
-import Bme280 from '../src/devices/bme280.js';
+import { Bme280 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 chai.should();

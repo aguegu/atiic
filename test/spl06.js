@@ -1,6 +1,6 @@
 import chai from 'chai';
 import config from 'config';
-import Spl06 from '../src/devices/spl06.js';
+import { Spl06 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 chai.should();

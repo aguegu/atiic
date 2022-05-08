@@ -1,6 +1,6 @@
 import chai from 'chai';
 import config from 'config';
-import Sht30 from '../src/devices/sht30.js';
+import { Sht30 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 chai.should();
