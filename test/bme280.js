@@ -20,5 +20,6 @@ describe.only('bme280', () => {
     temperature.should.be.a('number');
     pressure.should.be.a('number');
     humidity.should.be.a('number');
+    console.log({ temperature, pressure, humidity }); // eslint-disable-line no-console
   });
 });

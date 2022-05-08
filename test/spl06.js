@@ -19,5 +19,6 @@ describe.only('spl06', () => {
     const { pressure, temperature } = await this.spl06.measure();
     temperature.should.be.a('number');
     pressure.should.be.a('number');
+    console.log({ temperature, pressure }); // eslint-disable-line no-console
   });
 });
