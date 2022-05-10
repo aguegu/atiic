@@ -87,7 +87,7 @@ class Bme280 {
       let v2 = var4 - ((var5 * this.coefs.dig_h1) >> 4);
       v2 = v2 < 0 ? 0 : v2;
       v2 = v2 > 419430400 ? 419430400 : v2;
-      humidity = (v2 >> 12) / 1024;
+      humidity = (v2 >> 12) / 102400;
     })();
 
     return Promise.resolve({ temperature, pressure, humidity });
