@@ -1,6 +1,6 @@
 {
   "name": "atiic",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "js libraries for i2c devices with sourcekit atiic serial-to-i2c bridge",
   "main": "src/index.js",
   "exports": {
