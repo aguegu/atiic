@@ -20,7 +20,7 @@ class Aht21 {
     await this.adapter.transmit(`AT+TX=${this.address}ac3308`); // measure
     await delay(80);
     const payload = await this.adapter.transmit(`AT+TR=${this.address}07`); // measure
-    assert(!(payload[0] & 0x80)); // measure done
+    assert.ok(!(payload[0] & 0x80)); // measure done
 
     const humidity = ((payload[1] << 12) + (payload[2] << 4) + ((payload[3] & 0xf0) >> 4))
       / (1 << 20);
