@@ -1,25 +1,24 @@
 import chai from 'chai';
 import config from 'config';
-import { Bme280 } from '../src/index.js';
+import { Aht21 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 chai.should();
 
-describe('bme280', () => {
+describe.only('aht21', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'));
-    this.bme280 = new Bme280(adapter, config.get('slaves.bme280'));
+    this.aht21 = new Aht21(adapter);
   });
 
   it('should init', async function () {
-    return this.bme280.init();
+    return this.aht21.init();
   });
 
   it('should measure', async function () {
-    const { temperature, pressure, humidity } = await this.bme280.measure();
+    const { temperature, humidity } = await this.aht21.measure();
     temperature.should.be.a('number');
-    pressure.should.be.a('number');
     humidity.should.be.a('number');
-    console.log({ temperature, pressure, humidity }); // eslint-disable-line no-console
+    console.log({ temperature, humidity }); // eslint-disable-line no-console
   });
 });

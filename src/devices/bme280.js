@@ -17,28 +17,25 @@ class Bme280 {
     await delay(100);
     const calib0 = await this.adapter.transmit(`AT+TR=${this.address}881a`);
     const calib1 = await this.adapter.transmit(`AT+TR=${this.address}e107`);
-    const calib = Buffer.concat([calib0, calib1]);
 
-    this.coefs.dig_t1 = calib.readUInt16LE(0);
-    this.coefs.dig_t2 = calib.readInt16LE(2);
-    this.coefs.dig_t3 = calib.readInt16LE(4);
-    this.coefs.dig_p1 = calib.readUInt16LE(6);
-    this.coefs.dig_p2 = calib.readInt16LE(8);
-    this.coefs.dig_p3 = calib.readInt16LE(10);
-    this.coefs.dig_p4 = calib.readInt16LE(12);
-    this.coefs.dig_p5 = calib.readInt16LE(14);
-    this.coefs.dig_p6 = calib.readInt16LE(16);
-    this.coefs.dig_p7 = calib.readInt16LE(18);
-    this.coefs.dig_p8 = calib.readInt16LE(20);
-    this.coefs.dig_p9 = calib.readInt16LE(22);
-    this.coefs.dig_h1 = calib.readUInt8(25);
-    this.coefs.dig_h2 = calib.readInt16LE(26);
-    this.coefs.dig_h3 = calib.readUInt8(28);
-    this.coefs.dig_h4 = (calib.readInt8(29) << 4) + (calib.readUInt8(30) & 0x0f);
-    this.coefs.dig_h5 = (calib.readInt8(31) << 4) + (calib.readUInt8(30) >> 4);
-    this.coefs.dig_h6 = calib.readInt8(32);
-
-    // console.log(this.coefs); // eslint-disable-line no-console
+    this.coefs.dig_t1 = calib0.readUInt16LE(0);
+    this.coefs.dig_t2 = calib0.readInt16LE(2);
+    this.coefs.dig_t3 = calib0.readInt16LE(4);
+    this.coefs.dig_p1 = calib0.readUInt16LE(6);
+    this.coefs.dig_p2 = calib0.readInt16LE(8);
+    this.coefs.dig_p3 = calib0.readInt16LE(10);
+    this.coefs.dig_p4 = calib0.readInt16LE(12);
+    this.coefs.dig_p5 = calib0.readInt16LE(14);
+    this.coefs.dig_p6 = calib0.readInt16LE(16);
+    this.coefs.dig_p7 = calib0.readInt16LE(18);
+    this.coefs.dig_p8 = calib0.readInt16LE(20);
+    this.coefs.dig_p9 = calib0.readInt16LE(22);
+    this.coefs.dig_h1 = calib0.readUInt8(25);
+    this.coefs.dig_h2 = calib1.readInt16LE(0);
+    this.coefs.dig_h3 = calib1.readUInt8(2);
+    this.coefs.dig_h4 = (calib1.readInt8(3) << 4) + (calib1.readUInt8(4) & 0x0f);
+    this.coefs.dig_h5 = (calib1.readInt8(5) << 4) + (calib1.readUInt8(4) >> 4);
+    this.coefs.dig_h6 = calib1.readInt8(6);
 
     await this.adapter.transmit(`AT+TX=${this.address}f400`); // ctrl_mes: Sleep mode
     await this.adapter.transmit(`AT+TX=${this.address}f205`); // ctrl_hum: humidity oversampling x16
@@ -90,7 +87,7 @@ class Bme280 {
       let v2 = var4 - ((var5 * this.coefs.dig_h1) >> 4);
       v2 = v2 < 0 ? 0 : v2;
       v2 = v2 > 419430400 ? 419430400 : v2;
-      humidity = (v2 >> 12) / 1024;
+      humidity = (v2 >> 12) / 102400;
     })();
 
     return Promise.resolve({ temperature, pressure, humidity });

@@ -1,4 +1,3 @@
-import assert from 'assert/strict';
 import { delay, crc8 } from '../utils.js';
 
 class Aht21 {
@@ -20,14 +19,18 @@ class Aht21 {
     await this.adapter.transmit(`AT+TX=${this.address}ac3308`); // measure
     await delay(80);
     const payload = await this.adapter.transmit(`AT+TR=${this.address}07`); // measure
-    assert(!(payload[0] & 0x80)); // measure done
+    if (payload[0] & 0x80) {
+      throw new Error('Measurement not completed');
+    }
 
     const humidity = ((payload[1] << 12) + (payload[2] << 4) + ((payload[3] & 0xf0) >> 4))
       / (1 << 20);
     const temperature = ((((payload[3] & 0x0f) << 16) + (payload[4] << 8) + payload[5])
       / (1 << 20)) * 200 - 50;
 
-    assert.equal(crc8(payload), 0);
+    if (crc8(payload)) {
+      throw new Error('crc8 mismatch');
+    }
     return Promise.resolve({ humidity, temperature });
   }
 }
