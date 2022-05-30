@@ -1,3 +1,5 @@
+const i2hex = (i) => (`0${i.toString(16)}`).slice(-2);
+
 const delay = (ms) => new Promise((resolve) => {
   setTimeout(resolve, ms);
 });
@@ -30,4 +32,6 @@ const crc8 = (buffer, polynomial = 0x31, initialization = 0xff) => buffer.reduce
   return crc;
 }, initialization);
 
-export { delay, timeoutify, crc8 };
+export {
+  delay, timeoutify, crc8, i2hex,
+};
