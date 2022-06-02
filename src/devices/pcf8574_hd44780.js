@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { delay } from '../utils.js';
+import { delay, i2hex } from '../utils.js';
 
 // P7: d7
 // P6: d6
@@ -27,8 +27,8 @@ class Pcf8574Hd44780 {
     await this.emit(0x30);
     await this.emit(0x20);
 
-    await this.transmitBuffer(Buffer.from([0x28, 0x08, 0x01]), 0);
-    await this.transmitBuffer(Buffer.from([0x06, 0x02]), 0);
+    await this.transmitBuffer([0x28, 0x08, 0x01], 0);
+    await this.transmitBuffer([0x06, 0x02], 0);
     await delay(1.520);
     await this.setDisplay({
       display: true, cursor: false, blink: false, backlight: true,
@@ -47,22 +47,21 @@ class Pcf8574Hd44780 {
   }
 
   async emit(dt) {
-    const buff = Buffer.from([
+    const buff = [
       (dt & 0xf0) | 0x04 | this.backlight,
       (dt & 0xf0) | 0x00 | this.backlight,
-    ]);
-
-    return this.adapter.transmit(`AT+TX=${this.address}${buff.toString('hex')}`);
+    ];
+    return this.adapter.transmit(`AT+TX=${this.address}${buff.map(i2hex).join('')}`);
   }
 
   async write(dt, rs = 0x00) {
-    const buff = Buffer.from([
+    const buff = [
       (dt & 0xf0) | 0x04 | rs | this.backlight,
       (dt & 0xf0) | 0x00 | rs | this.backlight,
       ((dt << 4) & 0xf0) | 0x04 | rs | this.backlight,
       ((dt << 4) & 0xf0) | 0x00 | rs | this.backlight,
-    ]);
-    return this.adapter.transmit(`AT+TX=${this.address}${buff.toString('hex')}`);
+    ];
+    return this.adapter.transmit(`AT+TX=${this.address}${buff.map(i2hex).join('')}`);
   }
 
   async clear() {
@@ -79,11 +78,11 @@ class Pcf8574Hd44780 {
   }
 
   async print(str) {
-    return this.transmitBuffer(Buffer.from(Array.from(str).map((c) => c.charCodeAt())));
+    return this.transmitBuffer(Array.from(str).map((c) => c.charCodeAt()));
   }
 
   async transmitBuffer(buff, rs = 0x01) {
-    return _.chain(Array.from(buff)).map((dt) => ([
+    return _.chain(buff).map((dt) => ([
       (dt & 0xf0) | 0x04 | rs | this.backlight,
       (dt & 0xf0) | rs | this.backlight,
       ((dt << 4) & 0xf0) | 0x04 | rs | this.backlight,
@@ -92,7 +91,7 @@ class Pcf8574Hd44780 {
       .value()
       .reduce(async (prev, current) => {
         await prev;
-        return this.adapter.transmit(`AT+TX=${this.address}${Buffer.from(current).toString('hex')}`);
+        return this.adapter.transmit(`AT+TX=${this.address}${current.map(i2hex).join('')}`);
       }, Promise.resolve());
   }
 }

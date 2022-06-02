@@ -5,7 +5,7 @@ import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.
 
 chai.should();
 
-describe.only('aht21', () => {
+describe('aht21', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'));
     this.aht21 = new Aht21(adapter);

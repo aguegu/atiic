@@ -2,7 +2,7 @@ import { delay } from '../src/utils.js';
 import Lcd from '../src/devices/pcf8574_hd44780.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-describe.skip('pcf8574_hd44780', () => {
+describe.only('pcf8574_hd44780', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(
       '/dev/ttyUSB0',
