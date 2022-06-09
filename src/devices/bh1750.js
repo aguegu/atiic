@@ -6,8 +6,10 @@ class Bh1750 {
     this.address = address; // '23' or '5c'
   }
 
-  async init(mode = '10') {
-    await this.adapter.transmit(`AT+TX=${this.address}10`);
+  // static displayName = "Point";
+
+  async init(mode) {
+    await this.adapter.transmit(`AT+TX=${this.address}${i2hex(mode)}`);
     await this.setMeasureTime(69);
 
     await this.adapter.transmit(`AT+TX=${this.address}${mode}`);
@@ -26,5 +28,14 @@ class Bh1750 {
     return payload.readUInt16BE() / 1.2;
   }
 }
+
+Bh1750.modes = {
+  continuousHighResMode: 0x10,
+  continuousHighResMode2: 0x11,
+  continuousLowResMode: 0x13,
+  oneTimeHighResMode: 0x20,
+  oneTimeHighResMode2: 0x21,
+  oneTimeLowResMode: 0x23,
+};
 
 export default Bh1750;
