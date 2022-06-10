@@ -4,15 +4,16 @@ class Bh1750 {
   constructor(adapter, address = '23') {
     this.adapter = adapter;
     this.address = address; // '23' or '5c'
+    this.waiting = 120;
   }
-
-  // static displayName = "Point";
 
   async init(mode) {
     await this.adapter.transmit(`AT+TX=${this.address}${i2hex(mode)}`);
     await this.setMeasureTime(69);
-
-    await this.adapter.transmit(`AT+TX=${this.address}${mode}`);
+    this.waiting = [
+      Bh1750.modes.continuousLowResMode,
+      Bh1750.modes.oneTimeLowResMode,
+    ].includes(mode) ? 16 : 120;
   }
 
   async setMeasureTime(mt) {
@@ -23,8 +24,8 @@ class Bh1750 {
   }
 
   async measure() {
+    await delay(this.waiting);
     const payload = await this.adapter.transmit(`AT+TR=${this.address}02`);
-    await delay(120);
     return payload.readUInt16BE() / 1.2;
   }
 }
