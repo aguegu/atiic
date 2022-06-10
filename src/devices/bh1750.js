@@ -2,6 +2,9 @@ import { i2hex, delay } from '../utils.js';
 
 class Bh1750 {
   constructor(adapter, address = '23') {
+    if (!Bh1750.addresses.includes(address)) {
+      throw new Error('invalid address');
+    }
     this.adapter = adapter;
     this.address = address; // '23' or '5c'
     this.waiting = 120;
@@ -9,7 +12,7 @@ class Bh1750 {
 
   async init(mode) {
     await this.adapter.transmit(`AT+TX=${this.address}${i2hex(mode)}`);
-    await this.setMeasureTime(69);
+    this.mode = mode;
     this.waiting = [
       Bh1750.modes.continuousLowResMode,
       Bh1750.modes.oneTimeLowResMode,
@@ -17,6 +20,11 @@ class Bh1750 {
   }
 
   async setMeasureTime(mt) {
+    if (mt < Bh1750.measureTimeRange[0] || mt > Bh1750.measureTimeRange[1]) {
+      throw new Error('invalid measure time');
+    }
+
+    this.measureTime = mt;
     const dt = [0x40, 0x60];
     dt[0] |= (mt >> 5);
     dt[1] |= mt & 0x1f;
@@ -24,9 +32,13 @@ class Bh1750 {
   }
 
   async measure() {
-    await delay(this.waiting);
+    await delay(this.waiting * (Math.max(this.waiting / 69, 1)));
     const payload = await this.adapter.transmit(`AT+TR=${this.address}02`);
-    return payload.readUInt16BE() / 1.2;
+    let result = (payload.readUInt16BE() / 1.2) * (69 / this.measureTime);
+    if (this.mode === Bh1750.modes.continuousHighResMode2) {
+      result /= 2;
+    }
+    return Promise.resolve(result);
   }
 }
 
@@ -38,5 +50,9 @@ Bh1750.modes = {
   oneTimeHighResMode2: 0x21,
   oneTimeLowResMode: 0x23,
 };
+
+Bh1750.measureTimeRange = [0x1f, 0xfe];
+
+Bh1750.addresses = ['23', '5c'];
 
 export default Bh1750;
