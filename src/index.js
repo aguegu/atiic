@@ -11,7 +11,7 @@ export {
   Aht21,
   Sht30,
   Spl06,
-  Bh1850,
+  Bh1750,
   Bme280,
   Tea5767,
   Mpu6050,
