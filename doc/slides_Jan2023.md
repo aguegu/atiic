@@ -72,7 +72,9 @@ But I have not fully figured out the *why* part.
 
 Web Serial API / 串口通信
 
-那接下来只是需要 `通信协议` 和 一些 `硬件`
+Data Visualization / 数据可视化
+
+那接下来只是需要 `通信协议` 和 一些 `硬件`……
 
 ---
 
