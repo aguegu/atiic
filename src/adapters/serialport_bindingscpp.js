@@ -29,7 +29,8 @@ class SerialportBindingCppAdapter {
       this.logger?.debug({ rx: res, hex: res.toString('hex'), ttl: Date.now() - startAt });
 
       if (res.endsWith('OK\r\n')) {
-        const payload = Buffer.from(res.split('\r\n')[1], 'hex');
+        const lines = res.split('\r\n');
+        const payload = Buffer.from(lines[lines.length - 3], 'hex');
         await sp.close();
         return Promise.resolve(payload);
       } if (res.endsWith('ERROR\r\n')) {
