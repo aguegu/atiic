@@ -30,6 +30,10 @@ describe('jx90614', () => {
     console.log({ temperature }); // eslint-disable-line no-console
 
     ({ temperature } = await this.jx90614.measure());
-    console.log({ temperature }); // eslint-disable-line no-console    
+    console.log({ temperature }); // eslint-disable-line no-console
+  });
+
+  it('should change slave address', async function () {
+    await this.jx90614.setSlaveAddress('5A');
   });
 });
