@@ -1,7 +1,5 @@
+import assert from 'node:assert/strict';
 import { i2hex } from '../utils.js';
-
-const accelerometerScales = ['2', '4', '8', '16'];
-const gyroscopeScales = ['250', '500', '1000', '2000'];
 
 class Mpu6050 {
   constructor(adapter, address = '68') {
@@ -10,23 +8,16 @@ class Mpu6050 {
   }
 
   async init(gyroscopeScale = '500', accelerometerScale = '4') {
-    const gfs = gyroscopeScales.indexOf(gyroscopeScale);
-    if (gfs < 0) {
-      throw new Error('invalid gyroscopeScale');
-    }
-
-    const afs = accelerometerScales.indexOf(accelerometerScale);
-    if (afs < 0) {
-      throw new Error('invalid accelerometerScale');
-    }
+    assert(Mpu6050.gyroscopeScales.includes(gyroscopeScale), 'invalid gyroscopeScale');
+    assert(Mpu6050.accelerometerScales.includes(accelerometerScale), 'invalid accelerometerScale');
 
     this.gyroscopeSensitivity = (131072 >> gfs) / 1000;
     this.accelerometerSensitivity = 16384 >> afs;
     await this.adapter.transmit(`AT+TX=${this.address}${[0x6b, 0x00].map(i2hex).join('')}`);
     await this.adapter.transmit(`AT+TX=${this.address}${[0x19, 0x0f].map(i2hex).join('')}`);
     await this.adapter.transmit(`AT+TX=${this.address}${[0x1a, 0x04].map(i2hex).join('')}`);
-    await this.adapter.transmit(`AT+TX=${this.address}${[0x1b, gfs << 3].map(i2hex).join('')}`);
-    await this.adapter.transmit(`AT+TX=${this.address}${[0x1c, afs << 3].map(i2hex).join('')}`);
+    await this.adapter.transmit(`AT+TX=${this.address}${[0x1b, Mpu6050.gyroscopeScales.indexOf(gyroscopeScale) << 3].map(i2hex).join('')}`);
+    await this.adapter.transmit(`AT+TX=${this.address}${[0x1c, Mpu6050.accelerometerScales.indexOf(accelerometerScale) << 3].map(i2hex).join('')}`);
   }
 
   async measure() {
@@ -48,5 +39,7 @@ class Mpu6050 {
 }
 
 Mpu6050.addresses = ['68', '69'];
+Mpu6050.accelerometerScales = ['2', '4', '8', '16'];
+Mpu6050.gyroscopeScales = ['250', '500', '1000', '2000'];
 
 export default Mpu6050;

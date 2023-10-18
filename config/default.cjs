@@ -1,6 +1,7 @@
+require('dotenv-flow').config();
+
 module.exports = {
-  device: '/dev/ttyUSB0',
-  // device: '/dev/tty.usbserial-1410',
+  device: process.env.DEVICE_PORT,
   slaves: {
     spl06: '76',
     sht30: '44',

@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "^4.3.10",
     "config": "^3.3.9",
+    "dotenv-flow": "^4.0.0",
     "eslint": "^8.51.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1",

@@ -31,7 +31,7 @@ class Jx90614 {
   }
 
   async ready() {
-    return this.adapter.transmit(`AT+TR=${this.address}0202`);
+     return this.adapter.transmit(`AT+TR=${this.address}0201`).then(code => Buffer.from(code, 'hex').readUInt8());
   }
 }
 
