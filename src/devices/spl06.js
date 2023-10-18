@@ -52,4 +52,6 @@ class Spl06 {
   }
 }
 
+Spl06.addresses = ['76', '77'];
+
 export default Spl06;

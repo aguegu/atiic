@@ -47,4 +47,6 @@ class Mpu6050 {
   }
 }
 
+Mpu6050.addresses = ['68', '69'];
+
 export default Mpu6050;

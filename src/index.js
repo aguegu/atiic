@@ -5,6 +5,7 @@ import Bh1750 from './devices/bh1750.js';
 import Bme280 from './devices/bme280.js';
 import Tea5767 from './devices/tea5767.js';
 import Mpu6050 from './devices/mpu6050.js';
+import Jx90614 from './devices/jx90614.js';
 import Pcf8574Hd44780 from './devices/pcf8574_hd44780.js';
 
 export {
@@ -15,5 +16,6 @@ export {
   Bme280,
   Tea5767,
   Mpu6050,
+  Jx90614,
   Pcf8574Hd44780,
 };
