@@ -9,6 +9,7 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ### 0.4.1
   * addresses for Spl06 and Mpu6050
+  * new Device: Infrared Thermometer JX90614(NSA3300)
 
 ### 0.4.0
   * compatible with non-echo Atiic devices
