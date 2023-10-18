@@ -7,6 +7,9 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.2
+  * fix Jx90614 for browser
+
 ### 0.4.1
   * addresses for Spl06 and Mpu6050
   * new Device: Infrared Thermometer JX90614(NSA3300)
