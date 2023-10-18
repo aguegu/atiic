@@ -21,18 +21,23 @@ describe('jx90614', () => {
 
   it('should measure', async function () {
     let temperature;
+    await this.jx90614.ready();
     ({ temperature } = await this.jx90614.measure());
     console.log({ temperature }); // eslint-disable-line no-console
 
+    await this.jx90614.ready();
     ({ temperature } = await this.jx90614.measure());
     console.log({ temperature }); // eslint-disable-line no-console
 
+    await this.jx90614.ready();
     ({ temperature } = await this.jx90614.measure());
     console.log({ temperature }); // eslint-disable-line no-console
 
+    await this.jx90614.ready();
     ({ temperature } = await this.jx90614.measure());
     console.log({ temperature }); // eslint-disable-line no-console
 
+    await this.jx90614.ready();
     ({ temperature } = await this.jx90614.measure());
     console.log({ temperature }); // eslint-disable-line no-console
   });
