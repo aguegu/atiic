@@ -1,4 +1,3 @@
-import assert from 'node:assert/strict';
 import { i2hex } from '../utils.js';
 
 class Mpu6050 {
@@ -8,8 +7,12 @@ class Mpu6050 {
   }
 
   async init(gyroscopeScale = '500', accelerometerScale = '4') {
-    assert(Mpu6050.gyroscopeScales.includes(gyroscopeScale), 'invalid gyroscopeScale');
-    assert(Mpu6050.accelerometerScales.includes(accelerometerScale), 'invalid accelerometerScale');
+    if (!Mpu6050.gyroscopeScales.includes(gyroscopeScale)) {
+      throw new Error('invalid gyroscopeScale');
+    }
+    if (!Mpu6050.accelerometerScales.includes(accelerometerScale)) {
+      throw new Error('invalid accelerometerScale');
+    }
 
     this.gyroscopeSensitivity = (131072 >> gfs) / 1000;
     this.accelerometerSensitivity = 16384 >> afs;

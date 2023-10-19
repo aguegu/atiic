@@ -119,8 +119,6 @@ class V53l {
     if (!['eacc', 'ebaa'].includes(id.toString('hex'))) {
       throw new Error(`Device at adrress 0x${this.address} IS NOT V53L`);
     }
-    // assert.equal(id.toString('hex'), 'eacc');
-
     await DEFAULT_CONFIGURATION.reduce(async (prevPromise, v, i) => {
       await prevPromise;
       return this.adapter.transmit(`AT+TX=${this.address}00${i2hex(i + 0x2D)}${i2hex(v)}`); // Sensor ID

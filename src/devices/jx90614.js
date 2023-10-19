@@ -1,4 +1,3 @@
-import assert from 'node:assert/strict';
 import { i2hex } from '../utils.js';
 
 class Jx90614 {
@@ -13,9 +12,14 @@ class Jx90614 {
   }
 
   async setSlaveAddress(address) {
-    assert.match(address, /[0-7][0-9a-fA-F]/);
+    if (!address.match(/^[0-7][0-9a-fA-F]$/)) {
+      throw new Error('invalid slave address');
+    };
     const adr = parseInt(address, 16);
-    assert(adr > 2 && adr < 0x78, 'address out of range');
+    if (adr < 3 || adr > 0x77) {
+      throw new Error('address out of range');
+    }
+
     await this.adapter.transmit(`AT+TR=${this.address}9201`);
     await this.adapter.transmit(`AT+TX=${this.address}92${address}`);
     await this.adapter.transmit(`AT+TX=${this.address}4068`);
