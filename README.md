@@ -7,6 +7,12 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.5
+  * bugfix: remove assert in device code for browsers
+
+### 0.4.4
+  * bugfix: export V53L
+
 ### 0.4.3
   * new Device: V53Lx ToF Distance Sensor
 
