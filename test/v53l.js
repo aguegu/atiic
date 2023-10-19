@@ -1,5 +1,5 @@
 import config from 'config';
-import V53l from '../src/devices/v53l.js';
+import { V53l } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
 describe('v53l', () => {
