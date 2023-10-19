@@ -1,6 +1,4 @@
-import assert from 'node:assert/strict';
 import { i2hex, delay } from '../utils.js';
-
 
 const DEFAULT_CONFIGURATION = [
 	0x00, /* 0x2d : set bit 2 and 5 to 1 for fast plus mode (1MHz I2C), else don't touch */
@@ -118,7 +116,10 @@ class V53l {
 
   async init() {
     const id = await this.adapter.transmit(`AT+TR=${this.address}010f02`); // Sensor ID
-    assert.equal(id.toString('hex'), 'eacc');
+    if (!['eacc', 'ebaa'].includes(id.toString('hex'))) {
+      throw new Error(`Device at adrress 0x${this.address} IS NOT V53L`);
+    }
+    // assert.equal(id.toString('hex'), 'eacc');
 
     await DEFAULT_CONFIGURATION.reduce(async (prevPromise, v, i) => {
       await prevPromise;
