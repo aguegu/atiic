@@ -7,6 +7,9 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.3
+  * new Device: V53Lx ToF Distance Sensor
+
 ### 0.4.2
   * fix Jx90614 for browser
 
