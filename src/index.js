@@ -7,6 +7,7 @@ import Tea5767 from './devices/tea5767.js';
 import Mpu6050 from './devices/mpu6050.js';
 import Jx90614 from './devices/jx90614.js';
 import V53l from './devices/v53l.js';
+import Mlx90614 from './devices/mlx90614.js';
 import Pcf8574Hd44780 from './devices/pcf8574_hd44780.js';
 
 export {
@@ -16,6 +17,7 @@ export {
   Bh1750,
   Bme280,
   Tea5767,
+  Mlx90614,
   Mpu6050,
   Jx90614,
   V53l,

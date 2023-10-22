@@ -7,6 +7,9 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.6
+  * new Device: MLX90614 Infrared Thermometer 
+
 ### 0.4.5
   * bugfix: remove assert in device code for browsers
 
