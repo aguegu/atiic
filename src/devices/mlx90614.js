@@ -34,21 +34,16 @@ class Mlx90614 {
   }
 
   async writeEmissivity(emissivity) {
-    const pec = i2hex(crc8(Buffer.from(`${this.addressW}240000`, 'hex'), 0x07, 0x00));
-    await this.adapter.transmit(`AT+TR=${this.address}240000${pec}`);
-    await delay(10);
+    const pec = i2hex(crc8([parseInt(this.addressW, 16), 0x24, 0, 0], 0x07, 0x00));
+    await this.adapter.transmit(`AT+TX=${this.address}240000${pec}`);
+    await delay(20);
 
     const e = parseInt(0xffff * emissivity);
-    const payload = Buffer.alloc(4);
-    payload.writeUInt8(this.addressW);
-    payload.writeUInt8(0x24, 1);
-    payload.writeUInt16LE(e, 2);
-
+    const payload = [parseInt(this.addressW, 16), 0x24, e & 0xff, e >> 8];
     const pec2 = i2hex(crc8(payload, 0x07, 0x00));
-    console.log({ pec2 });
 
-    await this.adapter.transmit(`AT+TR=${this.address}${payload.slice(1).toString('hex')}${pec2}`);
-    await delay(10);
+    await this.adapter.transmit(`AT+TX=${this.address}${payload.slice(1).map(c => i2hex(c)).join('')}${pec2}`);
+    await delay(20);
   }
 }
 
