@@ -14,16 +14,16 @@ class Ina231 {
 
   async init() {
     const cfg = await this.adapter.transmit(`AT+TR=${this.address}0002`);
-    const calibration = _.round(0.00512 / this.currentLsb / this.resistorShunt);    
+    const calibration = _.round(0.00512 / this.currentLsb / this.resistorShunt);
     await this.adapter.transmit(`AT+TX=${this.address}05${i2hex(calibration >> 8)}${i2hex(calibration & 0xff)}`);
     await this.adapter.transmit(`AT+TR=${this.address}0502`).then(v => console.log(v.readUInt16BE()));
   }
 
   async measure() {
     const mvShunt = await this.adapter.transmit(`AT+TR=${this.address}0102`).then(v => _.round(v.readUInt16BE() * 0.0025, 4));
-    const mvBus = await this.adapter.transmit(`AT+TR=${this.address}0202`).then(v => v.readUInt16BE() * 1.25);
-    const mwPower = await this.adapter.transmit(`AT+TR=${this.address}0302`).then(v => v.readUInt16BE() * 25 * this.currentLsb * 1000);
-    const maShunt = await this.adapter.transmit(`AT+TR=${this.address}0402`).then(v => v.readUInt16BE() * this.currentLsb * 1000);
+    const mvBus = await this.adapter.transmit(`AT+TR=${this.address}0202`).then(v => _.round(v.readUInt16BE() * 1.25, 2));
+    const mwPower = await this.adapter.transmit(`AT+TR=${this.address}0302`).then(v => _.round(v.readUInt16BE() * 25 * this.currentLsb * 1000, 1));
+    const maShunt = await this.adapter.transmit(`AT+TR=${this.address}0402`).then(v => _.round(v.readUInt16BE() * this.currentLsb * 1000, 1));
     return Promise.resolve({ mvShunt, mvBus, mwPower, maShunt });
   }
 }
