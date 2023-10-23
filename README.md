@@ -7,6 +7,9 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.8
+  + new Device: INA231 Current, Voltage and Power Monitor
+
 ### 0.4.7
   * remove Buffer reference in Mlx90614
 
