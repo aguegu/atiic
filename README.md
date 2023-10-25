@@ -7,6 +7,9 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 ## Releases
 
+### 0.4.10
+  * new Device: SHT20 Humidity and Temperature Sensor
+
 ### 0.4.9
   * tweak INA231 measurement rounding
 

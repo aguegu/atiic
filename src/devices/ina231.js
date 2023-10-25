@@ -15,6 +15,8 @@ class Ina231 {
   async init() {
     const cfg = await this.adapter.transmit(`AT+TR=${this.address}0002`);
     const calibration = _.round(0.00512 / this.currentLsb / this.resistorShunt);
+
+    await this.adapter.transmit(`AT+TX=${this.address}008000`); // reset
     await this.adapter.transmit(`AT+TX=${this.address}05${i2hex(calibration >> 8)}${i2hex(calibration & 0xff)}`);
     await this.adapter.transmit(`AT+TR=${this.address}0502`).then(v => console.log(v.readUInt16BE()));
   }
