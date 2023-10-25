@@ -7,7 +7,7 @@ import Bme280 from './devices/bme280.js';
 import Tea5767 from './devices/tea5767.js';
 import Mpu6050 from './devices/mpu6050.js';
 import Jx90614 from './devices/jx90614.js';
-import V53l from './devices/v53l.js';
+import Vl53l from './devices/vl53l.js';
 import Ina231 from './devices/ina231.js';
 import Mlx90614 from './devices/mlx90614.js';
 import Pcf8574Hd44780 from './devices/pcf8574_hd44780.js';
@@ -24,6 +24,6 @@ export {
   Mpu6050,
   Ina231,
   Jx90614,
-  V53l,
+  Vl53l,
   Pcf8574Hd44780,
 };

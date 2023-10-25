@@ -94,7 +94,7 @@ const DEFAULT_CONFIGURATION = [
 	0x00  /* 0x87 : start ranging, use StartRanging() or StopRanging(), If you want an automatic start after VL53L1X_init() call, put 0x40 in location 0x87 */
 ];
 
-class V53l {
+class Vl53l {
   constructor(adapter, address = '29') {
     this.adapter = adapter;
     this.address = address;
@@ -157,10 +157,13 @@ class V53l {
     await this.clearInterrupt();
     await this.adapter.transmit(`AT+TX=${this.address}008710`); // SYSTEM__MODE_START oneShot
 
-    await this.waitForDataReady();
+		const start = Date.now();
+    // await this.waitForDataReady();
+		// console.log({ waited: Date.now() - start })
+		await delay(0x70);
     const distance = await this.adapter.transmit(`AT+TR=${this.address}009602`).then(s => s.readUInt16BE());
     return Promise.resolve({ distance });
   }
 }
 
-export default V53l;
+export default Vl53l;
