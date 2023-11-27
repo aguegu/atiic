@@ -7,10 +7,13 @@ class Mpu6050 {
   }
 
   async init(gyroscopeScale = '500', accelerometerScale = '4') {
-    if (!Mpu6050.gyroscopeScales.includes(gyroscopeScale)) {
+    const gfs = Mpu6050.gyroscopeScales.indexOf(gyroscopeScale);
+    if (gfs < 0) {
       throw new Error('invalid gyroscopeScale');
     }
-    if (!Mpu6050.accelerometerScales.includes(accelerometerScale)) {
+
+    const afs = Mpu6050.accelerometerScales.indexOf(accelerometerScale);
+    if (afs < 0) {
       throw new Error('invalid accelerometerScale');
     }
 
