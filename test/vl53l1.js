@@ -1,11 +1,11 @@
 import config from 'config';
-import { Vl53l } from '../src/index.js';
+import { Vl53l1 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-describe('v53l', () => {
+describe('v53l1', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'));
-    this.device = new Vl53l(adapter);
+    this.device = new Vl53l1(adapter);
   });
 
   it('should init', async function () {
@@ -16,12 +16,12 @@ describe('v53l', () => {
     await this.device.getReady();
   });
 
-  it('should get measurement', async function() {
+  it('should get measurement', async function () {
     const { distance } = await this.device.measureRegular();
     console.log({ distance });
   });
 
-  it('should get oneshort measurement', async function() {
+  it('should get oneshort measurement', async function () {
     let distance;
     ({ distance } = await this.device.measure());
     console.log({ distance });

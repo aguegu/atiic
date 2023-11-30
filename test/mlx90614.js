@@ -16,12 +16,12 @@ describe('Mlx90614', () => {
     console.log(result);
   });
 
-  it('should read Emissivity', async function() {
+  it('should read Emissivity', async function () {
     const result = await this.device.readEmissivity();
     console.log(result);
   });
 
-  it('should write Emissivity', async function() {
+  it('should write Emissivity', async function () {
     await this.device.writeEmissivity(0.75);
     let result = await this.device.readEmissivity();
     result.should.closeTo(0.75, 0.01);

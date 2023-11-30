@@ -14,7 +14,7 @@ class Jx90614 {
   async setSlaveAddress(address) {
     if (!address.match(/^[0-7][0-9a-fA-F]$/)) {
       throw new Error('invalid slave address');
-    };
+    }
     const adr = parseInt(address, 16);
     if (adr < 3 || adr > 0x77) {
       throw new Error('address out of range');
@@ -36,7 +36,7 @@ class Jx90614 {
   }
 
   async ready() {
-     return this.adapter.transmit(`AT+TR=${this.address}0201`).then(code => Buffer.from(code, 'hex').readUInt8());
+    return this.adapter.transmit(`AT+TR=${this.address}0201`).then((code) => Buffer.from(code, 'hex').readUInt8());
   }
 }
 

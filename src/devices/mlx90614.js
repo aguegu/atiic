@@ -30,7 +30,7 @@ class Mlx90614 {
   }
 
   async readEmissivity() {
-    return this.adapter.transmit(`AT+TR=${this.address}2403`).then(v => v.readUInt16LE() / 0xffff);
+    return this.adapter.transmit(`AT+TR=${this.address}2403`).then((v) => v.readUInt16LE() / 0xffff);
   }
 
   async writeEmissivity(emissivity) {
@@ -42,7 +42,7 @@ class Mlx90614 {
     const payload = [parseInt(this.addressW, 16), 0x24, e & 0xff, e >> 8];
     const pec2 = i2hex(crc8(payload, 0x07, 0x00));
 
-    await this.adapter.transmit(`AT+TX=${this.address}${payload.slice(1).map(c => i2hex(c)).join('')}${pec2}`);
+    await this.adapter.transmit(`AT+TX=${this.address}${payload.slice(1).map((c) => i2hex(c)).join('')}${pec2}`);
     await delay(20);
   }
 }
