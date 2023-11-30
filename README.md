@@ -5,6 +5,15 @@ The Javascript libraries to interact with Atiic devices. Atiic is a Serial-i2c b
 
 This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
+## Hardware v2
+
+1A: AGS10, slow
+23: BH1750, works
+29:
+38: AHT21, works
+68: MPU6050, works
+76: SPL06, works
+
 ## Releases
 
 ### 0.4.10
