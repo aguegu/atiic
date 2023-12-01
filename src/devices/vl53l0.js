@@ -561,12 +561,10 @@ class Vl53l0 {
     let ls_byte = 0;
     let ms_byte = 0;
 
-    if (timeout_mclks > 0)
-    {
+    if (timeout_mclks > 0) {
       ls_byte = timeout_mclks - 1;
 
-      while ((ls_byte & 0xFFFFFF00) > 0)
-      {
+      while ((ls_byte & 0xFFFFFF00) > 0) {
         ls_byte >>= 1;
         ms_byte++;
       }
@@ -617,15 +615,17 @@ class Vl53l0 {
     let [tmp] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.SYSRANGE_START)}01`);
     console.log({ tmp });
 
-    if (tmp & 0x01) {
-      ([tmp] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.SYSRANGE_START)}01`));
-      console.log({ tmp });
-    }
+    // if (tmp & 0x01) {
+    //   ([tmp] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.SYSRANGE_START)}01`));
+    //   console.log({ tmp });
+    // }
 
     return this.readRangeContinuousMillimeters();
   }
 
   async readRangeContinuousMillimeters() {
+    const t = Date.now();
+    console.log({ t });
     let [interrupt] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.RESULT_INTERRUPT_STATUS)}01`);
     console.log({ interrupt });
     if (!(interrupt & 0x07)) {
@@ -636,6 +636,7 @@ class Vl53l0 {
       ([interrupt] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.RESULT_INTERRUPT_STATUS)}01`));
       console.log({ interrupt });
     }
+    // console.log({ ttl: Date.now() - t });
 
     // assumptions: Linearity Corrective Gain is 1000 (default);
     // fractional ranging is not enabled
@@ -647,6 +648,29 @@ class Vl53l0 {
     // writeReg(SYSTEM_INTERRUPT_CLEAR, 0x01);
 
     return Promise.resolve(range);
+  }
+
+  async startContinuous() {
+    await this.adapter.transmit(`AT+TX=${this.address}8001`);
+    await this.adapter.transmit(`AT+TX=${this.address}FF01`);
+    await this.adapter.transmit(`AT+TX=${this.address}0000`);
+    await this.adapter.transmit(`AT+TX=${this.address}91${i2hex(this.stopVariable)}`);
+
+    await this.adapter.transmit(`AT+TX=${this.address}0001`);
+    await this.adapter.transmit(`AT+TX=${this.address}FF00`);
+    await this.adapter.transmit(`AT+TX=${this.address}8000`);
+
+    await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.SYSRANGE_START)}02`);
+  }
+
+  async stopContinuous() {
+    await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.SYSRANGE_START)}01`);
+    // await this.adapter.transmit(`AT+TX=${this.address}FF01`);
+    // await this.adapter.transmit(`AT+TX=${this.address}0000`);
+    // await this.adapter.transmit(`AT+TX=${this.address}9100`);
+    // await this.adapter.transmit(`AT+TX=${this.address}0001`);
+    // await this.adapter.transmit(`AT+TX=${this.address}FF00`);
+    // not really working if this section is enabled
   }
 }
 

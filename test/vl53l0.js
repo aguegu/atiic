@@ -14,7 +14,28 @@ describe('v53l0', () => {
   });
 
   it('should single measure', async function () {
-    const mm = await this.device.readRangeSingleMillimeters();
+    let mm = await this.device.readRangeSingleMillimeters();
     console.log({ mm });
+    mm = await this.device.readRangeSingleMillimeters();
+    console.log({ mm });
+    mm = await this.device.readRangeSingleMillimeters();
+    console.log({ mm });
+    mm = await this.device.readRangeSingleMillimeters();
+    console.log({ mm });
+  });
+
+  it('should get continuous measurements', async function () {
+    await this.device.startContinuous();
+
+    let mm = await this.device.readRangeContinuousMillimeters();
+    console.log({ mm });
+    mm = await this.device.readRangeContinuousMillimeters();
+    console.log({ mm });
+    mm = await this.device.readRangeContinuousMillimeters();
+    console.log({ mm });
+    mm = await this.device.readRangeContinuousMillimeters();
+    console.log({ mm });
+
+    await this.device.stopContinuous();
   });
 });
