@@ -106,7 +106,7 @@ class Vl53l1x {
   }
 
   async clearInterrupt() {
-    return await this.adapter.transmit(`AT+TX=${this.address}008601`); // SYSTEM__INTERRUPT_CLEAR
+    return this.adapter.transmit(`AT+TX=${this.address}008601`); // SYSTEM__INTERRUPT_CLEAR
   }
 
   async startRanging() {

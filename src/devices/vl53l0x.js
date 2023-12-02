@@ -176,9 +176,9 @@ class Vl53l0x {
       }
     }
 
-    console.log({ spadMap });
+    // console.log({ spadMap });
 
-    await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.GLOBAL_CONFIG_SPAD_ENABLES_REF_0)}${Buffer.from(spadMap).toString('hex')}`);
+    await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.GLOBAL_CONFIG_SPAD_ENABLES_REF_0)}${spadMap.map(i2hex).join('')}`);
 
     await this.adapter.transmit(`AT+TX=${this.address}FF01`);
     await this.adapter.transmit(`AT+TX=${this.address}0000`);
@@ -299,9 +299,10 @@ class Vl53l0x {
       throw new Error('invalid limitMcps');
     }
     // Q9.7 fixed point format (9 integer bits, 7 fractional bits)
-    const buff = Buffer.alloc(2);
-    buff.writeUInt16BE(limitMcps * (1 << 7));
-    return this.adapter.transmit(`AT+TX=${this.address}44${buff.toString('hex')}`); // FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT
+    // const buff = Buffer.alloc(2);
+    // buff.writeUInt16BE(limitMcps * (1 << 7));
+    const tmp = limitMcps * (1 << 7);
+    return this.adapter.transmit(`AT+TX=${this.address}44${i2hex(tmp >> 8)}${i2hex(tmp & 0xff)}`); // FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT
   }
 
   async getSpadInfo() {
@@ -540,9 +541,10 @@ class Vl53l0x {
         final_range_timeout_mclks += timeouts.pre_range_mclks;
       }
 
-      const buff = Buffer.alloc(2);
-      buff.writeUInt16BE(this.encodeTimeout(final_range_timeout_mclks));
-      return this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI)}${buff.toString('hex')}`); // FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT
+      // const buff = Buffer.alloc(2);
+      // buff.writeUInt16BE(this.encodeTimeout(final_range_timeout_mclks));
+      const tmp = this.encodeTimeout(final_range_timeout_mclks);
+      return this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI)}${i2hex(tmp >> 8)}${i2hex(tmp & 0xff)}`); // FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT
       // writeReg16Bit(FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI, encodeTimeout(final_range_timeout_mclks));
       // set_sequence_step_timeout() end
 
@@ -571,7 +573,7 @@ class Vl53l0x {
 
       return (ms_byte << 8) | (ls_byte & 0xFF);
     }
-    else { return 0; }
+    return 0;
   }
 
   async performSingleRefCalibration(vhv_init_byte) {
@@ -612,7 +614,7 @@ class Vl53l0x {
 
     await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.SYSRANGE_START)}01`);
 
-    let [tmp] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.SYSRANGE_START)}01`);
+    const [tmp] = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.SYSRANGE_START)}01`);
     console.log({ tmp });
 
     // if (tmp & 0x01) {
@@ -641,8 +643,7 @@ class Vl53l0x {
     // assumptions: Linearity Corrective Gain is 1000 (default);
     // fractional ranging is not enabled
     // uint16_t range = readReg16Bit(RESULT_RANGE_STATUS + 10);
-    const range = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.RESULT_RANGE_STATUS + 10)}02`).then(buff => buff.readUInt16BE());
-
+    const range = await this.adapter.transmit(`AT+TR=${this.address}${i2hex(this.RESULT_RANGE_STATUS + 10)}02`).then((buff) => buff.readUInt16BE());
 
     await this.adapter.transmit(`AT+TX=${this.address}${i2hex(this.SYSTEM_INTERRUPT_CLEAR)}01`);
     // writeReg(SYSTEM_INTERRUPT_CLEAR, 0x01);
