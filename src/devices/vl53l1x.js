@@ -94,7 +94,7 @@ const DEFAULT_CONFIGURATION = [
   0x00, /* 0x87 : start ranging, use StartRanging() or StopRanging(), If you want an automatic start after VL53L1X_init() call, put 0x40 in location 0x87 */
 ];
 
-class Vl53l {
+class Vl53l1x {
   constructor(adapter, address = '29') {
     this.adapter = adapter;
     this.address = address;
@@ -166,4 +166,4 @@ class Vl53l {
   }
 }
 
-export default Vl53l;
+export default Vl53l1x;

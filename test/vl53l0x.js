@@ -1,11 +1,11 @@
 import config from 'config';
-import { Vl53l0 } from '../src/index.js';
+import { Vl53l0x } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-describe('v53l0', () => {
+describe('vl53l0x', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'));
-    this.device = new Vl53l0(adapter);
+    this.device = new Vl53l0x(adapter);
   });
 
   it('should init', async function () {

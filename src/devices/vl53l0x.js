@@ -1,6 +1,6 @@
 import { i2hex } from '../utils.js';
 
-class Vl53l0 {
+class Vl53l0x {
   SYSRANGE_START = 0x00;
 
   SYSTEM_THRESH_HIGH = 0x0C;
@@ -674,4 +674,4 @@ class Vl53l0 {
   }
 }
 
-export default Vl53l0;
+export default Vl53l0x;
