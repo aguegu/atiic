@@ -9,14 +9,20 @@ This package is the core dependence of [i2c.ninja](https://i2c.ninja)
 
 Main Chip: STC8H3K48S2
 
-1A: AGS10, slow
+1A: AGS10, works
 23: BH1750, works
-29: VL53L0X
+29: VL53L0X, works
 38: AHT21, works
 68: MPU6050, works
 76: SPL06, works
 
 ## Releases
+
+### 0.4.15
+  * new device: AGS10, TVOC sensor
+
+### 0.4.11 - 0.4.14
+  * new device: VL53L0X
 
 ### 0.4.10
   * new Device: SHT20 Humidity and Temperature Sensor
