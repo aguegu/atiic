@@ -14,6 +14,7 @@ Main Chip: STC8H3K48S2
 29: VL53L0X, works
 38: AHT21, works
 68: MPU6050, works
+5A: MLX90614, works
 76: SPL06, works
 
 ## Releases

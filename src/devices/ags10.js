@@ -7,11 +7,11 @@ class Ags10 {
   }
 
   async init() {
-    await this.adapter.transmit(`AT+FQ=000E`);
+    return this.adapter.transmit(`AT+FQ=000E`);
   }
 
   async deinit() {
-    await this.adapter.transmit(`AT+FQ=0190`);
+    return this.adapter.transmit(`AT+FQ=0190`);
   }
 
   async version() {
