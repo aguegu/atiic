@@ -6,6 +6,7 @@ import Spl06 from './devices/spl06.js';
 import Bh1750 from './devices/bh1750.js';
 import Bme280 from './devices/bme280.js';
 import Tea5767 from './devices/tea5767.js';
+import Tcs37425 from './devices/tcs37425.js';
 import Mpu6050 from './devices/mpu6050.js';
 import Jx90614 from './devices/jx90614.js';
 import Vl53l0x from './devices/vl53l0x.js';
@@ -23,6 +24,7 @@ export {
   Bh1750,
   Bme280,
   Tea5767,
+  Tcs37425,
   Mlx90614,
   Mpu6050,
   Ina231,
