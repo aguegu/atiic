@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import { Tcs37425 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
 
 describe('Tcs37425', () => {
   before(async function () {

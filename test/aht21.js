@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import { Aht21 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
 
 describe('aht21', () => {
   before(async function () {
@@ -19,6 +19,6 @@ describe('aht21', () => {
     const { temperature, humidity } = await this.aht21.measure();
     temperature.should.be.a('number');
     humidity.should.be.a('number');
-    console.log({ temperature, humidity });  
+    console.log({ temperature, humidity });
   });
 });

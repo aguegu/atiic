@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import Mt6701 from '../src/devices/mt6701.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
 
 describe('mt6701', () => {
   before(async function () {

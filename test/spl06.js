@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import { Spl06 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
 
 describe('spl06', () => {
   before(async function () {
@@ -19,6 +19,6 @@ describe('spl06', () => {
     const { pressure, temperature } = await this.spl06.measure();
     temperature.should.be.a('number');
     pressure.should.be.a('number');
-    console.log({ temperature, pressure });  
+    console.log({ temperature, pressure });
   });
 });

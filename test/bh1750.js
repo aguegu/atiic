@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import { Bh1750 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
 
 describe('bh1750', () => {
   before(async function () {

@@ -35,7 +35,7 @@ class SerialportBindingCppAdapter {
         return Promise.resolve(payload);
       } if (res.endsWith('ERROR\r\n')) {
         await sp.close();
-        throw new Error('Command Not Supported');
+        throw new Error('FAILED');
       } else {
         return read();
       }

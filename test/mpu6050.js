@@ -1,9 +1,11 @@
-import chai from 'chai';
+import { should } from 'chai';
 import config from 'config';
 import { Mpu6050 } from '../src/index.js';
 import SerialportBindingCppAdapter from '../src/adapters/serialport_bindingscpp.js';
 
-chai.should();
+should();
+
+// console.log(config.get('device'));
 
 describe('mpu6050', () => {
   before(async function () {
@@ -16,8 +18,7 @@ describe('mpu6050', () => {
   });
 
   it('should measure', async function () {
-    const light = await this.device.measure();
-
-    console.log({ light });  
+    const result = await this.device.measure();
+    console.log({ result });
   });
 });
