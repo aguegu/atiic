@@ -18,6 +18,6 @@ describe('mpu6050', () => {
   it('should measure', async function () {
     const light = await this.device.measure();
 
-    console.log({ light }); // eslint-disable-line no-console
+    console.log({ light });  
   });
 });

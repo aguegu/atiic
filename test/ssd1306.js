@@ -8,7 +8,7 @@ chai.should();
 describe('Ssd1306', () => {
   before(async function () {
     const adapter = new SerialportBindingCppAdapter(config.get('device'), null, 200);
-    this.ssd1306 = new Ssd1306(adapter, 32);
+    this.ssd1306 = new Ssd1306(adapter, 64);
   });
 
   it('should init', async function () {
@@ -16,6 +16,7 @@ describe('Ssd1306', () => {
   });
 
   it('should clear', async function () {
-    return this.ssd1306.clear(0x83);
+    // return this.ssd1306.clear(0x00);
+    return this.ssd1306.clear(0xff);
   });
 });

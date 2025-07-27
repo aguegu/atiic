@@ -9,12 +9,13 @@ class Ssd1306 {
   }
 
   async command(data) {
-    return this.adapter.transmit(`AT+TX=${this.address}00${data.map(i2hex).join('')}`);
+    // return this.adapter.transmit(`AT+TX=${this.address}00${data.map(i2hex).join('')}`);
+    return this.adapter.transmit(`AT+TR=${this.address}00${data.map(i2hex).join('')}00`);
   }
 
   async data(data) {
-    return this.adapter.transmit(`AT+TX=${this.address}40${data.map(i2hex).join('')}`);
-    // return this.adapter.transmit(`AT+TX=${this.address}40${i2hex(cmd)}`);
+    // return this.adapter.transmit(`AT+TX=${this.address}40${data.map(i2hex).join('')}`);
+    return this.adapter.transmit(`AT+TR=${this.address}40${data.map(i2hex).join('')}00`);
   }
 
   async init() {

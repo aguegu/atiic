@@ -19,6 +19,6 @@ describe('aht21', () => {
     const { temperature, humidity } = await this.aht21.measure();
     temperature.should.be.a('number');
     humidity.should.be.a('number');
-    console.log({ temperature, humidity }); // eslint-disable-line no-console
+    console.log({ temperature, humidity });  
   });
 });

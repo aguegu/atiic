@@ -27,14 +27,15 @@
   },
   "homepage": "https://github.com/aguegu/atiic#readme",
   "devDependencies": {
-    "chai": "^4.3.10",
-    "config": "^3.3.9",
-    "dotenv-flow": "^4.0.0",
-    "eslint": "^8.51.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "mocha": "^10.2.0",
-    "nodemon": "^3.0.1"
+    "@eslint/js": "^9.32.0",
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "chai": "^5.2.1",
+    "config": "^4.1.0",
+    "dotenv-flow": "^4.1.0",
+    "eslint": "^9.32.0",
+    "globals": "^16.3.0",
+    "mocha": "^11.7.1",
+    "nodemon": "^3.1.10"
   },
   "dependencies": {
     "lodash": "^4.17.21"

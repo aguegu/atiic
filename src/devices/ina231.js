@@ -13,7 +13,7 @@ class Ina231 {
   }
 
   async init() {
-    const cfg = await this.adapter.transmit(`AT+TR=${this.address}0002`);
+    await this.adapter.transmit(`AT+TR=${this.address}0002`);
     const calibration = _.round(0.00512 / this.currentLsb / this.resistorShunt);
 
     await this.adapter.transmit(`AT+TX=${this.address}008000`); // reset

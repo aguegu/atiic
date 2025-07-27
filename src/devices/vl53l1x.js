@@ -157,7 +157,7 @@ class Vl53l1x {
     await this.clearInterrupt();
     await this.adapter.transmit(`AT+TX=${this.address}008710`); // SYSTEM__MODE_START oneShot
 
-    const start = Date.now();
+    // const start = Date.now();
     // await this.waitForDataReady();
     // console.log({ waited: Date.now() - start })
     await delay(0x70);

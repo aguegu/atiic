@@ -19,6 +19,10 @@ Main Chip: STC8H3K48S2
 
 ## Releases
 
+### 0.5.0
+  * dependencies upgraded
+  * eslint upgraded
+
 ### 0.4.16
   * new device: TCS37425, color sensor
   * new device: SSD1306, oled display

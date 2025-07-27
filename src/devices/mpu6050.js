@@ -19,6 +19,11 @@ class Mpu6050 {
 
     this.gyroscopeSensitivity = (131072 >> gfs) / 1000;
     this.accelerometerSensitivity = 16384 >> afs;
+    console.log({
+      gyroscopeSensitivity: this.gyroscopeSensitivity,
+      accelerometerSensitivity: this.accelerometerSensitivity,
+    });
+
     await this.adapter.transmit(`AT+TX=${this.address}${[0x6b, 0x00].map(i2hex).join('')}`);
     await this.adapter.transmit(`AT+TX=${this.address}${[0x19, 0x0f].map(i2hex).join('')}`);
     await this.adapter.transmit(`AT+TX=${this.address}${[0x1a, 0x04].map(i2hex).join('')}`);

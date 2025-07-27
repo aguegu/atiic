@@ -7,11 +7,11 @@ class Ags10 {
   }
 
   async init() {
-    return this.adapter.transmit(`AT+FQ=000E`);
+    return this.adapter.transmit('AT+FQ=000E');
   }
 
   async deinit() {
-    return this.adapter.transmit(`AT+FQ=0190`);
+    return this.adapter.transmit('AT+FQ=0190');
   }
 
   async version() {
@@ -19,7 +19,7 @@ class Ags10 {
     if (crc8(payload)) {
       throw new Error('crc8 mismatch');
     }
-    return polarity
+    return payload.readUInt32BE();
   }
 
   async measure() {
