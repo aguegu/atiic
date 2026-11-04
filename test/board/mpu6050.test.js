@@ -9,6 +9,8 @@ const SCL_HZ = 400000; // the MPU-6050's fast mode, its rated top
 const FIFO_TEST_MS = 300;
 const G_MIN = 0.9;
 const G_MAX = 1.1;
+const SETTLED_MS = 300; // long after any start-up
+const GYRO_AGREE = 1; // deg/s: the first reading after init() against a settled one, at rest
 
 describe('mpu6050 (board)', () => {
   let bus, mpu;
@@ -31,6 +33,17 @@ describe('mpu6050 (board)', () => {
     const g = Math.hypot(x, y, z);
     assert.ok(g > G_MIN && g < G_MAX, `|a| ${g} g`);
     assert.ok(r.temperature > 0 && r.temperature < 50, `${r.temperature} C`);
+  });
+
+  it('reads a settled gyro right after init() from sleep', async () => {
+    await mpu.sleep();
+    await mpu.init();
+    const first = (await mpu.measure()).gyroscopes;
+    await new Promise((resolve) => setTimeout(resolve, SETTLED_MS));
+    const later = (await mpu.measure()).gyroscopes;
+    for (const k of ['x', 'y', 'z']) {
+      assert.ok(Math.abs(first[k] - later[k]) < GYRO_AGREE, `${k}: ${first[k].toFixed(1)} then ${later[k].toFixed(1)} deg/s`);
+    }
   });
 
   it('queues 1 kHz samples in its FIFO, none lost', async () => {

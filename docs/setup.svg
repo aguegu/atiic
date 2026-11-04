@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" width="860" height="400" font-family="Helvetica, Arial, sans-serif">
+  <title>atiic bench: a CH341T dongle in I2C mode at 3.3V wired to a GY-521 (MPU-6050)</title>
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9ecef"/>
+      <stop offset="0.5" stop-color="#b8bec5"/>
+      <stop offset="1" stop-color="#d9dde1"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d77a"/>
+      <stop offset="1" stop-color="#b8922a"/>
+    </linearGradient>
+    <g id="dupont">
+      <rect x="0" y="-6" width="20" height="12" rx="1.5" fill="#1b1b1b"/>
+      <rect x="2" y="-2" width="4" height="4" fill="#444"/>
+    </g>
+  </defs>
+
+  <rect width="860" height="400" fill="#ffffff"/>
+  <text x="430" y="34" text-anchor="middle" font-size="17" font-weight="bold" fill="#222">CH341T (I2C mode, 3.3V) + GY-521 (MPU-6050)</text>
+
+  <!-- USB-A plug -->
+  <text x="70" y="160" text-anchor="middle" font-size="12" fill="#555">to the PC</text>
+  <rect x="20" y="170" width="100" height="90" rx="3" fill="url(#metal)" stroke="#8a9096"/>
+  <rect x="38" y="190" width="16" height="12" fill="#6b7178"/>
+  <rect x="38" y="228" width="16" height="12" fill="#6b7178"/>
+
+  <!-- the dongle's PCB -->
+  <rect x="118" y="125" width="340" height="180" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
+  <text x="130" y="318" font-size="12" fill="#555">CH341T 2-in-1 module (USB to I2C / TTL)</text>
+
+  <!-- LEDs -->
+  <rect x="134" y="140" width="10" height="7" fill="#f1f1f1" stroke="#999"/>
+  <text x="150" y="147" font-size="9" fill="#fff">RDY</text>
+  <rect x="134" y="282" width="10" height="7" fill="#f1f1f1" stroke="#999"/>
+  <text x="150" y="289" font-size="9" fill="#fff">TNOW</text>
+
+  <!-- crystal, chip -->
+  <rect x="160" y="196" width="72" height="30" rx="14" fill="url(#metal)" stroke="#8a9096"/>
+  <text x="196" y="215" text-anchor="middle" font-size="8" fill="#555">12.000</text>
+  <g fill="#c9ccd1">
+    <rect x="252" y="176" width="3" height="8"/><rect x="259" y="176" width="3" height="8"/><rect x="266" y="176" width="3" height="8"/><rect x="273" y="176" width="3" height="8"/><rect x="280" y="176" width="3" height="8"/>
+    <rect x="287" y="176" width="3" height="8"/><rect x="294" y="176" width="3" height="8"/><rect x="301" y="176" width="3" height="8"/><rect x="308" y="176" width="3" height="8"/><rect x="315" y="176" width="3" height="8"/>
+    <rect x="252" y="236" width="3" height="8"/><rect x="259" y="236" width="3" height="8"/><rect x="266" y="236" width="3" height="8"/><rect x="273" y="236" width="3" height="8"/><rect x="280" y="236" width="3" height="8"/>
+    <rect x="287" y="236" width="3" height="8"/><rect x="294" y="236" width="3" height="8"/><rect x="301" y="236" width="3" height="8"/><rect x="308" y="236" width="3" height="8"/><rect x="315" y="236" width="3" height="8"/>
+  </g>
+  <rect x="248" y="183" width="74" height="54" rx="2" fill="#1d1d1d"/>
+  <text x="285" y="214" text-anchor="middle" font-size="10" fill="#ccc">CH341T</text>
+
+  <!-- mode jumper (yellow): TTL | I2C, the cap on I2C -->
+  <text x="340" y="141" text-anchor="middle" font-size="9" fill="#fff">TTL</text>
+  <text x="380" y="141" text-anchor="middle" font-size="9" fill="#fff">I2C</text>
+  <g fill="#111"><rect x="333" y="147" width="14" height="14"/><rect x="353" y="147" width="14" height="14"/><rect x="373" y="147" width="14" height="14"/></g>
+  <circle cx="340" cy="154" r="3" fill="url(#pin)"/>
+  <rect x="351" y="144" width="38" height="20" rx="3" fill="#f2c200" stroke="#a88600"/>
+  <rect x="361" y="150" width="18" height="8" rx="2" fill="#d8ac00"/>
+
+  <!-- voltage jumper (green): 3V3 | 5V, the cap on 3V3 -->
+  <g fill="#111"><rect x="333" y="262" width="14" height="14"/><rect x="353" y="262" width="14" height="14"/><rect x="373" y="262" width="14" height="14"/></g>
+  <circle cx="380" cy="269" r="3" fill="url(#pin)"/>
+  <rect x="331" y="259" width="38" height="20" rx="3" fill="#2fa36b" stroke="#1d6e47"/>
+  <rect x="341" y="265" width="18" height="8" rx="2" fill="#268a5a"/>
+  <text x="340" y="293" text-anchor="middle" font-size="9" fill="#fff">3V3</text>
+  <text x="380" y="293" text-anchor="middle" font-size="9" fill="#fff">5V</text>
+
+  <!-- the dongle's header: top to bottom RXD TXD SDA SCL GND VCC -->
+  <rect x="432" y="138" width="22" height="144" fill="#161616"/>
+  <g font-size="11" fill="#fff" text-anchor="end" font-family="Menlo, Consolas, monospace">
+    <text x="426" y="154">RXD</text><text x="426" y="178">TXD</text><text x="426" y="202">SDA</text>
+    <text x="426" y="226">SCL</text><text x="426" y="250">GND</text><text x="426" y="274">VCC</text>
+  </g>
+  <g fill="url(#pin)">
+    <rect x="443" y="148" width="34" height="4"/><rect x="443" y="172" width="34" height="4"/><rect x="443" y="196" width="34" height="4"/>
+    <rect x="443" y="220" width="34" height="4"/><rect x="443" y="244" width="34" height="4"/><rect x="443" y="268" width="34" height="4"/>
+  </g>
+
+  <!-- the GY-521 -->
+  <rect x="612" y="80" width="190" height="210" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
+  <circle cx="780" cy="102" r="8" fill="#fff" stroke="#c9ccd1" stroke-width="3"/>
+  <circle cx="780" cy="268" r="8" fill="#fff" stroke="#c9ccd1" stroke-width="3"/>
+  <rect x="616" y="94" width="22" height="192" fill="#161616"/>
+  <g fill="url(#pin)">
+    <rect x="593" y="100" width="34" height="4"/><rect x="593" y="124" width="34" height="4"/><rect x="593" y="148" width="34" height="4"/><rect x="593" y="172" width="34" height="4"/>
+    <rect x="593" y="196" width="34" height="4"/><rect x="593" y="220" width="34" height="4"/><rect x="593" y="244" width="34" height="4"/><rect x="593" y="268" width="34" height="4"/>
+  </g>
+  <g font-size="11" fill="#fff" font-family="Menlo, Consolas, monospace">
+    <text x="644" y="106">INT</text><text x="644" y="130">AD0</text><text x="644" y="154">XCL</text><text x="644" y="178">XDA</text>
+    <text x="644" y="202">SDA</text><text x="644" y="226">SCL</text><text x="644" y="250">GND</text><text x="644" y="274">VCC</text>
+  </g>
+  <rect x="694" y="160" width="54" height="54" rx="2" fill="#1d1d1d"/>
+  <circle cx="702" cy="168" r="2.5" fill="#555"/>
+  <text x="721" y="230" text-anchor="middle" font-size="9" fill="#fff">MPU-6050</text>
+  <rect x="700" y="112" width="24" height="16" fill="#2b2b2b"/>
+  <text x="707" y="306" text-anchor="middle" font-size="12" fill="#555">GY-521</text>
+
+  <!-- wires, dupont ends on both pins -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M495 198 C 530 198, 545 198, 575 198" stroke="#0d4f8c" stroke-width="7"/>
+    <path d="M495 198 C 530 198, 545 198, 575 198" stroke="#1e88e5" stroke-width="5"/>
+    <path d="M495 222 C 530 222, 545 222, 575 222" stroke="#a88600" stroke-width="7"/>
+    <path d="M495 222 C 530 222, 545 222, 575 222" stroke="#f2c200" stroke-width="5"/>
+    <path d="M495 246 C 530 246, 545 246, 575 246" stroke="#000" stroke-width="7"/>
+    <path d="M495 246 C 530 246, 545 246, 575 246" stroke="#3a3a3a" stroke-width="5"/>
+    <path d="M495 270 C 530 270, 545 270, 575 270" stroke="#8e1c1c" stroke-width="7"/>
+    <path d="M495 270 C 530 270, 545 270, 575 270" stroke="#d32f2f" stroke-width="5"/>
+  </g>
+  <use href="#dupont" x="475" y="198"/><use href="#dupont" x="475" y="222"/><use href="#dupont" x="475" y="246"/><use href="#dupont" x="475" y="270"/>
+  <use href="#dupont" x="575" y="198"/><use href="#dupont" x="575" y="222"/><use href="#dupont" x="575" y="246"/><use href="#dupont" x="575" y="270"/>
+
+  <!-- notes -->
+  <g font-size="12" fill="#333">
+    <text x="20" y="350">Yellow jumper on I2C, green on 3V3, both before plugging in USB. Four wires: SDA, SCL, GND, VCC (3.3V).</text>
+    <text x="20" y="370">TXD and RXD stay free in I2C mode. AD0, INT, XDA, XCL stay free: AD0 low on the GY-521 makes the address 0x68.</text>
+  </g>
+</svg>

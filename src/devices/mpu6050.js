@@ -12,8 +12,11 @@ const MEASURE_BYTES = 14;
 const PWR_AWAKE = 0x00; // the internal 8 MHz oscillator, not asleep
 const PWR_SLEEP = 0x40;
 const SAMPLE_DIV = 0x0f; // sample rate: 1 kHz / (1 + 15) = 62.5 Hz with the DLPF on
-const SAMPLE_PERIOD_MS = 16; // 1 / 62.5 Hz
-const GYRO_STARTUP_MS = 30; // gyro start-up time, typical (PS-MPU-6000A rev 3.4, 6.1)
+// woken from sleep, the gyro's readings settle well after its 30 ms typical
+// start-up (PS-MPU-6000A rev 3.4, 6.1). Through the 20 Hz filter, on r8845's
+// GY-521, within 0.5 deg/s of rest: 80 ms after the wake-up when it slept
+// 10 ms or more, 110 ms when woken within 5 ms of going to sleep (the worst)
+const GYRO_SETTLE_MS = 150;
 const DLPF_20HZ = 0x04; // CONFIG's DLPF_CFG: accel 21 Hz, gyro 20 Hz
 const FS_SEL_SHIFT = 3; // GYRO_CONFIG's FS_SEL and ACCEL_CONFIG's AFS_SEL, bits 3-4
 const GYRO_LSB_250 = 131; // LSB per deg/s at +/-250, halved per range up
@@ -66,8 +69,9 @@ class Mpu6050 {
     await this.bus.write(this.address, [REG_PWR_MGMT_1, PWR_AWAKE]);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, SAMPLE_DIV, DLPF_20HZ, gfs << FS_SEL_SHIFT, afs << FS_SEL_SHIFT]);
     // the data registers keep the sample taken before (asleep, or at the old
-    // scale) until the next one: wait for a sample at the new settings
-    await delay(GYRO_STARTUP_MS + SAMPLE_PERIOD_MS);
+    // scale) until the next one, and a gyro just woken reads off until it
+    // settles: wait for settled samples at the new settings
+    await delay(GYRO_SETTLE_MS);
   }
 
   async measure() {

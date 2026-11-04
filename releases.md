@@ -1,5 +1,20 @@
 # Releases
 
+## 1.0.4
+
+- [docs/setup.md](docs/setup.md): the bench, step by step (jumpers, wiring,
+  udev, tests, a first read), with a Fritzing-style drawing
+  (`docs/setup.svg`): the common CH341T 2-in-1 dongle (yellow jumper I2C/TTL,
+  green 3V3/5V) on I2C and 3V3, four wires to a GY-521.
+- MPU-6050: `init()` waits for the gyro to settle (150 ms), not its typical
+  start-up (30 ms + a sample, 46 ms). Found running the doc's example: right
+  after a wake-up the gyro read up to 100 deg/s off. Measured on r8845:
+  within 0.5 deg/s 80 ms after the wake-up, 110 ms when woken within 5 ms of
+  going to sleep. Board test first: a gyro reading right after `init()` from
+  sleep agrees within 1 deg/s with one 300 ms later (red 3 of 3 before, green
+  5 of 5 after; 100 ms still failed on z).
+- Host 14 of 14, board 9 of 9.
+
 ## 1.0.3
 
 - MPU-6050, the first driver (`src/devices/mpu6050.js`, `import { Mpu6050 }
