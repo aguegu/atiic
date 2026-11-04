@@ -1,9 +1,10 @@
 {
   "name": "atiic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "JavaScript drivers for I2C devices, adapter-free; WCH's CH341 as the USB-to-I2C adapter, in Node and over WebUSB",
   "type": "module",
   "exports": {
+    ".": "./src/index.js",
     "./adapters/ch341": "./src/adapters/ch341/index.js",
     "./adapters/ch341/node": "./src/adapters/ch341/node.js"
   },
