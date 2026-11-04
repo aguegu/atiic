@@ -66,12 +66,15 @@ with AD0 tied to VCC).
    npm install
    npm test              # the host tests, no hardware
    npm run test:board    # the CH341 and the MPU-6050 on this bench
+   npm run test:advanced # measurements: how much data the MPU-6050 gives (about 20 s)
    ```
 
    `test:board` scans the bus and expects the MPU-6050 at 0x68 and nothing
    else, reads it at rest (about 1 g, at any tilt; a gyro already settled
-   right after `init()`) and runs its FIFO at 1 kHz for 300 ms. Keep the
-   module still while it runs.
+   right after `init()`) and runs its FIFO at 1 kHz for 300 ms.
+   `test:advanced` measures what the bus takes off the MPU-6050, polling and
+   by its FIFO from 1 to 8 kHz, prints the table and holds the limits seen.
+   Keep the module still while they run.
 
 ## A first read
 

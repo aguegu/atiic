@@ -1,5 +1,14 @@
 # Releases
 
+## 1.0.5
+
+- `npm run test:advanced` (`test/advanced/`): measurements as tests, the
+  benchmarks from the tryout. MPU-6050 at 400 kHz, 2 s a row, a table
+  printed: polling ~1600 reads/s keeps up at 62.5 Hz and misses ~1.5 % at
+  1 kHz (988-992 new samples/s of the chip's 1007); the FIFO loses no frame
+  up to gyro alone at 4 kHz; gyro at 8 kHz overflows (~28 KiB/s through).
+  7 of 7, three runs.
+
 ## 1.0.4
 
 - [docs/setup.md](docs/setup.md): the bench, step by step (jumpers, wiring,
