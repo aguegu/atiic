@@ -9,3 +9,7 @@ testing device drivers and for web apps that chart their readings, such as
 and its drivers end at [0.5.1](https://github.com/aguegu/atiic/tree/0.5.1).
 
 Releases: [releases.md](releases.md).
+
+## License
+
+MIT ([LICENSE](LICENSE)), from 1.0.1. Up to 0.5.1 it was MPL-2.0.

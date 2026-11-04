@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.1
+
+- MIT license (0.5.1 and before: MPL-2.0).
+
 ## 1.0.0
 
 - Started over from an empty tree: the CH341 in I2C mode replaces the STC8H
