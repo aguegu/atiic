@@ -8,7 +8,7 @@ testing device drivers and for web apps that chart their readings, such as
 1.0.0 starts over from an empty tree. The STC8H Atiic serial-to-I2C bridge
 and its drivers end at [0.5.1](https://github.com/aguegu/atiic/tree/0.5.1).
 
-Releases: [releases.md](releases.md).
+The adapter: [docs/ch341.md](docs/ch341.md). Releases: [releases.md](releases.md).
 
 ## License
 
