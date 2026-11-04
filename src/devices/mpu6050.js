@@ -7,28 +7,19 @@ const REG_SMPLRT_DIV = 0x19; // then CONFIG, GYRO_CONFIG, ACCEL_CONFIG
 const REG_ACCEL_XOUT_H = 0x3b; // accel x y z, temp, gyro x y z: 14 bytes, big-endian
 const REG_PWR_MGMT_1 = 0x6b;
 const REG_WHO_AM_I = 0x75;
-const WHO_AM_I = 0x68; // whatever AD0 is
 const MEASURE_BYTES = 14;
 const PWR_AWAKE = 0x00; // the internal 8 MHz oscillator, not asleep
 const PWR_SLEEP = 0x40;
 const SAMPLE_DIV = 0x0f; // sample rate: 1 kHz / (1 + 15) = 62.5 Hz with the DLPF on
-// woken from sleep, the gyro's readings settle well after its 30 ms typical
-// start-up (PS-MPU-6000A rev 3.4, 6.1). Through the 20 Hz filter, on r8845's
-// GY-521, within 0.5 deg/s of rest: 80 ms after the wake-up when it slept
-// 10 ms or more, 110 ms when woken within 5 ms of going to sleep (the worst)
-const GYRO_SETTLE_MS = 150;
 const DLPF_20HZ = 0x04; // CONFIG's DLPF_CFG: accel 21 Hz, gyro 20 Hz
 const FS_SEL_SHIFT = 3; // GYRO_CONFIG's FS_SEL and ACCEL_CONFIG's AFS_SEL, bits 3-4
 const GYRO_LSB_250 = 131; // LSB per deg/s at +/-250, halved per range up
 const ACCEL_LSB_2G = 16384; // LSB per g at +/-2 g, halved per range up
-const TEMP_LSB = 340; // LSB per degree C
-const TEMP_OFFSET = 36.53; // degrees C at a reading of 0
 // the FIFO: samples queued in register order (accel, temp, gyro), read in blocks
 const REG_FIFO_EN = 0x23;
 const REG_USER_CTRL = 0x6a;
 const REG_FIFO_COUNT_H = 0x72; // then FIFO_COUNT_L, big-endian
 const REG_FIFO_R_W = 0x74; // a burst read here pops the FIFO
-const FIFO_SIZE = 1024; // bytes; full, it overwrites its oldest: frames lost, the rest misaligned
 const FIFO_EN_TEMP = 0x80;
 const FIFO_EN_GYRO = 0x70; // XG, YG, ZG
 const FIFO_EN_ACCEL = 0x08;
@@ -42,6 +33,28 @@ const AXES = ['x', 'y', 'z'];
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 class Mpu6050 {
+  // what differs between the chips of the family (Mpu6500 has its own)
+  static chip = {
+    name: 'MPU-6050',
+    whoAmI: 0x68, // whatever AD0 is
+    tempLsb: 340, // LSB per degree C
+    tempOffset: 36.53, // degrees C at a reading of 0
+    fifoSize: 1024, // bytes; full, it overwrites its oldest: frames lost, the rest misaligned
+    // woken from sleep, the gyro's readings settle well after its 30 ms
+    // typical start-up (PS-MPU-6000A rev 3.4, 6.1). Through the 20 Hz
+    // filter, on r8845's GY-521, within 0.5 deg/s of rest: 80 ms after the
+    // wake-up when it slept 10 ms or more, 110 ms when woken within 5 ms of
+    // going to sleep (the worst)
+    settleMs: 150,
+    dividerWithFilterOff: true, // SMPLRT_DIV divides the gyro's 8 kHz too
+  };
+
+  // the config written after SMPLRT_DIV, in one burst: CONFIG, GYRO_CONFIG,
+  // ACCEL_CONFIG (and on the MPU-6500, ACCEL_CONFIG2 after them)
+  configBytes(gfs, afs) {
+    return [DLPF_20HZ, gfs << FS_SEL_SHIFT, afs << FS_SEL_SHIFT];
+  }
+
   constructor(bus, address = 0x68) {
     this.bus = bus;
     this.address = address;
@@ -59,19 +72,20 @@ class Mpu6050 {
     }
 
     const [who] = await this.bus.writeRead(this.address, [REG_WHO_AM_I], 1);
-    if (who !== WHO_AM_I) {
-      throw new Error(`WHO_AM_I 0x${who.toString(16)}, not an MPU-6050`);
+    const { chip } = this.constructor;
+    if (who !== chip.whoAmI) {
+      throw new Error(`WHO_AM_I 0x${who.toString(16)}, not an ${chip.name}`);
     }
 
     this.gyroscopeSensitivity = GYRO_LSB_250 / (1 << gfs);
     this.accelerometerSensitivity = ACCEL_LSB_2G >> afs;
 
     await this.bus.write(this.address, [REG_PWR_MGMT_1, PWR_AWAKE]);
-    await this.bus.write(this.address, [REG_SMPLRT_DIV, SAMPLE_DIV, DLPF_20HZ, gfs << FS_SEL_SHIFT, afs << FS_SEL_SHIFT]);
+    await this.bus.write(this.address, [REG_SMPLRT_DIV, SAMPLE_DIV, ...this.configBytes(gfs, afs)]);
     // the data registers keep the sample taken before (asleep, or at the old
     // scale) until the next one, and a gyro just woken reads off until it
     // settles: wait for settled samples at the new settings
-    await delay(GYRO_SETTLE_MS);
+    await delay(chip.settleMs);
   }
 
   async measure() {
@@ -83,7 +97,7 @@ class Mpu6050 {
         y: v.getInt16(2) / this.accelerometerSensitivity,
         z: v.getInt16(4) / this.accelerometerSensitivity,
       },
-      temperature: v.getInt16(6) / TEMP_LSB + TEMP_OFFSET,
+      temperature: this.temperature(v.getInt16(6)),
       gyroscopes: {
         x: v.getInt16(8) / this.gyroscopeSensitivity,
         y: v.getInt16(10) / this.gyroscopeSensitivity,
@@ -101,6 +115,10 @@ class Mpu6050 {
     this.fifo = { accelerometers, temperature, gyroscopes };
     this.fifoFrame = (accelerometers ? 6 : 0) + (temperature ? 2 : 0) + (gyroscopes ? 6 : 0);
     if (!this.fifoFrame) throw new Error('nothing to queue');
+    const { chip } = this.constructor;
+    if (!filter && divider && !chip.dividerWithFilterOff) {
+      throw new Error(`the ${chip.name} ignores SMPLRT_DIV with the filter off: 8 kHz only`);
+    }
     this.sampleRate = (filter ? GYRO_RATE_DLPF_ON : GYRO_RATE_DLPF_OFF) / (1 + divider);
     const enable = (accelerometers ? FIFO_EN_ACCEL : 0) | (temperature ? FIFO_EN_TEMP : 0) | (gyroscopes ? FIFO_EN_GYRO : 0);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, divider, filter ? DLPF_20HZ : DLPF_OFF]);
@@ -118,9 +136,9 @@ class Mpu6050 {
   async readFifo() {
     const [h, l] = await this.bus.writeRead(this.address, [REG_FIFO_COUNT_H], 2);
     const count = (h << 8) | l;
-    if (count >= FIFO_SIZE) {
+    if (count >= this.constructor.chip.fifoSize) {
       await this.resetFifo();
-      throw new Error('MPU-6050 FIFO overflowed: samples lost');
+      throw new Error(`${this.constructor.chip.name} FIFO overflowed: samples lost`);
     }
     const n = count - (count % this.fifoFrame);
     if (!n) return [];
@@ -132,7 +150,7 @@ class Mpu6050 {
       let k = o;
       const triple = (sensitivity) => Object.fromEntries(AXES.map((a, i) => [a, v.getInt16(k + 2 * i) / sensitivity]));
       if (this.fifo.accelerometers) { sample.accelerometers = triple(this.accelerometerSensitivity); k += 6; }
-      if (this.fifo.temperature) { sample.temperature = v.getInt16(k) / TEMP_LSB + TEMP_OFFSET; k += 2; }
+      if (this.fifo.temperature) { sample.temperature = this.temperature(v.getInt16(k)); k += 2; }
       if (this.fifo.gyroscopes) { sample.gyroscopes = triple(this.gyroscopeSensitivity); }
       samples.push(sample);
     }
@@ -143,6 +161,12 @@ class Mpu6050 {
     await this.bus.write(this.address, [REG_USER_CTRL, 0]);
     await this.bus.write(this.address, [REG_FIFO_EN, 0]);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, SAMPLE_DIV, DLPF_20HZ]);
+  }
+
+  // a raw temperature reading in degrees C
+  temperature(raw) {
+    const { chip } = this.constructor;
+    return raw / chip.tempLsb + chip.tempOffset;
   }
 
   async sleep() {

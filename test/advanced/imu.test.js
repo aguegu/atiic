@@ -1,4 +1,4 @@
-// The MPU-6050 pushed: how much data a CH341 at 400 kHz takes off it, by
+// The MPU-6050 and MPU-6500 pushed (whichever is on the bench): how much data a CH341 at 400 kHz takes off it, by
 // polling its data registers and by its FIFO. Measurements more than smoke
 // tests; each prints its table (node --test's diagnostics) and holds what the
 // bench showed (1.0.3 on r8845):
@@ -11,7 +11,8 @@
 // Keep the module still; each row runs ROW_MS.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { Mpu6050 } from '../../src/index.js';
+import { Mpu6050, Mpu6500 } from '../../src/index.js';
+import { onlyWith } from '../board/bench.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 
 const SCL_HZ = 400000;
@@ -25,11 +26,11 @@ const POLL_MISS_MAX = 0.05; // polling at 1 kHz: ~1.5 % missed seen
 
 const within = (got, want) => Math.abs(got - want) <= want * RATE_TOLERANCE;
 
-describe('mpu6050 (advanced)', () => {
+for (const Driver of [Mpu6050, Mpu6500]) describe(`${Driver.chip.name} (advanced)`, onlyWith(Driver), () => {
   let bus, mpu;
   before(async () => {
     bus = await openCh341(SCL_HZ);
-    mpu = new Mpu6050(bus);
+    mpu = new Driver(bus);
     await mpu.init();
   });
 
@@ -75,7 +76,9 @@ describe('mpu6050 (advanced)', () => {
   ];
 
   for (const row of ROWS) {
-    it(`FIFO ${row.label}: ${row.fits ? 'every frame through' : 'overflows, past the bus'}`, async (t) => {
+    const unsupported = !row.filter && row.divider && !Driver.chip.dividerWithFilterOff;
+    const skip = unsupported ? `the ${Driver.chip.name} ignores SMPLRT_DIV with the filter off: 8 kHz only` : false;
+    it(`FIFO ${row.label}: ${row.fits ? 'every frame through' : 'overflows, past the bus'}`, { skip }, async (t) => {
       await mpu.startFifo(row);
       let frames = 0, reads = 0, overflows = 0;
       const t0 = performance.now();

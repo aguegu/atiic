@@ -65,16 +65,26 @@ with AD0 tied to VCC).
    ```
    npm install
    npm test              # the host tests, no hardware
-   npm run test:board    # the CH341 and the MPU-6050 on this bench
-   npm run test:advanced # measurements: how much data the MPU-6050 gives (about 20 s)
+   npm run test:board    # the CH341 and the IMU on this bench
+   npm run test:advanced # measurements: how much data the IMU gives (about 20 s)
    ```
 
-   `test:board` scans the bus and expects the MPU-6050 at 0x68 and nothing
+   `test:board` scans the bus and expects the IMU at 0x68 and nothing
    else, reads it at rest (about 1 g, at any tilt; a gyro already settled
    right after `init()`) and runs its FIFO at 1 kHz for 300 ms.
-   `test:advanced` measures what the bus takes off the MPU-6050, polling and
+   `test:advanced` measures what the bus takes off the IMU, polling and
    by its FIFO from 1 to 8 kHz, prints the table and holds the limits seen.
    Keep the module still while they run.
+
+## Another IMU: the MPU-6500
+
+The tests read WHO_AM_I at 0x68 before they start and run the tests of the
+chip they find, skipping the other's with the reason (`no MPU-6050 on the
+bench (0x68: WHO_AM_I 0x70)`). The other chip so far: a board sold as
+GY-9250, which carries an MPU-6500 (WHO_AM_I 0x70), not the MPU-9250 (0x71)
+the name says: nothing answers at 0x0C, where an MPU-9250's magnetometer
+would, even with the bypass on. Wired the same: its VCC, GND, SCL and SDA to
+the dongle's.
 
 ## A first read
 

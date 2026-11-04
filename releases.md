@@ -1,5 +1,28 @@
 # Releases
 
+## 1.0.6
+
+- MPU-6500 (`src/devices/mpu6500.js`, `import { Mpu6500 } from 'atiic'`), on
+  r8845's "GY-9250", which carries one (WHO_AM_I 0x70; no magnetometer at
+  0x0C, so no MPU-9250). The MPU-6050's driver with its chip facts in one
+  place (`static chip`) and the MPU-6500's own: WHO_AM_I 0x70, the
+  temperature raw / 333.87 + 21, the FIFO 512 bytes, the accel filter at
+  ACCEL_CONFIG2 in the same burst (facts as Linux's inv_mpu6050 driver has
+  them; TDK's PDFs no longer download).
+- Measured on the board: the gyro settled within 0.5 deg/s by 66 ms after
+  `init()` at worst (24 wake-ups; the MPU-6050 needed 110), so a 100 ms wait.
+  And with the gyro's filter off the MPU-6500 samples at 8 kHz whatever
+  SMPLRT_DIV says (2, 2.67 and 4 kHz each filled at ~4400 frames/s and
+  overflowed): `startFifo` refuses a divider with the filter off on it,
+  test first (red, then green).
+- Board and advanced tests read WHO_AM_I at 0x68 first and run that chip's,
+  the other's skipped with the reason; the advanced FIFO rows a chip can't
+  run skipped too. `test/advanced/imu.test.js` (was mpu6050). The fake chip
+  shared (`test/host/fake-mpu.js`).
+- Host 20 of 20; board 9 of 9 three runs (the MPU-6050's skipped); advanced
+  4 of 4 with 3 skipped. On the GY-9250 the chip's clock runs a little slow:
+  991-995 frames/s for 1000 (the GY-521's ran fast, 1006-1007).
+
 ## 1.0.5
 
 - `npm run test:advanced` (`test/advanced/`): measurements as tests, the
