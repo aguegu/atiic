@@ -63,7 +63,6 @@ const OPMODE_NORMAL_10HZ = 0x00; // opmode 00 normal, data rate 000: 10 Hz (Tabl
 // BMX055's datasheet is followed here
 const REPXY_REGULAR = 0x04;
 const REPZ_REGULAR = 0x0e;
-const SAMPLE_PERIOD_MS = 100; // 10 Hz
 // raw values that mean the axis overflowed (the API's OVERFLOW_ADCVAL_*)
 const OVERFLOW_XY = -4096;
 const OVERFLOW_Z = -16384;
@@ -122,9 +121,12 @@ class Bmx055Mag {
     // what to write, and how long to wait, before reading it
     idWake: [REG_POWER, POWER_ON],
     idWakeMs: STARTUP_MS,
-    // after normal mode, before the first field reading: two samples at
-    // 10 Hz; to measure on the board
-    settleMs: 2 * SAMPLE_PERIOD_MS,
+    // after normal mode, before the first field reading. A measurement takes
+    // 145 us x nXY + 500 us x nZ + 980 us (the datasheet's fmax,ODR): 9.8 ms
+    // for the regular preset. On r8845's module (6 wake-ups, no wait): the
+    // reading at ~10 ms held none yet (Hall resistance 0: null), the next at
+    // ~20 ms was right, every time
+    settleMs: 50,
   };
 
   constructor(bus, address = 0x10) {
