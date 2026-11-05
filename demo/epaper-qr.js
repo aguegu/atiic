@@ -37,6 +37,37 @@ const scale = Math.floor(Math.min(w, h) / (n + 2 * QUIET_MODULES));
 if (scale < 1) throw new Error(`${n} modules don't fit ${w}x${h}`);
 const x0 = Math.floor((w - n * scale) / 2), y0 = Math.floor((h - n * scale) / 2);
 
+// the bytes a version holds at ECC (the library's own answer: the most "a"s
+// that make() takes)
+function capacity(version) {
+  const fits = (k) => {
+    try {
+      const q = qrcode(version, ECC);
+      q.addData('a'.repeat(k), 'Byte');
+      q.make();
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  let lo = 0, hi = 3000;
+  while (lo < hi) {
+    const m = (lo + hi + 1) >> 1;
+    if (fits(m)) lo = m;
+    else hi = m - 1;
+  }
+  return lo;
+}
+
+// the text just past a version that would draw bigger: say how much to cut
+// (twice a few bytes over dropped a code to 1 pixel a module)
+const version = (n - 17) / 4, bytes = Buffer.byteLength(TEXT, 'utf8');
+const smaller = Math.floor(Math.min(w, h) / (n - 4 + 2 * QUIET_MODULES));
+if (version > 1 && smaller > scale) {
+  const fits = capacity(version - 1);
+  console.warn(`warning: ${bytes} bytes need version ${version}, ${scale} px a module; version ${version - 1} holds ${fits} at ${ECC}: cut ${bytes - fits} bytes for ${smaller} px a module`);
+}
+
 const frame = blankFrame(w, h);
 for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
   if (!qr.isDark(r, c)) continue;
