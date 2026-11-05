@@ -3,6 +3,7 @@ import Mpu6500 from './devices/mpu6500.js';
 import Bmx055Accel from './devices/bmx055-accel.js';
 import Bmx055Gyro from './devices/bmx055-gyro.js';
 import Bmx055Mag from './devices/bmx055-mag.js';
+import St7735s from './devices/st7735s.js';
 
 export {
   Mpu6050,
@@ -10,4 +11,5 @@ export {
   Bmx055Accel,
   Bmx055Gyro,
   Bmx055Mag,
+  St7735s,
 };

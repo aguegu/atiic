@@ -107,3 +107,31 @@ export const UIO_MASK = 0x3f;
 export function uioPacket(levels, outputs) {
   return Uint8Array.of(CMD_UIO_STREAM, UIO_STM_OUT | (levels & UIO_MASK), UIO_STM_DIR | (outputs & UIO_MASK), UIO_STM_END);
 }
+
+// SPI: the CH341 clocks out the bytes after CMD_SPI_STREAM, up to 31 a
+// packet, and replies one byte for each (what MISO had). It shifts each byte
+// least significant bit first, so bytes go out and come back bit-reversed
+// to give the usual most-significant-first SPI (flashrom's reverse_byte).
+// SCK is D3 and MOSI D5 (outputs), MISO D7; a chip select is any of D0-D5,
+// driven by the UIO stream around the transfer
+export const CMD_SPI_STREAM = 0xa8;
+export const SPI_CHUNK = PACKET_SIZE - 1;
+export const SPI_SCK = 'D3';
+export const SPI_MOSI = 'D5';
+
+export const reverseBits = (b) => {
+  let r = 0;
+  for (let i = 0; i < 8; i++) r |= ((b >> i) & 1) << (7 - i);
+  return r;
+};
+
+// the bytes as SPI stream packets, each the command and up to 31 bytes; all
+// but the last exactly PACKET_SIZE, so several can go in one USB transfer
+export function spiPackets(bytes) {
+  const out = [];
+  for (let i = 0; i < bytes.length; i += SPI_CHUNK) {
+    const part = Array.from(bytes.slice(i, i + SPI_CHUNK), reverseBits);
+    out.push(Uint8Array.of(CMD_SPI_STREAM, ...part));
+  }
+  return out;
+}

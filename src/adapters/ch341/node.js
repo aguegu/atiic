@@ -18,6 +18,10 @@ export async function openCh341(speed = 100000) {
       // none bound: nothing to detach
     }
   }
+  // a USB reset: an earlier run cut short can leave the CH341 holding
+  // replies nobody read, and then it takes no command at all (r8845: every
+  // open "Cancelled" until reset)
+  await device.reset();
   return new Ch341(device).open(speed);
 }
 

@@ -3,7 +3,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   PACKET_SIZE, CMD_I2C_STREAM, STM_STA, STM_STO, STM_OUT, STM_IN, STM_END,
-  speedPacket, transaction, packets, uioPacket,
+  speedPacket, transaction, packets, uioPacket, reverseBits, spiPackets,
 } from '../../src/adapters/ch341/protocol.js';
 import Ch341 from '../../src/adapters/ch341/index.js';
 
@@ -92,5 +92,47 @@ describe('ch341 pins', () => {
       [0xab, 0x81, 0x44, 0x20], // D0 released (its level bit kept, no longer driven)
     ]);
     assert.throws(() => bus.pins({ D7: true }), /no such pin D7/);
+  });
+});
+
+describe('ch341 spi', () => {
+  it('bytes go out bit-reversed (the CH341 shifts least significant first), 31 a packet', () => {
+    assert.equal(reverseBits(0x01), 0x80);
+    assert.equal(reverseBits(0x2c), 0x34);
+    const ps = spiPackets(Array.from({ length: 40 }, (_, i) => i));
+    assert.equal(ps.length, 2);
+    assert.equal(ps[0].length, 32); // the command and 31: whole, so packets can go in one transfer
+    assert.equal(ps[0][0], 0xa8);
+    assert.equal(ps[0][2], reverseBits(1));
+    assert.equal(ps[1].length, 1 + 9);
+  });
+
+  it('Ch341.spi(): SCK and MOSI made outputs once, packets grouped, replies read back un-reversed', async () => {
+    const outs = [];
+    let pending = [];
+    const device = {
+      transferOut: async (ep, data) => {
+        outs.push(Array.from(data));
+        // the fake chip answers each SPI packet's bytes with themselves (MISO wired to MOSI)
+        for (let i = 0; i < data.length; i += 32) {
+          const p = data.slice(i, i + 32);
+          if (p[0] === 0xa8) pending.push(...p.slice(1));
+        }
+        return { status: 'ok', bytesWritten: data.length };
+      },
+      transferIn: async () => {
+        await new Promise((r) => setTimeout(r, 1)); // the replies come after the packets
+        const d = Uint8Array.from(pending.splice(0, 31));
+        return { status: 'ok', data: new DataView(d.buffer) };
+      },
+    };
+    const bus = new Ch341(device);
+    const bytes = Array.from({ length: 600 }, (_, i) => i & 0xff);
+    const back = await bus.spi(bytes);
+    assert.deepEqual(Array.from(back), bytes);
+    assert.deepEqual(outs[0], [0xab, 0x80, 0x68, 0x20]); // UIO: D3 (SCK) low and D5 (MOSI) outputs
+    assert.equal(outs[1].length, 16 * 32); // 16 packets in one transfer
+    await bus.spi([1]);
+    assert.notDeepEqual(outs.at(-2).slice(0, 1), [0xab]); // not again
   });
 });

@@ -16,7 +16,7 @@ import { PS, addressOf } from './bench.js';
 
 const CHIPS = [Bmx055Accel, Bmx055Gyro, Bmx055Mag];
 
-describe('ch341 pins (board)', { skip: PS ? false : 'no BENCH_PS: no CH341 line wired to a PS pin' }, () => {
+describe('ch341 pins (board)', { skip: PS && addressOf(Bmx055Accel) !== null ? false : 'no BENCH_PS, or no BMX055 found with it' }, () => {
   let bus;
   before(async () => {
     bus = await openCh341();

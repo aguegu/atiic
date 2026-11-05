@@ -6,16 +6,20 @@
 //   read(address, n)               -> Uint8Array
 //   writeRead(address, bytes, n)   -> Uint8Array, a repeated start between
 //   pins({ D0: true })             D0-D5 driven high or low, or released (null)
+//   spi(bytes)                     -> Uint8Array: SPI, as many bytes back (chip
+//                                     selects and other lines by pins())
 // A device that doesn't ack its address throws; data bytes written aren't
 // checked (the CH341 replies an ack only for bytes sent alone).
 import {
   VENDOR_ID, PRODUCT_ID, INTERFACE, ENDPOINT, PACKET_SIZE, ACK_NACKED,
   speedPacket, stopPacket, transaction, packets, uioPacket, UIO_PINS,
+  spiPackets, reverseBits, SPI_SCK, SPI_MOSI,
 } from './protocol.js';
 
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
 export const SCAN_FIRST = 0x08; // 0x00-0x07 and 0x78-0x7f are reserved
 export const SCAN_LAST = 0x77;
+const SPI_GROUP = 16; // SPI packets a USB transfer: 512 bytes out, their 496 replies in
 
 const hex = (a) => `0x${a.toString(16).padStart(2, '0')}`;
 
@@ -51,7 +55,8 @@ class Ch341 {
   async in(n) {
     const got = [];
     while (got.length < n) {
-      const r = await this.device.transferIn(ENDPOINT, PACKET_SIZE);
+      // as many whole packets as are still to come, in one request
+      const r = await this.device.transferIn(ENDPOINT, Math.ceil((n - got.length) / PACKET_SIZE) * PACKET_SIZE);
       if (r.status !== 'ok') throw new Error(`CH341 read: ${r.status}`);
       got.push(...new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength));
     }
@@ -119,6 +124,40 @@ class Ch341 {
     }
     const data = uioPacket(this.levels, this.outputs);
     const job = this.queue.then(() => this.out(data));
+    this.queue = job.catch(() => {});
+    return job;
+  }
+
+  // SPI, full duplex: the bytes clocked out on MOSI (D5) with SCK (D3), as
+  // many read from MISO (D7) and returned. No chip select: drive it with
+  // pins() around this. SCK and MOSI made outputs on the first call (SCK
+  // idling low). Packets go out SPI_GROUP at a time in one USB transfer, so
+  // a long transfer isn't a round trip a packet (r8845: 25,600 bytes in
+  // 230 ms, about 110 KB/s)
+  spi(bytes) {
+    const all = spiPackets(bytes);
+    const job = this.queue.then(async () => {
+      const sck = 1 << UIO_PINS.indexOf(SPI_SCK), mosi = 1 << UIO_PINS.indexOf(SPI_MOSI);
+      if ((this.outputs & (sck | mosi)) !== (sck | mosi)) {
+        this.outputs |= sck | mosi;
+        this.levels &= ~sck;
+        await this.out(uioPacket(this.levels, this.outputs));
+      }
+      const got = [];
+      for (let g = 0; g < all.length; g += SPI_GROUP) {
+        const group = all.slice(g, g + SPI_GROUP);
+        const data = new Uint8Array(group.reduce((n, p) => n + p.length, 0));
+        let o = 0;
+        for (const p of group) { data.set(p, o); o += p.length; }
+        // the replies collected while the packets go out: the CH341 stops
+        // taking packets once its replies aren't read (flashrom keeps reads
+        // waiting too); one after the other, a 1000-byte transfer was cancelled
+        const replies = this.in(group.reduce((n, p) => n + p.length - 1, 0));
+        await this.out(data);
+        got.push(...await replies);
+      }
+      return Uint8Array.from(got, reverseBits);
+    });
     this.queue = job.catch(() => {});
     return job;
   }
