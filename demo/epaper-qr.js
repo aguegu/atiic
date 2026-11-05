@@ -1,5 +1,6 @@
-// A QR code on the SSD1680 e-paper (r8845's 1.54" 152x152, the CH341A, BUSY
-// on D4): the text from the command line (https://i2c.ninja by default),
+// A QR code on an e-paper on the CH341A, BUSY on D4: the SSD1681 (r8845's
+// 1.54" 200x200) when .env.local has BENCH_SSD1681, else the SSD1680 (its
+// 1.54" 152x152, BENCH_SSD1680 or the defaults): the text from the command line (https://i2c.ninja by default),
 // the smallest QR version that holds it at error correction M, each module
 // as many pixels as fit (no quiet zone unless given), centred.
 // Shown by a full update, then the panel asleep: e-paper keeps it with the
@@ -9,7 +10,7 @@
 //
 // qrcode-generator (MIT, a dev dependency) encodes; atiic draws.
 import qrcode from 'qrcode-generator';
-import { Ssd1680 } from '../src/index.js';
+import { Ssd1680, Ssd1681 } from '../src/index.js';
 import { blankFrame, plot } from '../src/devices/ssd1680.js';
 import { openCh341 } from '../src/adapters/ch341/node.js';
 
@@ -21,11 +22,11 @@ const ECC = 'M';
 // none by default: the biggest code. 2 gave 5-pixel modules, 125 pixels
 const QUIET_MODULES = Number(process.argv[3] ?? 0);
 
-const lines = process.env.BENCH_SSD1680
-  ? Object.fromEntries(process.env.BENCH_SSD1680.split(',').map((kv) => kv.trim().split('=')))
-  : {};
+const setting = process.env.BENCH_SSD1681 ?? process.env.BENCH_SSD1680;
+const lines = setting ? Object.fromEntries(setting.split(',').map((kv) => kv.trim().split('='))) : {};
+const Epd = process.env.BENCH_SSD1681 ? Ssd1681 : Ssd1680;
 const bus = await openCh341();
-const epd = new Ssd1680(bus, lines);
+const epd = new Epd(bus, lines);
 const { width: w, height: h } = epd;
 
 const qr = qrcode(0, ECC); // 0: the smallest version that holds it
@@ -46,4 +47,4 @@ await epd.init();
 const ms = await epd.show(frame);
 await epd.sleep();
 await bus.close();
-console.log(`"${TEXT}": QR version ${(n - 17) / 4}-${ECC}, ${n} modules, ${scale} px each (${n * scale} px, ${((n * scale * 27.7) / w).toFixed(1)} mm est.), shown in ${ms} ms; asleep: unplug it and it stays`);
+console.log(`${Epd.name} ${w}x${h}, "${TEXT}": QR version ${(n - 17) / 4}-${ECC}, ${n} modules, ${scale} px each (${n * scale} px, ${((n * scale * 27.7) / w).toFixed(1)} mm est.), shown in ${ms} ms; asleep: unplug it and it stays`);
