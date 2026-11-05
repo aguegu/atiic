@@ -230,6 +230,27 @@ a card that labels itself: thirds in 12, 16 and 18 bits.
 D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
 two moves to another line.
 
+## An e-paper display: an SSD1680
+
+A 1.54" 152x152 black/white e-paper module on an SSD1680, wired as the
+displays above (RES D0, DC D1, CS D2, SCK, MOSI, VCC, GND), and its BUSY on
+D4: the panel holds it high while it works, and atiic reads it
+(`readPins()`, the CH341's status read). On r8845 `.env.local` has
+`BENCH_SSD1680=res=D0,dc=D1,cs=D2,busy=D4`.
+
+```js
+const epd = new Ssd1680(bus); // 152x152, BUSY on D4
+await epd.init();
+const frame = blankFrame(152, 152); // a bit a pixel, all white
+plot(frame, 152, 10, 10); // black
+const ms = await epd.show(frame); // a full update: BUSY high ~2.1 s
+await epd.sleep();
+```
+
+A full update flashes the panel and takes 2.10 s of BUSY on r8845's module
+(plus about 58 ms to send the RAM). The board test leaves a card that
+labels itself with that time.
+
 ## A first read
 
 ```js

@@ -1,5 +1,20 @@
 # Releases
 
+## 1.2.1
+
+- `Ssd1680`: Solomon Systech's SSD1680 e-paper controller, on r8845's
+  1.54" 152x152 black/white module (the displays' wiring, BUSY on D4).
+  The datasheet's operation flow (Rev 1.4, 9.1); `show(frame)` writes the
+  RAM and runs a full update, returning BUSY's high time: 2,101-2,106 ms on
+  the module, plus ~58 ms of RAM over the CH341. Frames a bit a pixel,
+  `blankFrame()`, `plot()`. The RAM window at 0, 0 showed whole, the
+  orientation as drawn, first try.
+- `Ch341.readPins()`: D0-D7's levels by the status read (0xA0).
+  `docs/ch341.md`: no longer claims a pull-up on a released D0-D5 (DS1
+  lists them for D6 and D7 only).
+- Host tests (63 in all); the board test leaves a card labelled with its
+  first update's time.
+
 ## 1.2.0
 
 1.1.x closed (1.1.0-1.1.5): SPI on the CH341 and three display drivers on

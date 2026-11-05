@@ -11,7 +11,8 @@
 // F7h, 20h), BUSY high until it's done. RAM is a bit a pixel, 1 white, the
 // leftmost pixel in a byte's MSB; X addresses count bytes. On r8845's module
 // the RAM window at 0, 0 shows whole, its top-left at the panel's, and a
-// full update keeps BUSY high about 2.1 s.
+// full update keeps BUSY high 2.10 s (2,101-2,106 ms), after about 58 ms of
+// sending the two RAMs over the CH341.
 
 const SWRESET = 0x12;
 const DRIVER_OUTPUT = 0x01;
