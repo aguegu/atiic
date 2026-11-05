@@ -1,5 +1,17 @@
 # Releases
 
+## 1.3.15
+
+- `Ina231`: TI's current and power monitor at 0x40-0x4F, from its datasheet
+  (SBOS644D): reset, the continuous configuration written (so an INA231B
+  runs too), the calibration by Equation 1 (the datasheet's 2 mohm / 1 mA
+  example as a host test: 2560, 10 A, 119.8 W), shunt voltage and current
+  signed. pre-1.0's defaults: 0.1 ohm (r8845's R100), 0.1 mA a count; its
+  reads were unsigned. On r8845: 4.843 V, 13.0 mA, 62.5 mW; the chip's
+  current agrees with shunt voltage over 0.1 ohm. Its FEh/FFh read the
+  INA226's IDs (0x5449, 0x2260; SBOS547C), the bench's way to know it.
+- Host tests (113 in all), a board test.
+
 ## 1.3.14
 
 - `Aht21`: Aosong's AHT21B at 0x38, from its datasheet (V1.0, May 2021):

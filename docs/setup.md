@@ -479,6 +479,22 @@ Tried and set aside: Aosong's AGS10 (a TVOC sensor) wants I2C at 15 kHz or
 under and a 3.0 V supply (± 0.1 V); the CH341 goes no slower than 20 kHz,
 and the dongle's 3.3 V is over. It didn't answer.
 
+## Current and power: the INA231
+
+An INA231 module (its shunt marked R100: 0.1 ohm) at 0x40, in series with a
+load: the shunt's voltage, the bus voltage, and from them current and power.
+
+```js
+const ina = new Ina231(bus); // 0x40, a 0.1 ohm shunt, 0.1 mA a count
+await ina.init(); // reset, continuous, its calibration (512)
+const { bus: v, current, power } = await ina.measure(); // V, A (signed), W
+```
+
+Pass `{ shunt, currentLsb }` for another shunt or scale: the calibration is
+the datasheet's Equation 1. On r8845: 4.843 V, 13.0 mA, 62.5 mW. Its ID
+registers (FEh, FFh) read the INA226's (0x5449, 0x2260), which the INA231's
+datasheet doesn't list: the same register map and scales either way.
+
 ## A first read
 
 ```js
