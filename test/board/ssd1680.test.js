@@ -20,6 +20,7 @@ const UPDATE_MAX_MS = 5000;
 const PARTIAL_MIN_MS = 300;
 const PARTIAL_MAX_MS = 1500;
 const PARTIAL_STEPS = 4;
+const SLEEP_MS = 3000;
 const LABEL_ROWS = 16;
 
 describe('SSD1680 (board)', { skip: SSD1680 ? false : 'no BENCH_SSD1680: no SSD1680 on the bench' }, () => {
@@ -52,6 +53,19 @@ describe('SSD1680 (board)', { skip: SSD1680 ? false : 'no BENCH_SSD1680: no SSD1
       partialMs = await epd.showPartial(f);
       assert.ok(partialMs > PARTIAL_MIN_MS && partialMs < PARTIAL_MAX_MS, `step ${n}: ${partialMs} ms`);
     }
+  });
+
+  it('sleeps (BUSY high) and wakes (BUSY low) to a partial update', async () => {
+    const { width: w } = epd;
+    await epd.sleep();
+    assert.equal((await bus.readPins())[epd.busy], true, 'BUSY high asleep');
+    await new Promise((r) => setTimeout(r, SLEEP_MS));
+    await epd.wake();
+    assert.equal((await bus.readPins())[epd.busy], false, 'BUSY low awake');
+    const f = blankFrame(w, epd.height);
+    for (let y = 64; y < 88; y++) for (let x = 8; x < 32; x++) plot(f, w, x, y);
+    const ms = await epd.showPartial(f); // the square back to the left: RAM 26h kept the last
+    assert.ok(ms > PARTIAL_MIN_MS && ms < PARTIAL_MAX_MS, `${ms} ms: not a partial update`);
   });
 
   it('leaves its card, labelled with a full and a partial update\'s ms', async () => {

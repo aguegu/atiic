@@ -87,15 +87,25 @@ class Ssd1680 {
 
   async init() {
     this.shown = false;
+    this.asleep = false;
+    await this.hardwareReset();
+    await this.command(SWRESET);
+    await delay(RESET_WAIT_MS);
+    await this.waitBusy();
+    await this.configure();
+  }
+
+  async hardwareReset() {
     await this.bus.pins({ [this.cs]: true, [this.dc]: true, [this.res]: true });
     await this.bus.pins({ [this.res]: false });
     await delay(RESET_LOW_MS);
     await this.bus.pins({ [this.res]: true });
     await delay(RESET_WAIT_MS);
     await this.waitBusy();
-    await this.command(SWRESET);
-    await delay(RESET_WAIT_MS);
-    await this.waitBusy();
+  }
+
+  // the panel's settings (a reset clears them, the RAM aside)
+  async configure() {
     const last = this.height - 1;
     await this.command(DRIVER_OUTPUT, [last & 0xff, last >> 8, 0x00]);
     await this.command(DATA_ENTRY, [DATA_ENTRY_XY_INC]);
@@ -136,9 +146,23 @@ class Ssd1680 {
     return ms;
   }
 
-  // deep sleep, the RAM kept: init() again to wake it
+  // deep sleep mode 1: 1-3 uA (the datasheet), the RAM kept, BUSY high
+  // until wake()
   async sleep() {
     await this.command(DEEP_SLEEP, [DEEP_SLEEP_KEEP_RAM]);
+    this.asleep = true;
+  }
+
+  // out of sleep(): a HW reset (the only way out, 10h's remark) and the
+  // settings again, no SWRESET. The RAM comes through, the last frame shown
+  // still in RAM 26h, so the next showPartial() is a partial update (on
+  // r8845's module: one right after a 3 s sleep moved a square cleanly).
+  // Not asleep by sleep() (power lost, say): init()
+  async wake() {
+    if (!this.asleep) return this.init();
+    await this.hardwareReset();
+    await this.configure();
+    this.asleep = false;
   }
 }
 

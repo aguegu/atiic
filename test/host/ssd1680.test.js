@@ -98,4 +98,30 @@ describe('ssd1680 (host)', () => {
     await new Ssd1680(bus).sleep();
     assert.deepEqual(commands(bus.log), [{ c: 0x10, data: [0x01] }]);
   });
+
+  it('wake after sleep: a HW reset, the settings, no SWRESET; the next showPartial partial', async () => {
+    const bus = new FakeBus();
+    const epd = new Ssd1680(bus);
+    await epd.init();
+    await epd.show(blankFrame(152, 152));
+    await epd.sleep();
+    bus.log.length = 0;
+    await epd.wake();
+    assert.deepEqual(bus.log.slice(0, 3).map((e) => e[1]), [{ D2: true, D1: true, D0: true }, { D0: false }, { D0: true }]);
+    const cs = commands(bus.log).map((c) => c.c);
+    assert.deepEqual(cs, [0x01, 0x11, 0x44, 0x45, 0x3c, 0x18]);
+    bus.log.length = 0;
+    await epd.showPartial(blankFrame(152, 152));
+    assert.deepEqual(commands(bus.log).find((c) => c.c === 0x22).data, [0xff]);
+  });
+
+  it('wake without a sleep(): init (SWRESET), the next showPartial a full update', async () => {
+    const bus = new FakeBus();
+    const epd = new Ssd1680(bus);
+    await epd.wake();
+    assert.ok(commands(bus.log).some((c) => c.c === 0x12));
+    bus.log.length = 0;
+    await epd.showPartial(blankFrame(152, 152));
+    assert.deepEqual(commands(bus.log).find((c) => c.c === 0x22).data, [0xf7]);
+  });
 });
