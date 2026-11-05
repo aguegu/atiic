@@ -3,8 +3,9 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   PACKET_SIZE, CMD_I2C_STREAM, STM_STA, STM_STO, STM_OUT, STM_IN, STM_END,
-  speedPacket, transaction, packets,
+  speedPacket, transaction, packets, uioPacket,
 } from '../../src/adapters/ch341/protocol.js';
+import Ch341 from '../../src/adapters/ch341/index.js';
 
 const hexOf = (p) => Array.from(p.data, (b) => b.toString(16).padStart(2, '0')).join(' ');
 
@@ -69,5 +70,27 @@ describe('ch341 protocol', () => {
       }
     }
     assert.deepEqual(written, bytes);
+  });
+});
+
+describe('ch341 pins', () => {
+  it('the UIO packet: levels and directions of D0-D5 (as flashrom drives them)', () => {
+    assert.deepEqual(Array.from(uioPacket(0x01, 0x01)), [0xab, 0x81, 0x41, 0x20]); // D0 high, an output
+    assert.deepEqual(Array.from(uioPacket(0x37, 0x3f)), [0xab, 0xb7, 0x7f, 0x20]); // flashrom's enable_pins
+    assert.deepEqual(Array.from(uioPacket(0xff, 0xff)), [0xab, 0xbf, 0x7f, 0x20]); // D6 and D7 can't be driven
+  });
+
+  it('Ch341.pins(): each call sends all six, remembering the lines not named', async () => {
+    const sent = [];
+    const bus = new Ch341({ transferOut: async (ep, data) => { sent.push(Array.from(data)); return { status: 'ok', bytesWritten: data.length }; } });
+    await bus.pins({ D0: true });
+    await bus.pins({ D2: false });
+    await bus.pins({ D0: null });
+    assert.deepEqual(sent, [
+      [0xab, 0x81, 0x41, 0x20], // D0 high
+      [0xab, 0x81, 0x45, 0x20], // D2 low too, D0 still high
+      [0xab, 0x81, 0x44, 0x20], // D0 released (its level bit kept, no longer driven)
+    ]);
+    assert.throws(() => bus.pins({ D7: true }), /no such pin D7/);
   });
 });

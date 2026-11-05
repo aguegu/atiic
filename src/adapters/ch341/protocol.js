@@ -92,3 +92,18 @@ export function packets(commands) {
 
 // a stop alone: the bus released after a transaction cut short
 export const stopPacket = () => Uint8Array.of(CMD_I2C_STREAM, STM_STO, STM_END);
+
+// D0-D5, the CH341's parallel data lines 0-5 (chip pins 15-20; D0-D2 are
+// also SPI's CS0-CS2), driven or released by its UIO stream: the levels and
+// the directions (1 an output) of all six at once. D6 and D7 are inputs
+// only (SPI's DIN2 and DIN). As flashrom's ch341a_spi.c drives its pins.
+export const CMD_UIO_STREAM = 0xab;
+export const UIO_STM_OUT = 0x80; // | the six lines' levels
+export const UIO_STM_DIR = 0x40; // | the six lines' directions
+export const UIO_STM_END = 0x20;
+export const UIO_PINS = ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'];
+export const UIO_MASK = 0x3f;
+
+export function uioPacket(levels, outputs) {
+  return Uint8Array.of(CMD_UIO_STREAM, UIO_STM_OUT | (levels & UIO_MASK), UIO_STM_DIR | (outputs & UIO_MASK), UIO_STM_END);
+}

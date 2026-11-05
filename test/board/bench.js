@@ -19,10 +19,17 @@ export const REFERENCES = [
   { Driver: Bmx055Mag, wake: [0x4b, 0x01], staticFirst: 0x5d, staticLast: 0x71, writable: 0x51, values: [0x5a, 0xa5] },
 ];
 
+// BENCH_PS (from .env.local, or the environment): the CH341 line wired to a
+// BMX055's PS pin (D0 on r8845's CH341A). PS picks the BMX055's interface:
+// high I2C, low SPI. Driven high before anything looks for a chip; the
+// CH341 keeps it while it stays plugged in, across the tests' own opens
+export const PS = process.env.BENCH_PS || null;
+
 async function probe() {
   const found = new Map(); // Driver -> address
   const bus = await openCh341();
   try {
+    if (PS) await bus.pins({ [PS]: true });
     for (const { Driver } of REFERENCES) {
       for (const a of Driver.addresses) {
         if (!(await bus.acks(a))) continue;

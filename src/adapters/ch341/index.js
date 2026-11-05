@@ -5,11 +5,12 @@
 //   write(address, bytes)
 //   read(address, n)               -> Uint8Array
 //   writeRead(address, bytes, n)   -> Uint8Array, a repeated start between
+//   pins({ D0: true })             D0-D5 driven high or low, or released (null)
 // A device that doesn't ack its address throws; data bytes written aren't
 // checked (the CH341 replies an ack only for bytes sent alone).
 import {
   VENDOR_ID, PRODUCT_ID, INTERFACE, ENDPOINT, PACKET_SIZE, ACK_NACKED,
-  speedPacket, stopPacket, transaction, packets,
+  speedPacket, stopPacket, transaction, packets, uioPacket, UIO_PINS,
 } from './protocol.js';
 
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
@@ -22,6 +23,8 @@ class Ch341 {
   constructor(device) {
     this.device = device;
     this.queue = Promise.resolve(); // one transaction on the wire at a time
+    this.levels = 0; // D0-D5 as last driven: bit n is Dn
+    this.outputs = 0;
   }
 
   async open(speed = 100000) {
@@ -97,6 +100,27 @@ class Ch341 {
       if (e.message.startsWith('no ack')) return false;
       throw e;
     }
+  }
+
+  // D0-D5 driven or released: { D0: true } high, { D0: false } low,
+  // { D0: null } back to an input (the chip's pull-up); lines not named keep
+  // what they had. In the queue, so never in the middle of a transaction.
+  // The CH341 forgets them when it resets (unplugged): drive them again
+  pins(lines) {
+    for (const [name, v] of Object.entries(lines)) {
+      const bit = 1 << UIO_PINS.indexOf(name);
+      if (bit < 1) throw new Error(`no such pin ${name}: D0-D5 can be driven`);
+      if (v === null) {
+        this.outputs &= ~bit;
+      } else {
+        this.outputs |= bit;
+        this.levels = v ? this.levels | bit : this.levels & ~bit;
+      }
+    }
+    const data = uioPacket(this.levels, this.outputs);
+    const job = this.queue.then(() => this.out(data));
+    this.queue = job.catch(() => {});
+    return job;
   }
 
   async scan(first = SCAN_FIRST, last = SCAN_LAST) {
