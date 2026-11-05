@@ -20,22 +20,19 @@ describe('mlx90614 (host)', () => {
     assert.equal(pec([0xb4, 0x22, 0x07, 0xc8]), 0x48);
   });
 
-  it('measure: Ta and Tobj1 at 0.02 K a count; a single zone has no object2', async () => {
-    const m = new Mlx90614(new FakeMlx({ 0x25: 0x9fb4, 0x06: 0x3ad2, 0x07: 0x3a86 }));
+  it('measure: Ta and Tobj1 at 0.02 K a count, zone 1 alone whatever the config says', async () => {
+    const m = new Mlx90614(new FakeMlx({ 0x25: 0xaff4, 0x06: 0x3ad2, 0x07: 0x3a86 })); // r8845's config: bit 6 set on a BAA
     await m.init();
-    assert.equal(m.dual, false);
+    assert.equal(m.config, 0xaff4);
     const r = await m.measure();
     assert.ok(Math.abs(r.ambient - (0x3ad2 * 0.02 - 273.15)) < 1e-9);
     assert.ok(Math.abs(r.object - 26.49) < 0.01);
-    assert.equal(r.object2, undefined);
-    await assert.rejects(m.object(2), /no zone 2/);
+    assert.deepEqual(Object.keys(r), ['ambient', 'object']);
   });
 
-  it('a dual-zone part (config bit 6): object2 too', async () => {
-    const m = new Mlx90614(new FakeMlx({ 0x25: 0x9ff4, 0x06: 0x3ad2, 0x07: 0x3a86, 0x08: 0x3a90 }));
-    await m.init();
-    assert.equal(m.dual, true);
-    assert.ok('object2' in await m.measure());
+  it('object(2): Tobj2 (0x08), for a part known to be dual', async () => {
+    const m = new Mlx90614(new FakeMlx({ 0x08: 0x3a90 }));
+    assert.ok(Math.abs(await m.object(2) - (0x3a90 * 0.02 - 273.15)) < 1e-9);
   });
 
   it('a wrong PEC throws; the error flag throws', async () => {

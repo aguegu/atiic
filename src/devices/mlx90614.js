@@ -7,9 +7,14 @@
 // address; each answer 2 bytes low first and a PEC, a CRC-8 (x8 + x2 + x1 +
 // 1) over the slave address written, the command, the address read and the
 // two bytes (its Figure 6: 0x30 for 0x3AD2 read from 0x07). A temperature
-// is 0.02 K a count; its MSb set flags an error. Config Register 1 (EEPROM
-// 0x05) bit 6 tells a dual-zone part: on a single, Tobj2 means nothing.
-// SMBus clock 10-100 kHz. On r8845's module: single zone, Ta ~28 C.
+// is 0.02 K a count; its MSb set flags an error. SMBus clock 10-100 kHz.
+//
+// Single or dual zone is the part number's middle letter (MLX90614ESF-xAx
+// single, xBx or xCx dual), not to be read off the chip: Config Register 1
+// (EEPROM 0x05) bit 6 says "dual IR sensor" (Table 9), but r8845's can,
+// marked BAA (3 V, single zone), reads 0xAFF4, bit 6 set, and its "zone 2"
+// gives 38-55 C, noisy, where zone 1 and the room are ~27. So measure() is
+// zone 1 alone; object(2) is for a part known to be dual.
 
 const RAM_TA = 0x06;
 const RAM_TOBJ1 = 0x07;
@@ -17,7 +22,6 @@ const RAM_TOBJ2 = 0x08;
 const EEPROM = 0x20; // | the EEPROM address
 const EE_CONFIG_1 = 0x05;
 const EE_ID_FIRST = 0x1c; // the ID number, 4 words
-const CONFIG_DUAL = 0x40; // bit 6
 const ERROR_FLAG = 0x8000;
 const KELVIN_PER_COUNT = 0.02;
 const ZERO_C_IN_K = 273.15;
@@ -59,10 +63,9 @@ class Mlx90614 {
     return value;
   }
 
-  // its config: single or dual zone
+  // its Config Register 1, read (and kept as config): its PEC checked
   async init() {
     this.config = await this.word(EEPROM | EE_CONFIG_1);
-    this.dual = Boolean(this.config & CONFIG_DUAL);
   }
 
   // its 64-bit ID number, as 4 words
@@ -82,17 +85,15 @@ class Mlx90614 {
     return this.temperature(RAM_TA);
   }
 
-  // the object's temperature, C: zone 1, or 2 on a dual-zone part
+  // the object's temperature, C: zone 1, or 2 on a part known to be dual
+  // (its part number: xBx, xCx)
   async object(zone = 1) {
-    if (zone === 2 && !this.dual) throw new Error('a single-zone MLX90614 has no zone 2');
     return this.temperature(zone === 2 ? RAM_TOBJ2 : RAM_TOBJ1);
   }
 
-  // { ambient, object } (and object2 on a dual-zone part), C
+  // { ambient, object } (zone 1), C
   async measure() {
-    const r = { ambient: await this.ambient(), object: await this.object() };
-    if (this.dual) r.object2 = await this.object(2);
-    return r;
+    return { ambient: await this.ambient(), object: await this.object() };
   }
 }
 

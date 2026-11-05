@@ -1,5 +1,19 @@
 # Releases
 
+## 1.3.13
+
+- `Mlx90614`: Melexis' IR thermometer at 0x5A, from its datasheet (Rev
+  021): RAM words with their PEC checked (the datasheet's Figure 6 and 7
+  as host tests), 0.02 K a count, the error flag; its ID number. On
+  r8845's (marked BAA: single zone) ambient 26.7 C, the room 26.6-27.0 C.
+  Zone 1 alone: its config register's "dual IR sensor" bit is set (0xAFF4)
+  and its zone 2 reads 38-55 C, noisy; `object(2)` is for a part known to
+  be dual.
+- The bench's I2C clock: chips state their top (`chip.maxSclHz`: the
+  MLX90614's 100 kHz) and every board test opens at the slowest found; at
+  400 kHz beside the MLX90614, a VL53L1X NACKed, at 100 kHz both work.
+- Host tests (103 in all).
+
 ## 1.3.12
 
 - `Sht20`: Sensirion's humidity and temperature sensor at 0x40, from its

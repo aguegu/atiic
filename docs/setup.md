@@ -440,6 +440,25 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
   Driver (BSD-3) and its 91-byte default configuration, the same bytes
   pre-1.0 atiic used. On r8845: ~1966 mm to the room, ±2 mm, every ~98 ms.
 
+## An IR thermometer: the MLX90614
+
+An MLX90614 (r8845's: marked BAA, 3 V, single zone) on the CH341's I2C at
+0x5A: the temperature of what it looks at, without touching it, and its
+own.
+
+```js
+const m = new Mlx90614(bus);
+await m.init(); // its config read
+const { ambient, object } = await m.measure(); // C: itself, what it sees (zone 1)
+```
+
+Every word it sends carries a PEC (a CRC-8), checked. Its SMBus runs at
+10-100 kHz, and faster upsets the whole bus: at 400 kHz beside it a VL53L1X
+stopped answering. The board tests run at the slowest top clock among the
+chips on the bench (`chip.maxSclHz`). Single or dual zone is the part
+number's (xAx single; xBx, xCx dual): this one's config register says dual,
+its can says single, its "zone 2" reads nonsense.
+
 ## A first read
 
 ```js

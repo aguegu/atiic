@@ -22,7 +22,7 @@ describe('mlx90614 (board)', onlyWith(Mlx90614), () => {
     await bus?.close();
   });
 
-  it('inits (its config: single or dual zone)', async () => {
+  it('inits (its config read, its PEC good)', async () => {
     await m.init();
   });
 
