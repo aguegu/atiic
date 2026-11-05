@@ -1,5 +1,13 @@
 # Releases
 
+## 1.3.21
+
+- The AT24C08's board test checks all four block addresses answer before
+  it writes anything: named on the bench but gone, it fails untouched.
+- The ADXL345 re-tested alone at 0x53 (the AT24C08 off the bench): 10 of
+  10 with the HMC5883L, three runs; 1.11 g at rest, self test +287 -298
+  +597 LSb, as 1.3.18's (taken while the EEPROM shared its address).
+
 ## 1.3.20
 
 - `At24c`: Atmel's AT24C01A/02/04/08A/16A EEPROMs, from their datasheet
