@@ -304,6 +304,30 @@ reach version 20 (97 modules, 194 pixels): 666 bytes at M, and it scans
 (about 0.28 mm a module); 690 bytes went to version 21 at 1 pixel. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
 only.
 
+## A reflective mono TFT: an ST7302
+
+A 2.13" 122x250 module on an ST7302, wired as the displays above (RES D0, DC
+D1, CS D2), with no BUSY (`BENCH_ST7302=res=D0,dc=D1,cs=D2`). It looks like
+e-paper but isn't: no backlight, very low power, and the picture goes when
+the power does. A frame is in the RAM the moment it's sent (4,125 bytes, 38
+ms over the CH341), and the glass shows it at the frame rate.
+
+```js
+const lcd = new St7302(bus); // upright: 122 wide, 250 tall
+await lcd.init(); // low power mode, 4 Hz
+const frame = blankFrame(122, 250); // the e-papers' frames: a bit a pixel, 1 white
+plot(frame, 122, 10, 10);
+await lcd.show(frame);
+await lcd.frameRate(1); // 0.25-8 Hz low power, 16 or 32 high power
+```
+
+On r8845's module, a square moving a frame every 100 ms: in high power mode
+(16 and 32 Hz) the panel blinked; in low power mode at 8 Hz it left ghosts,
+at 4 Hz it was fine, the default. The set-up's values are
+zhcong/ST7302-for-arduino's (MIT); the datasheet names the commands only.
+Its RAM packs 12 pixels across by 2 down in 3 bytes; the driver packs the
+upright frame for it.
+
 ## A first read
 
 ```js

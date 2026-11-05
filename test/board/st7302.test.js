@@ -14,7 +14,8 @@ import { ST7302 } from './bench.js';
 import { label } from './font.js';
 
 // a whole frame: 4,125 bytes, 38-39 ms over the CH341 on r8845, and the
-// packing in JavaScript
+// packing in JavaScript. Into the RAM only: the glass shows it at the frame
+// rate (4 Hz by default), so a run this quick isn't one to watch
 const FRAME_MS = 150;
 const FRAMES = 20;
 

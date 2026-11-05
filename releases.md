@@ -1,5 +1,21 @@
 # Releases
 
+## 1.3.1
+
+- `St7302`: Sitronix's ST7302 on r8845's 2.13" 122x250 reflective mono TFT
+  (no BUSY; the picture needs power). zhcong/ST7302-for-arduino's set-up
+  (MIT); upright frames (122 wide, 250 tall; the RAM's landscape a quarter
+  turn clockwise) packed for its RAM, 12 pixels by 2 in 3 bytes: all of
+  122x250 shows (a 3-pixel diagonal to each corner whole). A frame 4,125
+  bytes, 38 ms over the CH341.
+- Frame rates: `init()` ends in low power mode at 4 Hz, `frameRate(hz)`
+  changes it. On the module, high power mode (16, 32 Hz) blinked, low power
+  at 8 Hz ghosted, 4 Hz was fine; zhcong's set-up sets none, and the
+  chip's default moved nothing in 0.8 s.
+- `src/devices/frame.js`: `blankFrame()` and `plot()` shared by the
+  e-papers and the ST7302 (still exported by `ssd1680.js`). Host tests (75
+  in all); the board test leaves the upright card, labelled 122 and 250.
+
 ## 1.3.0
 
 1.2.x closed (1.2.0-1.2.7): e-paper on the CH341. `Ch341.readPins()` reads

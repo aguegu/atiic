@@ -35,7 +35,8 @@ describe('st7302 (host)', () => {
     const cs = commands(bus.log).map((c) => c.c);
     assert.deepEqual(cs.slice(0, 2), [0x38, 0xeb]);
     assert.equal(cs.indexOf(0x11), 9, 'SLPOUT after the 9 power commands');
-    assert.deepEqual(cs.slice(-5), [0x29, 0xb9, 0xb9, 0x72, 0x39]); // display on, clear RAM on, off, destress off, LPM
+    assert.deepEqual(cs.slice(-6), [0x29, 0xb9, 0xb9, 0x72, 0xb2, 0x39]); // display on, clear RAM on, off, destress off, rate, LPM
+    assert.deepEqual(commands(bus.log).at(-2).data, [0x01, 0x04]); // LPM at 4 Hz
   });
 
   it('a 122x250 frame packs to 11 bands x 125 pairs x 3 bytes, all white = all 0', () => {
@@ -65,5 +66,19 @@ describe('st7302 (host)', () => {
     assert.deepEqual(commands(bus.log).map((c) => [c.c, c.data.length]), [[0x2a, 2], [0x2b, 2], [0x2c, 4125]]);
     assert.deepEqual(commands(bus.log)[0].data, [0x19, 0x23]);
     assert.deepEqual(commands(bus.log)[1].data, [0, 124]);
+  });
+
+  it('frameRate: the mode follows the rate, the other mode\'s rate kept', async () => {
+    const bus = new FakeBus();
+    const lcd = new St7302(bus);
+    await lcd.init();
+    bus.log.length = 0;
+    await lcd.frameRate(16);
+    await lcd.frameRate(1);
+    assert.deepEqual(commands(bus.log), [
+      { c: 0xb2, data: [0x00, 0x04] }, { c: 0x38, data: [] }, // HPM 16 Hz, LPM still 4 Hz
+      { c: 0xb2, data: [0x00, 0x02] }, { c: 0x39, data: [] }, // LPM 1 Hz, HPM still 16 Hz
+    ]);
+    await assert.rejects(lcd.frameRate(10), /16 or 32/);
   });
 });

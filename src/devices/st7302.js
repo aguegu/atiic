@@ -16,6 +16,14 @@
 // 122 wide, 250 tall; that's the RAM's landscape turned a quarter clockwise
 // (landscape x = Y, y = 121 - X). On r8845's module all of 122x250 shows:
 // a diagonal of 3 pixels from a frame 3 in, to each corner, whole.
+//
+// Frame rates (FRCTRL B2h): the glass is redrawn 16 or 32 times a second in
+// high power mode (HPM, 38h), 0.25-8 in low power mode (LPM, 39h). On
+// r8845's module, a square moved a frame every 100 ms: HPM at 16 and 32 Hz
+// blinked too much (with zhcong's set-up, tuned for LPM), LPM at 8 Hz left
+// ghosts, at 4 Hz fine; zhcong's set-up sets no rate, and LPM at its default
+// moved nothing in 0.8 s. So init() ends in LPM at 4 Hz; frameRate() changes
+// it.
 
 const SLPOUT = 0x11;
 const DISPON = 0x29;
@@ -24,6 +32,10 @@ const RASET = 0x2b;
 const RAMWR = 0x2c;
 const HPM = 0x38; // high power mode
 const LPM = 0x39; // low power mode
+const FRCTRL = 0xb2; // frame rate: [HFR, LFR]
+const HPM_RATES = { 16: 0, 32: 1 }; // HFR, Hz
+const LPM_RATES = { 0.25: 0, 0.5: 1, 1: 2, 2: 3, 4: 4, 8: 5 }; // LFR[2:0], Hz
+const DEFAULT_RATE = 4; // LPM: on r8845's module, moving content without ghosts or blinking
 const BAND = 12; // pixels along the short side a column address covers
 const FIRST_BAND = 0x19;
 const RESET_MS = 100; // zhcong's waits, low and after
@@ -108,7 +120,25 @@ class St7302 {
     await delay(CLEAR_RAM_MS);
     await this.command(CLEAR_RAM_OFF[0], [CLEAR_RAM_OFF[1]]);
     await this.command(DESTRESS_OFF[0], [DESTRESS_OFF[1]]);
-    await this.command(LPM);
+    this.hfr = HPM_RATES[32];
+    await this.frameRate(DEFAULT_RATE);
+  }
+
+  // how often the glass is redrawn, Hz: 16 or 32 in high power mode, 0.25,
+  // 0.5, 1, 2, 4 or 8 in low power mode (the mode follows the rate)
+  async frameRate(hz) {
+    if (hz in HPM_RATES) {
+      this.hfr = HPM_RATES[hz];
+      await this.command(FRCTRL, [this.hfr, this.lfr ?? LPM_RATES[DEFAULT_RATE]]);
+      await this.command(HPM);
+    } else if (hz in LPM_RATES) {
+      this.lfr = LPM_RATES[hz];
+      await this.command(FRCTRL, [this.hfr ?? HPM_RATES[32], this.lfr]);
+      await this.command(LPM);
+    } else {
+      throw new Error(`${hz} Hz: 16 or 32 (high power), 0.25, 0.5, 1, 2, 4 or 8 (low power)`);
+    }
+    this.rate = hz;
   }
 
   // a whole frame (frame.js, upright) into the RAM: on the panel at once
