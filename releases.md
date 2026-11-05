@@ -1,5 +1,18 @@
 # Releases
 
+## 1.3.11
+
+- `Max30102`: Maxim's (ADI's) pulse oximeter at 0x57, from its datasheet
+  (19-7740 Rev 1): `init()` with the datasheet's tables as options (mode,
+  sample rate, averaging, pulse width, ADC range, LED currents in mA), a
+  reset first; `readFifo()` red and IR samples (18 bits), throwing on an
+  overflow; `temperature()`. On r8845: 100 samples a second; no finger, red
+  ~7,000 / IR ~2,300; a fingertip, ~120,700 / ~108,600, a pulse in it.
+- Its die temperature waits on DIE_TEMP_RDY: TEMP_EN, though
+  self-clearing, reads back 0 at once, so polling it read 0 C; the flag
+  sets after 27.5-28.6 ms (the datasheet's 29).
+- A bench reference for the CH341 test; host tests (89 in all).
+
 ## 1.3.10
 
 - The BMX055 benchmark counts each chip's samples the way that's right for

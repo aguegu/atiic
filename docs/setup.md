@@ -399,6 +399,24 @@ const mag = new Bmx055Mag(await new SpiRegisters(bus, { cs: 'D2' }).open());
 The BMX055 board tests run on I2C or SPI, whichever the bench has; on
 r8845 `.env.local` has `BENCH_BMX055_SPI=accel=D0,gyro=D1,mag=D2,ps=D4`.
 
+## A pulse oximeter: the MAX30102
+
+A MAX30102 module on the CH341's I2C (VCC, GND, SCL, SDA; it answers at
+0x57, part ID 0x15). A red and an IR LED pulse into the skin; the light that
+comes back pulses with the blood:
+
+```js
+const m = new Max30102(bus);
+await m.init(); // SpO2 mode: red and IR, 100 samples a second, 18 bits, ~7 mA
+const samples = await m.readFifo(); // [{ red, ir }, ...], 32 at most: read often
+const c = await m.temperature(); // its die, 29 ms
+```
+
+On r8845's module: nothing on it, red ~7,000 and IR ~2,300 counts (its
+cover's light); a fingertip, red ~120,700 and IR ~108,600, the beat a ripple
+on top (a rough count: 75 a minute). The driver gives samples; heart rate
+and SpO2 are for a page to work out.
+
 ## A first read
 
 ```js
