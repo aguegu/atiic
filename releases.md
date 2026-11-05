@@ -1,5 +1,12 @@
 # Releases
 
+## 1.3.22
+
+- The bench's probe doesn't ask an address again once a chip there is
+  found: the ITG-3200's wake (a write of 0x00 to 0x3E) would otherwise
+  reach an MPU or BMX055 gyro at 0x68/0x69 (the BMX055 gyro's 0x3E is its
+  FIFO_CONFIG_1; a write clears its FIFO).
+
 ## 1.3.21
 
 - The AT24C08's board test checks all four block addresses answer before
