@@ -1,6 +1,6 @@
 {
   "name": "atiic",
-  "version": "1.3.16",
+  "version": "1.3.17",
   "description": "JavaScript I2C and SPI drivers for sensors and displays (MPU-6050, BMX055, MAX30102, VL53L1X, ST7735, GC9A01, SSD1680 e-paper ...), adapter-free; WCH's CH341 as the USB bridge, in Node.js and over WebUSB",
   "type": "module",
   "exports": {
@@ -32,6 +32,7 @@
     "mpu6050",
     "mpu6500",
     "bmx055",
+    "hmc5883l",
     "max30102",
     "sht20",
     "aht21",

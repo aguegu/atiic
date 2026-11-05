@@ -1,5 +1,14 @@
 # Releases
 
+## 1.3.17
+
+- `Hmc5883l`: Honeywell's 3-axis magnetometer at 0x1E, from its datasheet
+  (Form #900405 Rev E): its continuous-mode example (8 samples averaged, 15
+  Hz) at the default gain (1090 LSb/gauss, +/-1.3 Ga), the X Z Y data,
+  microtesla, -4096 as an overflow (null); its self test with both biases
+  (gain 5, 243-575 LSb). Known by its ID "H43". On r8845: |B| 63.3
+  uT at rest; self test +451 +424 +436 / -444 -430 -423. Host
+  tests (120 in all), a board test.
 ## 1.3.16
 
 - README: what atiic is (I2C and SPI drivers, the CH341, Node.js and

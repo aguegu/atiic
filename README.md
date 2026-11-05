@@ -45,6 +45,7 @@ sections and quirks are in the driver's source.
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
 | Melexis MLX90614 | `Mlx90614` | non-contact infrared temperature, ambient temperature | I2C 0x5A (SMBus, 100 kHz) |
 | TI INA231 (INA226) | `Ina231` | current, bus voltage, power (shunt monitor) | I2C 0x40-0x4F |
+| Honeywell HMC5883L | `Hmc5883l` | 3-axis magnetometer (compass), self test | I2C 0x1E |
 
 ### Displays
 
