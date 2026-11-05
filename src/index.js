@@ -12,6 +12,7 @@ import Ina231 from './devices/ina231.js';
 import Hmc5883l from './devices/hmc5883l.js';
 import Adxl345 from './devices/adxl345.js';
 import Itg3200 from './devices/itg3200.js';
+import At24c from './devices/at24c.js';
 import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
@@ -35,6 +36,7 @@ export {
   Hmc5883l,
   Adxl345,
   Itg3200,
+  At24c,
   St7735s,
   Gc9107,
   Gc9a01,

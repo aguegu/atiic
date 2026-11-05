@@ -54,6 +54,11 @@ export const ST7302 = lines(process.env.BENCH_ST7302);
 export const MPU6500_SPI = lines(process.env.BENCH_MPU6500_SPI);
 export const BMX055_SPI = lines(process.env.BENCH_BMX055_SPI);
 
+// an AT24C08 EEPROM on the I2C: its first block's address ("0x50"), from
+// .env.local or the environment. No ID register to look for it by; its
+// board test writes (and puts back) 24 bytes at 0x2F8
+export const AT24C08 = process.env.BENCH_AT24C08 ? Number(process.env.BENCH_AT24C08) : null;
+
 async function probe() {
   const found = new Map(); // Driver -> address
   const bus = await openCh341();
