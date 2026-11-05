@@ -169,6 +169,9 @@ chip selects; atiic drives them as plain lines. On r8845 `.env.local` has
 `BENCH_ST7735=res=D0,dc=D1,cs=D2`; the board test leaves a white border on
 black with red, green and blue squares. This panel: RGB565, BGR order, no
 inversion, 24 columns in (`new St7735s(bus)`'s defaults).
+Colours are `0xRRGGBB`; `{ bits: 12 | 16 | 18 }` picks the pixel format
+(16 by default): 12 bits is the quickest (a screen in 174 ms on r8845) and
+shows a ramp in 16 steps, 18 the smoothest (341 ms).
 
 D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
 two moves to another line.

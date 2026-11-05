@@ -6,13 +6,14 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { St7735s } from '../../src/index.js';
-import { rgb565 } from '../../src/devices/st7735s.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 import { ST7735 } from './bench.js';
 
-const FULL_FILL_MS = 500; // a full screen, 25,600 bytes: 235 ms seen on r8845
-const RED = rgb565(255, 0, 0), GREEN = rgb565(0, 255, 0), BLUE = rgb565(0, 0, 255);
-const WHITE = 0xffff, BLACK = 0x0000;
+const FULL_FILL_MS = 500; // a full screen at 16 bits, 25,600 bytes: 235 ms seen on r8845
+// the other pixel formats' full screens, 19,200 and 38,400 bytes: 174 and
+// 341 ms seen on r8845
+const FORMAT_FILL_MS = { 12: 400, 18: 700 };
+const RED = 0xff0000, GREEN = 0x00ff00, BLUE = 0x0000ff, WHITE = 0xffffff, BLACK = 0x000000;
 
 describe('st7735s (board)', { skip: ST7735 ? false : 'no BENCH_ST7735: no display on the bench' }, () => {
   let bus, lcd;
@@ -38,7 +39,19 @@ describe('st7735s (board)', { skip: ST7735 ? false : 'no BENCH_ST7735: no displa
     }
   });
 
-  it('leaves its test pattern: a white border on black, red, green, blue', async () => {
+  for (const bits of [12, 18]) {
+    it(`${bits} bits a pixel: inits, fills the screen in under ${FORMAT_FILL_MS[bits]} ms`, async () => {
+      const other = new St7735s(bus, { ...ST7735, bits });
+      await other.init();
+      const t0 = performance.now();
+      await other.fill(BLUE);
+      const ms = performance.now() - t0;
+      assert.ok(ms < FORMAT_FILL_MS[bits], `${ms.toFixed(0)} ms`);
+    });
+  }
+
+  it('leaves its test pattern (16 bits): a white border on black, red, green, blue', async () => {
+    await lcd.init(); // back from the other formats
     const { width: w, height: h } = lcd;
     await lcd.fill(BLACK);
     await lcd.fillRect(0, 0, w, 1, WHITE);
