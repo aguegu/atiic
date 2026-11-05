@@ -9,6 +9,7 @@
   (gain 5, 243-575 LSb). Known by its ID "H43". On r8845: |B| 63.3
   uT at rest; self test +451 +424 +436 / -444 -430 -423. Host
   tests (120 in all), a board test.
+
 ## 1.3.16
 
 - README: what atiic is (I2C and SPI drivers, the CH341, Node.js and
