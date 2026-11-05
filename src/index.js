@@ -6,6 +6,7 @@ import Bmx055Mag from './devices/bmx055-mag.js';
 import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
+import Ssd1680 from './devices/ssd1680.js';
 
 export {
   Mpu6050,
@@ -16,4 +17,5 @@ export {
   St7735s,
   Gc9107,
   Gc9a01,
+  Ssd1680,
 };

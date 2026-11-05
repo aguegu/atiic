@@ -135,4 +135,24 @@ describe('ch341 spi', () => {
     await bus.spi([1]);
     assert.notDeepEqual(outs.at(-2).slice(0, 1), [0xab]); // not again
   });
+
+  it('Ch341.readPins: the status read (0xA0), its first byte D0-D7', async () => {
+    const outs = [];
+    let status = null;
+    const device = {
+      transferOut: async (ep, data) => {
+        outs.push(Array.from(data));
+        if (data[0] === 0xa0) status = [0b10010001, 0, 0, 0, 0, 0]; // D0, D4, D7 high
+        return { status: 'ok', bytesWritten: data.length };
+      },
+      transferIn: async () => {
+        while (!status) await new Promise((r) => setTimeout(r, 1));
+        const d = Uint8Array.from(status);
+        return { status: 'ok', data: new DataView(d.buffer) };
+      },
+    };
+    const pins = await new Ch341(device).readPins();
+    assert.deepEqual(outs, [[0xa0]]);
+    assert.deepEqual(pins, { D0: true, D1: false, D2: false, D3: false, D4: true, D5: false, D6: false, D7: true });
+  });
 });

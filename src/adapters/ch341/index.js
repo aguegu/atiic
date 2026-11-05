@@ -6,6 +6,7 @@
 //   read(address, n)               -> Uint8Array
 //   writeRead(address, bytes, n)   -> Uint8Array, a repeated start between
 //   pins({ D0: true })             D0-D5 driven high or low, or released (null)
+//   readPins()                     -> { D0: true, ... D7 }: the lines' levels
 //   spi(bytes)                     -> Uint8Array: SPI, as many bytes back (chip
 //                                     selects and other lines by pins())
 // A device that doesn't ack its address throws; data bytes written aren't
@@ -13,7 +14,7 @@
 import {
   VENDOR_ID, PRODUCT_ID, INTERFACE, ENDPOINT, PACKET_SIZE, ACK_NACKED,
   speedPacket, stopPacket, transaction, packets, uioPacket, UIO_PINS,
-  spiPackets, reverseBits, SPI_SCK, SPI_MOSI,
+  spiPackets, reverseBits, SPI_SCK, SPI_MOSI, CMD_STATUS, STATUS_BYTES, STATUS_PINS,
 } from './protocol.js';
 
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
@@ -111,6 +112,19 @@ class Ch341 {
   // { D0: null } back to an input (the chip's pull-up); lines not named keep
   // what they had. In the queue, so never in the middle of a transaction.
   // The CH341 forgets them when it resets (unplugged): drive them again
+  // the levels on D0-D7, driven or not (D6 and D7 are inputs only; D0-D5
+  // read as inputs once released by pins())
+  readPins() {
+    const job = this.queue.then(async () => {
+      const reply = this.in(STATUS_BYTES);
+      await this.out(Uint8Array.of(CMD_STATUS));
+      const [levels] = await reply;
+      return Object.fromEntries(STATUS_PINS.map((name, i) => [name, ((levels >> i) & 1) === 1]));
+    });
+    this.queue = job.catch(() => {});
+    return job;
+  }
+
   pins(lines) {
     for (const [name, v] of Object.entries(lines)) {
       const bit = 1 << UIO_PINS.indexOf(name);

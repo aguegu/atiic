@@ -114,6 +114,12 @@ export function uioPacket(levels, outputs) {
 // to give the usual most-significant-first SPI (flashrom's reverse_byte).
 // SCK is D3 and MOSI D5 (outputs), MISO D7; a chip select is any of D0-D5,
 // driven by the UIO stream around the transfer
+// the status read: 6 bytes back, the first the levels of D0-D7 (bit n Dn),
+// driven or not (WCH's CH341DLL.H: mCH341_PARA_CMD_STS, CH341GetInput)
+export const CMD_STATUS = 0xa0;
+export const STATUS_BYTES = 6;
+export const STATUS_PINS = ['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7'];
+
 export const CMD_SPI_STREAM = 0xa8;
 export const SPI_CHUNK = PACKET_SIZE - 1;
 export const SPI_SCK = 'D3';

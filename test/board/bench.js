@@ -27,11 +27,13 @@ export const PS = process.env.BENCH_PS || null;
 
 // a display on the CH341's SPI, its lines as "res=D0,dc=D1,cs=D2", from
 // .env.local or the environment: BENCH_ST7735 (r8845's 0.96" 80x160),
-// BENCH_GC9107 (r8845's 1.45" 60x160), BENCH_GC9A01 (r8845's round 240x240)
+// BENCH_GC9107 (r8845's 1.45" 60x160), BENCH_GC9A01 (r8845's round 240x240),
+// BENCH_SSD1680 (r8845's 1.54" 152x152 e-paper, its BUSY too: "...,busy=D4")
 const lines = (v) => (v ? Object.fromEntries(v.split(',').map((kv) => kv.trim().split('='))) : null);
 export const ST7735 = lines(process.env.BENCH_ST7735);
 export const GC9107 = lines(process.env.BENCH_GC9107);
 export const GC9A01 = lines(process.env.BENCH_GC9A01);
+export const SSD1680 = lines(process.env.BENCH_SSD1680);
 
 async function probe() {
   const found = new Map(); // Driver -> address
