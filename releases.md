@@ -1,5 +1,14 @@
 # Releases
 
+## 1.0.11
+
+- `docs/setup.md`: the CH341A and BMX055 bench, step by step, with a
+  Fritzing-style drawing (`docs/setup-bmx055.svg`): the V357 CH341A from its
+  photo (the 2x8 header's labels; the voltage pair on 3V3, the board's
+  default being 5V; the mode jumper on I2C/SPI), five wires, CS0 (the
+  chip's D0) to PS. The module drawn with only the five pins wired, its
+  layout not known here.
+
 ## 1.0.10
 
 - `Ch341.pins({ D0: true, ... })`: the CH341's D0-D5 driven high or low, or

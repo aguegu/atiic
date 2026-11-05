@@ -86,19 +86,62 @@ the name says: nothing answers at 0x0C, where an MPU-9250's magnetometer
 would, even with the bypass on. Wired the same: its VCC, GND, SCL and SDA to
 the dongle's.
 
-## Another module: the BMX055
+## Another bench: a CH341A and a BMX055
+
+![A CH341A (V357) dongle in I2C/SPI mode at 3.3V, wired to a BMX055 module, CS0 (D0) to its PS pin](setup-bmx055.svg)
 
 Bosch's 9-axis BMX055 is three chips at three addresses: the accelerometer
 at 0x18 or 0x19, the gyro at 0x68 or 0x69, the magnetometer at 0x10-0x13
-(r8845's module: 0x19, 0x69, 0x13). Wire VCC, GND, SCL, SDA as above, and
-tie its **PS** pin to VCC: PS picks the interface at power-up, and left
-floating the module answered nothing on I2C. atiic drives all three
-(`Bmx055Accel`, `Bmx055Gyro`, `Bmx055Mag`); the tests find each by its chip
-ID (the magnetometer's reads only once its power bit is set).
+(r8845's module: 0x19, 0x69, 0x13). atiic drives all three (`Bmx055Accel`,
+`Bmx055Gyro`, `Bmx055Mag`); the tests find each by its chip ID (the
+magnetometer's reads only once its power bit is set).
 
-On r8845 the BMX055 sits on a CH341A whose **D0** drives PS: put
-`BENCH_PS=D0` in an untracked `.env.local`, and `npm run test:board` drives
-D0 high before anything looks for a chip. Never drive PS low while it runs:
+Its **PS** pin picks the interface: high for I2C, low for SPI. Left floating
+the module answered nothing on I2C. A wire to VCC does; on r8845 a CH341A
+line drives it instead, which is why this bench uses the CH341A: it brings
+more of the chip's lines out.
+
+### The dongle: the V357 CH341A
+
+The USB plug on the right, a 2x8 header on the left (two rows of 10 holes
+along the edges, the parallel port, unused here):
+
+| Outer column | Inner column |
+|---|---|
+| GND | MISO |
+| RXD | MOSI |
+| TXD | SCK |
+| VCC | CS2 |
+| GND | CS1 |
+| SCL | CS0 (the chip's D0, pin 15) |
+| SDA | GND |
+| VCC | VCC |
+
+Set the jumpers with it unplugged:
+
+- **The pair top right: 3V3.** The board comes on 5V; the BMX055 is a 3.3V
+  part (3.6V at most).
+- **The one bottom right: I2C/SPI** (UART is the serial port, 1a86:5523).
+
+### Wiring
+
+| CH341A header | BMX055 module |
+|---|---|
+| GND (outer) | GND |
+| SCL (outer) | SCL |
+| SDA (outer) | SDA |
+| VCC (outer) | VCC |
+| CS0 (inner) | PS |
+
+The drawing shows only these five of the module's pins: modules differ, so
+match the labels on yours. Its other pins (addresses, interrupts) stay free.
+
+### PS from D0
+
+Put `BENCH_PS=D0` in an untracked `.env.local` in atiic: `npm run
+test:board` drives D0 high before anything looks for a chip, and the CH341
+holds it while it stays plugged in (each replug: run the tests or drive it
+again, `bus.pins({ D0: true })`). Never drive PS low while the BMX055 runs:
 the gyro and the magnetometer come back when it goes high again, but the
 accelerometer stays on SPI until the module is powered off and on.
 
