@@ -30,6 +30,7 @@ const MADCTL = 0x36;
 const VSCSAD = 0x37;
 const COLMOD = 0x3a;
 const MADCTL_BGR = 0x08;
+const MADCTL_MX = 0x40; // columns mirrored
 // the pixel formats' bytes from 0xRRGGBB colours (COLMOD's values are the
 // chip's: chip.colmod)
 const FORMATS = {
@@ -84,17 +85,19 @@ export function encodePixels(colors, bits = 16) {
 
 class DcsPanel {
   // a chip's own: its name, its frame memory's rows (TFA + VSA + BFA must
-  // make them), COLMOD's value for each pixel format, the commands its
-  // panels need after MADCTL ([command, ...parameters]), and its module's
-  // defaults (width, height, xOffset, yOffset, invert, bgr)
+  // make them), whether its scroll definition takes BFA (scrollBfa: false
+  // when it's TFA and VSA alone), COLMOD's value for each pixel format, the
+  // commands its panels need after MADCTL ([command, ...parameters]), and
+  // its module's defaults (width, height, xOffset, yOffset, invert, bgr,
+  // mirrorX: MADCTL's MX, the columns mirrored)
   static chip = null;
 
   constructor(bus, options = {}) {
     const { chip } = this.constructor;
-    const o = { cs: 'D2', dc: 'D1', res: 'D0', yOffset: 0, invert: false, bgr: true, bits: 16, ...chip.defaults, ...options };
+    const o = { cs: 'D2', dc: 'D1', res: 'D0', yOffset: 0, invert: false, bgr: true, mirrorX: false, bits: 16, ...chip.defaults, ...options };
     if (!chip.colmod[o.bits]) throw new Error(`${o.bits} bits a pixel: 12, 16 or 18`);
-    const { cs, dc, res, width, height, xOffset, yOffset, invert, bgr, bits } = o;
-    Object.assign(this, { bus, cs, dc, res, width, height, xOffset, yOffset, invert, bgr, bits });
+    const { cs, dc, res, width, height, xOffset, yOffset, invert, bgr, mirrorX, bits } = o;
+    Object.assign(this, { bus, cs, dc, res, width, height, xOffset, yOffset, invert, bgr, mirrorX, bits });
   }
 
   // a command and its parameters: CS low, DC low for the command, high for
@@ -121,7 +124,7 @@ class DcsPanel {
     await delay(SLPOUT_WAIT_MS);
     const { chip } = this.constructor;
     await this.command(COLMOD, [chip.colmod[this.bits]]);
-    await this.command(MADCTL, [this.bgr ? MADCTL_BGR : 0]);
+    await this.command(MADCTL, [(this.bgr ? MADCTL_BGR : 0) | (this.mirrorX ? MADCTL_MX : 0)]);
     for (const [c, ...data] of chip.setup) await this.command(c, data);
     await this.command(this.invert ? INVON : INVOFF);
     await this.command(NORON);
@@ -143,7 +146,9 @@ class DcsPanel {
     const tfa = this.yOffset + top, vsa = this.height - top - bottom, bfa = this.constructor.chip.memoryRows - tfa - vsa;
     if (vsa < 1) throw new Error(`no rows left to scroll: ${top} + ${bottom} of ${this.height}`);
     this.scrolling = { top, rows: vsa };
-    await this.command(SCRLAR, [tfa >> 8, tfa & 0xff, vsa >> 8, vsa & 0xff, bfa >> 8, bfa & 0xff]);
+    const params = [tfa >> 8, tfa & 0xff, vsa >> 8, vsa & 0xff];
+    if (this.constructor.chip.scrollBfa !== false) params.push(bfa >> 8, bfa & 0xff);
+    await this.command(SCRLAR, params);
     await this.scroll(0);
   }
 

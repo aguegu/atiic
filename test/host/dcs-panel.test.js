@@ -1,7 +1,7 @@
 // the ST7735S and GC9107 drivers (DcsPanel) against a fake bus: every line change and SPI byte in order
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { St7735s, Gc9107 } from '../../src/index.js';
+import { St7735s, Gc9107, Gc9a01 } from '../../src/index.js';
 import { encodePixels } from '../../src/devices/st7735s.js';
 
 class FakeBus {
@@ -175,5 +175,29 @@ describe('gc9107 (host)', () => {
     const bus = new FakeBus();
     await new Gc9107(bus).scrollArea();
     assert.deepEqual(commands(bus.log)[0], { c: 0x33, data: [0, 0, 0, 160, 0, 0] });
+  });
+});
+
+describe('gc9a01 (host)', () => {
+  it('init: MADCTL with the columns mirrored, the inner registers, inversion on', async () => {
+    const bus = new FakeBus();
+    await new Gc9a01(bus).init();
+    const cs = commands(bus.log);
+    assert.deepEqual(cs[3], { c: 0x36, data: [0x48] }); // MADCTL: MX | BGR
+    assert.deepEqual(cs.slice(4, 6), [{ c: 0xfe, data: [] }, { c: 0xef, data: [] }]);
+    assert.deepEqual(cs.at(-4), { c: 0x99, data: [0x3e, 0x07] });
+    assert.deepEqual(cs.slice(-3), [{ c: 0x21, data: [] }, { c: 0x13, data: [] }, { c: 0x29, data: [] }]);
+  });
+
+  it('scrollArea: TFA and VSA alone, the 240 rows', async () => {
+    const bus = new FakeBus();
+    await new Gc9a01(bus).scrollArea(10, 20);
+    assert.deepEqual(commands(bus.log)[0], { c: 0x33, data: [0, 10, 0, 210] });
+  });
+
+  it('mirrorX off by option: MADCTL BGR alone', async () => {
+    const bus = new FakeBus();
+    await new Gc9a01(bus, { mirrorX: false }).init();
+    assert.deepEqual(commands(bus.log)[3], { c: 0x36, data: [0x08] });
   });
 });
