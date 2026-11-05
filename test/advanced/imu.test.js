@@ -11,8 +11,8 @@
 // Keep the module still; each row runs ROW_MS.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { Mpu6050, Mpu6500 } from '../../src/index.js';
-import { onlyWith } from '../board/bench.js';
+import { Mpu6050, Mpu6500, SpiRegisters } from '../../src/index.js';
+import { onlyWith, MPU6500_SPI } from '../board/bench.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 
 const SCL_HZ = 400000;
@@ -26,10 +26,23 @@ const POLL_MISS_MAX = 0.05; // polling at 1 kHz: ~1.5 % missed seen
 
 const within = (got, want) => Math.abs(got - want) <= want * RATE_TOLERANCE;
 
-for (const Driver of [Mpu6050, Mpu6500]) describe(`${Driver.chip.name} (advanced)`, onlyWith(Driver), () => {
+// the benches: each chip on I2C where found, and the MPU-6500 on SPI
+// (BENCH_MPU6500_SPI), its driver on SpiRegisters
+const BENCHES = [
+  ...[Mpu6050, Mpu6500].map((Driver) => ({ Driver, name: `${Driver.chip.name} (advanced)`, skip: onlyWith(Driver), transport: 'i2c' })),
+  { Driver: Mpu6500, name: 'MPU-6500 over SPI (advanced)', skip: { skip: MPU6500_SPI ? false : 'no BENCH_MPU6500_SPI' }, transport: 'spi' },
+];
+
+for (const { Driver, name, skip: benchSkip, transport } of BENCHES) describe(name, benchSkip, () => {
   let bus, mpu;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
+    if (transport === 'spi') {
+      const ch341 = await openCh341();
+      bus = await new SpiRegisters(ch341, MPU6500_SPI).open();
+      bus.close = () => ch341.close();
+    } else {
+      bus = await openCh341(SCL_HZ);
+    }
     mpu = new Driver(bus);
     await mpu.init();
   });
@@ -72,7 +85,7 @@ for (const Driver of [Mpu6050, Mpu6500]) describe(`${Driver.chip.name} (advanced
     { label: 'gyro 2 kHz', accelerometers: false, filter: false, divider: 3, fits: true },
     { label: 'gyro 2.67 kHz', accelerometers: false, filter: false, divider: 2, fits: true },
     { label: 'gyro 4 kHz', accelerometers: false, filter: false, divider: 1, fits: true },
-    { label: 'gyro 8 kHz', accelerometers: false, filter: false, divider: 0, fits: false },
+    { label: 'gyro 8 kHz', accelerometers: false, filter: false, divider: 0, fits: false, spiFits: undefined },
   ];
 
   for (const row of ROWS) {
@@ -95,7 +108,9 @@ for (const Driver of [Mpu6050, Mpu6500]) describe(`${Driver.chip.name} (advanced
       await mpu.stopFifo();
       const f = frames / s;
       t.diagnostic(`${row.label.padEnd(16)} ${f.toFixed(0)} frames/s of ${mpu.sampleRate.toFixed(0)}, ${(f * mpu.fifoFrame / 1024).toFixed(1)} KiB/s, ${(reads / s).toFixed(0)} reads/s, ${overflows} overflows`);
-      if (row.fits) {
+      const fits = transport === 'spi' && 'spiFits' in row ? row.spiFits : row.fits;
+      if (fits === undefined) return; // not known yet: reported only
+      if (fits) {
         assert.equal(overflows, 0);
         assert.ok(within(f, mpu.sampleRate), `${f.toFixed(0)} frames/s`);
       } else {
