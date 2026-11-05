@@ -18,6 +18,10 @@
 //    in 2 s (1.3.5); with spiSelected() (CS low in the SPI's transfer,
 //    1.3.6): 88-90 KiB/s, 6-14 overflows, polling 1830 -> ~2080 reads/s.
 //    What's left is mostly the wire: 96 KB/s against the CH341's ~110
+//    Left there: one burst from FIFO_COUNTH for the count and the frames
+//    doesn't work (the register pointer walks on past FIFO_R_W to 0x75:
+//    garbage, the FIFO never emptied), and holding the chip select low
+//    between transactions is a trick not wanted
 // Keep the module still; each row runs ROW_MS.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';

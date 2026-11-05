@@ -1,5 +1,14 @@
 # Releases
 
+## 1.3.7
+
+- The IMU benchmark's notes: accel+gyro at 8 kHz over SPI stays as it is
+  (88-90 of 96 KiB/s). Tried: one SPI burst from FIFO_COUNTH for the count
+  and the frames: on the MPU-6500 the register pointer walks on past
+  FIFO_R_W (0x74) to 0x75 and on, so the frames read are garbage and the
+  FIFO fills (1 kHz "read" at 6314 frames/s, nearly all off 1 g). The
+  plain setup stays.
+
 ## 1.3.6
 
 - `Ch341.spiSelected(cs, bytes)`: SPI with a chip select, the line driven
