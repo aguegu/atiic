@@ -7,6 +7,7 @@ import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
 import Ssd1680 from './devices/ssd1680.js';
+import Ssd1681 from './devices/ssd1681.js';
 
 export {
   Mpu6050,
@@ -18,4 +19,5 @@ export {
   Gc9107,
   Gc9a01,
   Ssd1680,
+  Ssd1681,
 };

@@ -2,7 +2,7 @@
 // test sets it
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { Ssd1680 } from '../../src/index.js';
+import { Ssd1680, Ssd1681 } from '../../src/index.js';
 import { blankFrame, plot } from '../../src/devices/ssd1680.js';
 
 class FakeBus {
@@ -123,5 +123,25 @@ describe('ssd1680 (host)', () => {
     bus.log.length = 0;
     await epd.showPartial(blankFrame(152, 152));
     assert.deepEqual(commands(bus.log).find((c) => c.c === 0x22).data, [0xf7]);
+  });
+});
+
+describe('ssd1681 (host)', () => {
+  it('init: the same flow for 200x200', async () => {
+    const bus = new FakeBus();
+    await new Ssd1681(bus).init();
+    const cs = commands(bus.log);
+    assert.deepEqual(cs.slice(1, 5), [
+      { c: 0x01, data: [199, 0, 0] }, // 200 gates
+      { c: 0x11, data: [0x03] },
+      { c: 0x44, data: [0, 24] }, // RAM X: 25 bytes
+      { c: 0x45, data: [0, 0, 199, 0] },
+    ]);
+  });
+
+  it('show: a 200x200 frame, 5,000 bytes', async () => {
+    const bus = new FakeBus();
+    await new Ssd1681(bus).show(blankFrame(200, 200));
+    assert.equal(commands(bus.log).find((c) => c.c === 0x24).data.length, 5000);
   });
 });
