@@ -1,5 +1,20 @@
 # Releases
 
+## 1.2.2
+
+- `Ssd1680.showPartial(frame)`: a partial update, the chip's display mode 2
+  (22h FFh, the waveform in the panel's OTP): only the pixels that differ
+  from the last frame shown, no flash. On r8845's module BUSY 588-594 ms
+  (a full update 2,100), about 650 ms with the RAM writes; eight in a row
+  moving a square: no ghost, the border clean. A full update when nothing
+  was shown since `init()`.
+- `show()` writes the frame into RAM 26h as well (the previous image mode 2
+  compares against), where it wrote zeros: the driver is for black/white
+  panels (RAM 26h is red on three-colour ones).
+- Host tests (65 in all); the board test moves a square by partial updates
+  and leaves its card with a second label, the partial update's time,
+  added by one.
+
 ## 1.2.1
 
 - `Ssd1680`: Solomon Systech's SSD1680 e-paper controller, on r8845's

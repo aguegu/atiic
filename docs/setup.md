@@ -244,12 +244,20 @@ await epd.init();
 const frame = blankFrame(152, 152); // a bit a pixel, all white
 plot(frame, 152, 10, 10); // black
 const ms = await epd.show(frame); // a full update: BUSY high ~2.1 s
+plot(frame, 152, 20, 10);
+await epd.showPartial(frame); // only what changed, no flash: ~0.59 s
 await epd.sleep();
 ```
 
 A full update flashes the panel and takes 2.10 s of BUSY on r8845's module
-(plus about 58 ms to send the RAM). The board test leaves a card that
-labels itself with that time.
+(plus about 58 ms to send the RAM). A partial update (the chip's display
+mode 2, its waveform in the panel's OTP) changes only the pixels that
+differ from the last frame shown, without a flash: 588-594 ms, about 1.5 a
+second with the RAM writes; eight in a row moving a square left no ghost.
+It keeps the last frame in the chip's second RAM, which a three-colour
+panel shows red: the driver is for black/white panels. The board test
+leaves a card labelled with both times, the second label added by a
+partial update.
 
 ## A first read
 
