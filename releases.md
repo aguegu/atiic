@@ -1,5 +1,20 @@
 # Releases
 
+## 1.3.12
+
+- `Sht20`: Sensirion's humidity and temperature sensor at 0x40, from its
+  datasheet (Version 5, 10/2022): no-hold measurements, the maximum times
+  waited, CRC-8 and the type bit checked, the datasheet's formulas (its
+  example's CRC and 42.5 % as host tests). On r8845: 26.8 C, 69.9 % RH.
+  The bench probe knows a chip by its own check when it has no ID register
+  (`chip.identify`): the SHT20 by its electronic ID's CRCs.
+- `Vl53l1x`: ST's time-of-flight sensor at 0x29, 16-bit register
+  addresses, by ST's Ultra Lite Driver (its default configuration and
+  sequence, BSD-3, the notice in the source; the same bytes as pre-1.0
+  atiic's driver): continuous ranging, the ULD's range status. On r8845:
+  ~1966 mm, valid, a reading every ~98 ms.
+- Host tests (98 in all); board tests for both.
+
 ## 1.3.11
 
 - `Max30102`: Maxim's (ADI's) pulse oximeter at 0x57, from its datasheet

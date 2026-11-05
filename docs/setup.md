@@ -417,6 +417,29 @@ cover's light); a fingertip, red ~120,700 and IR ~108,600, the beat a ripple
 on top (a rough count: 75 a minute). The driver gives samples; heart rate
 and SpO2 are for a page to work out.
 
+## Humidity and distance: an SHT20 and a VL53L1X
+
+Both on the CH341's I2C at once (VCC, GND, SCL, SDA each), on r8845 a
+CH341T:
+
+```js
+const sht = new Sht20(bus); // 0x40: commands, not registers
+await sht.init(); // a soft reset
+const { temperature, humidity } = await sht.measure(); // ~115 ms: C, % RH
+const tof = new Vl53l1x(bus); // 0x29: 16-bit register addresses
+await tof.init(); // ST's ULD sequence; then ranging every ~100 ms
+const { distance, status } = await tof.measure(); // mm; status 0 valid
+```
+
+- The SHT20 is measured in "no hold master" mode, the datasheet's maximum
+  time waited (85 ms T, 29 ms RH), each reading's CRC-8 checked: hold
+  master mode would need the bridge to wait on a held-low SCL. r8845's
+  reads its user register 0x3A where the datasheet's example shows 0x02
+  (reserved bits); the bench knows it by its electronic ID's CRCs.
+- The VL53L1X has no public register map: atiic follows ST's Ultra Lite
+  Driver (BSD-3) and its 91-byte default configuration, the same bytes
+  pre-1.0 atiic used. On r8845: ~1966 mm to the room, ±2 mm, every ~98 ms.
+
 ## A first read
 
 ```js
