@@ -41,6 +41,7 @@ async function readWord(bus, address, command) {
 class Mlx90614 {
   static chip = {
     name: 'MLX90614',
+    maxSclHz: 100000, // SMBus 10-100 kHz: faster, it upsets the bus for the others too (r8845: a VL53L1X beside it NACKed at 400)
     // no ID register to compare: its config register read with a good PEC
     async identify(bus, address) {
       return (await readWord(bus, address, EEPROM | EE_CONFIG_1)).ok;

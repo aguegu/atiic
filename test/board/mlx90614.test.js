@@ -4,7 +4,7 @@ import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Mlx90614 } from '../../src/index.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf } from './bench.js';
+import { onlyWith, addressOf, sclFor } from './bench.js';
 
 const SCL_HZ = 100000;
 const AMBIENT_C = [5, 45];
@@ -14,7 +14,7 @@ const AGREE_C = 1; // two readings a second apart, a still scene
 describe('mlx90614 (board)', onlyWith(Mlx90614), () => {
   let bus, m;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
+    bus = await openCh341(sclFor(SCL_HZ));
     m = new Mlx90614(bus, addressOf(Mlx90614));
   });
 

@@ -26,7 +26,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Mpu6050, Mpu6500, SpiRegisters } from '../../src/index.js';
-import { onlyWith, MPU6500_SPI } from '../board/bench.js';
+import { onlyWith, MPU6500_SPI, sclFor } from '../board/bench.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 
 const SCL_HZ = 400000;
@@ -55,7 +55,7 @@ for (const { Driver, name, skip: benchSkip, transport } of BENCHES) describe(nam
       bus = await new SpiRegisters(ch341, MPU6500_SPI).open();
       bus.close = () => ch341.close();
     } else {
-      bus = await openCh341(SCL_HZ);
+      bus = await openCh341(sclFor(SCL_HZ));
     }
     mpu = new Driver(bus);
     await mpu.init();

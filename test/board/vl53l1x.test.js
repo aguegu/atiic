@@ -4,7 +4,7 @@ import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Vl53l1x } from '../../src/index.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf } from './bench.js';
+import { onlyWith, addressOf, sclFor } from './bench.js';
 
 const SCL_HZ = 400000;
 const READINGS = 10;
@@ -15,7 +15,7 @@ const PERIOD_MS = [80, 130]; // the default configuration's ~100 ms a reading (r
 describe('vl53l1x (board)', onlyWith(Vl53l1x), () => {
   let bus, tof;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
+    bus = await openCh341(sclFor(SCL_HZ));
     tof = new Vl53l1x(bus, addressOf(Vl53l1x));
   });
 

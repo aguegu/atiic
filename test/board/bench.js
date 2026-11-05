@@ -82,6 +82,10 @@ const found = await probe();
 
 export const addressOf = (Driver) => found.get(Driver) ?? null;
 
+// an I2C clock for the bench: hz, or the slowest top among the chips found
+// (chip.maxSclHz: an MLX90614 on the bus holds everyone to 100 kHz)
+export const sclFor = (hz) => Math.min(hz, ...[...found.keys()].map((D) => D.chip.maxSclHz ?? Infinity));
+
 // a describe() option: skip with the reason unless the chip is on the bench
 export const onlyWith = (Driver) => ({
   skip: found.has(Driver) ? false : `no ${Driver.chip.name} on the bench (none at ${Driver.addresses.map((a) => `0x${a.toString(16)}`).join(' or ')}${Driver.chip.identify ? '' : ` with ID 0x${Driver.chip.whoAmI.toString(16)}`})`,
@@ -98,7 +102,7 @@ export function bmx055Benches(Driver, chip, sclHz) {
     {
       label: 'on I2C', skip: onlyWith(Driver),
       open: async () => {
-        const bus = await openCh341(sclHz);
+        const bus = await openCh341(sclFor(sclHz));
         return { bus, regs: bus, address: addressOf(Driver) };
       },
     },
