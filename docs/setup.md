@@ -268,9 +268,21 @@ fit, then the panel asleep. E-paper holds its picture with no power, so it
 stays readable unplugged. On r8845's module `https://i2c.ninja` is version
 2 (25x25), 6 pixels a module, 150 of the 152 pixels: with no quiet zone of
 its own it scans fine on a phone, the panel's white surround serving as
-one. What fits 152 pixels at 2 pixels a module (the practical smallest):
-version 12, 287 bytes at error correction M; at 3 pixels, version 6, 106
-bytes. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
+one. Longer text, smaller modules (no quiet zone; `qrcode-generator`'s
+capacities, bytes at error correction L / M):
+
+| px a module | version | code | bytes L / M |
+|---|---|---|---|
+| 6 | 2 | 150 px | 32 / 26 |
+| 5 | 3 | 145 px | 53 / 42 |
+| 4 | 5 | 148 px | 106 / 84 |
+| 3 | 8 | 147 px | 192 / 152 |
+| 2 | 14 | 146 px | 458 / 362 |
+
+2 pixels (about 0.36 mm a module) still scans on a phone: 355 bytes as
+version 14-M did on r8845's module. Past a version's capacity the code
+jumps a version and may drop to fewer pixels a module: 374 bytes made
+version 15 (77 modules), 1 pixel each, 77 pixels across. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
 only.
 
 ## A first read

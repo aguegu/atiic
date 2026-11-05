@@ -1,5 +1,12 @@
 # Releases
 
+## 1.2.4
+
+- `docs/setup.md`: the QR demo's sizes on the 152x152 (6 down to 2 pixels
+  a module, versions 2 to 14, capacities from qrcode-generator) and what
+  scanned: 355 bytes as version 14-M at 2 pixels a module (146 pixels)
+  scans on a phone; 374 bytes went to version 15, 1 pixel a module.
+
 ## 1.2.3
 
 - `demo/epaper-qr.js` (`npm run demo:qr [text] [quiet modules]`): a QR code
