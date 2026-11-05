@@ -359,7 +359,10 @@ clock is under that or near it: on r8845 every write read back.
 Faster than I2C: polling its 14 data bytes runs ~1830 reads a second (25
 KiB/s), and its FIFO keeps gyro alone at 8 kHz without losing a frame (46.5
 KiB/s), which the CH341's I2C at 400 kHz can't (it overflows; ~31 KiB/s
-seen). `npm run test:advanced` measures both. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
+seen). Accel and gyro together at 8 kHz (96 KB/s) overflow over SPI too:
+83-84 KiB/s get through, the chip's 512-byte FIFO filling in 5.3 ms while a
+read cycle's six USB transfers take ~3.8 ms. `npm run test:advanced`
+measures them all. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
 
 ## A first read
 

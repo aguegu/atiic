@@ -1,5 +1,14 @@
 # Releases
 
+## 1.3.5
+
+- The IMU benchmark's accel+gyro at 8 kHz (12-byte frames, 96 KB/s): over
+  SPI it overflows, 7087-7203 of 8000 frames/s (83-84 KiB/s), 27-28
+  overflows in 2 s, 3 runs. Not the SPI's throughput (~110 KB/s) but its
+  round trips: the 512-byte FIFO fills in 5.3 ms, a read cycle is six USB
+  transfers (~3.8 ms), and a late one loses frames. Folding the chip
+  select into the SPI transfer may bring it in: not tried.
+
 ## 1.3.4
 
 - The IMU benchmark (`test/advanced/imu.test.js`) runs over SPI too
