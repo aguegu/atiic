@@ -12,7 +12,8 @@
     "test": "node --test \"test/host/*.test.js\"",
     "test:board": "node --env-file-if-exists=.env.local --test --test-concurrency=1 \"test/board/*.test.js\"",
     "lint": "eslint --fix",
-    "test:advanced": "node --env-file-if-exists=.env.local --test --test-concurrency=1 \"test/advanced/*.test.js\""
+    "test:advanced": "node --env-file-if-exists=.env.local --test --test-concurrency=1 \"test/advanced/*.test.js\"",
+    "demo:qr": "node --env-file-if-exists=.env.local demo/epaper-qr.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "@stylistic/eslint-plugin": "5.10.0",
     "eslint": "10.14.0",
     "globals": "17.14.0",
+    "qrcode-generator": "^2.0.4",
     "usb": "3.2.1"
   },
   "overrides": {
