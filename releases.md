@@ -1,5 +1,13 @@
 # Releases
 
+## 1.3.8
+
+- The BMX055 over SPI: its three drivers unchanged, each on `SpiRegisters`.
+  On r8845's CJMCU-900F (SDO1 and SDO2 both on MISO, PS on D4 driven low)
+  CSB1 is the accelerometer, CSB2 the gyro, CSB3 the magnetometer, read
+  off each select's chip ID. The BMX055 board tests run on I2C or SPI
+  (`BENCH_BMX055_SPI`): all 14 pass on SPI. `docs/setup.md`: the wiring.
+
 ## 1.3.7
 
 - The IMU benchmark's notes: accel+gyro at 8 kHz over SPI stays as it is

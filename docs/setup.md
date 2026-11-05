@@ -366,6 +366,39 @@ same USB transfer as the bytes (a round trip less: polling ~2080 reads/s,
 from ~1830 with `pins()` around each `spi()`). `npm run test:advanced`
 measures them all. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
 
+## The BMX055 over SPI
+
+The BMX055's three chips speak SPI too (BST-BMX055-DS000, Table 61): one
+data input (SDI), two data outputs (SDOAM for the accelerometer and the
+magnetometer, SDOG for the gyro, each high-impedance unless its chip is
+selected), a chip select each, and PS low for SPI. On the CJMCU-900F:
+
+| CJMCU-900F | SPI | CH341A |
+|---|---|---|
+| 3V3, GND | | VCC (3.3V), GND |
+| SCL | SCK | SCK |
+| SDA | SDI | MOSI |
+| SDO1 and SDO2 | SDOAM, SDOG | both to MISO |
+| CSB1 | the accelerometer's select | D0 (CS0) |
+| CSB2 | the gyro's select | D1 (CS1) |
+| CSB3 | the magnetometer's select | D2 (CS2) |
+| PS | low: SPI | D4, driven low (or GND, as the datasheet asks) |
+
+Which CSB is which was read off r8845's module: each select's chip ID
+(0xFA on CSB1, 0x0F on CSB2, 0x32 on CSB3 once woken), the other two
+silent. atiic's three drivers run unchanged, each on its own
+`SpiRegisters`:
+
+```js
+await bus.pins({ D4: false }); // PS low: SPI
+const acc = new Bmx055Accel(await new SpiRegisters(bus, { cs: 'D0' }).open());
+const gyro = new Bmx055Gyro(await new SpiRegisters(bus, { cs: 'D1' }).open());
+const mag = new Bmx055Mag(await new SpiRegisters(bus, { cs: 'D2' }).open());
+```
+
+The BMX055 board tests run on I2C or SPI, whichever the bench has; on
+r8845 `.env.local` has `BENCH_BMX055_SPI=accel=D0,gyro=D1,mag=D2,ps=D4`.
+
 ## A first read
 
 ```js
