@@ -22,6 +22,10 @@
 // holds the last image shown, so this driver is for black/white panels: on
 // a three-colour one that RAM is red.
 
+import { blankFrame, plot } from './frame.js';
+
+export { blankFrame, plot };
+
 const SWRESET = 0x12;
 const DRIVER_OUTPUT = 0x01;
 const DATA_ENTRY = 0x11;
@@ -48,17 +52,6 @@ const BUSY_POLL_MS = 5;
 const BUSY_LIMIT_MS = 10000; // a full update takes ~2.1 s on r8845's module, a partial ~0.59
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// a frame for width x height: a bit a pixel, all white
-export function blankFrame(width, height) {
-  return new Uint8Array(Math.ceil(width / 8) * height).fill(0xff);
-}
-
-// a pixel in a frame black (true) or white
-export function plot(frame, width, x, y, black = true) {
-  const i = y * Math.ceil(width / 8) + (x >> 3), bit = 0x80 >> (x & 7);
-  frame[i] = black ? frame[i] & ~bit : frame[i] | bit;
-}
 
 class Ssd1680 {
   constructor(bus, { cs = 'D2', dc = 'D1', res = 'D0', busy = 'D4', width = 152, height = 152 } = {}) {
