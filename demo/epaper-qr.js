@@ -1,11 +1,11 @@
 // A QR code on the SSD1680 e-paper (r8845's 1.54" 152x152, the CH341A, BUSY
 // on D4): the text from the command line (https://i2c.ninja by default),
 // the smallest QR version that holds it at error correction M, each module
-// as many pixels as fit with a quiet zone of at least 2 modules, centred.
+// as many pixels as fit (no quiet zone unless given), centred.
 // Shown by a full update, then the panel asleep: e-paper keeps it with the
 // power gone, so it stays readable unplugged.
 //
-//   node --env-file-if-exists=.env.local demo/epaper-qr.js [text]
+//   node --env-file-if-exists=.env.local demo/epaper-qr.js [text] [quiet modules]
 //
 // qrcode-generator (MIT, a dev dependency) encodes; atiic draws.
 import qrcode from 'qrcode-generator';
@@ -15,7 +15,11 @@ import { openCh341 } from '../src/adapters/ch341/node.js';
 
 const TEXT = process.argv[2] ?? 'https://i2c.ninja';
 const ECC = 'M';
-const QUIET_MODULES = 2; // the spec asks 4; the panel's white margin helps
+// the white quiet zone around it, in modules. The spec asks 4; on r8845's
+// module none scans fine (a phone, 2026-11-05: https://i2c.ninja, 6-pixel
+// modules, 150 of the 152 pixels), the panel's white surround serving, so
+// none by default: the biggest code. 2 gave 5-pixel modules, 125 pixels
+const QUIET_MODULES = Number(process.argv[3] ?? 0);
 
 const lines = process.env.BENCH_SSD1680
   ? Object.fromEntries(process.env.BENCH_SSD1680.split(',').map((kv) => kv.trim().split('=')))

@@ -1,5 +1,15 @@
 # Releases
 
+## 1.2.3
+
+- `demo/epaper-qr.js` (`npm run demo:qr [text] [quiet modules]`): a QR code
+  on the SSD1680 e-paper, the panel left asleep, readable unplugged.
+  `https://i2c.ninja` as version 2-M at 6 pixels a module (150 of 152
+  pixels) with no quiet zone scans fine on a phone; at the spec's margin it
+  was 5 pixels (125). `qrcode-generator` 2.0.4 (MIT) as a dev dependency,
+  the demo's only; its capacities match the QR tables quoted (versions
+  2, 3, 6, 12 at L and M).
+
 ## 1.2.2
 
 - `Ssd1680.showPartial(frame)`: a partial update, the chip's display mode 2

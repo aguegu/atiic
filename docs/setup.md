@@ -259,6 +259,20 @@ panel shows red: the driver is for black/white panels. The board test
 leaves a card labelled with both times, the second label added by a
 partial update.
 
+### A QR code that stays
+
+`npm run demo:qr [text] [quiet modules]` (`demo/epaper-qr.js`) puts a QR
+code on the e-paper, `https://i2c.ninja` unless told otherwise: the smallest
+version that holds the text at error correction M, its modules as big as
+fit, then the panel asleep. E-paper holds its picture with no power, so it
+stays readable unplugged. On r8845's module `https://i2c.ninja` is version
+2 (25x25), 6 pixels a module, 150 of the 152 pixels: with no quiet zone of
+its own it scans fine on a phone, the panel's white surround serving as
+one. What fits 152 pixels at 2 pixels a module (the practical smallest):
+version 12, 287 bytes at error correction M; at 3 pixels, version 6, 106
+bytes. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
+only.
+
 ## A first read
 
 ```js
