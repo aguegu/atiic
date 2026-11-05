@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -13,6 +13,8 @@ export const REFERENCES = [
   // BMX055's accelerometer: its configuration, 0x0f-0x3d (FIFO_STATUS 0x0e and FIFO_DATA 0x3f outside);
   // PMU_BW takes 0x08-0x0f
   { Driver: Bmx055Accel, wake: [0x11, 0x00], staticFirst: 0x0f, staticLast: 0x3d, writable: 0x10, values: [0x09, 0x0e] },
+  // BMX055's gyro: the same span of configuration; BW takes 0x00-0x07
+  { Driver: Bmx055Gyro, wake: [0x11, 0x00], staticFirst: 0x0f, staticLast: 0x3d, writable: 0x10, values: [0x05, 0x06] },
 ];
 
 async function probe() {
