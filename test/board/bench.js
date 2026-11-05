@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, SpiRegisters } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -21,6 +21,10 @@ export const REFERENCES = [
   // read and written as usual); LED1_PA takes any byte
   { Driver: Max30102, wake: [0x09, 0x80], staticFirst: 0x08, staticLast: 0x0d, writable: 0x0c, values: [0x5a, 0xa5] },
 ];
+
+// the other chips looked for: no registers for the CH341 test to try
+// (Sht20: commands only)
+const OTHERS = [Sht20];
 
 // BENCH_PS (from .env.local, or the environment): the CH341 line wired to a
 // BMX055's PS pin (D0 on r8845's CH341A). PS picks the BMX055's interface:
@@ -52,12 +56,16 @@ async function probe() {
   const bus = await openCh341();
   try {
     if (PS) await bus.pins({ [PS]: true });
-    for (const { Driver } of REFERENCES) {
+    for (const Driver of [...REFERENCES.map((r) => r.Driver), ...OTHERS]) {
       for (const a of Driver.addresses) {
         if (!(await bus.acks(a))) continue;
         if (Driver.chip.idWake) { // a chip whose ID reads only once woken
           await bus.write(a, Driver.chip.idWake);
           await new Promise((resolve) => setTimeout(resolve, Driver.chip.idWakeMs));
+        }
+        if (Driver.chip.identify) { // a chip known by a check of its own, no ID register
+          if (await Driver.chip.identify(bus, a)) { found.set(Driver, a); break; }
+          continue;
         }
         const [id] = await bus.writeRead(a, [Driver.chip.idRegister], 1);
         if (id === Driver.chip.whoAmI) { found.set(Driver, a); break; }
@@ -75,7 +83,7 @@ export const addressOf = (Driver) => found.get(Driver) ?? null;
 
 // a describe() option: skip with the reason unless the chip is on the bench
 export const onlyWith = (Driver) => ({
-  skip: found.has(Driver) ? false : `no ${Driver.chip.name} on the bench (none at ${Driver.addresses.map((a) => `0x${a.toString(16)}`).join(' or ')} with ID 0x${Driver.chip.whoAmI.toString(16)})`,
+  skip: found.has(Driver) ? false : `no ${Driver.chip.name} on the bench (none at ${Driver.addresses.map((a) => `0x${a.toString(16)}`).join(' or ')}${Driver.chip.identify ? '' : ` with ID 0x${Driver.chip.whoAmI.toString(16)}`})`,
 });
 
 // the first chip found, with its address: the CH341 test's reference
