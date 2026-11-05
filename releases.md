@@ -1,5 +1,14 @@
 # Releases
 
+## 1.1.5
+
+- `docs/setup.md`, "The round module: a rectangle behind a circle": the
+  GC9A01's memory, scan and every write are rectangles; 45,244 of its
+  57,600 pixels show (78.5%), a frame sends 24,712 bytes to the corners;
+  the rows' chords; the largest rectangle inside, 169x169; why skipping
+  the corners hardly pays over the CH341 (windows cost round trips: ~11%
+  at best in bands, more than it saves row by row, estimated).
+
 ## 1.1.4
 
 - A note on scrolling's one direction (`dcs-panel.js`, `docs/setup.md`): the

@@ -195,6 +195,35 @@ And a round 240x240 IPS module, 32.4 mm across, on a GC9A01 (`Gc9a01`,
 (`mirrorX`). A whole frame is 115,200 bytes: about a second over the CH341,
 a scrolled strip chart's row 10.8 ms.
 
+### The round module: a rectangle behind a circle
+
+The GC9A01 doesn't know it's round. Its memory is a rectangle (320x240;
+the module uses 240x240 of it), it scans all of it, and every window,
+fill and frame is a rectangle of pixels. The glass shows the circle inside:
+the rest is drawn and never seen.
+
+- **What shows:** 45,244 of the 57,600 pixels, 78.5% (the pixels whose
+  centres lie within 120 of the centre, 119.5, 119.5). A ring drawn at the
+  memory's edge shows whole on r8845's module: the circle touches all four
+  sides.
+- **What's sent anyway:** a 16-bit frame is 115,200 bytes, 24,712 of them
+  for the corners.
+- **A row's visible chord** is short near the top and bottom: 22 pixels on
+  rows 0 and 239 (columns 109-130), 134 on row 20, all 240 in the middle.
+- **The largest rectangle that shows** is the circle's square: 169x169,
+  half the memory. Text and boxes belong in it (the board test's card sits
+  there); round things (dials, rings, arcs) use the rest.
+- **Skipping the corners hardly pays over the CH341.** A window costs its
+  commands' round trips (about 4 ms, judging by a strip chart's step) as
+  well as its bytes, so drawing in bands, each as wide as its widest row,
+  saves at best about 11% (estimated: 12 bands, 97,600 bytes, ~935 ms
+  against ~1,050 for the whole frame), and drawing each row's chord alone
+  costs more than it saves (240 windows: ~1,780 ms). Send the whole frame,
+  or only what changed.
+- **Scrolling** moves the whole rectangle: rows pass through the hidden
+  corners on their way, and it runs upwards as the module sits (see the
+  note above).
+
 All three drivers are `DcsPanel`s: the same calls. Their board tests leave
 a card that labels itself: thirds in 12, 16 and 18 bits.
 

@@ -13,6 +13,10 @@
 // inverted (without INVON a white ground, the squares their complements),
 // BGR, the columns mirrored (MX: a marker above the red square showed on the
 // right), the memory's 240x240 at 0, 0 (a ring at its edge whole).
+//
+// Round only on the glass: the chip draws, scans and is sent a rectangle.
+// 78.5% of the 240x240 shows (45,244 pixels); the largest rectangle inside
+// is 169x169 (docs/setup.md, "The round module").
 import DcsPanel from './dcs-panel.js';
 
 class Gc9a01 extends DcsPanel {
