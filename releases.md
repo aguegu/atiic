@@ -1,5 +1,23 @@
 # Releases
 
+## 1.0.10
+
+- `Ch341.pins({ D0: true, ... })`: the CH341's D0-D5 driven high or low, or
+  released to an input (`null`), by its UIO stream (flashrom's command), in
+  the adapter's queue, the lines not named kept. Host tests: the packet's
+  bytes, D6/D7 refused, the lines remembered (36 in all).
+- `BENCH_PS`: the CH341 line wired to a BMX055's PS pin, from an untracked
+  `.env.local` (`test:board` and `test:advanced` read it, Node's
+  `--env-file-if-exists`); the bench probe drives it high first. On r8845, a
+  CH341A (it works as the CH341T did: the same 1a86:5512, the same release
+  0x0304) with D0 on PS: floating, nothing answered; driven high, all three
+  chips.
+- Found on the way: PS driven low while it runs puts the BMX055 on SPI, but
+  back high only the gyro and the magnetometer returned; the accelerometer
+  stayed on SPI until the module was powered off and on. The datasheet has
+  PS wired fixed; the pins test drives it high only.
+- Board 19 of 19, three runs (the pins test new).
+
 ## 1.0.9
 
 - The BMX055's magnetometer (`src/devices/bmx055-mag.js`,

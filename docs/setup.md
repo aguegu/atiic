@@ -96,6 +96,12 @@ floating the module answered nothing on I2C. atiic drives all three
 (`Bmx055Accel`, `Bmx055Gyro`, `Bmx055Mag`); the tests find each by its chip
 ID (the magnetometer's reads only once its power bit is set).
 
+On r8845 the BMX055 sits on a CH341A whose **D0** drives PS: put
+`BENCH_PS=D0` in an untracked `.env.local`, and `npm run test:board` drives
+D0 high before anything looks for a chip. Never drive PS low while it runs:
+the gyro and the magnetometer come back when it goes high again, but the
+accelerometer stays on SPI until the module is powered off and on.
+
 ## A first read
 
 ```js
