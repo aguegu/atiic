@@ -246,8 +246,15 @@ plot(frame, 152, 10, 10); // black
 const ms = await epd.show(frame); // a full update: BUSY high ~2.1 s
 plot(frame, 152, 20, 10);
 await epd.showPartial(frame); // only what changed, no flash: ~0.59 s
-await epd.sleep();
+await epd.sleep(); // deep sleep 1: the RAM kept, 1-3 uA (the datasheet)
+await epd.wake(); // a HW reset and the settings: partial updates go on
 ```
+
+Asleep, BUSY stays high and only a HW reset wakes it. The RAM comes
+through the sleep and the reset: on r8845's module a partial update right
+after a wake (no SWRESET, the previous image not rewritten) moved a square
+cleanly. `wake()` without an earlier `sleep()` (the power lost) runs
+`init()`, and the next update is a full one.
 
 A full update flashes the panel and takes 2.10 s of BUSY on r8845's module
 (plus about 58 ms to send the RAM). A partial update (the chip's display

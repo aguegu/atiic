@@ -1,5 +1,16 @@
 # Releases
 
+## 1.2.5
+
+- `Ssd1680.wake()`: out of deep sleep mode 1 by a HW reset (the only way
+  out) and the panel's settings, no SWRESET. The RAM comes through: on
+  r8845's module a partial update right after a 3 s sleep, RAM 26h not
+  rewritten, moved a square cleanly, no ghost. Without an earlier
+  `sleep()`, `init()`. `init()` split into `hardwareReset()` and
+  `configure()`.
+- Host tests (67 in all); the board test sleeps (BUSY high), wakes (BUSY
+  low) and makes a partial update.
+
 ## 1.2.4
 
 - `docs/setup.md`: the QR demo's sizes on the 152x152 (6 down to 2 pixels
