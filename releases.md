@@ -1,5 +1,14 @@
 # Releases
 
+## 1.2.7
+
+- `demo/epaper-qr.js`: the SSD1681 when `BENCH_SSD1681` is set (on the
+  200x200, `https://i2c.ninja` is version 2 at 8 pixels a module, 200
+  pixels); a warning when the text just misses a version that would draw
+  bigger: "690 bytes need version 21, 1 px a module; version 20 holds 666
+  at M: cut 24 bytes for 2 px a module". Version 20-M at 2 pixels (666
+  bytes, 194 pixels) scans on a phone.
+
 ## 1.2.6
 
 - `Ssd1681`: Solomon Systech's SSD1681 on r8845's 1.54" 200x200

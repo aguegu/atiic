@@ -297,7 +297,11 @@ capacities, bytes at error correction L / M):
 2 pixels (about 0.36 mm a module) still scans on a phone: 355 bytes as
 version 14-M did on r8845's module. Past a version's capacity the code
 jumps a version and may drop to fewer pixels a module: 374 bytes made
-version 15 (77 modules), 1 pixel each, 77 pixels across. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
+version 15 (77 modules), 1 pixel each, 77 pixels across. The demo warns when that
+happens: the bytes, what the version below holds, and how many to cut to
+get the bigger modules back. On the 200x200 SSD1681, 2 pixels a module
+reach version 20 (97 modules, 194 pixels): 666 bytes at M, and it scans
+(about 0.28 mm a module); 690 bytes went to version 21 at 1 pixel. `qrcode-generator` (MIT) encodes, as a dev dependency of the demo
 only.
 
 ## A first read
