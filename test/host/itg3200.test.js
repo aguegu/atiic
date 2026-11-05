@@ -23,9 +23,13 @@ class FakeItg3200 {
     values.forEach((v, i) => { this.regs[reg + i] = v; });
   }
 
+  // asleep (r8845's part): every register but PWR_MGM reads 0; reset: awake
   async writeRead(address, [reg], n) {
     assert.equal(address, ADDRESS);
-    return this.regs.slice(reg, reg + n);
+    if (this.regs[0x3e] & 0x80) this.regs[0x3e] = 0;
+    const out = this.regs.slice(reg, reg + n);
+    if (this.regs[0x3e] & 0x40) out.forEach((_, i) => { if (reg + i !== 0x3e) out[i] = 0; });
+    return out;
   }
 }
 
@@ -51,6 +55,13 @@ describe('itg3200 (host)', () => {
     const bus = new FakeItg3200();
     await new Itg3200(bus).init();
     assert.deepEqual(bus.writes, [[0x3e, 0x80], [0x3e, 0x01], [0x15, 0x00, 0x1a]]);
+  });
+
+  it('inits a chip left asleep (its WHO_AM_I reading 0 till woken)', async () => {
+    const bus = new FakeItg3200();
+    bus.regs[0x3e] = 0x41;
+    await new Itg3200(bus).init();
+    assert.deepEqual(bus.writes[0], [0x3e, 0x80]);
   });
 
   it('refuses another chip', async () => {

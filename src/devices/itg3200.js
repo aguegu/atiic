@@ -15,6 +15,9 @@
 // WHO_AM_I (0x00) holds its address's bits 6-1 (110100); bit 0 isn't
 // defined (r8845's part reads 0x69 at 0x68). An MPU-6050 also sits at 0x68:
 // the bench tells them apart by 0x75 (an MPU's WHO_AM_I: 0x68, 0x70).
+// Asleep, every register but PWR_MGM reads 0, WHO_AM_I too (r8845's part;
+// the specification doesn't say), its settings kept: init() resets first,
+// and a bench wakes it before asking (chip.idWake).
 
 const REG_WHO_AM_I = 0x00;
 const REG_SMPLRT_DIV = 0x15;
@@ -51,6 +54,8 @@ export const celsius = (raw) => TEMP_OFFSET_C + (raw - TEMP_OFFSET_LSB) / TEMP_L
 class Itg3200 {
   static chip = {
     name: 'ITG-3200',
+    idWake: [REG_PWR_MGM, 0x00], // awake on the internal oscillator: asleep, WHO_AM_I reads 0
+    idWakeMs: STARTUP_MS,
     // WHO_AM_I's address bits, and not an MPU's WHO_AM_I at 0x75
     async identify(bus, address) {
       const [id] = await bus.writeRead(address, [REG_WHO_AM_I], 1);
@@ -65,12 +70,13 @@ class Itg3200 {
     this.address = address;
   }
 
-  // reset; the X gyro's PLL; +/-2000 deg/s, 98 Hz, 1 kHz; settled
+  // reset (awake, should it sleep); the X gyro's PLL; +/-2000 deg/s, 98 Hz,
+  // 1 kHz; settled
   async init() {
-    const [id] = await this.bus.writeRead(this.address, [REG_WHO_AM_I], 1);
-    if ((id & ID_MASK) !== ID) throw new Error(`no ITG-3200 at 0x${this.address.toString(16)} (WHO_AM_I 0x${id.toString(16)})`);
     await this.bus.write(this.address, [REG_PWR_MGM, H_RESET]);
     await delay(STARTUP_MS);
+    const [id] = await this.bus.writeRead(this.address, [REG_WHO_AM_I], 1);
+    if ((id & ID_MASK) !== ID) throw new Error(`no ITG-3200 at 0x${this.address.toString(16)} (WHO_AM_I 0x${id.toString(16)})`);
     await this.bus.write(this.address, [REG_PWR_MGM, CLK_PLL_X]);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, DIV_1KHZ, FS_2000 | DLPF_98HZ]);
     await delay(SETTLE_MS);

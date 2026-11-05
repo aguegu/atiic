@@ -39,6 +39,13 @@ describe('itg3200 (board)', onlyWith(Itg3200), () => {
     for (const k of ['x', 'y', 'z']) assert.ok(Math.abs(a[k] - b[k]) < AGREE_DPS, `${k}: ${a[k]} then ${b[k]} deg/s`);
   });
 
+  it('sleeps, then inits again (asleep its WHO_AM_I reads 0)', async () => {
+    await gyro.sleep();
+    await gyro.init();
+    const { temperature } = await gyro.measure();
+    assert.ok(temperature > 5 && temperature < 50, `${temperature} C`);
+  });
+
   it('sleeps', async () => {
     await gyro.sleep();
   });
