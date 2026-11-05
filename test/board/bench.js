@@ -66,6 +66,9 @@ async function probe() {
     if (PS) await bus.pins({ [PS]: true });
     for (const Driver of [...REFERENCES.map((r) => r.Driver), ...OTHERS]) {
       for (const a of Driver.addresses) {
+        // an address a chip found before holds: not asked again (an
+        // ITG-3200's idWake writes 0x3E, a BMX055 gyro's FIFO_CONFIG_1)
+        if ([...found.values()].includes(a)) continue;
         if (!(await bus.acks(a))) continue;
         if (Driver.chip.idWake) { // a chip whose ID reads only once woken
           await bus.write(a, Driver.chip.idWake);
