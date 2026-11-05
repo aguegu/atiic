@@ -1,32 +1,27 @@
-// the CH341 on a bench: a CH341 in I2C mode with an MPU-6050 at 0x68 on its
-// bus (r8845). Its registers are the reference: a block read across
-// packets must agree with reading them one by one.
+// the CH341 on a bench: a CH341 in I2C mode with a known chip on its bus
+// (bench.js finds which: an MPU-6050 or MPU-6500, or a BMX055 on r8845).
+// That chip's registers are the reference: a block read across packets must
+// agree with reading them one by one.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
+import { reference as ref } from './bench.js';
 
-const MPU = 0x68;
-const ABSENT = 0x10; // nothing on the bench answers here
-const REG_SMPLRT_DIV = 0x19;
-const REG_PWR_MGMT_1 = 0x6b;
-const PWR_AWAKE = 0x00; // asleep, the MPU-6050 ignores writes to its other registers
-const STATIC_FIRST = 0x0d; // SELF_TEST_X .. INT_ENABLE: no sensor data among them
-const STATIC_LAST = 0x39; // INT_STATUS (0x3a) after it clears on read
+const ABSENT = 0x2a; // none of the bench's chips answers here
 
-let bus;
-
-describe('ch341', () => {
+describe('ch341', { skip: ref ? false : 'no known chip on the bench to read registers from' }, () => {
+  let bus;
   before(async () => {
     bus = await openCh341();
-    await bus.write(MPU, [REG_PWR_MGMT_1, PWR_AWAKE]);
+    await bus.write(ref.address, ref.wake); // asleep, a chip may ignore writes
   });
 
   after(async () => {
     await bus?.close();
   });
 
-  it('scans: the MPU-6050 and nothing else', async () => {
-    assert.deepEqual(await bus.scan(), [MPU]);
+  it(`scans: the ${ref?.Driver.chip.name} among the addresses that answer`, async () => {
+    assert.ok((await bus.scan()).includes(ref.address));
   });
 
   it('a missing device throws, and the bus works after', async () => {
@@ -36,25 +31,25 @@ describe('ch341', () => {
     } catch (e) {
       err = e;
     }
-    assert.equal(err?.message, 'no ack from 0x10');
-    assert.equal(await bus.acks(MPU), true);
+    assert.equal(err?.message, `no ack from 0x${ABSENT.toString(16)}`);
+    assert.equal(await bus.acks(ref.address), true);
   });
 
   it('a block read across packets agrees with byte reads', async () => {
-    const n = STATIC_LAST - STATIC_FIRST + 1;
-    const block = await bus.writeRead(MPU, [STATIC_FIRST], n);
+    const n = ref.staticLast - ref.staticFirst + 1;
+    const block = await bus.writeRead(ref.address, [ref.staticFirst], n);
     const single = [];
-    for (let r = STATIC_FIRST; r <= STATIC_LAST; r++) {
-      single.push((await bus.writeRead(MPU, [r], 1))[0]);
+    for (let r = ref.staticFirst; r <= ref.staticLast; r++) {
+      single.push((await bus.writeRead(ref.address, [r], 1))[0]);
     }
     assert.deepEqual(Array.from(block), single);
   });
 
   it('writes, read back', async () => {
-    const [was] = await bus.writeRead(MPU, [REG_SMPLRT_DIV], 1);
-    for (const v of [0x5a, 0xa5, was]) {
-      await bus.write(MPU, [REG_SMPLRT_DIV, v]);
-      assert.equal((await bus.writeRead(MPU, [REG_SMPLRT_DIV], 1))[0], v);
+    const [was] = await bus.writeRead(ref.address, [ref.writable], 1);
+    for (const v of [...ref.values, was]) {
+      await bus.write(ref.address, [ref.writable, v]);
+      assert.equal((await bus.writeRead(ref.address, [ref.writable], 1))[0], v);
     }
   });
 });

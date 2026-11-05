@@ -13,6 +13,7 @@ const A_DLPF_20HZ = 0x04; // ACCEL_CONFIG2's A_DLPF_CFG, ACCEL_FCHOICE_B 0: the 
 class Mpu6500 extends Mpu6050 {
   static chip = {
     name: 'MPU-6500',
+    idRegister: 0x75, // WHO_AM_I
     whoAmI: 0x70,
     tempLsb: 333.87, // LSB per degree C
     tempOffset: 21, // degrees C at a reading of 0

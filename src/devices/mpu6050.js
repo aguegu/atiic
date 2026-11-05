@@ -36,6 +36,7 @@ class Mpu6050 {
   // what differs between the chips of the family (Mpu6500 has its own)
   static chip = {
     name: 'MPU-6050',
+    idRegister: REG_WHO_AM_I,
     whoAmI: 0x68, // whatever AD0 is
     tempLsb: 340, // LSB per degree C
     tempOffset: 36.53, // degrees C at a reading of 0
