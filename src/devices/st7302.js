@@ -20,7 +20,9 @@
 // Frame rates (FRCTRL B2h): the glass is redrawn 16 or 32 times a second in
 // high power mode (HPM, 38h), 0.25-8 in low power mode (LPM, 39h). On
 // r8845's module, a square moved a frame every 100 ms: HPM at 16 and 32 Hz
-// blinked too much (with zhcong's set-up, tuned for LPM), LPM at 8 Hz left
+// blinked too much, still pictures as well, with either gate scan (B8h 09h,
+// zhcong's, or 05h, one line interval; zhcong's set-up is tuned for LPM, its
+// HPM voltages untried), LPM at 8 Hz left
 // ghosts, at 4 Hz fine; zhcong's set-up sets no rate, and LPM at its default
 // moved nothing in 0.8 s. So init() ends in LPM at 4 Hz; frameRate() changes
 // it.

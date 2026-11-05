@@ -322,7 +322,8 @@ await lcd.frameRate(1); // 0.25-8 Hz low power, 16 or 32 high power
 ```
 
 On r8845's module, a square moving a frame every 100 ms: in high power mode
-(16 and 32 Hz) the panel blinked; in low power mode at 8 Hz it left ghosts,
+(16 and 32 Hz) the panel blinked, still pictures too and with either gate
+scan, too much to use; in low power mode at 8 Hz it left ghosts,
 at 4 Hz it was fine, the default. The set-up's values are
 zhcong/ST7302-for-arduino's (MIT); the datasheet names the commands only.
 Its RAM packs 12 pixels across by 2 down in 3 bytes; the driver packs the

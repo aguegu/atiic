@@ -1,5 +1,12 @@
 # Releases
 
+## 1.3.2
+
+- The ST7302's high power mode, looked at again: at 16 and 32 Hz the panel
+  blinks, still pictures as well as moving ones, with zhcong's gate scan
+  (B8h 09h) or one line interval (05h): too much to use. Noted in the
+  driver and `docs/setup.md`; low power at 4 Hz stays the default.
+
 ## 1.3.1
 
 - `St7302`: Sitronix's ST7302 on r8845's 2.13" 122x250 reflective mono TFT
