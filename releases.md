@@ -1,5 +1,35 @@
 # Releases
 
+## 1.1.0
+
+SPI: the CH341 drives an SPI device, and the first one is a display.
+
+- `Ch341.spi(bytes)`: full duplex on SCK (D3), MOSI (D5), MISO (D7), chip
+  selects by `pins()`. Mode 0, MSB first to the device: the CH341 shifts
+  LSB first under every stream mode (r8845; WCH's `CH341DLL.H` gives its
+  0x60 no bit-order bit), so atiic reverses each byte. Replies read while
+  the packets go out (the CH341 stalls otherwise), 16 packets a round:
+  about 110-117 KB/s, the same from 8 packets a round up to a whole screen
+  in one; WCH's DLL says about 68 KB/s.
+- Node's opener resets the CH341 (USB reset) on open: a run cut short left
+  it taking no command. Driven lines hold over the reset.
+- `St7735s`: the Sitronix ST7735S on 4-wire SPI (RES, DC, CS on any of
+  D0-D5), r8845's 0.96" 80x160 IPS module's settings as defaults (BGR, no
+  inversion, column 24). Colours `0xRRGGBB`; `bits: 12 | 16 | 18` picks the
+  pixel format (a screen in 174, 227, 341 ms; a 12-bit odd count's padding
+  checked by eye); `scrollArea()`, `scroll(n)`, `scrollRow(n)`,
+  `scrollOff()` use the controller's scrolling, a strip chart's step 4.2 ms.
+- `BENCH_ST7735` (`res=D0,dc=D1,cs=D2`) in `.env.local` turns on the display's
+  board test; the pins test skips without a BMX055.
+- Docs: `docs/ch341.md`'s SPI section (bit order, speed, sources: WCH's
+  CH341 EVT), `docs/setup.md`'s display bench. Datasheets kept untracked in
+  `docs/`: the ST7735S (V1.3), WCH's CH341 EVT header and the CH347's, for
+  a CH347T adapter next (60 MHz SPI, MSB or LSB, high-speed USB).
+
+1.0.14-1.0.19 led here: SPI and the driver (1.0.14), the bit order
+(1.0.15, 1.0.17), the datasheet cited (1.0.16), the pixel formats
+(1.0.18), scrolling (1.0.19).
+
 ## 1.0.13
 
 - The setup drawing and the V357's header table mark CS1 and CS2 as the
