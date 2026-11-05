@@ -1,5 +1,18 @@
 # Releases
 
+## 1.3.6
+
+- `Ch341.spiSelected(cs, bytes)`: SPI with a chip select, the line driven
+  low in the same USB transfer as the bytes (its command padded to a
+  packet of its own, as flashrom does), high in the next: a round trip
+  less than `pins()`, `spi()`, `pins()`. (The high can't join: a short
+  SPI packet ends a transfer, and padding it would clock out bytes.)
+  `SpiRegisters` uses it where the bus has it.
+- The MPU-6500 over SPI with it: polling ~2080 reads/s (from ~1830);
+  accel+gyro at 8 kHz still overflows, less: 88-90 KiB/s and 6-14
+  overflows in 2 s (from 83-84, 27-28). What's left is mostly the wire:
+  96 KB/s against the CH341's ~110. Host tests (81 in all).
+
 ## 1.3.5
 
 - The IMU benchmark's accel+gyro at 8 kHz (12-byte frames, 96 KB/s): over

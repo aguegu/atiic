@@ -13,12 +13,11 @@
 //  - the FIFO: accel+gyro and gyro at 1 kHz every frame; gyro alone at
 //    8 kHz every frame too (7934-7948 frames/s, 46.5 KiB/s, 3 runs): the
 //    CH341's SPI (~110 KB/s) has room where its I2C hasn't
-//  - accel+gyro at 8 kHz (96 KB/s) overflows: 7087-7203 frames/s, 83-84
-//    KiB/s, 27-28 overflows in 2 s (3 runs). The 512-byte FIFO fills in
-//    5.3 ms; a read cycle (the count, then the frames, each with its chip
-//    select changes: six USB transfers) takes ~3.8 ms, and a late one loses
-//    frames. Fewer transfers a read (the CS pins and the SPI in one) may
-//    bring it in: not tried
+//  - accel+gyro at 8 kHz (96 KB/s) overflows: the 512-byte FIFO fills in
+//    5.3 ms. With pins() around each spi(): 83-84 KiB/s, 27-28 overflows
+//    in 2 s (1.3.5); with spiSelected() (CS low in the SPI's transfer,
+//    1.3.6): 88-90 KiB/s, 6-14 overflows, polling 1830 -> ~2080 reads/s.
+//    What's left is mostly the wire: 96 KB/s against the CH341's ~110
 // Keep the module still; each row runs ROW_MS.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
