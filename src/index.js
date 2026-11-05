@@ -7,6 +7,7 @@ import Max30102 from './devices/max30102.js';
 import Sht20 from './devices/sht20.js';
 import Vl53l1x from './devices/vl53l1x.js';
 import Mlx90614 from './devices/mlx90614.js';
+import Aht21 from './devices/aht21.js';
 import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
@@ -25,6 +26,7 @@ export {
   Sht20,
   Vl53l1x,
   Mlx90614,
+  Aht21,
   St7735s,
   Gc9107,
   Gc9a01,
