@@ -459,6 +459,26 @@ chips on the bench (`chip.maxSclHz`). Single or dual zone is the part
 number's (xAx single; xBx, xCx dual): this one's config register says dual,
 its can says single, its "zone 2" reads nonsense.
 
+## Humidity again: the AHT21B
+
+Aosong's AHT21B at 0x38 (r8845: on the CH341T):
+
+```js
+const a = new Aht21(bus);
+await a.init(); // its status must read 0x18: calibrated
+const { temperature, humidity } = await a.measure(); // ~80 ms; every 2 s or more
+```
+
+Its datasheet (V1.0, May 2021): status by command 0x71, a measurement by
+0xAC 0x33 0x00, 7 bytes back with a CRC-8 (from 0xFF). A chip whose status
+lacks 0x18 needs Aosong's own initialisation of three registers, which the
+datasheet doesn't give: the driver refuses it. On r8845: 28.1 C, 67.7 % RH,
+close to the SHT20's beside it.
+
+Tried and set aside: Aosong's AGS10 (a TVOC sensor) wants I2C at 15 kHz or
+under and a 3.0 V supply (± 0.1 V); the CH341 goes no slower than 20 kHz,
+and the dongle's 3.3 V is over. It didn't answer.
+
 ## A first read
 
 ```js

@@ -1,5 +1,16 @@
 # Releases
 
+## 1.3.14
+
+- `Aht21`: Aosong's AHT21B at 0x38, from its datasheet (V1.0, May 2021):
+  the status (0x71) checked for 0x18, a measurement (0xAC 0x33 0x00, 80
+  ms, the busy bit), its CRC-8, the formulas. A chip needing Aosong's
+  unpublished initialisation is refused. On r8845's CH341T: 28.1 C, 67.7 %
+  RH. Host tests (108 in all), a board test.
+- The AGS10 (TVOC) set aside: its datasheet asks I2C at 15 kHz or under
+  (the CH341: 20 kHz at the least) and 3.0 V ± 0.1 (the dongle: 3.3 V);
+  it answered at no clock.
+
 ## 1.3.13
 
 - `Mlx90614`: Melexis' IR thermometer at 0x5A, from its datasheet (Rev
