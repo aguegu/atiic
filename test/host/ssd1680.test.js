@@ -46,7 +46,7 @@ describe('ssd1680 (host)', () => {
     ]);
   });
 
-  it('show: the frame to the black/white RAM, zeros to the red, a full update, BUSY waited', async () => {
+  it('show: the frame into both RAMs, a full update (F7h), BUSY waited', async () => {
     const bus = new FakeBus([true, true, false]);
     const frame = blankFrame(152, 152);
     plot(frame, 152, 0, 0);
@@ -55,9 +55,33 @@ describe('ssd1680 (host)', () => {
     assert.deepEqual(cs.map((c) => c.c), [0x4e, 0x4f, 0x24, 0x4e, 0x4f, 0x26, 0x22, 0x20]);
     assert.equal(cs[2].data.length, 2888);
     assert.equal(cs[2].data[0], 0x7f); // the top-left pixel black, the MSB
-    assert.ok(cs[5].data.every((b) => b === 0));
+    assert.deepEqual(cs[5].data, cs[2].data); // the previous image for mode 2
     assert.deepEqual(cs[6].data, [0xf7]);
     assert.equal(bus.log.filter((e) => e[0] === 'read').length, 3);
+  });
+
+  it('showPartial: the new frame into 24h, mode 2 (FFh), BUSY waited, then the frame into 26h', async () => {
+    const bus = new FakeBus();
+    const epd = new Ssd1680(bus);
+    await epd.show(blankFrame(152, 152));
+    bus.log.length = 0;
+    bus.busyReads = [true, false];
+    const frame = blankFrame(152, 152);
+    plot(frame, 152, 8, 0);
+    await epd.showPartial(frame);
+    const cs = commands(bus.log);
+    assert.deepEqual(cs.map((c) => c.c), [0x4e, 0x4f, 0x24, 0x22, 0x20, 0x4e, 0x4f, 0x26]);
+    assert.deepEqual(cs[3].data, [0xff]);
+    assert.equal(cs[2].data[1], 0x7f);
+    assert.deepEqual(cs[7].data, cs[2].data);
+    const reads = bus.log.findIndex((e) => e[0] === 'read'), ramPrevious = bus.log.findLastIndex((e) => e[0] === 'spi' && e[1][0] === 0x26);
+    assert.ok(reads < ramPrevious, '26h written after the update');
+  });
+
+  it('showPartial with nothing shown since init: a full update', async () => {
+    const bus = new FakeBus();
+    await new Ssd1680(bus).showPartial(blankFrame(152, 152));
+    assert.deepEqual(commands(bus.log).find((c) => c.c === 0x22).data, [0xf7]);
   });
 
   it('frames: a bit a pixel, 1 white, the leftmost pixel the MSB', () => {
