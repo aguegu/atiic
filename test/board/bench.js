@@ -25,11 +25,12 @@ export const REFERENCES = [
 // CH341 keeps it while it stays plugged in, across the tests' own opens
 export const PS = process.env.BENCH_PS || null;
 
-// BENCH_ST7735 (from .env.local, or the environment): an ST7735S display on
-// the CH341's SPI, its lines as "res=D0,dc=D1,cs=D2" (r8845's 0.96" 80x160)
-export const ST7735 = process.env.BENCH_ST7735
-  ? Object.fromEntries(process.env.BENCH_ST7735.split(',').map((kv) => kv.trim().split('=')))
-  : null;
+// a display on the CH341's SPI, its lines as "res=D0,dc=D1,cs=D2", from
+// .env.local or the environment: BENCH_ST7735 (r8845's 0.96" 80x160),
+// BENCH_GC9107 (r8845's 1.45" 60x160)
+const lines = (v) => (v ? Object.fromEntries(v.split(',').map((kv) => kv.trim().split('='))) : null);
+export const ST7735 = lines(process.env.BENCH_ST7735);
+export const GC9107 = lines(process.env.BENCH_GC9107);
 
 async function probe() {
   const found = new Map(); // Driver -> address

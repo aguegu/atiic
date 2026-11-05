@@ -1,5 +1,24 @@
 # Releases
 
+## 1.1.1
+
+- `Gc9107`: GalaxyCore's GC9107, on r8845's 1.45" 60x160 IPS module (same
+  wiring as the ST7735S). Its panel needs the chip's inner registers set
+  (Espressif's esp_lcd_gc9107 values behind FE and EF): the standard
+  commands alone left a white haze over a quarter of the screen; with them
+  it shows inverted unless INVON. BGR, 60x160 at column 34 (a whole-memory
+  red fill under a bordered window: no red at any edge).
+- Its 12-bit code is 0x03, as the ST7735S's: the datasheet (V1.2) says 001
+  in its COLMOD table (6.2.28) and 011 in its 4-line serial section
+  (4.2.2); on the module, side by side, 0x03 showed the card and 0x01
+  nothing.
+- `DcsPanel` (`src/devices/dcs-panel.js`): the two chips' shared code
+  (commands, pixel formats, scrolling, drawing); `St7735s` and `Gc9107`
+  give their own (memory rows, COLMOD codes, setup commands, the module's
+  defaults). Host tests for the GC9107 (54 in all); the board tests shared
+  (`test/board/panel.js`), run for `BENCH_ST7735` or `BENCH_GC9107`, the
+  fill limits from each screen's bytes.
+
 ## 1.1.0
 
 SPI: the CH341 drives an SPI device, and the first one is a display.

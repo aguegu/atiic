@@ -176,6 +176,12 @@ shows a ramp in 16 steps, 18 the smoothest (341 ms).
 scrolling along the panel's long side: a strip chart draws one new row a
 step (4.2 ms on r8845, about 240 steps a second) instead of a whole screen.
 
+The same wiring drives a 1.45" 60x160 IPS module on a GC9107 (`Gc9107`,
+`BENCH_GC9107=res=D0,dc=D1,cs=D2`): its panel needs the chip's inner
+registers set (Espressif's values, sent by `init()`; without them a white
+haze over a quarter of the screen), then shows inverted unless INVON; BGR,
+34 columns in. Both drivers are `DcsPanel`s: the same calls.
+
 D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
 two moves to another line.
 

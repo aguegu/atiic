@@ -1,7 +1,7 @@
-// the ST7735S driver against a fake bus: every line change and SPI byte in order
+// the ST7735S and GC9107 drivers (DcsPanel) against a fake bus: every line change and SPI byte in order
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { St7735s } from '../../src/index.js';
+import { St7735s, Gc9107 } from '../../src/index.js';
 import { encodePixels } from '../../src/devices/st7735s.js';
 
 class FakeBus {
@@ -128,5 +128,40 @@ describe('st7735s (host)', () => {
     bus.log.length = 0;
     await lcd.scrollOff();
     assert.deepEqual(commands(bus.log), [{ c: 0x13, data: [] }]);
+  });
+});
+
+describe('gc9107 (host)', () => {
+  it('init: the standard commands, then the inner registers behind FE and EF, inversion on', async () => {
+    const bus = new FakeBus();
+    await new Gc9107(bus).init();
+    const cs = commands(bus.log);
+    assert.deepEqual(cs.slice(0, 4), [
+      { c: 0x01, data: [] }, // SWRESET
+      { c: 0x11, data: [] }, // SLPOUT
+      { c: 0x3a, data: [0x05] }, // COLMOD: 16 bits
+      { c: 0x36, data: [0x08] }, // MADCTL: BGR
+    ]);
+    assert.deepEqual(cs.slice(4, 6), [{ c: 0xfe, data: [] }, { c: 0xef, data: [] }]);
+    assert.deepEqual(cs.at(-4), { c: 0xf1, data: [0x00, 0x2d, 0x2f, 0x3c, 0x6f, 0x1c, 0x0b, 0x00, 0x00, 0x00, 0x07, 0x0d, 0x11, 0x0f] });
+    assert.deepEqual(cs.slice(-3), [{ c: 0x21, data: [] }, { c: 0x13, data: [] }, { c: 0x29, data: [] }]); // INVON, NORON, DISPON
+  });
+
+  it('12 bits: COLMOD 0x03 (r8845; the datasheet\'s 6.2.28 says 0x01)', async () => {
+    const bus = new FakeBus();
+    await new Gc9107(bus, { bits: 12 }).init();
+    assert.deepEqual(commands(bus.log)[2], { c: 0x3a, data: [0x03] });
+  });
+
+  it('its module: 60x160 at column 34', async () => {
+    const bus = new FakeBus();
+    await new Gc9107(bus).fillRect(0, 0, 60, 1, 0xffffff);
+    assert.deepEqual(commands(bus.log)[0], { c: 0x2a, data: [0, 34, 0, 93] });
+  });
+
+  it('scrollArea: all 160 rows of its memory (TFA + VSA + BFA = 160)', async () => {
+    const bus = new FakeBus();
+    await new Gc9107(bus).scrollArea();
+    assert.deepEqual(commands(bus.log)[0], { c: 0x33, data: [0, 0, 0, 160, 0, 0] });
   });
 });
