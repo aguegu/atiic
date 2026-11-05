@@ -1,5 +1,12 @@
 # Releases
 
+## 1.3.16
+
+- README: what atiic is (I2C and SPI drivers, the CH341, Node.js and
+  WebUSB), an example, and the devices board-tested so far: 9 sensors, 6
+  displays, the AGS10 tried and not supported. `package.json`: a
+  description and keywords naming them.
+
 ## 1.3.15
 
 - `Ina231`: TI's current and power monitor at 0x40-0x4F, from its datasheet
