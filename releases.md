@@ -1,5 +1,17 @@
 # Releases
 
+## 1.3.18
+
+- `Adxl345`: Analog Devices' 3-axis accelerometer at 0x53 or 0x1D, from its
+  datasheet (Rev. G): full resolution at +/-16 g (256 LSb/g), 100 Hz,
+  measurement mode, g; its "Using Self-Test" (10 samples averaged each way,
+  4 to settle), Table 15's limits scaled by Table 14 for the supply (3.3 V
+  by default). `init()` waits 4 samples: on r8845 the first sample after
+  the turn-on read 5 % short (Y 265 against a settled 280 LSb), the next
+  one had settled. On r8845: |a| 1.09 g at rest (280 LSb/g on Y, inside
+  230-282); self test +289 -302 +598 LSb, in range. Host tests (128 in
+  all), a board test.
+
 ## 1.3.17
 
 - `Hmc5883l`: Honeywell's 3-axis magnetometer at 0x1E, from its datasheet
