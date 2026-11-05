@@ -354,8 +354,12 @@ await mpu.init(); // WHO_AM_I 0x70 over SPI
 ```
 
 The MPU-6500 takes register writes at up to 1 MHz on SPI; the CH341's
-clock is under that or near it: on r8845 every write read back. Its FIFO
-at 1 kHz loses nothing. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
+clock is under that or near it: on r8845 every write read back.
+
+Faster than I2C: polling its 14 data bytes runs ~1830 reads a second (25
+KiB/s), and its FIFO keeps gyro alone at 8 kHz without losing a frame (46.5
+KiB/s), which the CH341's I2C at 400 kHz can't (it overflows; ~31 KiB/s
+seen). `npm run test:advanced` measures both. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
 
 ## A first read
 

@@ -1,5 +1,13 @@
 # Releases
 
+## 1.3.4
+
+- The IMU benchmark (`test/advanced/imu.test.js`) runs over SPI too
+  (`BENCH_MPU6500_SPI`). The MPU-6500 on the CH341A's SPI: polling ~1830
+  reads/s (25 KiB/s); its FIFO at 1 kHz every frame, and gyro alone at
+  8 kHz every frame too (7934-7948 frames/s, 46.5 KiB/s, 3 runs), where on
+  I2C at 400 kHz it overflows.
+
 ## 1.3.3
 
 - `SpiRegisters` (`src/buses/spi-registers.js`): a register-addressed SPI

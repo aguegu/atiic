@@ -8,6 +8,11 @@
 //  - the FIFO loses no frame up to gyro alone at 4 kHz (24 KB/s)
 //  - gyro alone at 8 kHz (48 KB/s) overflows: past the bus (44 KB/s at
 //    400 kHz, less the CH341's per-packet round trips: ~31 KiB/s seen)
+// Over SPI (1.3.4, an MPU-6500 on the CH341A, NCS on D4):
+//  - polling ~1830 reads/s (25 KiB/s), 963-967 new samples/s at 1 kHz
+//  - the FIFO: accel+gyro and gyro at 1 kHz every frame; gyro alone at
+//    8 kHz every frame too (7934-7948 frames/s, 46.5 KiB/s, 3 runs): the
+//    CH341's SPI (~110 KB/s) has room where its I2C hasn't
 // Keep the module still; each row runs ROW_MS.
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -85,13 +90,14 @@ for (const { Driver, name, skip: benchSkip, transport } of BENCHES) describe(nam
     { label: 'gyro 2 kHz', accelerometers: false, filter: false, divider: 3, fits: true },
     { label: 'gyro 2.67 kHz', accelerometers: false, filter: false, divider: 2, fits: true },
     { label: 'gyro 4 kHz', accelerometers: false, filter: false, divider: 1, fits: true },
-    { label: 'gyro 8 kHz', accelerometers: false, filter: false, divider: 0, fits: false, spiFits: undefined },
+    { label: 'gyro 8 kHz', accelerometers: false, filter: false, divider: 0, fits: false, spiFits: true },
   ];
 
   for (const row of ROWS) {
     const unsupported = !row.filter && row.divider && !Driver.chip.dividerWithFilterOff;
     const skip = unsupported ? `the ${Driver.chip.name} ignores SMPLRT_DIV with the filter off: 8 kHz only` : false;
-    it(`FIFO ${row.label}: ${row.fits ? 'every frame through' : 'overflows, past the bus'}`, { skip }, async (t) => {
+    const fits = transport === 'spi' && 'spiFits' in row ? row.spiFits : row.fits;
+    it(`FIFO ${row.label}: ${fits ? 'every frame through' : 'overflows, past the bus'}`, { skip }, async (t) => {
       await mpu.startFifo(row);
       let frames = 0, reads = 0, overflows = 0;
       const t0 = performance.now();
@@ -108,8 +114,6 @@ for (const { Driver, name, skip: benchSkip, transport } of BENCHES) describe(nam
       await mpu.stopFifo();
       const f = frames / s;
       t.diagnostic(`${row.label.padEnd(16)} ${f.toFixed(0)} frames/s of ${mpu.sampleRate.toFixed(0)}, ${(f * mpu.fifoFrame / 1024).toFixed(1)} KiB/s, ${(reads / s).toFixed(0)} reads/s, ${overflows} overflows`);
-      const fits = transport === 'spi' && 'spiFits' in row ? row.spiFits : row.fits;
-      if (fits === undefined) return; // not known yet: reported only
       if (fits) {
         assert.equal(overflows, 0);
         assert.ok(within(f, mpu.sampleRate), `${f.toFixed(0)} frames/s`);
