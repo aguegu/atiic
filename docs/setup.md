@@ -88,11 +88,13 @@ the dongle's.
 
 ## Another bench: a CH341A and a BMX055
 
-![A CH341A (V357) dongle in I2C/SPI mode at 3.3V, wired to a BMX055 module, CS0 (D0) to its PS pin](setup-bmx055.svg)
+![A CH341A (V357) dongle in I2C/SPI mode at 3.3V, wired to a BMX055 module (CJMCU-900F), CS0 (D0) to its PS pin](setup-bmx055.svg)
 
 Bosch's 9-axis BMX055 is three chips at three addresses: the accelerometer
 at 0x18 or 0x19, the gyro at 0x68 or 0x69, the magnetometer at 0x10-0x13
-(r8845's module: 0x19, 0x69, 0x13). atiic drives all three (`Bmx055Accel`,
+(r8845's module, a CJMCU-900F: 0x19, 0x69, 0x13). The CJMCU-900F's pins,
+top to bottom: 3V3, GND, SCL, SDA, PS, SDO1, SDO2, CSB1, CSB2, CSB3 (SDO1/2
+and CSB1-3 set the chips' I2C addresses, or are SPI's chip selects). atiic drives all three (`Bmx055Accel`,
 `Bmx055Gyro`, `Bmx055Mag`); the tests find each by its chip ID (the
 magnetometer's reads only once its power bit is set).
 
@@ -125,16 +127,17 @@ Set the jumpers with it unplugged:
 
 ### Wiring
 
-| CH341A header | BMX055 module |
+| CH341A header | CJMCU-900F |
 |---|---|
-| GND (outer) | GND |
-| SCL (outer) | SCL |
-| SDA (outer) | SDA |
-| VCC (outer) | VCC |
-| CS0 (inner) | PS |
+| VCC (outer, row 4) | 3V3 |
+| GND (outer, row 5) | GND |
+| SCL (outer, row 6) | SCL |
+| SDA (outer, row 7) | SDA |
+| CS0 (inner, row 6) | PS |
 
-The drawing shows only these five of the module's pins: modules differ, so
-match the labels on yours. Its other pins (addresses, interrupts) stay free.
+The four in the same order on both boards, so their wires run side by side.
+SDO1, SDO2 and CSB1-CSB3 stay free (as this module leaves them, the chips
+answer at 0x19, 0x69 and 0x13).
 
 ### PS from D0
 

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" font-family="Helvetica, Arial, sans-serif">
-  <title>atiic bench: a CH341A (V357) dongle in I2C mode at 3.3V, wired to a BMX055 module with PS on CS0 (D0)</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540" font-family="Helvetica, Arial, sans-serif">
+  <title>atiic bench: a CH341A (V357) dongle in I2C mode at 3.3V, wired to a BMX055 module (CJMCU-900F) with PS on CS0 (D0)</title>
   <defs>
     <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#e9ecef"/>
@@ -16,24 +16,40 @@
     </g>
   </defs>
 
-  <rect width="900" height="470" fill="#ffffff"/>
+  <rect width="900" height="540" fill="#ffffff"/>
   <text x="450" y="34" text-anchor="middle" font-size="17" font-weight="bold" fill="#222">CH341A (V357, I2C/SPI mode, 3.3V) + BMX055 module</text>
 
-  <!-- the BMX055 module: only the five pins wired drawn -->
-  <rect x="40" y="150" width="150" height="200" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
-  <rect x="80" y="225" width="44" height="34" rx="2" fill="#1d1d1d"/>
-  <text x="102" y="276" text-anchor="middle" font-size="9" fill="#fff">BMX055</text>
-  <rect x="172" y="186" width="18" height="152" fill="#161616"/>
+  <!-- the BMX055 module, a CJMCU-900F: its ten pins top to bottom -->
+  <rect x="40" y="118" width="150" height="290" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
+  <rect x="78" y="242" width="44" height="34" rx="2" fill="#1d1d1d"/>
+  <text x="100" y="293" text-anchor="middle" font-size="9" fill="#fff">BMX055</text>
+  <text x="100" y="140" text-anchor="middle" font-size="10" fill="#fff">CJMCU-900F</text>
+  <rect x="172" y="136" width="18" height="254" fill="#161616"/>
   <g fill="url(#pin)">
-    <rect x="181" y="198" width="34" height="4"/><rect x="181" y="248" width="34" height="4"/><rect x="181" y="273" width="34" height="4"/>
-    <rect x="181" y="298" width="34" height="4"/><rect x="181" y="323" width="34" height="4"/>
+    <rect x="181" y="148" width="34" height="4"/>
+    <rect x="181" y="173" width="34" height="4"/>
+    <rect x="181" y="198" width="34" height="4"/>
+    <rect x="181" y="223" width="34" height="4"/>
+    <rect x="181" y="248" width="34" height="4"/>
+    <rect x="181" y="273" width="34" height="4"/>
+    <rect x="181" y="298" width="34" height="4"/>
+    <rect x="181" y="323" width="34" height="4"/>
+    <rect x="181" y="348" width="34" height="4"/>
+    <rect x="181" y="373" width="34" height="4"/>
   </g>
   <g font-size="11" fill="#fff" text-anchor="end" font-family="Menlo, Consolas, monospace">
-    <text x="166" y="204">PS</text><text x="166" y="254">GND</text><text x="166" y="279">SCL</text>
-    <text x="166" y="304">SDA</text><text x="166" y="329">VCC</text>
+    <text x="166" y="154">3V3</text>
+    <text x="166" y="179">GND</text>
+    <text x="166" y="204">SCL</text>
+    <text x="166" y="229">SDA</text>
+    <text x="166" y="254">PS</text>
+    <text x="166" y="279">SDO1</text>
+    <text x="166" y="304">SDO2</text>
+    <text x="166" y="329">CSB1</text>
+    <text x="166" y="354">CSB2</text>
+    <text x="166" y="379">CSB3</text>
   </g>
-  <text x="115" y="368" text-anchor="middle" font-size="12" fill="#555">BMX055 module</text>
-  <text x="115" y="384" text-anchor="middle" font-size="10" fill="#777">the five pins wired; its others not drawn</text>
+  <text x="115" y="428" text-anchor="middle" font-size="12" fill="#555">BMX055 module (CJMCU-900F)</text>
 
   <!-- the CH341A V357: header on the left, USB-A on the right -->
   <rect x="290" y="120" width="470" height="240" rx="6" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
@@ -82,25 +98,13 @@
   <circle cx="715" cy="334" r="3" fill="url(#pin)"/>
   <rect x="705" y="288" width="20" height="38" rx="3" fill="#2a2a2a" stroke="#000"/>
 
-  <!-- the wires: module pin ends at x 215, dongle pins; dupont ends on both -->
+  <!-- the wires: the module's 3V3, GND, SCL, SDA to the dongle's VCC, GND, SCL, SDA (outer rows 4-7, the same order); PS under the board to CS0 -->
   <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M221 250 H331" stroke="#000" stroke-width="7"/><path d="M221 250 H331" stroke="#3a3a3a" stroke-width="5"/>
-    <path d="M221 275 H331" stroke="#a88600" stroke-width="7"/><path d="M221 275 H331" stroke="#f2c200" stroke-width="5"/>
-    <path d="M221 300 H331" stroke="#0d4f8c" stroke-width="7"/><path d="M221 300 H331" stroke="#1e88e5" stroke-width="5"/>
-    <path d="M221 325 H331" stroke="#8e1c1c" stroke-width="7"/><path d="M221 325 H331" stroke="#d32f2f" stroke-width="5"/>
-    <path d="M221 200 H262 Q 276 200 276 214 V 370 Q 276 384 290 384 H 330 Q 344 384 344 370 V 289 Q 344 275 357 275" stroke="#4a1f6b" stroke-width="7"/>
-    <path d="M221 200 H262 Q 276 200 276 214 V 370 Q 276 384 290 384 H 330 Q 344 384 344 370 V 289 Q 344 275 357 275" stroke="#8e44ad" stroke-width="5"/>
-  </g>
-  <use href="#dupont" x="221" y="200"/><use href="#dupont" x="221" y="250"/><use href="#dupont" x="221" y="275"/><use href="#dupont" x="221" y="300"/><use href="#dupont" x="221" y="325"/>
-  <g fill="#1f5fa8">
-    <rect x="293" y="142" width="25" height="11" rx="2"/>
-    <rect x="293" y="167" width="25" height="11" rx="2"/>
-    <rect x="293" y="192" width="25" height="11" rx="2"/>
-    <rect x="293" y="217" width="25" height="11" rx="2"/>
-    <rect x="293" y="242" width="25" height="11" rx="2"/>
-    <rect x="293" y="267" width="25" height="11" rx="2"/>
-    <rect x="293" y="292" width="25" height="11" rx="2"/>
-    <rect x="293" y="317" width="25" height="11" rx="2"/>
+    <path d="M221 150 C 276 150, 276 225, 331 225" stroke="#8e1c1c" stroke-width="7"/><path d="M221 150 C 276 150, 276 225, 331 225" stroke="#d32f2f" stroke-width="5"/>
+    <path d="M221 175 C 276 175, 276 250, 331 250" stroke="#000" stroke-width="7"/><path d="M221 175 C 276 175, 276 250, 331 250" stroke="#3a3a3a" stroke-width="5"/>
+    <path d="M221 200 C 276 200, 276 275, 331 275" stroke="#a88600" stroke-width="7"/><path d="M221 200 C 276 200, 276 275, 331 275" stroke="#f2c200" stroke-width="5"/>
+    <path d="M221 225 C 276 225, 276 300, 331 300" stroke="#0d4f8c" stroke-width="7"/><path d="M221 225 C 276 225, 276 300, 331 300" stroke="#1e88e5" stroke-width="5"/>
+    <path d="M221 250 H 236 Q 250 250 250 264 V 436 Q 250 450 264 450 H 330 Q 344 450 344 436 V 289 Q 344 275 357 275" stroke="#4a1f6b" stroke-width="7"/><path d="M221 250 H 236 Q 250 250 250 264 V 436 Q 250 450 264 450 H 330 Q 344 450 344 436 V 289 Q 344 275 357 275" stroke="#8e44ad" stroke-width="5"/>
   </g>
   <!-- silkscreen, drawn over the wires on the board's blue: the outer column's labels left of it, the inner's right -->
   <g font-size="9" fill="#fff" font-family="Menlo, Consolas, monospace">
@@ -116,10 +120,13 @@
 
   <use href="#dupont" x="331" y="250"/><use href="#dupont" x="331" y="275"/><use href="#dupont" x="331" y="300"/><use href="#dupont" x="331" y="325"/><use href="#dupont" x="357" y="275"/>
 
+  <use href="#dupont" x="221" y="150"/><use href="#dupont" x="221" y="175"/><use href="#dupont" x="221" y="200"/><use href="#dupont" x="221" y="225"/><use href="#dupont" x="221" y="250"/>
+  <use href="#dupont" x="331" y="225"/><use href="#dupont" x="331" y="250"/><use href="#dupont" x="331" y="275"/><use href="#dupont" x="331" y="300"/><use href="#dupont" x="357" y="275"/>
+
   <!-- notes -->
   <g font-size="12" fill="#333">
-    <text x="20" y="420">Jumpers set unplugged: the pair top right on 3V3 (5V is the board's default), the one bottom right on I2C/SPI.</text>
-    <text x="20" y="440">Five wires: GND, SCL, SDA, VCC (3.3V) to the module's, and CS0 (the chip's D0) to PS: atiic drives it high (BENCH_PS=D0).</text>
-    <text x="20" y="460">Never drive PS low while the BMX055 runs: its accelerometer stays on SPI until the module is powered off and on.</text>
+    <text x="20" y="490">Jumpers set unplugged: the pair top right on 3V3 (5V is the board's default), the one bottom right on I2C/SPI.</text>
+    <text x="20" y="510">Five wires: VCC (3.3V) to 3V3, GND, SCL, SDA to the module's, and CS0 (the chip's D0) to PS: atiic drives it high (BENCH_PS=D0).</text>
+    <text x="20" y="530">Never drive PS low while the BMX055 runs: its accelerometer stays on SPI until the module is powered off and on.</text>
   </g>
 </svg>

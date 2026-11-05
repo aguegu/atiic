@@ -1,5 +1,12 @@
 # Releases
 
+## 1.0.12
+
+- The setup drawing's BMX055 module as it is: a CJMCU-900F, its ten pins
+  (3V3, GND, SCL, SDA, PS, SDO1, SDO2, CSB1, CSB2, CSB3, the user's reading),
+  wired to the CH341A's VCC, GND, SCL, SDA in the same order (rows 4-7, the
+  wires side by side) and CS0 to PS; the guide's wiring table to match.
+
 ## 1.0.11
 
 - `docs/setup.md`: the CH341A and BMX055 bench, step by step, with a
