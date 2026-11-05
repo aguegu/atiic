@@ -10,6 +10,7 @@ import Mlx90614 from './devices/mlx90614.js';
 import Aht21 from './devices/aht21.js';
 import Ina231 from './devices/ina231.js';
 import Hmc5883l from './devices/hmc5883l.js';
+import Adxl345 from './devices/adxl345.js';
 import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
@@ -31,6 +32,7 @@ export {
   Aht21,
   Ina231,
   Hmc5883l,
+  Adxl345,
   St7735s,
   Gc9107,
   Gc9a01,
