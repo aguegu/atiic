@@ -1,5 +1,16 @@
 # Releases
 
+## 1.3.10
+
+- The BMX055 benchmark counts each chip's samples the way that's right for
+  it, each measured over 10 s: the accelerometer by its new_data flag (by
+  its data it undercounts: at rest 1 sample in 10 repeats the last); the
+  magnetometer by its data (its data-ready flag overcounts: set again 0.3
+  ms after a read, no new data, 12 times in 114); the gyro by its data.
+  The limits ±10% of the nominal rates (the chips' own clocks: the
+  accelerometer ~65 Hz for 62.5). 1.3.9's checks were set from too few
+  runs and failed on the bench; three runs pass now.
+
 ## 1.3.9
 
 - `test/advanced/bmx055.test.js`: the BMX055's chips polled, on I2C or SPI.
