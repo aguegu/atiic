@@ -1,5 +1,15 @@
 # Releases
 
+## 1.1.2
+
+- `format(bits)`: a DcsPanel's pixel format changed without an init: what's
+  on the panel stays, the next pixels are read in the new format, so
+  formats can share a screen. Host test (55 in all).
+- The display board tests leave a card that labels itself: inside a white
+  border, thirds labelled 12, 16, 18 (a 5x7 digit font, `test/board/font.js`),
+  each its pixel format's ramps. On the GC9107 all three formats checked by
+  eye this way: steps in 12, smooth in 18.
+
 ## 1.1.1
 
 - `Gc9107`: GalaxyCore's GC9107, on r8845's 1.45" 60x160 IPS module (same

@@ -161,6 +161,16 @@ class DcsPanel {
     return top + (((n % rows) + rows) % rows);
   }
 
+  // the pixel format from here on (12, 16 or 18 bits), without an init:
+  // what's on the panel stays, only the bytes coming in are read anew, so
+  // formats can share a screen
+  async format(bits) {
+    const { chip } = this.constructor;
+    if (!chip.colmod[bits]) throw new Error(`${bits} bits a pixel: 12, 16 or 18`);
+    this.bits = bits;
+    await this.command(COLMOD, [chip.colmod[bits]]);
+  }
+
   // back to the plain display: rows where they're drawn
   async scrollOff() {
     this.scrolling = null;

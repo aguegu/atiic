@@ -131,6 +131,18 @@ describe('st7735s (host)', () => {
   });
 });
 
+describe('dcs panel format() (host)', () => {
+  it('format: COLMOD alone, and the next pixels in the new format', async () => {
+    const bus = new FakeBus();
+    const lcd = new Gc9107(bus);
+    await lcd.format(18);
+    await lcd.fillRect(0, 0, 1, 1, 0xff0000);
+    assert.deepEqual(commands(bus.log).map(({ c, data }) => [c, data.length]), [[0x3a, 1], [0x2a, 4], [0x2b, 4], [0x2c, 3]]);
+    assert.deepEqual(commands(bus.log)[0].data, [0x06]);
+    await assert.rejects(lcd.format(24), /12, 16 or 18/);
+  });
+});
+
 describe('gc9107 (host)', () => {
   it('init: the standard commands, then the inner registers behind FE and EF, inversion on', async () => {
     const bus = new FakeBus();

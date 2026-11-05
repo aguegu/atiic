@@ -1,11 +1,14 @@
 // a DcsPanel display's board tests (st7735s.test.js, gc9107.test.js): on
 // r8845, a module on the CH341A's SPI. Its MISO isn't wired, so nothing reads
 // back: these show the commands go through and how fast; what the panel
-// shows is for the eye. Left showing: black, a white border, red, green and
-// blue squares (left to right held landscape)
+// shows is for the eye, and the screen labels itself. Left showing, held
+// landscape: a white border; inside, thirds labelled 12, 16, 18, each its
+// pixel format's ramps (red, green, blue, grey bands bottom to top, black to
+// full left to right): steps in 12, finer in 16, smooth in 18
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
+import { label } from './font.js';
 
 // a full screen's bytes at the CH341's measured ~110 KB/s, twice over
 // (r8845: the ST7735S's 25,600 bytes in 227-235 ms)
@@ -15,6 +18,7 @@ const BYTES_PER_PIXEL = { 12: 1.5, 16: 2, 18: 3 };
 // a strip chart's step on the controller's scrolling: one row and the start
 // line moved. 4.2 ms seen on r8845 (the ST7735S, 16 bits)
 const SCROLL_STEP_MS = 10;
+const LABEL_COLS = 16; // a 2x label's strip
 const RED = 0xff0000, GREEN = 0x00ff00, BLUE = 0x0000ff, WHITE = 0xffffff, BLACK = 0x000000;
 
 export function panelTests(Panel, lines, setting) {
@@ -66,7 +70,7 @@ export function panelTests(Panel, lines, setting) {
       assert.ok(ms < SCROLL_STEP_MS, `${ms.toFixed(2)} ms a step`);
     });
 
-    it('leaves its test pattern (16 bits): a white border on black, red, green, blue', async () => {
+    it('a white border on black, red, green, blue squares', async () => {
       const { width: w, height: h } = lcd;
       await lcd.fill(BLACK);
       await lcd.fillRect(0, 0, w, 1, WHITE);
@@ -74,6 +78,23 @@ export function panelTests(Panel, lines, setting) {
       await lcd.fillRect(0, 0, 1, h, WHITE);
       await lcd.fillRect(w - 1, 0, 1, h, WHITE);
       for (const [y, c] of [[20, RED], [70, GREEN], [120, BLUE]]) await lcd.fillRect(w / 2 - 10, y, 20, 20, c);
+    });
+
+    it('leaves its card: inside the border, thirds in 12, 16, 18 bits, labelled', async () => {
+      const { width: w, height: h } = lcd;
+      const part = Math.floor((h - 2) / 3), cols = w - 2 - LABEL_COLS, band = Math.floor(cols / 4);
+      const ramps = [];
+      for (let y = 0; y < part; y++) for (let x = 0; x < cols; x++) {
+        const v = Math.round((y * 255) / (part - 1));
+        ramps.push([v << 16, v << 8, v, (v << 16) | (v << 8) | v][Math.min(3, Math.floor(x / band))]);
+      }
+      for (const [i, bits] of [12, 16, 18].entries()) {
+        const y = 1 + i * part;
+        await lcd.format(bits);
+        await lcd.draw(1, y, cols, part, ramps);
+        await lcd.format(16);
+        await lcd.draw(1 + cols, y, LABEL_COLS, part, label(String(bits), LABEL_COLS, part));
+      }
     });
   });
 }
