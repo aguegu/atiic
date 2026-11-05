@@ -329,6 +329,34 @@ zhcong/ST7302-for-arduino's (MIT); the datasheet names the commands only.
 Its RAM packs 12 pixels across by 2 down in 3 bytes; the driver packs the
 upright frame for it.
 
+## An IMU over SPI: the MPU-6500
+
+The GY-9250's MPU-6500 speaks SPI as well as I2C (the MPU-6050 doesn't: its
+SPI sibling is the MPU-6000). On the CH341A, in I2C/SPI mode at 3.3V:
+
+| GY-9250 | SPI | CH341A |
+|---|---|---|
+| VCC, GND | | VCC (3.3V), GND |
+| SCL | SCLK | SCK |
+| SDA | SDI | MOSI |
+| AD0 | SDO | MISO |
+| NCS | chip select | a free line: D4 on r8845 |
+
+The chip answers on SPI from the first time NCS goes low. atiic's
+`SpiRegisters` turns the SPI and the chip-select line into the bus the I2C
+drivers use (a read sets bit 7 of the register), so the `Mpu6500` driver
+runs unchanged:
+
+```js
+const spi = await new SpiRegisters(bus, { cs: 'D4' }).open();
+const mpu = new Mpu6500(spi);
+await mpu.init(); // WHO_AM_I 0x70 over SPI
+```
+
+The MPU-6500 takes register writes at up to 1 MHz on SPI; the CH341's
+clock is under that or near it: on r8845 every write read back. Its FIFO
+at 1 kHz loses nothing. On r8845 `.env.local` has `BENCH_MPU6500_SPI=cs=D4`.
+
 ## A first read
 
 ```js

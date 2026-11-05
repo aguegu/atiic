@@ -1,5 +1,19 @@
 # Releases
 
+## 1.3.3
+
+- `SpiRegisters` (`src/buses/spi-registers.js`): a register-addressed SPI
+  device as the bus the I2C drivers use, `write(address, bytes)` and
+  `writeRead(address, bytes, n)` over `spi()` and a chip-select line, bit 7
+  marking a read, the address ignored. So `Mpu6500` runs over SPI
+  unchanged: on r8845 a GY-9250 on the CH341A (NCS on D4) reads WHO_AM_I
+  0x70, takes every write (SMPLRT_DIV read back three values), measures 1
+  g and room temperature, and its FIFO at 1 kHz loses nothing.
+- The gyro-settle check failed once, on the first run after wiring; then
+  three runs and ten logged sleep/init cycles agreed within 0.3 deg/s (the
+  limit is 1). Not reproduced; the board may have moved.
+- Host tests (80 in all); `docs/setup.md`: the SPI wiring.
+
 ## 1.3.2
 
 - The ST7302's high power mode, looked at again: at 16 and 32 Hz the panel
