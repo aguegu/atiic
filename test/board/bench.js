@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, SpiRegisters } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -17,6 +17,9 @@ export const REFERENCES = [
   { Driver: Bmx055Gyro, wake: [0x11, 0x00], staticFirst: 0x0f, staticLast: 0x3d, writable: 0x10, values: [0x05, 0x06] },
   // BMX055's magnetometer: its trim registers 0x5d-0x71 (factory values); REP_XY takes any byte
   { Driver: Bmx055Mag, wake: [0x4b, 0x01], staticFirst: 0x5d, staticLast: 0x71, writable: 0x51, values: [0x5a, 0xa5] },
+  // MAX30102: its configuration 0x08-0x0d, shut down (SHDN: the registers
+  // read and written as usual); LED1_PA takes any byte
+  { Driver: Max30102, wake: [0x09, 0x80], staticFirst: 0x08, staticLast: 0x0d, writable: 0x0c, values: [0x5a, 0xa5] },
 ];
 
 // BENCH_PS (from .env.local, or the environment): the CH341 line wired to a
