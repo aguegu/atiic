@@ -1,5 +1,12 @@
 # Releases
 
+## 1.3.23
+
+- README: an I2C address table: each driver's addresses, what picks them
+  (pins per the datasheets; the BMX055's Table 64; the MLX90614's EEPROM;
+  the VL53L1X's power-up 0x29), the ones board-tested on r8845, and the
+  addresses to keep apart on one bus (0x68/0x69, 0x40, 0x53).
+
 ## 1.3.22
 
 - The bench's probe doesn't ask an address again once a chip there is

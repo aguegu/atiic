@@ -55,6 +55,34 @@ sections and quirks are in the driver's source.
 |---|---|---|---|
 | Atmel AT24C08 (the AT24C01A-16A family) | `At24c` | 1 KB EEPROM (the family: 128 B to 2 KB); reads, page writes | I2C 0x50-0x53 |
 
+### I2C addresses
+
+What each driver looks for, what picks the address, and where the bench
+has had it. Addresses in **bold** are the ones board-tested.
+
+| Device | Addresses | Picked by | On the bench |
+|---|---|---|---|
+| MPU-6050 | **0x68**, 0x69 | AD0 pin | 0x68 (GY-521) |
+| MPU-6500 | **0x68**, 0x69 | AD0 pin | 0x68 (GY-9250); also SPI |
+| BMX055 accelerometer | 0x18, **0x19** | SDO1 pin | 0x19 (CJMCU-900F); also SPI |
+| BMX055 gyroscope | 0x68, **0x69** | SDO2 pin | 0x69 |
+| BMX055 magnetometer | 0x10-0x12, **0x13** | SDO1 and CSB3 pins (Table 64) | 0x13 |
+| ITG-3200 | **0x68**, 0x69 | AD0 pin | 0x68 |
+| ADXL345 | **0x53**, 0x1D | SDO/ALT ADDRESS pin (low: 0x53) | 0x53 |
+| HMC5883L | **0x1E** | fixed | 0x1E |
+| MAX30102 | **0x57** | fixed | 0x57 |
+| SHT20 | **0x40** | fixed | 0x40 |
+| AHT21B | **0x38** | fixed | 0x38 |
+| VL53L1X | **0x29** | 0x29 at power-up; software can move it (ST's driver; not in atiic) | 0x29 |
+| MLX90614 | **0x5A** | its EEPROM (SMBus address, 0x0E); not changed by atiic | 0x5A |
+| INA231 | **0x40**-0x4F | A0, A1 pins | 0x40 |
+| AT24C08 | **0x50-0x53** (one per 256-byte block) | A2 pin (high: 0x54-0x57) | 0x50-0x53 |
+
+Shared addresses to keep apart on one bus: 0x68/0x69 (the MPUs, the
+ITG-3200, the BMX055's gyro), 0x40 (the SHT20, an INA231 with A0 and A1
+low), 0x53 (the ADXL345 and an AT24C08's last block: on r8845 both
+answered, reads looked right, and the ADXL's writes landed in the EEPROM).
+
 ### Displays
 
 | Device | Driver | Panel | Bus |
