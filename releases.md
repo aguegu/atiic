@@ -1,5 +1,15 @@
 # Releases
 
+## 1.3.9
+
+- `test/advanced/bmx055.test.js`: the BMX055's chips polled, on I2C or SPI.
+  Over SPI on r8845, ~2400-2600 reads/s; at the drivers' rates every
+  sample (accelerometer 58-62 of 62.5, gyro 100, magnetometer 10); at the
+  chips' top rates polling catches 95-98% (accelerometer 1956-1967, gyro
+  1898-1912 of 2000), the drivers using no FIFO. A sample counted by its
+  data with the clear-on-read flags masked (the accelerometer's new_data,
+  the magnetometer's data ready): unmasked, each counted twice.
+
 ## 1.3.8
 
 - The BMX055 over SPI: its three drivers unchanged, each on `SpiRegisters`.
