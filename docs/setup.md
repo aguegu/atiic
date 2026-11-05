@@ -86,6 +86,15 @@ the name says: nothing answers at 0x0C, where an MPU-9250's magnetometer
 would, even with the bypass on. Wired the same: its VCC, GND, SCL and SDA to
 the dongle's.
 
+## Another module: the BMX055
+
+Bosch's 9-axis BMX055 is three chips at three addresses: the accelerometer
+at 0x18 or 0x19, the gyro at 0x68 or 0x69, the magnetometer at 0x10-0x13
+(r8845's module: 0x19, 0x69, 0x13). Wire VCC, GND, SCL, SDA as above, and
+tie its **PS** pin to VCC: PS picks the interface at power-up, and left
+floating the module answered nothing on I2C. atiic drives the accelerometer
+so far (`Bmx055Accel`); the tests find it by its chip ID.
+
 ## A first read
 
 ```js

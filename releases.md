@@ -1,5 +1,20 @@
 # Releases
 
+## 1.0.7
+
+- The BMX055's accelerometer (`src/devices/bmx055-accel.js`,
+  `import { Bmx055Accel } from 'atiic'`), the first of its three chips:
+  `init(scale)` (soft reset, the range, 62.5 Hz, normal power), `measure()`
+  (12 bits to g, the temperature), `sleep()` (suspend). Its facts from
+  Linux's bmc150-accel driver first (Bosch's datasheet wouldn't download),
+  then every one checked against the datasheet (BST-BMX055-DS000-02 rev 1.1,
+  kept untracked in `docs/`, Bosch's notice). On r8845's module at 0x19:
+  the module answered nothing until its PS pin was tied to VCC.
+- Board tests find each chip by its own ID register at its addresses
+  (`test/board/bench.js`); `ch341.test.js` takes whichever chip is there
+  as its register reference. Host 24 of 24, board 9 of 9 (the MPU tests
+  skipped, no MPU on the bench).
+
 ## 1.0.6
 
 - MPU-6500 (`src/devices/mpu6500.js`, `import { Mpu6500 } from 'atiic'`), on
