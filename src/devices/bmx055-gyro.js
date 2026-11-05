@@ -31,8 +31,11 @@ class Bmx055Gyro {
     idRegister: REG_CHIP_ID,
     whoAmI: 0x0f,
     // woken (normal mode after the soft reset), the wait before the rates are
-    // settled: provisional, the kernel's 80 ms "safety margin"; to measure
-    settleMs: 80,
+    // settled. The datasheet: start-up 30 ms to +/-1 deg/s. On r8845's module
+    // (24 wake-ups, no wait): within 0.5 deg/s 49-60 ms after init() began,
+    // 30 of them the soft reset's wait: about 30 ms after normal mode, as
+    // promised. The kernel waits 80 ms as a margin; 50 is ours
+    settleMs: 50,
   };
 
   constructor(bus, address = 0x68) {
