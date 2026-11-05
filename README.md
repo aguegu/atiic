@@ -13,3 +13,8 @@ The bench: [docs/setup.md](docs/setup.md). The adapter: [docs/ch341.md](docs/ch3
 ## License
 
 MIT ([LICENSE](LICENSE)), from 1.0.1. Up to 0.5.1 it was MPL-2.0.
+
+Third party: `src/devices/bmx055-mag.js` follows Bosch Sensortec's [BMM150
+Sensor API](https://github.com/boschsensortec/BMM150_SensorAPI) for the
+magnetometer's compensation (the data and trim layouts, `compensate_x/y/z`),
+under its BSD-3-Clause license; its notice is kept in that file.

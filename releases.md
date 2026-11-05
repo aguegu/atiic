@@ -1,5 +1,26 @@
 # Releases
 
+## 1.0.9
+
+- The BMX055's magnetometer (`src/devices/bmx055-mag.js`,
+  `import { Bmx055Mag } from 'atiic'`), the last of its three chips:
+  `init()` (powered, the chip ID, the factory trims read, the regular preset
+  nXY 9 and nZ 15, normal at 10 Hz), `measure()` (the field in uT, an axis
+  that overflowed or has no reading yet `null`, not 0), `sleep()`
+  (suspend). Registers and presets from the datasheet; the data and trim
+  layouts and the floating-point compensation from Bosch's BMM150 Sensor API
+  (BSD-3-Clause, its notice in the file, a note in the README). Where the
+  two differ (the regular preset's nZ: 15 in the BMX055's datasheet, 8 in
+  the 2020 API) the datasheet is followed.
+- Measured on r8845's module (0x13): |B| 58.4 uT on the desk; after normal
+  mode the first reading (~10 ms) holds none yet, the second (~20 ms) is
+  right, 6 of 6: a measurement is 9.8 ms (the datasheet's formula); the
+  driver waits 50 ms.
+- The bench probe wakes a chip before its ID where it needs it (`idWake`:
+  the magnetometer's ID reads 0x00 suspended).
+- Host 34 of 34 (the compensation checked on numbers worked by hand);
+  board 18 of 18, three runs.
+
 ## 1.0.8
 
 - The BMX055's gyro (`src/devices/bmx055-gyro.js`,

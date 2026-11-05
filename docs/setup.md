@@ -92,9 +92,9 @@ Bosch's 9-axis BMX055 is three chips at three addresses: the accelerometer
 at 0x18 or 0x19, the gyro at 0x68 or 0x69, the magnetometer at 0x10-0x13
 (r8845's module: 0x19, 0x69, 0x13). Wire VCC, GND, SCL, SDA as above, and
 tie its **PS** pin to VCC: PS picks the interface at power-up, and left
-floating the module answered nothing on I2C. atiic drives the accelerometer
-and the gyro so far (`Bmx055Accel`, `Bmx055Gyro`); the tests find each by its
-chip ID.
+floating the module answered nothing on I2C. atiic drives all three
+(`Bmx055Accel`, `Bmx055Gyro`, `Bmx055Mag`); the tests find each by its chip
+ID (the magnetometer's reads only once its power bit is set).
 
 ## A first read
 
