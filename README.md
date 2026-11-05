@@ -47,6 +47,7 @@ sections and quirks are in the driver's source.
 | TI INA231 (INA226) | `Ina231` | current, bus voltage, power (shunt monitor) | I2C 0x40-0x4F |
 | Analog Devices ADXL345 | `Adxl345` | 3-axis accelerometer (+/-16 g, full resolution), self test | I2C 0x53/0x1D |
 | Honeywell HMC5883L | `Hmc5883l` | 3-axis magnetometer (compass), self test | I2C 0x1E |
+| InvenSense ITG-3200 | `Itg3200` | 3-axis gyroscope (+/-2000 deg/s), temperature | I2C 0x68/0x69 |
 
 ### Displays
 

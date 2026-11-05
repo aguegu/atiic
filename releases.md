@@ -1,5 +1,20 @@
 # Releases
 
+## 1.3.19
+
+- `Itg3200`: InvenSense's 3-axis gyroscope at 0x68 or 0x69, from its
+  product specification (rev 1.4 for the register map, 1.7 for the
+  figures): a reset, the X gyro's PLL as the clock (as recommended),
+  +/-2000 deg/s (14.375 LSb per deg/s), 98 Hz at 1 kHz, deg/s and its
+  temperature (280 LSb/C, -13200 at 35 C). Known by WHO_AM_I's address bits
+  and not an MPU's ID at 0x75 (an MPU-6050 shares 0x68).
+- Found on r8845's part: asleep, every register but PWR_MGM reads 0,
+  WHO_AM_I too, its settings kept. `init()` resets first (which wakes it);
+  the bench wakes it before asking (`idWake`). A board test sleeps and
+  inits again.
+- On r8845: 3.7, -4.0, 2.2 deg/s at rest (the zero-rate tolerance is +/-40),
+  27.8 C. Host tests (136 in all), a board test.
+
 ## 1.3.18
 
 - `Adxl345`: Analog Devices' 3-axis accelerometer at 0x53 or 0x1D, from its
