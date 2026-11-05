@@ -1,8 +1,11 @@
 // Sitronix ST7735S: a TFT controller, here on a 0.96" 80x160 IPS module.
 // Adapter-free: any bus with spi(bytes) and pins({ name: level }) (the CH341
 // has both), and the names of the lines its CS, DC and RES are on. 4-wire
-// SPI, write only (the module's MISO isn't wired). The commands are MIPI
-// DCS's, as the controller's datasheet lists them; the panel's settings (no
+// SPI, write only (the module's MISO isn't wired), MSB first with no other
+// order ("The MSB is transmitted first", 9.4 serial interface, page 44).
+// The commands are MIPI DCS's, as the controller's datasheet lists them
+// (Sitronix ST7735S V1.3, 2012-06-20: Crystalfontz keeps a copy,
+// crystalfontz.com/controllers/uploaded/ST7735S_V1.3_20120620.pdf); the panel's settings (no
 // inversion, BGR, its 80x160 at column 24 row 0 of the controller's 132x162)
 // found on r8845's module by eye: inverted, red showed as cyan; at 26 and 1,
 // a column and two rows of noise along the edges.
