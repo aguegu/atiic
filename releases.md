@@ -1,5 +1,21 @@
 # Releases
 
+## 1.3.0
+
+1.2.x closed (1.2.0-1.2.7): e-paper on the CH341. `Ch341.readPins()` reads
+the panels' BUSY (D4); `Ssd1680` (r8845's 1.54" 152x152) and `Ssd1681`
+(1.54" 200x200, the same driver at 200x200) do full updates (BUSY 2.10 s,
+1.68 s), partial updates by display mode 2 (0.59 s, 0.50 s; no flash, no
+ghost), and deep sleep with the RAM kept through the wake, so partial
+updates go on after it. `demo/epaper-qr.js` puts a QR code on either and
+leaves it there unpowered: on the 200x200, version 20 at 2 pixels a module
+(666 bytes) scans on a phone, and the demo warns when a text just misses a
+version that would draw bigger.
+
+1.3.x: the ST7302 2.13" 250x122 reflective mono TFT (not e-paper: its
+picture needs power), parked from 1.2.x (`docs/parked/st7302-smoke.mjs`,
+untracked).
+
 ## 1.2.7
 
 - `demo/epaper-qr.js`: the SSD1681 when `BENCH_SSD1681` is set (on the
