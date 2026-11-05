@@ -1,21 +1,21 @@
-// the BMX055's accelerometer on a bench: r8845's CH341T at 400 kHz, the
+// the BMX055's accelerometer on a bench: r8845's CH341 on I2C at 400 kHz or on SPI (BENCH_BMX055_SPI), the
 // module at rest (only the size of gravity checked, at any tilt)
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Bmx055Accel } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf } from './bench.js';
+import { bmx055Benches } from './bench.js';
 
 const SCL_HZ = 400000;
 const G_MIN = 0.9;
 const G_MAX = 1.1;
 const g = ({ x, y, z }) => Math.hypot(x, y, z);
 
-describe('bmx055 accelerometer (board)', onlyWith(Bmx055Accel), () => {
+for (const bench of bmx055Benches(Bmx055Accel, 'accel', SCL_HZ)) describe(`bmx055 accelerometer ${bench.label} (board)`, bench.skip, () => {
   let bus, acc;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
-    acc = new Bmx055Accel(bus, addressOf(Bmx055Accel));
+    const { bus: b, regs, address } = await bench.open();
+    bus = b;
+    acc = new Bmx055Accel(regs, address);
   });
 
   after(async () => {

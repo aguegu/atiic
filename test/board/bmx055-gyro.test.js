@@ -1,20 +1,20 @@
-// the BMX055's gyro on a bench: r8845's CH341T at 400 kHz, the module at rest
+// the BMX055's gyro on a bench: r8845's CH341 on I2C at 400 kHz or on SPI (BENCH_BMX055_SPI), the module at rest
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Bmx055Gyro } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf } from './bench.js';
+import { bmx055Benches } from './bench.js';
 
 const SCL_HZ = 400000;
 const SETTLED_MS = 300; // long after any start-up
 const GYRO_AGREE = 1; // deg/s: the first reading after init() against a settled one, at rest
 const AT_REST_DPS = 5; // at rest, each axis' offset within this (the BMX055's zero-rate offset is about 1 deg/s)
 
-describe('bmx055 gyro (board)', onlyWith(Bmx055Gyro), () => {
+for (const bench of bmx055Benches(Bmx055Gyro, 'gyro', SCL_HZ)) describe(`bmx055 gyro ${bench.label} (board)`, bench.skip, () => {
   let bus, gyro;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
-    gyro = new Bmx055Gyro(bus, addressOf(Bmx055Gyro));
+    const { bus: b, regs, address } = await bench.open();
+    bus = b;
+    gyro = new Bmx055Gyro(regs, address);
   });
 
   after(async () => {

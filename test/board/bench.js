@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -31,7 +31,9 @@ export const PS = process.env.BENCH_PS || null;
 // BENCH_SSD1680 (r8845's 1.54" 152x152 e-paper, its BUSY too: "...,busy=D4"),
 // BENCH_SSD1681 (r8845's 1.54" 200x200 e-paper, the same), BENCH_ST7302
 // (r8845's 2.13" 122x250 reflective mono TFT), BENCH_MPU6500_SPI (an
-// MPU-6500 on the CH341A's SPI, its NCS: "cs=D4")
+// MPU-6500 on the CH341A's SPI, its NCS: "cs=D4"), BENCH_BMX055_SPI (a BMX055
+// on the CH341A's SPI: its three chip selects and PS, "accel=D0,gyro=D1,
+// mag=D2,ps=D4"; PS driven low, the module on SPI)
 const lines = (v) => (v ? Object.fromEntries(v.split(',').map((kv) => kv.trim().split('='))) : null);
 export const ST7735 = lines(process.env.BENCH_ST7735);
 export const GC9107 = lines(process.env.BENCH_GC9107);
@@ -40,6 +42,7 @@ export const SSD1680 = lines(process.env.BENCH_SSD1680);
 export const SSD1681 = lines(process.env.BENCH_SSD1681);
 export const ST7302 = lines(process.env.BENCH_ST7302);
 export const MPU6500_SPI = lines(process.env.BENCH_MPU6500_SPI);
+export const BMX055_SPI = lines(process.env.BENCH_BMX055_SPI);
 
 async function probe() {
   const found = new Map(); // Driver -> address
@@ -74,3 +77,27 @@ export const onlyWith = (Driver) => ({
 
 // the first chip found, with its address: the CH341 test's reference
 export const reference = REFERENCES.map((r) => ({ ...r, address: found.get(r.Driver) })).find((r) => r.address !== undefined) ?? null;
+
+// a BMX055 chip's benches, I2C and SPI: { label, skip, open() } where open()
+// gives { bus, regs, address }, regs the bus its driver takes (the CH341 on
+// I2C; on SPI, SpiRegisters on the chip's select, PS driven low first)
+export function bmx055Benches(Driver, chip, sclHz) {
+  return [
+    {
+      label: 'on I2C', skip: onlyWith(Driver),
+      open: async () => {
+        const bus = await openCh341(sclHz);
+        return { bus, regs: bus, address: addressOf(Driver) };
+      },
+    },
+    {
+      label: 'on SPI', skip: { skip: BMX055_SPI ? false : 'no BENCH_BMX055_SPI: no BMX055 on the SPI' },
+      open: async () => {
+        const { ps, accel, gyro, mag } = BMX055_SPI;
+        const bus = await openCh341();
+        await bus.pins({ ...(ps ? { [ps]: false } : {}), [accel]: true, [gyro]: true, [mag]: true });
+        return { bus, regs: new SpiRegisters(bus, { cs: BMX055_SPI[chip] }), address: 0 };
+      },
+    },
+  ];
+}

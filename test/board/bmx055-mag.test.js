@@ -1,10 +1,9 @@
-// the BMX055's magnetometer on a bench: r8845's CH341T at 400 kHz, the
+// the BMX055's magnetometer on a bench: r8845's CH341 on I2C at 400 kHz or on SPI (BENCH_BMX055_SPI), the
 // module at rest on a desk: Earth's field, whatever the heading
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Bmx055Mag } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf } from './bench.js';
+import { bmx055Benches } from './bench.js';
 
 const SCL_HZ = 400000;
 // Earth's field is 25-65 uT over its surface; a room's steel bends it, so a little wider
@@ -14,11 +13,12 @@ const AGREE_UT = 3; // the first reading after init() against one a second later
 const SETTLED_MS = 1000;
 const size = ({ x, y, z }) => Math.hypot(x, y, z);
 
-describe('bmx055 magnetometer (board)', onlyWith(Bmx055Mag), () => {
+for (const bench of bmx055Benches(Bmx055Mag, 'mag', SCL_HZ)) describe(`bmx055 magnetometer ${bench.label} (board)`, bench.skip, () => {
   let bus, mag;
   before(async () => {
-    bus = await openCh341(SCL_HZ);
-    mag = new Bmx055Mag(bus, addressOf(Bmx055Mag));
+    const { bus: b, regs, address } = await bench.open();
+    bus = b;
+    mag = new Bmx055Mag(regs, address);
   });
 
   after(async () => {
