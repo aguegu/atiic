@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, SpiRegisters } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, Mlx90614, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -23,8 +23,9 @@ export const REFERENCES = [
 ];
 
 // the other chips looked for: no 8-bit registers for the CH341 test to try
-// (Sht20: commands only; Vl53l1x: 16-bit register addresses)
-const OTHERS = [Sht20, Vl53l1x];
+// (Sht20: commands only; Vl53l1x: 16-bit register addresses; Mlx90614:
+// words with a PEC)
+const OTHERS = [Sht20, Vl53l1x, Mlx90614];
 
 // BENCH_PS (from .env.local, or the environment): the CH341 line wired to a
 // BMX055's PS pin (D0 on r8845's CH341A). PS picks the BMX055's interface:
