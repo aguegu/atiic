@@ -148,6 +148,31 @@ again, `bus.pins({ D0: true })`). Never drive PS low while the BMX055 runs:
 the gyro and the magnetometer come back when it goes high again, but the
 accelerometer stays on SPI until the module is powered off and on.
 
+## A display on SPI: an ST7735S
+
+The same CH341A, still in I2C/SPI mode at 3.3V, drives a 0.96" 80x160 IPS
+module (ST7735S, 4-wire SPI). Its pins to the header's inner column:
+
+| module | CH341A |
+|---|---|
+| GND | GND |
+| VCC | VCC (3.3V) |
+| SCL | SCK |
+| SDA | MOSI |
+| RES | CS0 (D0) |
+| DC | CS1 (D1) |
+| CS | CS2 (D2) |
+| BLK | VCC (3.3V): the backlight always on |
+
+The module sends nothing back: MISO stays unwired. Its RES and DC aren't
+chip selects; atiic drives them as plain lines. On r8845 `.env.local` has
+`BENCH_ST7735=res=D0,dc=D1,cs=D2`; the board test leaves a white border on
+black with red, green and blue squares. This panel: RGB565, BGR order, no
+inversion, 24 columns in (`new St7735s(bus)`'s defaults).
+
+D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
+two moves to another line.
+
 ## A first read
 
 ```js
