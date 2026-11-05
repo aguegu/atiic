@@ -2,7 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -15,6 +15,8 @@ export const REFERENCES = [
   { Driver: Bmx055Accel, wake: [0x11, 0x00], staticFirst: 0x0f, staticLast: 0x3d, writable: 0x10, values: [0x09, 0x0e] },
   // BMX055's gyro: the same span of configuration; BW takes 0x00-0x07
   { Driver: Bmx055Gyro, wake: [0x11, 0x00], staticFirst: 0x0f, staticLast: 0x3d, writable: 0x10, values: [0x05, 0x06] },
+  // BMX055's magnetometer: its trim registers 0x5d-0x71 (factory values); REP_XY takes any byte
+  { Driver: Bmx055Mag, wake: [0x4b, 0x01], staticFirst: 0x5d, staticLast: 0x71, writable: 0x51, values: [0x5a, 0xa5] },
 ];
 
 async function probe() {
@@ -24,6 +26,10 @@ async function probe() {
     for (const { Driver } of REFERENCES) {
       for (const a of Driver.addresses) {
         if (!(await bus.acks(a))) continue;
+        if (Driver.chip.idWake) { // a chip whose ID reads only once woken
+          await bus.write(a, Driver.chip.idWake);
+          await new Promise((resolve) => setTimeout(resolve, Driver.chip.idWakeMs));
+        }
         const [id] = await bus.writeRead(a, [Driver.chip.idRegister], 1);
         if (id === Driver.chip.whoAmI) { found.set(Driver, a); break; }
       }
