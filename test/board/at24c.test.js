@@ -15,6 +15,11 @@ describe('at24c08 (board)', { skip: AT24C08 === null ? 'no BENCH_AT24C08: no AT2
   let bus, eeprom, saved;
   before(async () => {
     bus = await openCh341(sclFor(SCL_HZ));
+    // all four blocks answering before anything is written: named but gone
+    // (or another chip on one of its addresses) fails here, untouched
+    for (let b = 0; b < 4; b++) {
+      if (!(await bus.acks(AT24C08 + b))) throw new Error(`BENCH_AT24C08 names 0x${AT24C08.toString(16)}, but 0x${(AT24C08 + b).toString(16)} doesn't answer`);
+    }
     eeprom = new At24c(bus, { model: 'AT24C08', address: AT24C08 });
     saved = await eeprom.read(AT, N);
   });
@@ -22,10 +27,6 @@ describe('at24c08 (board)', { skip: AT24C08 === null ? 'no BENCH_AT24C08: no AT2
   after(async () => {
     if (saved) await eeprom.write(AT, saved);
     await bus?.close();
-  });
-
-  it('answers at its four blocks\' addresses', async () => {
-    for (let b = 0; b < 4; b++) assert.ok(await bus.acks(AT24C08 + b), `0x${(AT24C08 + b).toString(16)}`);
   });
 
   it('writes across a page and a block edge and reads it back', async () => {
