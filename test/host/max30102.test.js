@@ -15,10 +15,17 @@ class FakeChip {
     this.writes.push([reg, ...data]);
     data.forEach((v, i) => { this.regs[reg + i] = v; });
     if (reg === 0x09) this.regs[0x09] &= ~0x40; // RESET clears itself
-    if (reg === 0x21) { this.regs[0x21] = 0; this.regs[0x1f] = 0xfe; this.regs[0x20] = 0x04; } // -2 + 0.25
+    if (reg === 0x21) { this.regs[0x21] = 0; this.tempReads = 2; } // ready after two polls
   }
   async writeRead(address, [reg], n) {
     if (reg === 0x07) return Uint8Array.from(this.fifo.splice(0, n));
+    if (reg === 0x01) { // DIE_TEMP_RDY, cleared by the read
+      if (this.tempReads !== undefined && --this.tempReads === 0) {
+        this.regs[0x1f] = 0xfe; this.regs[0x20] = 0x04; // -2 + 0.25
+        return Uint8Array.of(0x02);
+      }
+      return Uint8Array.of(0);
+    }
     return this.regs.slice(reg, reg + n);
   }
 }
@@ -33,6 +40,7 @@ describe('max30102 (host)', () => {
       [0x08, 0x40], // SMP_AVE 4
       [0x0a, 0x2f], // ADC 4096 nA, 400 per second, 411 us
       [0x0c, 0x23, 0x23], // red, IR: 7 mA (35 x 0.2)
+      [0x03, 0x02], // DIE_TEMP_RDY_EN
       [0x04, 0, 0, 0], // FIFO pointers, overflow counter
       [0x09, 0x03], // SpO2 mode
     ]);
@@ -81,7 +89,7 @@ describe('max30102 (host)', () => {
     assert.deepEqual(chip.writes, [[0x04, 0, 0, 0]]);
   });
 
-  it('temperature: integer (two\'s complement) plus fraction', async () => {
+  it('temperature: waits for DIE_TEMP_RDY; integer (two\'s complement) plus fraction', async () => {
     assert.equal(await new Max30102(new FakeChip()).temperature(), -1.75);
   });
 

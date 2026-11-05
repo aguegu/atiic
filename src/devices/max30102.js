@@ -9,6 +9,9 @@
 // This driver gives the samples; heart rate and SpO2 are what a page makes
 // of them.
 
+const REG_INT_STATUS_2 = 0x01; // DIE_TEMP_RDY[1], cleared by the read
+const REG_INT_ENABLE_2 = 0x03; // DIE_TEMP_RDY_EN[1]
+const DIE_TEMP_RDY = 0x02;
 const REG_FIFO_WR_PTR = 0x04; // then OVF_COUNTER 0x05, FIFO_RD_PTR 0x06
 const REG_FIFO_DATA = 0x07; // reading it doesn't advance the address: a burst reads samples on
 const REG_FIFO_CONFIG = 0x08; // SMP_AVE[7:5], FIFO_ROLLOVER_EN[4], FIFO_A_FULL[3:0]
@@ -16,7 +19,7 @@ const REG_MODE_CONFIG = 0x09; // SHDN[7], RESET[6], MODE[2:0]
 const REG_SPO2_CONFIG = 0x0a; // SPO2_ADC_RGE[6:5], SPO2_SR[4:2], LED_PW[1:0]
 const REG_LED1_PA = 0x0c; // red, then IR at 0x0d: 0.2 mA a step (Table 8)
 const REG_TEMP_INT = 0x1f; // then TEMP_FRAC 0x20 (0.0625 C steps, bits 3:0)
-const REG_TEMP_CONFIG = 0x21; // TEMP_EN[0]: a reading, self-clearing
+const REG_TEMP_CONFIG = 0x21; // TEMP_EN[0]: a reading (it reads back 0 at once on r8845's: no use polling)
 const REG_PART_ID = 0xff;
 
 const SHDN = 0x80;
@@ -30,7 +33,7 @@ const MA_PER_STEP = 0.2; // Table 8
 const FIFO_DEPTH = 32;
 const SAMPLE_MASK = 0x3ffff; // 18 bits, left-justified
 const RESET_POLL_MS = 1;
-const TEMP_POLL_MS = 5; // a reading takes 29 ms (TT)
+const TEMP_POLL_MS = 2; // a reading takes 29 ms (TT): DIE_TEMP_RDY after 27.5-28.6 on r8845
 const POLL_LIMIT = 100;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -69,6 +72,7 @@ class Max30102 {
     await this.bus.write(this.address, [REG_FIFO_CONFIG, ave << 5]);
     await this.bus.write(this.address, [REG_SPO2_CONFIG, (rge << 5) | (sr << 2) | pw]);
     await this.bus.write(this.address, [REG_LED1_PA, current(red, 'red'), current(ir, 'IR')]);
+    await this.bus.write(this.address, [REG_INT_ENABLE_2, DIE_TEMP_RDY]); // temperature() waits on its flag
     await this.bus.write(this.address, [REG_FIFO_WR_PTR, 0, 0, 0]);
     await this.bus.write(this.address, [REG_MODE_CONFIG, MODES[mode]]);
     this.mode = mode;
@@ -76,14 +80,14 @@ class Max30102 {
     this.rate = sampleRate / average; // samples a second into the FIFO
   }
 
-  // until a register's bits clear
-  async until(reg, bits, pollMs) {
+  // until a register's bits clear (set: until they're set)
+  async until(reg, bits, pollMs, set = false) {
     for (let i = 0; i < POLL_LIMIT; i++) {
       const [v] = await this.bus.writeRead(this.address, [reg], 1);
-      if (!(v & bits)) return;
+      if (set ? v & bits : !(v & bits)) return;
       await delay(pollMs);
     }
-    throw new Error(`register 0x${reg.toString(16)} bits 0x${bits.toString(16)} never cleared`);
+    throw new Error(`register 0x${reg.toString(16)} bits 0x${bits.toString(16)} never ${set ? 'set' : 'cleared'}`);
   }
 
   // the samples queued, oldest first: { red, ir } (spo2) or { red } (hr),
@@ -105,10 +109,12 @@ class Max30102 {
     });
   }
 
-  // the die's temperature, C: one reading (29 ms)
+  // the die's temperature, C: one reading (29 ms), done when DIE_TEMP_RDY
+  // sets (init() enables it)
   async temperature() {
+    await this.bus.writeRead(this.address, [REG_INT_STATUS_2], 1); // an old flag cleared
     await this.bus.write(this.address, [REG_TEMP_CONFIG, 1]);
-    await this.until(REG_TEMP_CONFIG, 1, TEMP_POLL_MS);
+    await this.until(REG_INT_STATUS_2, DIE_TEMP_RDY, TEMP_POLL_MS, true);
     const [whole, frac] = await this.bus.writeRead(this.address, [REG_TEMP_INT], 2);
     return ((whole << 24) >> 24) + (frac & 0x0f) * 0.0625;
   }
