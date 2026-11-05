@@ -172,6 +172,9 @@ inversion, 24 columns in (`new St7735s(bus)`'s defaults).
 Colours are `0xRRGGBB`; `{ bits: 12 | 16 | 18 }` picks the pixel format
 (16 by default): 12 bits is the quickest (a screen in 174 ms on r8845) and
 shows a ramp in 16 steps, 18 the smoothest (341 ms).
+`scrollArea()`, `scroll(n)` and `scrollRow(n)` use the controller's
+scrolling along the panel's long side: a strip chart draws one new row a
+step (4.2 ms on r8845, about 240 steps a second) instead of a whole screen.
 
 D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
 two moves to another line.

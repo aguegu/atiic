@@ -14,6 +14,11 @@
 // pixel, COLMOD) decides how many of their bits reach the panel: 4, 5-6-5 or
 // 6 a colour (the 4-line serial layouts, 9.8.20-22, pages 65-66). Tried on
 // r8845's module: a ramp shows 16 steps in 12 bits, looks smooth in 18.
+//
+// Scrolling is the controller's (SCRLAR 33h, VSCSAD 37h, 9.11.6): it shows
+// its memory's rows from a start line on, wrapping around, so a strip chart
+// draws one new row a step instead of a whole screen. Along the rows only:
+// the panel's long side, left to right held landscape.
 
 const SWRESET = 0x01;
 const SLPOUT = 0x11;
@@ -24,9 +29,12 @@ const DISPON = 0x29;
 const CASET = 0x2a;
 const RASET = 0x2b;
 const RAMWR = 0x2c;
+const SCRLAR = 0x33;
 const MADCTL = 0x36;
+const VSCSAD = 0x37;
 const COLMOD = 0x3a;
 const MADCTL_BGR = 0x08;
+const MEMORY_ROWS = 162; // the controller's frame memory: TFA + VSA + BFA must make it
 // the pixel formats: COLMOD's value, the bytes for n pixels, and the bytes
 // themselves from 0xRRGGBB colours
 const FORMATS = {
@@ -124,6 +132,37 @@ class St7735s {
     const x0 = x + this.xOffset, y0 = y + this.yOffset;
     await this.command(CASET, [x0 >> 8, x0 & 0xff, (x0 + w - 1) >> 8, (x0 + w - 1) & 0xff]);
     await this.command(RASET, [y0 >> 8, y0 & 0xff, (y0 + h - 1) >> 8, (y0 + h - 1) & 0xff]);
+  }
+
+  // the scroll area: the panel's rows between `top` fixed rows and `bottom`
+  // fixed rows (the memory's rows past the panel fixed too). Shows from its
+  // first row until scroll()
+  async scrollArea(top = 0, bottom = 0) {
+    const tfa = this.yOffset + top, vsa = this.height - top - bottom, bfa = MEMORY_ROWS - tfa - vsa;
+    if (vsa < 1) throw new Error(`no rows left to scroll: ${top} + ${bottom} of ${this.height}`);
+    this.scrolling = { top, rows: vsa };
+    await this.command(SCRLAR, [tfa >> 8, tfa & 0xff, vsa >> 8, vsa & 0xff, bfa >> 8, bfa & 0xff]);
+    await this.scroll(0);
+  }
+
+  // the scroll area shown from its row `n` (wrapping): the row before it
+  // shows last. A strip chart draws its newest row at scrollRow(n) and calls
+  // scroll(n + 1)
+  async scroll(n) {
+    const ssa = this.yOffset + this.scrollRow(n);
+    await this.command(VSCSAD, [ssa >> 8, ssa & 0xff]);
+  }
+
+  // the panel row (for draw()'s y) of the scroll area's row n
+  scrollRow(n) {
+    const { top, rows } = this.scrolling;
+    return top + (((n % rows) + rows) % rows);
+  }
+
+  // back to the plain display: rows where they're drawn
+  async scrollOff() {
+    this.scrolling = null;
+    await this.command(NORON);
   }
 
   // a rectangle of one colour (0xRRGGBB)

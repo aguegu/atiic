@@ -89,4 +89,44 @@ describe('st7735s (host)', () => {
     await new St7735s(bus, { bits: 12 }).fillRect(0, 0, 3, 1, 0xffffff);
     assert.deepEqual(commands(bus.log)[2], { c: 0x2c, data: [0xff, 0xff, 0xff, 0xff, 0xf0] });
   });
+
+  it('scrollArea: the panel\'s 160 rows scroll, the memory\'s 2 past them fixed (TFA + VSA + BFA = 162)', async () => {
+    const bus = new FakeBus();
+    const lcd = new St7735s(bus);
+    await lcd.scrollArea();
+    assert.deepEqual(commands(bus.log), [
+      { c: 0x33, data: [0, 0, 0, 160, 0, 2] }, // SCRLAR: TFA 0, VSA 160, BFA 2
+      { c: 0x37, data: [0, 0] }, // VSCSAD: from row 0
+    ]);
+  });
+
+  it('scrollArea with fixed rows: 10 at the top, 20 at the bottom', async () => {
+    const bus = new FakeBus();
+    const lcd = new St7735s(bus);
+    await lcd.scrollArea(10, 20);
+    assert.deepEqual(commands(bus.log)[0], { c: 0x33, data: [0, 10, 0, 130, 0, 22] });
+    assert.deepEqual(commands(bus.log)[1], { c: 0x37, data: [0, 10] });
+    await assert.rejects(lcd.scrollArea(80, 80), /no rows left/);
+  });
+
+  it('scroll wraps in the area; scrollRow gives the panel row to draw on', async () => {
+    const bus = new FakeBus();
+    const lcd = new St7735s(bus);
+    await lcd.scrollArea(10, 20); // rows 10-139: 130 of them
+    bus.log.length = 0;
+    await lcd.scroll(5);
+    await lcd.scroll(130 + 7);
+    await lcd.scroll(-1);
+    assert.deepEqual(commands(bus.log).map((c) => c.data), [[0, 15], [0, 17], [0, 139]]);
+    assert.deepEqual([0, 129, 130, -1].map((n) => lcd.scrollRow(n)), [10, 139, 10, 139]);
+  });
+
+  it('scrollOff: NORON', async () => {
+    const bus = new FakeBus();
+    const lcd = new St7735s(bus);
+    await lcd.scrollArea();
+    bus.log.length = 0;
+    await lcd.scrollOff();
+    assert.deepEqual(commands(bus.log), [{ c: 0x13, data: [] }]);
+  });
 });

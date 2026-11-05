@@ -13,6 +13,10 @@ const FULL_FILL_MS = 500; // a full screen at 16 bits, 25,600 bytes: 235 ms seen
 // the other pixel formats' full screens, 19,200 and 38,400 bytes: 174 and
 // 341 ms seen on r8845
 const FORMAT_FILL_MS = { 12: 400, 18: 700 };
+// a strip chart's step on the controller's scrolling: one 80-pixel row and
+// the start line moved. 4.2 ms seen on r8845 (16 bits)
+const SCROLL_STEP_MS = 10;
+const SCROLL_STEPS = 320; // two screens: past the wrap twice
 const RED = 0xff0000, GREEN = 0x00ff00, BLUE = 0x0000ff, WHITE = 0xffffff, BLACK = 0x000000;
 
 describe('st7735s (board)', { skip: ST7735 ? false : 'no BENCH_ST7735: no display on the bench' }, () => {
@@ -49,6 +53,22 @@ describe('st7735s (board)', { skip: ST7735 ? false : 'no BENCH_ST7735: no displa
       assert.ok(ms < FORMAT_FILL_MS[bits], `${ms.toFixed(0)} ms`);
     });
   }
+
+  it(`scrolls: a strip chart's step in under ${SCROLL_STEP_MS} ms`, async () => {
+    await lcd.init(); // back from the other formats
+    await lcd.fill(BLACK);
+    await lcd.scrollArea();
+    const t0 = performance.now();
+    for (let n = 0; n < SCROLL_STEPS; n++) {
+      const row = new Array(lcd.width).fill(BLACK);
+      row[Math.round(40 + 36 * Math.sin(n / 15))] = RED;
+      await lcd.draw(0, lcd.scrollRow(n), lcd.width, 1, row);
+      await lcd.scroll(n + 1);
+    }
+    const ms = (performance.now() - t0) / SCROLL_STEPS;
+    await lcd.scrollOff();
+    assert.ok(ms < SCROLL_STEP_MS, `${ms.toFixed(2)} ms a step`);
+  });
 
   it('leaves its test pattern (16 bits): a white border on black, red, green, blue', async () => {
     await lcd.init(); // back from the other formats
