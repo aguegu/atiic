@@ -1,5 +1,11 @@
 # Releases
 
+## 1.0.13
+
+- The setup drawing and the V357's header table mark CS1 and CS2 as the
+  chip's D1 and D2 too (pins 16 and 17), as CS0 is D0: lines `bus.pins()`
+  can drive, for later.
+
 ## 1.0.12
 
 - The setup drawing's BMX055 module as it is: a CJMCU-900F, its ten pins

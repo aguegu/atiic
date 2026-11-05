@@ -113,8 +113,8 @@
       <text x="316" y="253">GND</text><text x="316" y="278">SCL</text><text x="316" y="303">SDA</text><text x="316" y="328">VCC</text>
     </g>
     <g>
-      <text x="374" y="153">MISO</text><text x="374" y="178">MOSI</text><text x="374" y="203">SCK</text><text x="374" y="228">CS2</text>
-      <text x="374" y="253">CS1</text><text x="374" y="278">CS0 (D0)</text><text x="374" y="303">GND</text><text x="374" y="328">VCC</text>
+      <text x="374" y="153">MISO</text><text x="374" y="178">MOSI</text><text x="374" y="203">SCK</text><text x="374" y="228">CS2 (D2)</text>
+      <text x="374" y="253">CS1 (D1)</text><text x="374" y="278">CS0 (D0)</text><text x="374" y="303">GND</text><text x="374" y="328">VCC</text>
     </g>
   </g>
 

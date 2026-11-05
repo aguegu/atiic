@@ -113,8 +113,8 @@ along the edges, the parallel port, unused here):
 | GND | MISO |
 | RXD | MOSI |
 | TXD | SCK |
-| VCC | CS2 |
-| GND | CS1 |
+| VCC | CS2 (the chip's D2, pin 17) |
+| GND | CS1 (the chip's D1, pin 16) |
 | SCL | CS0 (the chip's D0, pin 15) |
 | SDA | GND |
 | VCC | VCC |
