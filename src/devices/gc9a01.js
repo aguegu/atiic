@@ -3,8 +3,9 @@
 // chip's own, per its datasheet (GC9A01A Rev 1.0 Preliminary, 2019-07-02:
 // Waveshare keeps a copy, files.waveshare.com/upload/5/5e/GC9A01A.pdf): a
 // 320x240 frame memory scrolled over 240 rows, its scroll definition TFA and
-// VSA alone (6.2.15, four parameters, no BFA), COLMOD 5/6 for 16/18 bits
-// (and 3 for 12, which its serial sections don't show).
+// VSA alone (6.2.15, four parameters, no BFA), COLMOD 3/5/6 for 12/16/18
+// bits (its serial sections show 16 and 18 only; 12 on r8845's module
+// shows its ramps in steps, as the other chips).
 //
 // Its panel needs the chip's inner registers set: Espressif's esp_lcd_gc9a01
 // defaults (esp-bsp, vendor_specific_init_default), behind the inter

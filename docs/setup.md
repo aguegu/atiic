@@ -180,7 +180,16 @@ The same wiring drives a 1.45" 60x160 IPS module on a GC9107 (`Gc9107`,
 `BENCH_GC9107=res=D0,dc=D1,cs=D2`): its panel needs the chip's inner
 registers set (Espressif's values, sent by `init()`; without them a white
 haze over a quarter of the screen), then shows inverted unless INVON; BGR,
-34 columns in. Both drivers are `DcsPanel`s: the same calls.
+34 columns in.
+
+And a round 240x240 IPS module, 32.4 mm across, on a GC9A01 (`Gc9a01`,
+`BENCH_GC9A01=res=D0,dc=D1,cs=D2`): the chip's inner registers set by
+`init()` (Espressif's values), inverted, BGR, its columns mirrored
+(`mirrorX`). A whole frame is 115,200 bytes: about a second over the CH341,
+a scrolled strip chart's row 10.8 ms.
+
+All three drivers are `DcsPanel`s: the same calls. Their board tests leave
+a card that labels itself: thirds in 12, 16 and 18 bits.
 
 D0 is RES here, so it can't be a BMX055's PS on the same bench: one of the
 two moves to another line.

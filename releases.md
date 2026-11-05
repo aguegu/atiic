@@ -1,5 +1,23 @@
 # Releases
 
+## 1.1.3
+
+- `Gc9a01`: GalaxyCore's GC9A01 on r8845's round 240x240 IPS module (32.4
+  mm across, the same wiring). Espressif's esp_lcd_gc9a01 inner registers
+  (behind FE and EF), inversion on, BGR, the columns mirrored: a marker
+  drawn above the red square showed on the right, with the red one, so a
+  mirror, not swapped colours. A ring at the memory's edge shows whole.
+  Its 12-bit format works (COLMOD 3) though the datasheet's serial sections
+  show 16 and 18 only.
+- `DcsPanel`: `mirrorX` (MADCTL's MX); a chip's scroll definition without
+  BFA (the GC9A01's takes TFA and VSA alone). Host tests (58 in all).
+- The board tests' round layout: rings at the edge (white, red, green,
+  blue, 3 pixels each: white and green look wider than red and blue, the
+  eye's doing, the data the same) and the self-labelled card upright in
+  the circle's square. The scroll step's limit from the row's bytes: a
+  240-pixel row 10.8 ms. On r8845: a frame about 1 s (16 bits), 0.97 (12),
+  1.75 (18).
+
 ## 1.1.2
 
 - `format(bits)`: a DcsPanel's pixel format changed without an init: what's
