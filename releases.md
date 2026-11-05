@@ -1,5 +1,20 @@
 # Releases
 
+## 1.0.8
+
+- The BMX055's gyro (`src/devices/bmx055-gyro.js`,
+  `import { Bmx055Gyro } from 'atiic'`), the second of its three chips:
+  `init(scale)` (±125 to ±2000 deg/s; soft reset, the range, 100 Hz with
+  its 32 Hz filter, normal power), `measure()` (deg/s), `sleep()`
+  (suspend). Its facts from the datasheet (BST-BMX055-DS000-02, the GYR
+  registers), cross-checked with Linux's bmg160 driver. No temperature: the
+  BMX055's gyro has none (0x08 reserved).
+- Measured on r8845's module (0x69): the rates settle within 0.5 deg/s about
+  30 ms after normal mode (24 wake-ups), the datasheet's start-up time; the
+  kernel waits 80 ms as a margin, the driver 50.
+- Host 28 of 28; board 14 of 14, three runs (the CH341's 4, the
+  accelerometer's 5, the gyro's 5; the MPU tests skipped).
+
 ## 1.0.7
 
 - The BMX055's accelerometer (`src/devices/bmx055-accel.js`,
