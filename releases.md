@@ -1,5 +1,18 @@
 # Releases
 
+## 1.2.0
+
+1.1.x closed (1.1.0-1.1.5): SPI on the CH341 and three display drivers on
+it, `DcsPanel`'s `St7735s` (0.96" 80x160), `Gc9107` (1.45" 60x160) and
+`Gc9a01` (round 240x240), each in 12, 16 and 18 bits, with the
+controller's scrolling, checked by eye on r8845 and left showing a card
+that labels itself. Found on the way: the CH341 shifts LSB first only
+(about 110-117 KB/s, a 240x240 frame about a second), the GC9107's 12-bit
+code is the datasheet's other one, scrolling follows the panel's scan
+lines only, and a round panel is a rectangle behind a circle.
+
+1.2.x: e-ink displays.
+
 ## 1.1.5
 
 - `docs/setup.md`, "The round module: a rectangle behind a circle": the
