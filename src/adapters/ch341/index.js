@@ -109,7 +109,7 @@ class Ch341 {
   }
 
   // D0-D5 driven or released: { D0: true } high, { D0: false } low,
-  // { D0: null } back to an input (the chip's pull-up); lines not named keep
+  // { D0: null } back to an input (pulled up? DS1 says so only for D6, D7); lines not named keep
   // what they had. In the queue, so never in the middle of a transaction.
   // The CH341 forgets them when it resets (unplugged): drive them again
   // the levels on D0-D7, driven or not (D6 and D7 are inputs only; D0-D5
