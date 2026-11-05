@@ -28,9 +28,13 @@ const SELF_TEST = 0x80;
 const LSB_PER_G = 256; // full resolution, typical (Table 1)
 const RATE_HZ = 100;
 const SAMPLE_MS = 1000 / RATE_HZ;
-const TURN_ON_MS = Math.ceil(SAMPLE_MS + 1.1); // Table 1, note 7: tau + 1.1 ms
+// after measurement mode: Table 1's turn-on (note 7: tau + 1.1 ms) gives a
+// first sample, but on r8845's part it read 5 % short (Y 265 against a
+// settled 280 LSb) and the next one had settled; waited the 4 tau its
+// output filter takes to its final value (note 6, said of self-test)
+const SETTLE_SAMPLES = 4;
 const SELF_TEST_SAMPLES = 10;
-const SELF_TEST_SETTLE = 4; // "about four samples"
+const SELF_TEST_SETTLE = 4; // "about four samples" (note 6: 4 tau)
 // Table 15 (LSb, VS 2.5 V) and Table 14's scale for other supplies
 const SELF_TEST_LIMITS = { x: [50, 540], y: [-540, -50], z: [75, 875] };
 const SELF_TEST_SCALE = { 2.0: { xy: 0.64, z: 0.8 }, 2.5: { xy: 1, z: 1 }, 3.3: { xy: 1.77, z: 1.47 }, 3.6: { xy: 2.11, z: 1.69 } };
@@ -63,7 +67,7 @@ class Adxl345 {
     return parseData(await this.bus.writeRead(this.address, [REG_DATAX0], 6));
   }
 
-  // full resolution, +/-16 g, 100 Hz, measuring; its first sample waited for
+  // full resolution, +/-16 g, 100 Hz, measuring; its output settled
   async init() {
     const [id] = await this.bus.writeRead(this.address, [REG_DEVID], 1);
     if (id !== DEVID) throw new Error(`no ADXL345 at 0x${this.address.toString(16)} (DEVID 0x${id.toString(16)})`);
@@ -71,7 +75,7 @@ class Adxl345 {
     await this.bus.write(this.address, [REG_DATA_FORMAT, FORMAT_FULL_RES_16G]);
     await this.bus.write(this.address, [REG_BW_RATE, RATE_100HZ]);
     await this.bus.write(this.address, [REG_POWER_CTL, POWER_MEASURE]);
-    await delay(TURN_ON_MS);
+    await delay(SETTLE_SAMPLES * SAMPLE_MS);
   }
 
   // the latest sample, g
