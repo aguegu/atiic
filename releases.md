@@ -1,5 +1,21 @@
 # Releases
 
+## 1.3.20
+
+- `At24c`: Atmel's AT24C01A/02/04/08A/16A EEPROMs, from their datasheet
+  (0180Z1-SEEPR-5/07); the AT24C08 board-tested. A read is one random read,
+  sequential across the 256-byte blocks (each block its own device address,
+  0x50-0x53 for the AT24C08); writes are split at the 16-byte (8 for 1K, 2K)
+  page edges, each followed by acknowledge polling (tWR 5 ms max). No ID
+  register: `BENCH_AT24C08` names it on a bench; the board test writes 24
+  bytes across a page and a block edge, reads them back and puts back what
+  was there (r8845: the whole 1 KB the same before and after; two page
+  writes 6.3 ms). Host tests (141 in all).
+- Found on r8845: this AT24C08 had shared 0x53 with the ADXL345 (block 3's
+  address): reads came out right (the EEPROM's 0xFF under the ADXL's
+  bytes), but 1.3.18's ADXL345 tests wrote into its block 3 (0x2C, 0x2D,
+  0x31). Taken apart on the bench since.
+
 ## 1.3.19
 
 - `Itg3200`: InvenSense's 3-axis gyroscope at 0x68 or 0x69, from its
