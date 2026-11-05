@@ -155,4 +155,34 @@ describe('ch341 spi', () => {
     assert.deepEqual(outs, [[0xa0]]);
     assert.deepEqual(pins, { D0: true, D1: false, D2: false, D3: false, D4: true, D5: false, D6: false, D7: true });
   });
+
+  it('Ch341.spiSelected: CS low padded to its own packet with the SPI in one transfer, CS high in the next', async () => {
+    const outs = [];
+    let pending = [];
+    const device = {
+      transferOut: async (ep, data) => {
+        outs.push(Array.from(data));
+        for (let i = 0; i < data.length; i += 32) {
+          const p = data.slice(i, i + 32);
+          if (p[0] === 0xa8) pending.push(...p.slice(1));
+        }
+        return { status: 'ok', bytesWritten: data.length };
+      },
+      transferIn: async () => {
+        await new Promise((r) => setTimeout(r, 1));
+        const d = Uint8Array.from(pending.splice(0, 31));
+        return { status: 'ok', data: new DataView(d.buffer) };
+      },
+    };
+    const bus = new Ch341(device);
+    const back = await bus.spiSelected('D4', [0xf5, 0x00]);
+    assert.deepEqual(Array.from(back), [0xf5, 0x00]); // the fake's MISO is MOSI
+    assert.equal(outs.length, 2);
+    assert.deepEqual(outs[0].slice(0, 4), [0xab, 0x80, 0x40 | 0x38, 0x20]); // D3 low, D4 low, D5 low; D3 D4 D5 outputs
+    assert.ok(outs[0].slice(4, 32).every((b) => b === 0), 'padded to 32');
+    assert.equal(outs[0][32], 0xa8);
+    assert.equal(outs[0].length, 32 + 3);
+    assert.deepEqual(outs[1], [0xab, 0x80 | 0x10, 0x40 | 0x38, 0x20]); // D4 high
+    await assert.rejects(async () => bus.spiSelected('D7', [0]), /no such pin/);
+  });
 });

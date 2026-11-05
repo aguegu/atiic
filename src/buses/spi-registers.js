@@ -23,7 +23,10 @@ class SpiRegisters {
     return this;
   }
 
+  // the chip select around the bytes: by the bus's spiSelected() where it
+  // has one (the CH341's: a USB round trip less), else pins() each side
   async transfer(bytes) {
+    if (this.bus.spiSelected) return this.bus.spiSelected(this.cs, bytes);
     await this.bus.pins({ [this.cs]: false });
     try {
       return await this.bus.spi(bytes);

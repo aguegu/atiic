@@ -9,6 +9,8 @@
 //   readPins()                     -> { D0: true, ... D7 }: the lines' levels
 //   spi(bytes)                     -> Uint8Array: SPI, as many bytes back (chip
 //                                     selects and other lines by pins())
+//   spiSelected(cs, bytes)         -> the same, the line cs low around it, a
+//                                     USB round trip less
 // A device that doesn't ack its address throws; data bytes written aren't
 // checked (the CH341 replies an ack only for bytes sent alone).
 import {
@@ -149,32 +151,69 @@ class Ch341 {
   // a long transfer isn't a round trip a packet (r8845: 25,600 bytes in
   // 230 ms, about 110 KB/s)
   spi(bytes) {
+    return this.spiRun(bytes, null);
+  }
+
+  // spi() with a chip select: the line driven low in the same USB transfer
+  // as the bytes (its command a 32-byte packet of its own, the CH341 taking
+  // a packet a command, as flashrom sends its chip selects), then high in
+  // the next: a round trip less than pins(), spi(), pins(). The high can't
+  // ride along: an SPI packet is mostly short, and a short packet ends a
+  // transfer (padding it would clock out bytes)
+  spiSelected(cs, bytes) {
+    if (UIO_PINS.indexOf(cs) < 0) throw new Error(`no such pin ${cs}: D0-D5 can be driven`);
+    return this.spiRun(bytes, cs);
+  }
+
+  spiRun(bytes, cs) {
     const all = spiPackets(bytes);
     const job = this.queue.then(async () => {
       const sck = 1 << UIO_PINS.indexOf(SPI_SCK), mosi = 1 << UIO_PINS.indexOf(SPI_MOSI);
+      let lead = null; // a UIO packet before the first group: SCK and MOSI outputs, the chip select low
       if ((this.outputs & (sck | mosi)) !== (sck | mosi)) {
         this.outputs |= sck | mosi;
         this.levels &= ~sck;
-        await this.out(uioPacket(this.levels, this.outputs));
+        lead = true;
+      }
+      const select = cs ? 1 << UIO_PINS.indexOf(cs) : 0;
+      if (select) {
+        this.outputs |= select;
+        this.levels &= ~select;
+        lead = true;
+      }
+      if (lead) {
+        lead = new Uint8Array(PACKET_SIZE); // padded: the SPI's packets start on their own
+        lead.set(uioPacket(this.levels, this.outputs));
+        if (!select) { // as before: on its own
+          await this.out(lead.subarray(0, uioPacket(0, 0).length));
+          lead = null;
+        }
       }
       const got = [];
       for (let g = 0; g < all.length; g += SPI_GROUP) {
         const group = all.slice(g, g + SPI_GROUP);
+        if (lead) group.unshift(lead);
         const data = new Uint8Array(group.reduce((n, p) => n + p.length, 0));
         let o = 0;
         for (const p of group) { data.set(p, o); o += p.length; }
         // the replies collected while the packets go out: the CH341 stops
         // taking packets once its replies aren't read (flashrom keeps reads
         // waiting too); one after the other, a 1000-byte transfer was cancelled
-        const replies = this.in(group.reduce((n, p) => n + p.length - 1, 0));
+        const replies = this.in(group.reduce((n, p) => n + (p === lead ? 0 : p.length - 1), 0));
+        lead = null;
         await this.out(data);
         got.push(...await replies);
+      }
+      if (select) {
+        this.levels |= select;
+        await this.out(uioPacket(this.levels, this.outputs));
       }
       return Uint8Array.from(got, reverseBits);
     });
     this.queue = job.catch(() => {});
     return job;
   }
+
 
   async scan(first = SCAN_FIRST, last = SCAN_LAST) {
     const found = [];
