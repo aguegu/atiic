@@ -13,8 +13,17 @@
 //
 // Scrolling is the controller's (VSCRDEF 33h, VSCSAD 37h): it shows its
 // memory's rows from a start line on, wrapping around, so a strip chart
-// draws one new row a step instead of a whole screen. Along the rows only:
-// the panel's long side, left to right held landscape.
+// draws one new row a step instead of a whole screen.
+//
+// Note: it moves along the panel's scan lines (its gates) only, the way the
+// glass is wired, whatever MADCTL says: MV swaps how pixels are written into
+// memory, not how the panel scans (the ST7735S datasheet asks MV 0 while
+// scrolling, 10.1.26), and ML only turns the scroll back to front. On r8845's
+// modules the scan runs along the memory's rows: the bars, held landscape
+// (portrait top on the left), scroll leftwards; the round GC9A01, as it
+// sits, scrolls upwards. A sideways scroll there means turning the module a
+// quarter (counter-clockwise: up becomes left); a whole frame redrawn a
+// step instead is about a second over the CH341.
 
 const SWRESET = 0x01;
 const SLPOUT = 0x11;

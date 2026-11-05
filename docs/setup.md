@@ -173,8 +173,15 @@ Colours are `0xRRGGBB`; `{ bits: 12 | 16 | 18 }` picks the pixel format
 (16 by default): 12 bits is the quickest (a screen in 174 ms on r8845) and
 shows a ramp in 16 steps, 18 the smoothest (341 ms).
 `scrollArea()`, `scroll(n)` and `scrollRow(n)` use the controller's
-scrolling along the panel's long side: a strip chart draws one new row a
-step (4.2 ms on r8845, about 240 steps a second) instead of a whole screen.
+scrolling: a strip chart draws one new row a step (4.2 ms on r8845, about
+240 steps a second) instead of a whole screen.
+
+> **Scrolling goes one way only.** It moves along the panel's scan lines,
+> as the glass is wired; MADCTL can't turn it sideways (MV changes how
+> pixels are written, not how the panel scans; ML only reverses it). The bar
+> modules, held landscape, scroll leftwards; the round GC9A01, as it sits,
+> scrolls upwards (146 rows a second). For a leftward scroll on the round
+> one, turn it a quarter counter-clockwise: being round, it looks the same.
 
 The same wiring drives a 1.45" 60x160 IPS module on a GC9107 (`Gc9107`,
 `BENCH_GC9107=res=D0,dc=D1,cs=D2`): its panel needs the chip's inner

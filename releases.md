@@ -1,5 +1,13 @@
 # Releases
 
+## 1.1.4
+
+- A note on scrolling's one direction (`dcs-panel.js`, `docs/setup.md`): the
+  controller scrolls along the panel's scan lines only, which MADCTL can't
+  turn; the bars held landscape scroll leftwards, the round GC9A01 upwards
+  (6.9 ms a row, 146 a second on r8845, against about a second for a whole
+  frame redrawn); a quarter turn of the round module makes it leftwards.
+
 ## 1.1.3
 
 - `Gc9a01`: GalaxyCore's GC9A01 on r8845's round 240x240 IPS module (32.4
