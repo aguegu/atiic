@@ -1,5 +1,16 @@
 # Releases
 
+## 1.2.6
+
+- `Ssd1681`: Solomon Systech's SSD1681 on r8845's 1.54" 200x200
+  black/white e-paper (the same wiring, BUSY on D4). Its commands, RAM and
+  flow are the SSD1680's (Rev 1.1, 9.1), so it is `Ssd1680` at 200x200:
+  the window, orientation, partial updates and the RAM through sleep and
+  wake all held first time. BUSY: a full update 1,682-1,685 ms, a partial
+  494-498 ms.
+- The e-paper board tests shared (`test/board/epaper.js`), run for
+  `BENCH_SSD1680` or `BENCH_SSD1681`. Host tests (69 in all).
+
 ## 1.2.5
 
 - `Ssd1680.wake()`: out of deep sleep mode 1 by a HW reset (the only way

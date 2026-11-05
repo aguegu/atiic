@@ -266,6 +266,14 @@ panel shows red: the driver is for black/white panels. The board test
 leaves a card labelled with both times, the second label added by a
 partial update.
 
+### A second e-paper: an SSD1681
+
+A 1.54" 200x200 black/white module on an SSD1681, the same wiring and BUSY
+on D4 (`BENCH_SSD1681=res=D0,dc=D1,cs=D2,busy=D4`). Its commands and flow
+are the SSD1680's: `Ssd1681` is `Ssd1680` with 200x200 as its defaults, and
+everything above held on r8845's module first time. Its panel is quicker: a
+full update 1.68 s of BUSY, a partial 0.50 s.
+
 ### A QR code that stays
 
 `npm run demo:qr [text] [quiet modules]` (`demo/epaper-qr.js`) puts a QR
