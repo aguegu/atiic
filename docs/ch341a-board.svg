@@ -300,7 +300,8 @@
   <line x1="734" y1="838" x2="734" y2="882" stroke="#9ca3af" stroke-width="1.5"/>
   <circle cx="734" cy="840" r="3" fill="#7a5b10"/>
   <circle cx="734" cy="880" r="3" fill="#7a5b10"/>
-  <text x="714.0" y="950" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
+  <text x="676" y="844" text-anchor="end" font-size="9.5" fill="#fff">3V3</text>
+  <text x="676" y="924" text-anchor="end" font-size="9.5" fill="#fff">5V</text>
   <rect x="451" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="458" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="463" y="837" width="6" height="6" fill="#7a5b10"/>
