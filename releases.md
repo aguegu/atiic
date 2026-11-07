@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.5
+
+- The ST7735's RES moved from CS1 to GPIO4 (pin 15, ACT), freeing CS1 for
+  a second SPI device (the user): the board test passed so, and the reset
+  seen working (GPIO4 held low 6 s, the panel dark, then red after
+  `init()`; the CH347's GPIO status 80 then c0). `docs/ch347.md` and the
+  pinout sheet's ST7735 wiring: `res=GPIO4,dc=GPIO6,cs=CS0`.
+
 ## 1.4.4
 
 - **The CH347's SPI and pins** (the user wired an ST7735 to it): `spi()`

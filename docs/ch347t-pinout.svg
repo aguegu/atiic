@@ -167,7 +167,7 @@
   <text x="272" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">SDA (MOSI)</tspan> → pin 8 MOSI</text>
   <text x="504" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → pin 5 · CS0</text>
   <text x="736" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">DC</tspan> → pin 2 · GPIO6</text>
-  <text x="40" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → pin 9 · CS1</text>
+  <text x="40" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → pin 15 · GPIO4</text>
   <text x="272" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">VCC, BL</tspan> → 3.3 V</text>
   <text x="504" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">GND</tspan> → GND</text>
   <rect x="40" y="741" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
@@ -191,7 +191,7 @@
   <text x="40" y="786" font-size="12" fill="#374151">• Mode 1 at reset: pin 10 (DTR1) open or high, pin 13 (RTS1) low; both are pulled up inside.</text>
   <text x="40" y="806" font-size="12" fill="#374151">• Only three GPIOs in mode 1: WCH's Linux driver offers GPIO4, GPIO6, GPIO7 on the CH347T (the CH347F has eight).</text>
   <text x="40" y="826" font-size="12" fill="#374151">• GPIO7 is the mode strap: usable once reset is over if the strap is a pull-down, not a short to GND.</text>
-  <text x="40" y="846" font-size="12" fill="#374151">• A chip select not used as one is an output too: CS1 runs the ST7735's RES. SPI's own CS is CS0.</text>
+  <text x="40" y="846" font-size="12" fill="#374151">• GPIO4 is ACT: low once USB is up, so a RES on it resets the panel then; the driver resets it again at init.</text>
   <text x="40" y="866" font-size="12" fill="#374151">• GPIO6 shares pin 2 with UART1's CTS: no hardware flow control on UART1 while it's a GPIO.</text>
   <text x="40" y="904" font-size="10" fill="#6b7280">Sources: WCH CH347DS1 V1.6 §4.3 (tables 4-8, 4-9, 4-11), §5.2; WCH ch34x_mphsi_master_linux (ch347t_board_config, the 0xCC and 0xC1 commands); flashrom ch347_spi.c.</text>
 </svg>

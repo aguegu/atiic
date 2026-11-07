@@ -33,7 +33,7 @@ const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3
 // BENCH_ADAPTER (from .env.local, or the environment): the I2C bus the
 // chips' tests run on, ch341 (the default) or ch347 (a CH347T in mode 1 or a
 // CH347F). The displays' tests run on it too (their lines in its names:
-// BENCH_ST7735=res=CS1,dc=GPIO6,cs=CS0); the BMX055 and MPU-6500 SPI benches
+// BENCH_ST7735=res=GPIO4,dc=GPIO6,cs=CS0); the BMX055 and MPU-6500 SPI benches
 // and the CH341's pin test stay on the CH341
 export const ADAPTER = process.env.BENCH_ADAPTER || 'ch341';
 const OPENERS = { ch341: openCh341, ch347: openCh347 };
