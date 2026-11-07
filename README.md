@@ -104,6 +104,7 @@ under, below the CH341's slowest (20 kHz).
 - The bench, wiring, each device: [docs/setup.md](docs/setup.md)
 - The CH341 adapter (I2C, SPI, D0-D7, speeds): [docs/ch341.md](docs/ch341.md)
 - The CH347 adapter (its modes, I2C as measured): [docs/ch347.md](docs/ch347.md)
+- The two side by side on I2C: [docs/i2c_adapters.md](docs/i2c_adapters.md)
 - Releases: [releases.md](releases.md)
 
 1.0.0 started over from an empty tree. The STC8H Atiic serial-to-I2C bridge

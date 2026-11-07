@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.1
+
+- `docs/i2c_adapters.md`: the CH341 and the CH347 side by side on I2C
+  (USB IDs and speed, interface, packet and reply sizes, the acks each
+  replies, OUT 0, speeds, what errors each catches, opening in Node, Linux
+  access, where the packets come from, what's board-tested), linked from
+  the README and both adapter docs.
+
 ## 1.4.0
 
 - **The CH347 as an I2C bus** (`atiic/adapters/ch347`, `.../ch347/node`):
