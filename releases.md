@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.26
+
+- The CH341A sheet without CS0-CS2 (the user): the header's three cells
+  D0, D1, D2, digital I/O, as atiic names them; a note that D0, D1, D2
+  and D4 can each be a chip select, so up to four SPI devices share SCK,
+  MOSI and MISO at once (a BMX055's three chips ran on D0-D2).
+
 ## 1.4.25
 
 - The CH341A sheet's D0-D2 and D4 as "digital I/O" (the user: "a free
