@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.20
+
+- The CH341A and CH341T sheets draw the same USB-A plug (the user): its
+  shell over the board's end, its four contacts above, two windows; the
+  CH341T's to scale, the CH341A's in its photo's proportions to the board.
+  The CH341A's "3V3 (both)" under its jumper pair, clear of the shell.
+
 ## 1.4.19
 
 - The board sheets without the chip pin numbers (p15 ...) on their tags

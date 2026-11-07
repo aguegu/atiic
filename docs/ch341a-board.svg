@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1246" width="1200" height="1246" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1397" width="1200" height="1397" font-family="Helvetica, Arial, sans-serif">
   <title>CH341A dongle (V357) in I2C/SPI mode: the headers</title>
-  <rect width="1200" height="1246" fill="#ffffff"/>
+  <rect width="1200" height="1397" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341A dongle (V357) in I2C/SPI mode: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down. Each hole: its silkscreen (the side rows' from the back), its role in mode 1a86:5512, atiic's name.</text>
   <rect x="440" y="230" width="320" height="610" rx="8" fill="#1f6fa8" stroke="#164e78" stroke-width="2"/>
@@ -268,38 +268,44 @@
   <rect x="717.8" y="781.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="717.8" y="799.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="714.8" y="760.75" width="20" height="32" rx="3" fill="#222"/>
-  <text x="682.0" y="774.75" text-anchor="end" font-size="9.5" fill="#fff">3V3 (both)</text>
+  <text x="710.4" y="829.75" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
   <rect x="452.2" y="763.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="452.2" y="781.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="452.2" y="799.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="449.2" y="778.75" width="20" height="32" rx="3" fill="#222"/>
   <text x="473.2" y="774.75" font-size="9.5" fill="#fff">UART</text>
   <text x="473.2" y="810.75" font-size="9.5" fill="#fff">I2C/SPI</text>
-  <rect x="540.0" y="834" width="120" height="80" rx="6" fill="#cfd4da" stroke="#8a9096"/>
-  <text x="600.0" y="934" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
-  <rect x="40" y="951" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="64" y="964" font-size="12" fill="#374151">I2C</text>
-  <rect x="107" y="951" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="131" y="964" font-size="12" fill="#374151">SPI / its lines</text>
-  <rect x="258" y="951" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="282" y="964" font-size="12" fill="#374151">a free line</text>
-  <rect x="381" y="951" width="18" height="18" rx="9" fill="#fef9c3" stroke="#ca8a04"/>
-  <text x="405" y="964" font-size="12" fill="#374151">input only</text>
-  <rect x="497" y="951" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="521" y="964" font-size="12" fill="#374151">power</text>
-  <rect x="578" y="951" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="602" y="964" font-size="12" fill="#374151">same chip pin as a header hole</text>
-  <rect x="816.0" y="951" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="840.0" y="964" font-size="12" fill="#374151">not used by atiic</text>
-  <text x="970.8" y="964" font-size="13" fill="#15803d">✓</text><text x="986.8" y="964" font-size="12" fill="#374151">tested</text>
-  <text x="40" y="1000" font-size="14" font-weight="bold" fill="#222">The jumpers (set unplugged)</text>
-  <text x="40" y="1024" font-size="12" fill="#374151"><tspan font-weight="bold">The pair by the USB, right: 3V3.</tspan> VCC and the chip at 3.3 V (the board comes on 5 V)</text>
-  <text x="40" y="1044" font-size="12" fill="#374151"><tspan font-weight="bold">The one by the USB, left: I2C/SPI.</tspan> 1a86:5512, atiic's mode; UART is a serial port (1a86:5523)</text>
-  <text x="40" y="1088" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7, chip selects any of D0-D5.</text>
-  <text x="40" y="1108" font-size="12" fill="#374151">• The header's CS0-CS2, SCK, MOSI, MISO are D0-D3, D5, D7 again on the left-hand row (dashed); D4 and D6 are on that row only.</text>
-  <text x="40" y="1128" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
-  <text x="40" y="1148" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
-  <text x="40" y="1168" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
-  <text x="40" y="1202" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1160" y="1226" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <rect x="557.76" y="747.3" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="582.08" y="747.3" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="606.4" y="747.3" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="630.72" y="747.3" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="536.0" y="772.9" width="128.0" height="274.5" rx="6" fill="#cfd4da" stroke="#8a9096"/>
+  <rect x="565.44" y="885.628" width="21.76" height="19.2" fill="#6b7178"/>
+  <rect x="612.8" y="885.628" width="21.76" height="19.2" fill="#6b7178"/>
+  <text x="600.0" y="1067.4" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
+  <rect x="40" y="1102.4" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="1115.4" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="1102.4" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="131" y="1115.4" font-size="12" fill="#374151">SPI / its lines</text>
+  <rect x="258" y="1102.4" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="282" y="1115.4" font-size="12" fill="#374151">a free line</text>
+  <rect x="381" y="1102.4" width="18" height="18" rx="9" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="405" y="1115.4" font-size="12" fill="#374151">input only</text>
+  <rect x="497" y="1102.4" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="521" y="1115.4" font-size="12" fill="#374151">power</text>
+  <rect x="578" y="1102.4" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="602" y="1115.4" font-size="12" fill="#374151">same chip pin as a header hole</text>
+  <rect x="816.0" y="1102.4" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="840.0" y="1115.4" font-size="12" fill="#374151">not used by atiic</text>
+  <text x="970.8" y="1115.4" font-size="13" fill="#15803d">✓</text><text x="986.8" y="1115.4" font-size="12" fill="#374151">tested</text>
+  <text x="40" y="1151.4" font-size="14" font-weight="bold" fill="#222">The jumpers (set unplugged)</text>
+  <text x="40" y="1175.4" font-size="12" fill="#374151"><tspan font-weight="bold">The pair by the USB, right: 3V3.</tspan> VCC and the chip at 3.3 V (the board comes on 5 V)</text>
+  <text x="40" y="1195.4" font-size="12" fill="#374151"><tspan font-weight="bold">The one by the USB, left: I2C/SPI.</tspan> 1a86:5512, atiic's mode; UART is a serial port (1a86:5523)</text>
+  <text x="40" y="1239.4" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7, chip selects any of D0-D5.</text>
+  <text x="40" y="1259.4" font-size="12" fill="#374151">• The header's CS0-CS2, SCK, MOSI, MISO are D0-D3, D5, D7 again on the left-hand row (dashed); D4 and D6 are on that row only.</text>
+  <text x="40" y="1279.4" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
+  <text x="40" y="1299.4" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
+  <text x="40" y="1319.4" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
+  <text x="40" y="1353.4" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1377.4" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

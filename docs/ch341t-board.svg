@@ -91,13 +91,14 @@
   <text x="496.554" y="784.1800000000001" text-anchor="start" font-size="10" fill="#fff">TNOW</text>
   <rect x="705.876" y="760.1800000000001" width="14" height="10" fill="#f1f1f1" stroke="#999"/>
   <text x="701.876" y="784.1800000000001" text-anchor="end" font-size="10" fill="#fff">RDY</text>
-  <rect x="524.745" y="791.32" width="20.76" height="41.52" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="567.995" y="791.32" width="20.76" height="41.52" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="611.245" y="791.32" width="20.76" height="41.52" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="654.495" y="791.32" width="20.76" height="41.52" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="525.783" y="791.3199999999999" width="20.241" height="40.482" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="568.514" y="791.3199999999999" width="20.241" height="40.482" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="611.245" y="791.3199999999999" width="20.241" height="40.482" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="653.976" y="791.3199999999999" width="20.241" height="40.482" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
   <rect x="487.55" y="836.3" width="224.9" height="328.7" rx="6" fill="#cfd4da" stroke="#8a9096"/>
+  <rect x="539.277" y="962.59" width="38.233000000000004" height="33.735" fill="#6b7178"/>
+  <rect x="622.49" y="962.59" width="38.233000000000004" height="33.735" fill="#6b7178"/>
   <text x="600.0" y="1185.0" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
-  <rect x="539.45" y="974.7" width="38.06" height="34.6" fill="#6b7178"/><rect x="622.49" y="974.7" width="38.06" height="34.6" fill="#6b7178"/>
   <rect x="40" y="1220.0" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
   <text x="64" y="1233.0" font-size="12" fill="#374151">I2C</text>
   <rect x="107" y="1220.0" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
