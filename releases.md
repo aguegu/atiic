@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.30
+
+- The jumpers drawn as one part each (the user): their three pins in an
+  outlined base (CH341A and CH341T); the CH341A's exactly on the side rows'
+  columns (the I2C/SPI jumper under the left row, the 3V3 pair under the
+  right row and one pitch in), where 1.4.29 had them by the board's width.
+
 ## 1.4.29
 
 - The CH341A's jumpers on the side rows' grid (the user: the same span,

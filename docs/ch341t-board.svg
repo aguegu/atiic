@@ -83,6 +83,7 @@
   <rect x="500.352" y="633.0250000000001" width="185.10999999999999" height="81.31" rx="39.79" fill="#e9ecef" stroke="#8a9096"/>
   <text x="592.9069999999999" y="677.6800000000001" text-anchor="middle" font-size="11" fill="#555">12.000</text>
   <rect x="581.316" y="729.905" width="20" height="12" rx="2" fill="#b45309"/><text x="607.316" y="739.905" font-size="9" fill="#e0f2fe">C3</text>
+  <rect x="460.43999999999994" y="484.815" width="30" height="117.884" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="467.43999999999994" y="491.815" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="472.43999999999994" y="496.815" width="6" height="6" fill="#7a5b10"/>
   <rect x="467.43999999999994" y="535.757" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
@@ -91,6 +92,7 @@
   <rect x="472.43999999999994" y="584.699" width="6" height="6" fill="#7a5b10"/>
   <rect x="462.43999999999994" y="486.815" width="26" height="69.94200000000001" rx="4" fill="#f2c200" stroke="#333" opacity="0.94"/>
   <rect x="468.43999999999994" y="494.815" width="14" height="53.942" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="709.56" y="484.815" width="30" height="117.884" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="716.56" y="491.815" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="496.815" width="6" height="6" fill="#7a5b10"/>
   <rect x="716.56" y="535.757" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>

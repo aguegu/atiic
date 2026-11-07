@@ -276,33 +276,36 @@
   <rect x="649.2" y="759" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
   <text transform="translate(639.2 744) rotate(-90)" text-anchor="middle" font-size="7.5" fill="#ddd">AMS1117 3.3</text>
   <text x="635.2" y="786" text-anchor="middle" font-size="9" fill="#e0f2fe">3.3 V regulator</text>
-  <rect x="684.8" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="837" width="6" height="6" fill="#7a5b10"/>
-  <rect x="684.8" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="877" width="6" height="6" fill="#7a5b10"/>
-  <rect x="684.8" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="679.8" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="685.8" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
-  <rect x="720.0" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="837" width="6" height="6" fill="#7a5b10"/>
-  <rect x="720.0" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="877" width="6" height="6" fill="#7a5b10"/>
-  <rect x="720.0" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="715.0" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="721.0" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
-  <text x="710.4" y="950" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
-  <rect x="454.4" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="837" width="6" height="6" fill="#7a5b10"/>
-  <rect x="454.4" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="877" width="6" height="6" fill="#7a5b10"/>
-  <rect x="454.4" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="449.4" y="867" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="455.4" y="875" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
-  <text x="480.4" y="844" font-size="9.5" fill="#fff">UART</text>
-  <text x="480.4" y="924" font-size="9.5" fill="#fff">I2C/SPI</text>
+  <rect x="679" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="686" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="691" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="686" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="691" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="686" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="691" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="681" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="687" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="719" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="726" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="731" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="726" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="731" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="726" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="731" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="721" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="727" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <text x="714.0" y="950" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
+  <rect x="451" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="458" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="463" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="458" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="463" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="458" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="463" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="453" y="867" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="459" y="875" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <text x="484" y="844" font-size="9.5" fill="#fff">UART</text>
+  <text x="484" y="924" font-size="9.5" fill="#fff">I2C/SPI</text>
   <rect x="557.76" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
   <rect x="582.08" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
   <rect x="606.4" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
