@@ -1,5 +1,15 @@
 # Releases
 
+## 1.4.15
+
+- The CH341T sheet redrawn from the vendor's photo (the user), to scale:
+  the board 18 x 35 mm, the header at the 2.54 mm pitch, the chip's SSOP-20
+  body, the HC-49S crystal (about 10.7 x 4.7 mm) lying across below the
+  chip, the jumpers upright either side (yellow left, green right) at the
+  pins' pitch, the USB-A shell overlapping the board's end with its four
+  contacts. Corrected: the LEDs, TNOW at the lower left and RDY at the
+  lower right (swapped before); the crystal's place and angle.
+
 ## 1.4.14
 
 - The CH341A sheet's parts placed as on the vendor's photo, turned with
