@@ -1,5 +1,11 @@
 # Releases
 
+## 1.4.31
+
+- The jumper caps see-through, their spring contact inside (the user: to
+  see which two pins are joined): a metal strip from one pin to the
+  other, under the cap's tint (CH341A and CH341T).
+
 ## 1.4.30
 
 - The jumpers drawn as one part each (the user): their three pins in an

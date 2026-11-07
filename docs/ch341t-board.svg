@@ -90,8 +90,11 @@
   <rect x="472.43999999999994" y="540.757" width="6" height="6" fill="#7a5b10"/>
   <rect x="467.43999999999994" y="579.699" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="472.43999999999994" y="584.699" width="6" height="6" fill="#7a5b10"/>
-  <rect x="462.43999999999994" y="486.815" width="26" height="69.94200000000001" rx="4" fill="#f2c200" stroke="#333" opacity="0.94"/>
-  <rect x="468.43999999999994" y="494.815" width="14" height="53.942" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="462.43999999999994" y="486.815" width="26" height="69.94200000000001" rx="4" fill="#f2c200" fill-opacity="0.45" stroke="#f2c200" stroke-width="2"/>
+  <rect x="469.43999999999994" y="492.815" width="12" height="57.942" rx="5" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
+  <line x1="475.43999999999994" y1="497.815" x2="475.43999999999994" y2="545.757" stroke="#9ca3af" stroke-width="1.5"/>
+  <circle cx="475.43999999999994" cy="499.815" r="3" fill="#7a5b10"/>
+  <circle cx="475.43999999999994" cy="543.757" r="3" fill="#7a5b10"/>
   <rect x="709.56" y="484.815" width="30" height="117.884" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="716.56" y="491.815" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="496.815" width="6" height="6" fill="#7a5b10"/>
@@ -99,8 +102,11 @@
   <rect x="721.56" y="540.757" width="6" height="6" fill="#7a5b10"/>
   <rect x="716.56" y="579.699" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="584.699" width="6" height="6" fill="#7a5b10"/>
-  <rect x="711.56" y="530.757" width="26" height="69.94200000000001" rx="4" fill="#22a34a" stroke="#333" opacity="0.94"/>
-  <rect x="717.56" y="538.757" width="14" height="53.942" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="711.56" y="530.757" width="26" height="69.94200000000001" rx="4" fill="#22a34a" fill-opacity="0.45" stroke="#22a34a" stroke-width="2"/>
+  <rect x="718.56" y="536.757" width="12" height="57.942" rx="5" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
+  <line x1="724.56" y1="541.757" x2="724.56" y2="589.699" stroke="#9ca3af" stroke-width="1.5"/>
+  <circle cx="724.56" cy="543.757" r="3" fill="#7a5b10"/>
+  <circle cx="724.56" cy="587.699" r="3" fill="#7a5b10"/>
   <text x="493.43999999999994" y="503.815" font-size="10" fill="#fff">I2C</text><text x="493.43999999999994" y="591.699" font-size="10" fill="#fff">TTL</text>
   <text x="706.56" y="503.815" text-anchor="end" font-size="10" fill="#fff">5V</text><text x="706.56" y="591.699" text-anchor="end" font-size="10" fill="#fff">3.3</text>
   <rect x="478.554" y="760.1800000000001" width="14" height="10" fill="#f1f1f1" stroke="#999"/>

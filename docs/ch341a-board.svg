@@ -283,8 +283,11 @@
   <rect x="691" y="877" width="6" height="6" fill="#7a5b10"/>
   <rect x="686" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="691" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="681" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="687" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="681" y="827" width="26" height="66" rx="4" fill="#222" fill-opacity="0.45" stroke="#222" stroke-width="2"/>
+  <rect x="688" y="833" width="12" height="54" rx="5" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
+  <line x1="694" y1="838" x2="694" y2="882" stroke="#9ca3af" stroke-width="1.5"/>
+  <circle cx="694" cy="840" r="3" fill="#7a5b10"/>
+  <circle cx="694" cy="880" r="3" fill="#7a5b10"/>
   <rect x="719" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="726" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="731" y="837" width="6" height="6" fill="#7a5b10"/>
@@ -292,8 +295,11 @@
   <rect x="731" y="877" width="6" height="6" fill="#7a5b10"/>
   <rect x="726" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="731" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="721" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="727" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="721" y="827" width="26" height="66" rx="4" fill="#222" fill-opacity="0.45" stroke="#222" stroke-width="2"/>
+  <rect x="728" y="833" width="12" height="54" rx="5" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
+  <line x1="734" y1="838" x2="734" y2="882" stroke="#9ca3af" stroke-width="1.5"/>
+  <circle cx="734" cy="840" r="3" fill="#7a5b10"/>
+  <circle cx="734" cy="880" r="3" fill="#7a5b10"/>
   <text x="714.0" y="950" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
   <rect x="451" y="825" width="30" height="110" rx="4" fill="#000" fill-opacity="0.22" stroke="#0f172a" stroke-width="1.5"/>
   <rect x="458" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
@@ -302,8 +308,11 @@
   <rect x="463" y="877" width="6" height="6" fill="#7a5b10"/>
   <rect x="458" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="463" y="917" width="6" height="6" fill="#7a5b10"/>
-  <rect x="453" y="867" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="459" y="875" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="453" y="867" width="26" height="66" rx="4" fill="#222" fill-opacity="0.45" stroke="#222" stroke-width="2"/>
+  <rect x="460" y="873" width="12" height="54" rx="5" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
+  <line x1="466" y1="878" x2="466" y2="922" stroke="#9ca3af" stroke-width="1.5"/>
+  <circle cx="466" cy="880" r="3" fill="#7a5b10"/>
+  <circle cx="466" cy="920" r="3" fill="#7a5b10"/>
   <text x="484" y="844" font-size="9.5" fill="#fff">UART</text>
   <text x="484" y="924" font-size="9.5" fill="#fff">I2C/SPI</text>
   <rect x="557.76" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
