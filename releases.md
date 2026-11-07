@@ -1,5 +1,14 @@
 # Releases
 
+## 1.4.21
+
+- The CH341A and CH341T sheets share their header pins and jumpers (the
+  user): a soldered male pin drawn one way (a gold pad and its pin), so the
+  CH341A's 2x8 header shows as the pins it is, like the CH341T's 6 (its
+  side rows stay bare holes, as on the board); a jumper drawn one way,
+  three pins and a cap over two, each in its real colour (yellow and green
+  on the CH341T, black on the CH341A).
+
 ## 1.4.20
 
 - The CH341A and CH341T sheets draw the same USB-A plug (the user): its
