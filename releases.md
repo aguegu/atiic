@@ -1,5 +1,16 @@
 # Releases
 
+## 1.4.7
+
+- `docs/ch347t-board.svg`: r8845's CH347T development board in mode 1 (the
+  user: "this ch347t dongle SVGed"): both 16-pin rows as the silkscreen
+  names them, the chip pin behind each, its mode-1 function and `pins()`
+  name; the UART0 and JTAG headers dashed (in mode 1 the same chip pins as
+  the SPI and I2C headers); the mode switch's table; the SPI display's
+  wiring as run; a tick on each header that ran on r8845. Headers read
+  off the vendor's photo, chip pins from the silkscreen names and the
+  datasheet, not traced. In `docs/ch347.md`.
+
 ## 1.4.6
 
 - **The CH347's SPI at wire speed:** 4,093 bytes a write-read command (WCH's

@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1296" width="1200" height="1296" font-family="Helvetica, Arial, sans-serif">
+  <title>The CH347T development board in mode 1: its headers, the chip pins behind them, and what atiic drives</title>
+  <rect width="1200" height="1296" fill="#ffffff"/>
+  <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347T board in mode 1: the headers</text>
+  <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C left. Each header: its silkscreen, the chip pin behind it, its function in mode 1, and its pins() name.</text>
+  <rect x="196" y="366" width="784" height="338" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
+  <rect x="150" y="501.0" width="86" height="68" rx="12" fill="#cfd4da" stroke="#8a9096"/>
+  <rect x="160" y="521.0" width="60" height="28" rx="9" fill="#6b7178"/>
+  <text x="142" y="539.0" text-anchor="end" font-size="12" fill="#475569">USB-C</text>
+  <rect x="480" y="499.0" width="120" height="72" rx="4" fill="#1f1f1f"/>
+  <rect x="486" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="486" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="498" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="498" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="510" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="510" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="522" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="522" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="534" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="534" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="546" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="546" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="558" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="558" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="570" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="570" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="582" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="582" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="594" y="489.0" width="5" height="10" fill="#c9ccd1"/>
+  <rect x="594" y="571.0" width="5" height="10" fill="#c9ccd1"/>
+  <text x="540" y="540.0" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH347T</text>
+  <rect x="630" y="515.0" width="44" height="40" rx="4" fill="#e9ecef" stroke="#9aa0a6"/>
+  <text x="652" y="539.0" text-anchor="middle" font-size="9" fill="#555">8 MHz</text>
+  <rect x="730" y="505.0" width="62" height="60" rx="4" fill="#f2c200" stroke="#a68400"/>
+  <rect x="740" y="515.0" width="16" height="36" rx="2" fill="#fff7cc" stroke="#a68400"/>
+  <rect x="742" y="517.0" width="12" height="16" fill="#5c4a00"/>
+  <text x="748" y="562.0" text-anchor="middle" font-size="9" fill="#5c4a00">S1</text>
+  <rect x="764" y="515.0" width="16" height="36" rx="2" fill="#fff7cc" stroke="#a68400"/>
+  <rect x="766" y="533.0" width="12" height="16" fill="#5c4a00"/>
+  <text x="772" y="562.0" text-anchor="middle" font-size="9" fill="#5c4a00">S2</text>
+  <text x="761" y="497.0" text-anchor="middle" font-size="10" fill="#f5f3ff">ON ↑</text>
+  <text x="761" y="581.0" text-anchor="middle" font-size="10" fill="#f5f3ff">mode 1: S1 on, S2 off</text>
+  <rect x="252" y="390" width="20" height="20" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="262" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(266 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">GND</text>
+  <rect x="250" y="236" width="24" height="104" rx="12.0" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text transform="translate(266.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <circle cx="308" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="308" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(312 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">5V</text>
+  <rect x="296" y="236" width="24" height="104" rx="12.0" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(312.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
+  <circle cx="354" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="354" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(358 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">CTS</text>
+  <text x="354" y="352" text-anchor="middle" font-size="10" fill="#475569">p6</text>
+  <rect x="342" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(358.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
+  <circle cx="400" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="400" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(404 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">TX</text>
+  <text x="400" y="352" text-anchor="middle" font-size="10" fill="#475569">p8</text>
+  <rect x="388" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(404.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
+  <circle cx="446" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(450 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RX</text>
+  <text x="446" y="352" text-anchor="middle" font-size="10" fill="#475569">p12</text>
+  <rect x="434" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
+  <text transform="translate(450.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SDA</text>
+  <circle cx="492" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="492" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(496 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RTS</text>
+  <text x="492" y="352" text-anchor="middle" font-size="10" fill="#475569">p7</text>
+  <rect x="480" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(496.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
+  <circle cx="538" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="538" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(542 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DTR</text>
+  <text x="538" y="352" text-anchor="middle" font-size="10" fill="#475569">p9</text>
+  <rect x="526" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(542.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS1</text>
+  <rect x="526" y="168" width="24" height="62" rx="12.0" fill="#ffffff" stroke="#6366f1" stroke-dasharray="4 3"/>
+  <text transform="translate(542.0 199.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">CS1</text>
+  <circle cx="584" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="584" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(588 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DSR</text>
+  <text x="584" y="352" text-anchor="middle" font-size="10" fill="#475569">p5</text>
+  <rect x="572" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(588.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
+  <rect x="572" y="168" width="24" height="62" rx="12.0" fill="#ffffff" stroke="#6366f1" stroke-dasharray="4 3"/>
+  <text transform="translate(588.0 199.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">CS0</text>
+  <circle cx="630" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="630" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(634 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RI</text>
+  <text x="630" y="352" text-anchor="middle" font-size="10" fill="#475569">p11</text>
+  <rect x="618" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
+  <text transform="translate(634.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCL</text>
+  <circle cx="676" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="676" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(680 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DCD</text>
+  <text x="676" y="352" text-anchor="middle" font-size="10" fill="#475569">p15</text>
+  <rect x="664" y="236" width="24" height="104" rx="12.0" fill="#f5f5f4" stroke="#a8a29e"/>
+  <text transform="translate(680.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">ACT</text>
+  <rect x="664" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text transform="translate(680.0 199.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO4</text>
+  <text x="676" y="160" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="722" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="722" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(726 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RX</text>
+  <text x="722" y="352" text-anchor="middle" font-size="10" fill="#475569">p4</text>
+  <rect x="710" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(726.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">RXD1</text>
+  <circle cx="768" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="768" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(772 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">TX</text>
+  <text x="768" y="352" text-anchor="middle" font-size="10" fill="#475569">p3</text>
+  <rect x="756" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(772.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">TXD1</text>
+  <circle cx="814" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="814" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(818 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">CTS</text>
+  <text x="814" y="352" text-anchor="middle" font-size="10" fill="#475569">p2</text>
+  <rect x="802" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(818.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">CTS1</text>
+  <rect x="802" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text transform="translate(818.0 199.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO6</text>
+  <text x="814" y="160" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="860" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="860" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(864 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RTS</text>
+  <text x="860" y="352" text-anchor="middle" font-size="10" fill="#475569">p13</text>
+  <rect x="848" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(864.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
+  <rect x="848" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text transform="translate(864.0 199.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO7</text>
+  <circle cx="906" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="906" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(910 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DTR</text>
+  <text x="906" y="352" text-anchor="middle" font-size="10" fill="#475569">p10</text>
+  <rect x="894" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(910.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">DTR1 · S2</text>
+  <circle cx="952" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="952" cy="400" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(956 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">3V3</text>
+  <rect x="940" y="236" width="24" height="104" rx="12.0" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(956.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
+  <line x1="336" y1="452" x2="694" y2="452" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="515.0" y="468" text-anchor="middle" font-size="12" font-weight="bold" fill="#f5f3ff">UART0</text>
+  <line x1="704" y1="452" x2="924" y2="452" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="814.0" y="468" text-anchor="middle" font-size="12" font-weight="bold" fill="#f5f3ff">UART1</text>
+  <circle cx="262" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="262" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(266 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">GND</text>
+  <rect x="250" y="736" width="24" height="104" rx="12.0" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text transform="translate(266.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <circle cx="308" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="308" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(312 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">5V</text>
+  <rect x="296" y="736" width="24" height="104" rx="12.0" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(312.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
+  <circle cx="354" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="354" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(358 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">SCL</text>
+  <text x="354" y="728" text-anchor="middle" font-size="10" fill="#475569">p11</text>
+  <rect x="342" y="736" width="24" height="104" rx="12.0" fill="#dcfce7" stroke="#4fb879"/>
+  <text transform="translate(358.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SCL</text>
+  <text x="354" y="862" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="400" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="400" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(404 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">SDA</text>
+  <text x="400" y="728" text-anchor="middle" font-size="10" fill="#475569">p12</text>
+  <rect x="388" y="736" width="24" height="104" rx="12.0" fill="#dcfce7" stroke="#4fb879"/>
+  <text transform="translate(404.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SDA</text>
+  <text x="400" y="862" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="446" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(450 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TCK</text>
+  <text x="446" y="728" text-anchor="middle" font-size="10" fill="#475569">p6</text>
+  <rect x="434" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(450.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
+  <circle cx="492" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="492" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(496 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TMS</text>
+  <text x="492" y="728" text-anchor="middle" font-size="10" fill="#475569">p5</text>
+  <rect x="480" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(496.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
+  <rect x="480" y="846" width="24" height="62" rx="12.0" fill="#ffffff" stroke="#6366f1" stroke-dasharray="4 3"/>
+  <text transform="translate(496.0 877.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">CS0</text>
+  <circle cx="538" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="538" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(542 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TDI</text>
+  <text x="538" y="728" text-anchor="middle" font-size="10" fill="#475569">p8</text>
+  <rect x="526" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(542.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
+  <circle cx="584" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="584" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(588 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TDO</text>
+  <text x="584" y="728" text-anchor="middle" font-size="10" fill="#475569">p7</text>
+  <rect x="572" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text transform="translate(588.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
+  <circle cx="630" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="630" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(634 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">RST</text>
+  <text x="630" y="728" text-anchor="middle" font-size="10" fill="#475569">p1</text>
+  <rect x="618" y="736" width="24" height="104" rx="12.0" fill="#fef3c7" stroke="#d6a738"/>
+  <text transform="translate(634.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">RST#</text>
+  <circle cx="676" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="676" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(680 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">3V3</text>
+  <rect x="664" y="736" width="24" height="104" rx="12.0" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(680.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
+  <circle cx="722" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="722" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(726 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">CS0</text>
+  <text x="722" y="728" text-anchor="middle" font-size="10" fill="#475569">p5</text>
+  <rect x="710" y="736" width="24" height="104" rx="12.0" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text transform="translate(726.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS0</text>
+  <rect x="710" y="846" width="24" height="62" rx="12.0" fill="#e0e7ff" stroke="#6366f1"/>
+  <text transform="translate(726.0 877.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">CS0</text>
+  <text x="722" y="924" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="768" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="768" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(772 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">CS1</text>
+  <text x="768" y="728" text-anchor="middle" font-size="10" fill="#475569">p9</text>
+  <rect x="756" y="736" width="24" height="104" rx="12.0" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text transform="translate(772.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS1</text>
+  <rect x="756" y="846" width="24" height="62" rx="12.0" fill="#e0e7ff" stroke="#6366f1"/>
+  <text transform="translate(772.0 877.0) rotate(-90)" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">CS1</text>
+  <text x="768" y="924" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="814" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="814" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(818 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">SCK</text>
+  <text x="814" y="728" text-anchor="middle" font-size="10" fill="#475569">p6</text>
+  <rect x="802" y="736" width="24" height="104" rx="12.0" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text transform="translate(818.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SCK</text>
+  <text x="814" y="862" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <circle cx="860" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="860" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(864 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">MI</text>
+  <text x="860" y="728" text-anchor="middle" font-size="10" fill="#475569">p7</text>
+  <rect x="848" y="736" width="24" height="104" rx="12.0" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text transform="translate(864.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">MISO</text>
+  <circle cx="906" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="906" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(910 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">MO</text>
+  <text x="906" y="728" text-anchor="middle" font-size="10" fill="#475569">p8</text>
+  <rect x="894" y="736" width="24" height="104" rx="12.0" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text transform="translate(910.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">MOSI</text>
+  <text x="906" y="862" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
+  <rect x="942" y="660" width="20" height="20" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="952" cy="670" r="4.5" fill="#4c1d95"/>
+  <text transform="translate(956 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">GND</text>
+  <rect x="940" y="736" width="24" height="104" rx="12.0" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text transform="translate(956.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <line x1="336" y1="618" x2="418" y2="618" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="377.0" y="612" text-anchor="middle" font-size="12" font-weight="bold" fill="#f5f3ff">I2C</text>
+  <line x1="428" y1="618" x2="602" y2="618" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="515.0" y="612" text-anchor="middle" font-size="12" font-weight="bold" fill="#f5f3ff">JTAG</text>
+  <line x1="704" y1="618" x2="924" y2="618" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="814.0" y="612" text-anchor="middle" font-size="12" font-weight="bold" fill="#f5f3ff">SPI</text>
+  <rect x="40" y="949" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="962" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="949" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="131" y="962" font-size="12" fill="#374151">SPI</text>
+  <rect x="174" y="949" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="198" y="962" font-size="12" fill="#374151">UART1</text>
+  <rect x="255" y="949" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="279" y="962" font-size="12" fill="#374151">GPIO</text>
+  <rect x="329" y="949" width="18" height="18" rx="9" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="353" y="962" font-size="12" fill="#374151">chip select</text>
+  <rect x="452" y="949" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="476" y="962" font-size="12" fill="#374151">power</text>
+  <rect x="533" y="949" width="18" height="18" rx="9" fill="#fef3c7" stroke="#d6a738"/>
+  <text x="557" y="962" font-size="12" fill="#374151">reset</text>
+  <rect x="614" y="949" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="638" y="962" font-size="12" fill="#374151">the same chip pin as another header</text>
+  <text x="874" y="962" font-size="12" fill="#15803d">✓</text><text x="888" y="962" font-size="12" fill="#374151">ran on r8845</text>
+  <text x="40" y="998" font-size="14" font-weight="bold" fill="#222">The mode switch (its silkscreen)</text>
+  <text x="40" y="1022" font-size="12" font-weight="bold" fill="#1f2937">S1</text>
+  <text x="90" y="1022" font-size="12" font-weight="bold" fill="#1f2937">S2</text>
+  <text x="140" y="1022" font-size="12" font-weight="bold" fill="#1f2937">Mode</text>
+  <text x="200" y="1022" font-size="12" font-weight="bold" fill="#1f2937">USB ID</text>
+  <text x="300" y="1022" font-size="12" font-weight="bold" fill="#1f2937"></text>
+  <text x="40" y="1044" font-size="12" fill="#1f2937">off</text>
+  <text x="90" y="1044" font-size="12" fill="#1f2937">off</text>
+  <text x="140" y="1044" font-size="12" fill="#1f2937">0</text>
+  <text x="200" y="1044" font-size="12" fill="#1f2937">1a86:55da</text>
+  <text x="300" y="1044" font-size="12" fill="#1f2937">two serial ports</text>
+  <rect x="32" y="1051" width="520" height="21" rx="4" fill="#dcfce7"/>
+  <text x="40" y="1066" font-size="12" fill="#1f2937">on</text>
+  <text x="90" y="1066" font-size="12" fill="#1f2937">off</text>
+  <text x="140" y="1066" font-size="12" fill="#1f2937">1</text>
+  <text x="200" y="1066" font-size="12" fill="#1f2937">1a86:55db</text>
+  <text x="300" y="1066" font-size="12" fill="#1f2937">UART1 + I2C + SPI: atiic</text>
+  <text x="40" y="1088" font-size="12" fill="#1f2937">off</text>
+  <text x="90" y="1088" font-size="12" fill="#1f2937">on</text>
+  <text x="140" y="1088" font-size="12" fill="#1f2937">2</text>
+  <text x="200" y="1088" font-size="12" fill="#1f2937">1a86:55dc</text>
+  <text x="300" y="1088" font-size="12" fill="#1f2937">UART1 + I2C + SPI as HID</text>
+  <text x="40" y="1110" font-size="12" fill="#1f2937">on</text>
+  <text x="90" y="1110" font-size="12" fill="#1f2937">on</text>
+  <text x="140" y="1110" font-size="12" fill="#1f2937">3</text>
+  <text x="200" y="1110" font-size="12" fill="#1f2937">1a86:55dd</text>
+  <text x="300" y="1110" font-size="12" fill="#1f2937">UART1 + JTAG</text>
+  <text x="620" y="998" font-size="14" font-weight="bold" fill="#222">An SPI display (ST7735, GC9A01), as run</text>
+  <text x="620" y="1022" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → SPI SCK</text>
+  <text x="620" y="1042" font-size="12" fill="#374151"><tspan font-weight="bold">SDA / MOSI</tspan> → SPI MO</text>
+  <text x="620" y="1062" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → SPI CS0 (CS0)</text>
+  <text x="620" y="1082" font-size="12" fill="#374151"><tspan font-weight="bold">DC</tspan> → UART1 CTS (GPIO6)</text>
+  <text x="620" y="1102" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → UART0 DCD (GPIO4)</text>
+  <text x="620" y="1122" font-size="12" fill="#374151"><tspan font-weight="bold">VCC, BL</tspan> → 3V3</text>
+  <text x="620" y="1142" font-size="12" fill="#374151"><tspan font-weight="bold">GND</tspan> → GND</text>
+  <text x="40" y="1182" font-size="12" fill="#374151">• In mode 1 the UART0 and JTAG headers are mode 0's and mode 3's names: the same chip pins as the SPI and I2C headers (dashed).</text>
+  <text x="40" y="1202" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
+  <text x="40" y="1222" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
+  <text x="40" y="1242" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
+  <text x="40" y="1280" font-size="10" fill="#6b7280">Headers from the vendor's photo; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), not traced on the board; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
+</svg>
