@@ -1,5 +1,14 @@
 # Releases
 
+## 1.4.19
+
+- The board sheets without the chip pin numbers (p15 ...) on their tags
+  (the user), and their legend line with them; the CH341A's 2x8 header as
+  a table above the board (the user: no two rows of tags), a column a
+  header column, the outer row on top of the inner, leader lines to the
+  pads; the CH341T's header the same way (its I2C-mode and TTL-mode roles,
+  a GY-521's wire). Subtitles and captions to match.
+
 ## 1.4.18
 
 - The CH341A sheet's AMS1117-3.3 as on the photo (the user): SOT-223, its

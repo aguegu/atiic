@@ -108,7 +108,7 @@ more of the chip's lines out.
 
 ### The dongle: the V357 CH341A
 
-![The CH341A dongle V357 in I2C/SPI mode: the 2x8 header and both edge rows, each hole's chip pin and what atiic drives](ch341a-board.svg)
+![The CH341A dongle V357 in I2C/SPI mode: the 2x8 header and both edge rows, each hole's role and what atiic drives](ch341a-board.svg)
 
 The USB plug on the right, a 2x8 header on the left, and two rows of 10
 holes along the edges, named on the back (the back is the front flipped
