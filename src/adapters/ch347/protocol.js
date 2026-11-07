@@ -104,14 +104,20 @@ export function packets(commands) {
 export const stopPacket = () => Uint8Array.of(CMD_I2C_STREAM, STM_STO, STM_END);
 
 // SPI and GPIO, from the open drivers: flashrom's ch347_spi.c (0xC0, 0xC1,
-// 0xC3, 0xC4, the 507-byte packets) and WCH's Linux ch34x_mphsi_master
+// 0xC3, 0xC4) and WCH's Linux ch34x_mphsi_master
 // (0xC2 write-read, 0xCC GPIO, the CH347T's three GPIOs in mode 1). Each
 // command: the byte, a 16-bit length (LSB first), the payload.
 export const CMD_SPI_SET_CFG = 0xc0; // reply: c0 01 00 status (0 ok)
 export const CMD_SPI_CS = 0xc1; // no reply
 export const CMD_SPI_OUT_IN = 0xc2; // reply: c2 n n, the n bytes read
 export const CMD_GPIO = 0xcc; // reply: cc 08 00, a status byte a GPIO
-export const SPI_CHUNK = 507; // a write-read's bytes, so its reply fits one 512-byte packet (flashrom: 510 - 3)
+// a write-read's bytes: WCH's driver's CH347_SPI_MAX_BULK_SIZE (4096 - 3),
+// its reply then 4,096 bytes, eight USB packets. Measured on r8845 (25,600
+// bytes at 7.5 MHz, 27.3 ms on the wire): 34.4 ms in flashrom's 507-byte
+// commands one at a time, 29.1 in 4,093s, 28.0 with the next sent before
+// the last reply is read (Ch347.spi does); at 15 MHz 21.4, 15.0, 14.2. The
+// write-only 0xC4 was cancelled at 4,093 and no faster at 507: not used
+export const SPI_CHUNK = 4093;
 
 // SCK: 60 MHz divided by 2^0..2^7 (the config's byte 15, bits 5:3)
 export const SPI_CLOCKS = [60e6, 30e6, 15e6, 7.5e6, 3.75e6, 1.875e6, 937500, 468750];

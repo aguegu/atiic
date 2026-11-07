@@ -36,7 +36,10 @@ const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3
 // BENCH_ST7735=res=GPIO4,dc=GPIO6,cs=CS0); the BMX055 and MPU-6500 SPI benches
 // and the CH341's pin test stay on the CH341
 export const ADAPTER = process.env.BENCH_ADAPTER || 'ch341';
-const OPENERS = { ch341: openCh341, ch347: openCh347 };
+// BENCH_SPI_HZ: the CH347's SCK (7.5 MHz by default; 60 MHz / 2^n); the
+// CH341's is fixed
+export const SPI_HZ = process.env.BENCH_SPI_HZ ? Number(process.env.BENCH_SPI_HZ) : undefined;
+const OPENERS = { ch341: (hz) => openCh341(hz), ch347: (hz) => openCh347(hz, SPI_HZ ? { spiHz: SPI_HZ } : {}) };
 if (!OPENERS[ADAPTER]) throw new Error(`BENCH_ADAPTER ${ADAPTER}: ch341 or ch347`);
 export const openBus = (hz) => OPENERS[ADAPTER](hz);
 

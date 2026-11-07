@@ -35,8 +35,10 @@ details: [ch341.md](ch341.md), [ch347.md](ch347.md).
 - **Long transfers.** A 1,200-byte read is three packets on the CH347 and
   about forty on the CH341, each packet a USB round trip. Neither adapter's
   timing has been compared on the same transactions yet: the CH347's full
-  scan of 0x08-0x77 took about 280 ms on r8845; the CH341's isn't measured.
+  scan of 0x08-0x77 took about 27 ms on r8845; the CH341's isn't measured.
 - **Drivers.** Nothing changes for them: the same tests pass on either bus,
   picked on the bench by `BENCH_ADAPTER` (`ch341`, the default, or `ch347`).
-- **SPI.** Both have it; on the CH347 the ST7735S has run so far
-  ([ch347.md](ch347.md#spi-and-pins)), the e-papers and SPI IMUs untried.
+- **SPI.** Both have it. The CH347's runs to 60 MHz: a 240x240 GC9A01
+  screen in ~25 ms there, ~1 s on the CH341 ([ch347.md](ch347.md#speed)).
+  On the CH347 the ST7735S and GC9A01 have run so far; the e-papers and
+  SPI IMUs untried.

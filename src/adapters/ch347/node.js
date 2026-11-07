@@ -6,7 +6,8 @@
 import { WebUSB } from 'usb';
 import Ch347, { FILTERS, findInterface } from './index.js';
 
-export async function openCh347(speed = 100000) {
+// speed: I2C's SCL; options: { spiHz, spiMode } (Ch347.open)
+export async function openCh347(speed = 100000, options = {}) {
   const webusb = new WebUSB({ allowAllDevices: true });
   const device = await webusb.requestDevice({ filters: FILTERS });
   await device.open();
@@ -18,7 +19,7 @@ export async function openCh347(speed = 100000) {
       // none bound: nothing to detach
     }
   }
-  return new Ch347(device).open(speed);
+  return new Ch347(device).open(speed, options);
 }
 
 export default openCh347;

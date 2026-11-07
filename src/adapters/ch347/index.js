@@ -71,7 +71,8 @@ class Ch347 {
   async in(n) {
     const got = [];
     while (got.length < n) {
-      const r = await this.device.transferIn(this.iface.in, PACKET_SIZE);
+      // as many whole packets as are still to come, in one request
+      const r = await this.device.transferIn(this.iface.in, Math.ceil((n - got.length) / PACKET_SIZE) * PACKET_SIZE);
       if (r.status !== 'ok') throw new Error(`CH347 read: ${r.status}`);
       got.push(...new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength));
     }
@@ -138,20 +139,28 @@ class Ch347 {
   }
 
   // SPI, full duplex: the bytes out on MOSI, as many read from MISO. No chip
-  // select: drive CS0/CS1 (or a GPIO) with pins() around it
+  // select: drive CS0/CS1 (or a GPIO) with pins() around it. Each command
+  // goes out before the last one's reply is read (two in flight), so the
+  // wire isn't left idle for a USB round trip between commands
   spi(bytes) {
     const job = this.queue.then(async () => {
       await this.spiSetup();
-      const got = [];
+      const got = new Uint8Array(bytes.length);
+      let at = 0;
+      let reading = Promise.resolve();
       for (const p of spiPackets(Uint8Array.from(bytes))) {
-        await this.out(p);
         const n = p.length - 3;
-        const r = [];
-        while (r.length < n + 3) r.push(...await this.in(1));
-        if (r[0] !== CMD_SPI_OUT_IN) throw new Error(`CH347 SPI reply 0x${r[0].toString(16)}`);
-        got.push(...r.slice(3, 3 + n));
+        const sent = this.out(p);
+        await reading;
+        await sent;
+        reading = this.in(n + 3).then((r) => {
+          if (r[0] !== CMD_SPI_OUT_IN) throw new Error(`CH347 SPI reply 0x${r[0].toString(16)}`);
+          got.set(r.slice(3, 3 + n), at);
+          at += n;
+        });
       }
-      return Uint8Array.from(got);
+      await reading;
+      return got;
     });
     this.queue = job.catch(() => {});
     return job;

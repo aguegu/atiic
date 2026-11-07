@@ -1,5 +1,21 @@
 # Releases
 
+## 1.4.6
+
+- **The CH347's SPI at wire speed:** 4,093 bytes a write-read command (WCH's
+  driver's limit), the next sent before the last reply is read. 25,600
+  bytes at 7.5 MHz in 28.4 ms (27.3 on the wire; 39.1 before), at 15 MHz
+  14.5, at 30 MHz 7.7.
+- `openCh347(hz, { spiHz, spiMode })` in Node (the options reached only
+  the browser's `open()`); `BENCH_SPI_HZ` on the bench.
+- **The GC9A01 on the CH347** (the user rewired it: res=GPIO4, dc=GPIO6,
+  cs=CS0): its board test passed at 7.5, 15, 30 and 60 MHz; at 60 MHz a
+  240x240 screen in 24-26 ms, about 38 a second (~1 s on the CH341), its
+  card right by eye (the user). The ST7735S's test passed at 15 MHz.
+- `docs/ch347.md` "Speed": the clocks, the measurements, each panel's rated
+  clock (from its datasheet). The CH347's I2C scan corrected to ~27 ms
+  (280 was the first run's) in `ch347.md` and `i2c_adapters.md`.
+
 ## 1.4.5
 
 - The ST7735's RES moved from CS1 to GPIO4 (pin 15, ACT), freeing CS1 for

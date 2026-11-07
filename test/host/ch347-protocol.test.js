@@ -200,9 +200,9 @@ describe('ch347 spi and pins', async () => {
     assert.deepEqual(Array.from(gpioPacket({ GPIO6: false, GPIO4: null })), [0xcc, 8, 0, 0, 0, 0, 0, 0xc0, 0, 0xf0, 0]);
   });
 
-  it('SPI write-reads of 507 bytes at most, the length LSB first', () => {
-    const ps = spiPackets(Uint8Array.from({ length: 1200 }, (_, i) => i & 0xff));
-    assert.deepEqual(ps.map((p) => p.length - 3), [SPI_CHUNK, SPI_CHUNK, 1200 - 2 * SPI_CHUNK]);
+  it('SPI write-reads of 4,093 bytes at most (WCH\'s driver), the length LSB first', () => {
+    const ps = spiPackets(Uint8Array.from({ length: 10000 }, (_, i) => i & 0xff));
+    assert.deepEqual(ps.map((p) => p.length - 3), [SPI_CHUNK, SPI_CHUNK, 10000 - 2 * SPI_CHUNK]);
     assert.deepEqual(Array.from(ps[0].slice(0, 4)), [0xc2, SPI_CHUNK & 0xff, SPI_CHUNK >> 8, 0]);
   });
 
@@ -229,6 +229,9 @@ describe('ch347 spi and pins', async () => {
     await bus.pins({ CS0: false, GPIO6: true });
     assert.deepEqual(Array.from(await bus.spi([0x0f, 0xf0])), [0xf0, 0x0f]);
     assert.deepEqual(sent.map((p) => p[0]), [0xaa, 0xc0, 0xcc, 0xc1, 0xc2]); // the I2C speed at open, then SPI's config once
+    const long = Uint8Array.from({ length: 10000 }, (_, i) => (i * 7) & 0xff);
+    assert.deepEqual(Array.from(await bus.spi(long)), Array.from(long, (b) => b ^ 0xff)); // three commands, two in flight, in order
+    assert.deepEqual(sent.slice(-3).map((p) => p.length - 3), [4093, 4093, 10000 - 2 * 4093]);
     assert.throws(() => bus.pins({ D0: true }), /no such pin D0/);
     assert.throws(() => bus.pins({ CS1: null }), /can't be released/);
   });
