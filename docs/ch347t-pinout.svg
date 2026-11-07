@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 866" width="1000" height="866" font-family="Helvetica, Arial, sans-serif">
+  <title>CH347T (TSSOP20) pinout by mode, from WCH CH347DS1 V1.6</title>
+  <rect width="1000" height="866" fill="#ffffff"/>
+  <text x="500.0" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347T pinout (TSSOP20), by mode</text>
+  <text x="500.0" y="64" text-anchor="middle" font-size="13" fill="#555">Each pin's function in modes 1/2, 0 and 3. atiic uses mode 1: I2C and SPI on a vendor interface (1a86:55db).</text>
+  <rect x="275" y="98" width="132" height="394" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <text x="341.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">Mode 1 / 2</text>
+  <text x="211.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#64748b">Mode 0</text>
+  <text x="81.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#64748b">Mode 3</text>
+  <text x="341.0" y="134" text-anchor="middle" font-size="10" fill="#475569">atiic: mode 1</text>
+  <rect x="593" y="98" width="132" height="394" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <text x="659.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">Mode 1 / 2</text>
+  <text x="789.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#64748b">Mode 0</text>
+  <text x="919.0" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#64748b">Mode 3</text>
+  <text x="659.0" y="134" text-anchor="middle" font-size="10" fill="#475569">atiic: mode 1</text>
+  <rect x="432" y="126" width="136" height="372" rx="6" fill="#2b2b2b" stroke="#111"/>
+  <circle cx="448" cy="142" r="5" fill="#555"/>
+  <text transform="translate(496.0 312.0) rotate(-90)" text-anchor="middle" font-size="20" font-weight="bold" fill="#f1f1f1">CH347T</text>
+  <text transform="translate(516.0 312.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#bdbdbd">TSSOP20, top view</text>
+  <rect x="418" y="145" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="154" font-size="12" fill="#e5e5e5">1</text>
+  <line x1="418" y1="150" x2="402" y2="150" stroke="#9aa0a6"/>
+  <rect x="20" y="138" width="382" height="24" rx="12" fill="#fef3c7" stroke="#d6a738"/>
+  <text x="211.0" y="154" text-anchor="middle" font-size="12" fill="#1f2937">RST#</text>
+  <rect x="418" y="181" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="190" font-size="12" fill="#e5e5e5">2</text>
+  <line x1="418" y1="186" x2="402" y2="186" stroke="#9aa0a6"/>
+  <rect x="280" y="174" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="334.0" y="190" text-anchor="middle" font-size="12" fill="#1f2937">CTS1</text>
+  <text x="394" y="189.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="150" y="174" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="204.0" y="190" text-anchor="middle" font-size="12" fill="#1f2937">CTS1 / GPIO6</text>
+  <text x="264" y="189.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="20" y="174" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="74.0" y="190" text-anchor="middle" font-size="12" fill="#1f2937">CTS1</text>
+  <text x="134" y="189.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="418" y="217" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="226" font-size="12" fill="#e5e5e5">3</text>
+  <line x1="418" y1="222" x2="402" y2="222" stroke="#9aa0a6"/>
+  <rect x="280" y="210" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="341.0" y="226" text-anchor="middle" font-size="12" fill="#1f2937">TXD1</text>
+  <rect x="150" y="210" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="211.0" y="226" text-anchor="middle" font-size="12" fill="#1f2937">TXD1</text>
+  <rect x="20" y="210" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="81.0" y="226" text-anchor="middle" font-size="12" fill="#1f2937">TXD1</text>
+  <rect x="418" y="253" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="262" font-size="12" fill="#e5e5e5">4</text>
+  <line x1="418" y1="258" x2="402" y2="258" stroke="#9aa0a6"/>
+  <rect x="280" y="246" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="334.0" y="262" text-anchor="middle" font-size="12" fill="#1f2937">RXD1</text>
+  <text x="394" y="261.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="150" y="246" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="204.0" y="262" text-anchor="middle" font-size="12" fill="#1f2937">RXD1</text>
+  <text x="264" y="261.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="20" y="246" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="74.0" y="262" text-anchor="middle" font-size="12" fill="#1f2937">RXD1</text>
+  <text x="134" y="261.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="418" y="289" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="298" font-size="12" fill="#e5e5e5">5</text>
+  <line x1="418" y1="294" x2="402" y2="294" stroke="#9aa0a6"/>
+  <rect x="280" y="282" width="122" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="341.0" y="298" text-anchor="middle" font-size="12" fill="#1f2937">SCS0</text>
+  <rect x="150" y="282" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="204.0" y="298" text-anchor="middle" font-size="12" fill="#1f2937">DSR0 / GPIO2</text>
+  <text x="264" y="297.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="20" y="282" width="122" height="24" rx="12" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="81.0" y="298" text-anchor="middle" font-size="12" fill="#1f2937">TMS</text>
+  <rect x="418" y="325" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="334" font-size="12" fill="#e5e5e5">6</text>
+  <line x1="418" y1="330" x2="402" y2="330" stroke="#9aa0a6"/>
+  <rect x="280" y="318" width="122" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="341.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">SCK</text>
+  <rect x="150" y="318" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="204.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">CTS0 / GPIO0</text>
+  <text x="264" y="333.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="20" y="318" width="122" height="24" rx="12" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="81.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">TCK</text>
+  <rect x="418" y="361" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="370" font-size="12" fill="#e5e5e5">7</text>
+  <line x1="418" y1="366" x2="402" y2="366" stroke="#9aa0a6"/>
+  <rect x="280" y="354" width="122" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="334.0" y="370" text-anchor="middle" font-size="12" fill="#1f2937">MISO</text>
+  <text x="394" y="369.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="150" y="354" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="211.0" y="370" text-anchor="middle" font-size="12" fill="#1f2937">RTS0 / GPIO1</text>
+  <rect x="20" y="354" width="122" height="24" rx="12" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="74.0" y="370" text-anchor="middle" font-size="12" fill="#1f2937">TDO</text>
+  <text x="134" y="369.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="418" y="397" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="406" font-size="12" fill="#e5e5e5">8</text>
+  <line x1="418" y1="402" x2="402" y2="402" stroke="#9aa0a6"/>
+  <rect x="280" y="390" width="122" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="341.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">MOSI</text>
+  <rect x="150" y="390" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="211.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">TXD0</text>
+  <rect x="20" y="390" width="122" height="24" rx="12" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="81.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">TDI</text>
+  <rect x="418" y="433" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="442" font-size="12" fill="#e5e5e5">9</text>
+  <line x1="418" y1="438" x2="402" y2="438" stroke="#9aa0a6"/>
+  <rect x="280" y="426" width="122" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="341.0" y="442" text-anchor="middle" font-size="12" fill="#1f2937">SCS1</text>
+  <rect x="150" y="426" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="211.0" y="442" text-anchor="middle" font-size="10.5" fill="#1f2937">DTR0/TNOW0/GPIO5</text>
+  <rect x="20" y="426" width="122" height="24" rx="12" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="81.0" y="442" text-anchor="middle" font-size="12" fill="#1f2937">TRST</text>
+  <rect x="418" y="469" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="444" y="478" font-size="12" fill="#e5e5e5">10</text>
+  <line x1="418" y1="474" x2="402" y2="474" stroke="#9aa0a6"/>
+  <rect x="280" y="462" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="341.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">DTR1 / TNOW1</text>
+  <rect x="150" y="462" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="211.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">DTR1 / TNOW1</text>
+  <rect x="20" y="462" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="81.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">DTR1 / TNOW1</text>
+  <path d="M410 467 L417 474 L410 481 L403 474 Z" fill="#f59e0b" stroke="#92400e"/>
+  <rect x="568" y="469" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="478" text-anchor="end" font-size="12" fill="#e5e5e5">11</text>
+  <line x1="582" y1="474" x2="598" y2="474" stroke="#9aa0a6"/>
+  <rect x="598" y="462" width="122" height="24" rx="12" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="659.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">SCL</text>
+  <rect x="728" y="462" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="782.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">RI0 / GPIO3</text>
+  <text x="842" y="477.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="858" y="462" width="122" height="24" rx="12" fill="#ccfbf1" stroke="#3fb5a3"/>
+  <text x="919.0" y="478" text-anchor="middle" font-size="12" fill="#1f2937">GPIO</text>
+  <rect x="568" y="433" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="442" text-anchor="end" font-size="12" fill="#e5e5e5">12</text>
+  <line x1="582" y1="438" x2="598" y2="438" stroke="#9aa0a6"/>
+  <rect x="598" y="426" width="122" height="24" rx="12" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="652.0" y="442" text-anchor="middle" font-size="12" fill="#1f2937">SDA</text>
+  <text x="712" y="441.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="728" y="426" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="782.0" y="442" text-anchor="middle" font-size="12" fill="#1f2937">RXD0</text>
+  <text x="842" y="441.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="858" y="426" width="122" height="24" rx="12" fill="#ccfbf1" stroke="#3fb5a3"/>
+  <text x="919.0" y="442" text-anchor="middle" font-size="12" fill="#1f2937">GPIO</text>
+  <rect x="568" y="397" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="406" text-anchor="end" font-size="12" fill="#e5e5e5">13</text>
+  <line x1="582" y1="402" x2="598" y2="402" stroke="#9aa0a6"/>
+  <rect x="598" y="390" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="659.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">RTS1</text>
+  <rect x="728" y="390" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="789.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">RTS1 / GPIO7</text>
+  <rect x="858" y="390" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="919.0" y="406" text-anchor="middle" font-size="12" fill="#1f2937">RTS1</text>
+  <path d="M590 395 L597 402 L590 409 L583 402 Z" fill="#f59e0b" stroke="#92400e"/>
+  <rect x="568" y="361" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="370" text-anchor="end" font-size="12" fill="#e5e5e5">14</text>
+  <line x1="582" y1="366" x2="598" y2="366" stroke="#9aa0a6"/>
+  <rect x="598" y="354" width="382" height="24" rx="12" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="789.0" y="370" text-anchor="middle" font-size="12" fill="#1f2937">VCC 3.3 V</text>
+  <rect x="568" y="325" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="334" text-anchor="end" font-size="12" fill="#e5e5e5">15</text>
+  <line x1="582" y1="330" x2="598" y2="330" stroke="#9aa0a6"/>
+  <rect x="598" y="318" width="122" height="24" rx="12" fill="#f5f5f4" stroke="#a8a29e"/>
+  <text x="659.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">ACT</text>
+  <rect x="728" y="318" width="122" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="782.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">DCD0 / GPIO4</text>
+  <text x="842" y="333.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
+  <rect x="858" y="318" width="122" height="24" rx="12" fill="#f5f5f4" stroke="#a8a29e"/>
+  <text x="919.0" y="334" text-anchor="middle" font-size="12" fill="#1f2937">ACT</text>
+  <rect x="568" y="289" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="298" text-anchor="end" font-size="12" fill="#e5e5e5">16</text>
+  <line x1="582" y1="294" x2="598" y2="294" stroke="#9aa0a6"/>
+  <rect x="598" y="282" width="382" height="24" rx="12" fill="#fce7f3" stroke="#db7fb4"/>
+  <text x="789.0" y="298" text-anchor="middle" font-size="12" fill="#1f2937">UD−</text>
+  <rect x="568" y="253" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="262" text-anchor="end" font-size="12" fill="#e5e5e5">17</text>
+  <line x1="582" y1="258" x2="598" y2="258" stroke="#9aa0a6"/>
+  <rect x="598" y="246" width="382" height="24" rx="12" fill="#fce7f3" stroke="#db7fb4"/>
+  <text x="789.0" y="262" text-anchor="middle" font-size="12" fill="#1f2937">UD+</text>
+  <rect x="568" y="217" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="226" text-anchor="end" font-size="12" fill="#e5e5e5">18</text>
+  <line x1="582" y1="222" x2="598" y2="222" stroke="#9aa0a6"/>
+  <rect x="598" y="210" width="382" height="24" rx="12" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="789.0" y="226" text-anchor="middle" font-size="12" fill="#1f2937">GND</text>
+  <rect x="568" y="181" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="190" text-anchor="end" font-size="12" fill="#e5e5e5">19</text>
+  <line x1="582" y1="186" x2="598" y2="186" stroke="#9aa0a6"/>
+  <rect x="598" y="174" width="382" height="24" rx="12" fill="#f3f4f6" stroke="#9ca3af"/>
+  <text x="789.0" y="190" text-anchor="middle" font-size="12" fill="#1f2937">XI (crystal)</text>
+  <rect x="568" y="145" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text x="556" y="154" text-anchor="end" font-size="12" fill="#e5e5e5">20</text>
+  <line x1="582" y1="150" x2="598" y2="150" stroke="#9aa0a6"/>
+  <rect x="598" y="138" width="382" height="24" rx="12" fill="#f3f4f6" stroke="#9ca3af"/>
+  <text x="789.0" y="154" text-anchor="middle" font-size="12" fill="#1f2937">XO (crystal)</text>
+  <rect x="40" y="517" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="530" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="517" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="131" y="530" font-size="12" fill="#374151">SPI</text>
+  <rect x="174" y="517" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="198" y="530" font-size="12" fill="#374151">UART</text>
+  <rect x="248" y="517" width="18" height="18" rx="9" fill="#ede9fe" stroke="#9a7fe0"/>
+  <text x="272" y="530" font-size="12" fill="#374151">JTAG</text>
+  <rect x="322" y="517" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#3fb5a3"/>
+  <text x="346" y="530" font-size="12" fill="#374151">GPIO</text>
+  <rect x="396" y="517" width="18" height="18" rx="9" fill="#fce7f3" stroke="#db7fb4"/>
+  <text x="420" y="530" font-size="12" fill="#374151">USB</text>
+  <rect x="463" y="517" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="487" y="530" font-size="12" fill="#374151">power</text>
+  <rect x="544" y="517" width="18" height="18" rx="9" fill="#fef3c7" stroke="#d6a738"/>
+  <text x="568" y="530" font-size="12" fill="#374151">reset</text>
+  <path d="M632 519 L639 526 L632 533 L625 526 Z" fill="#f59e0b" stroke="#92400e"/>
+  <text x="645" y="530" font-size="12" fill="#374151">mode strap</text>
+  <text x="731" y="530" font-size="9" font-weight="bold" fill="#b45309">5V</text>
+  <text x="747" y="530" font-size="12" fill="#374151">input tolerates 5 V</text>
+  <text x="40" y="570" font-size="14" font-weight="bold" fill="#222">Modes: pins 10 (DTR1) and 13 (RTS1), read at reset (both pulled up inside: open = high)</text>
+  <text x="40" y="596" font-size="12" font-weight="bold" fill="#1f2937">Mode</text>
+  <text x="110" y="596" font-size="12" font-weight="bold" fill="#1f2937">Pin 10</text>
+  <text x="180" y="596" font-size="12" font-weight="bold" fill="#1f2937">Pin 13</text>
+  <text x="250" y="596" font-size="12" font-weight="bold" fill="#1f2937">PID</text>
+  <text x="320" y="596" font-size="12" font-weight="bold" fill="#1f2937">The chip is</text>
+  <text x="40" y="620" font-size="12" fill="#1f2937">0</text>
+  <text x="110" y="620" font-size="12" fill="#1f2937">high</text>
+  <text x="180" y="620" font-size="12" fill="#1f2937">high</text>
+  <text x="250" y="620" font-size="12" fill="#1f2937">55DA</text>
+  <text x="320" y="620" font-size="12" fill="#1f2937">two serial ports (UART0 with all modem lines, UART1 with some)</text>
+  <rect x="32" y="628" width="936" height="22" rx="4" fill="#dcfce7"/>
+  <text x="40" y="644" font-size="12" fill="#1f2937">1</text>
+  <text x="110" y="644" font-size="12" fill="#1f2937">high</text>
+  <text x="180" y="644" font-size="12" fill="#1f2937">low</text>
+  <text x="250" y="644" font-size="12" fill="#1f2937">55DB</text>
+  <text x="320" y="644" font-size="12" fill="#1f2937">UART1 + I2C + SPI on a vendor interface (WebUSB): atiic</text>
+  <text x="40" y="668" font-size="12" fill="#1f2937">2</text>
+  <text x="110" y="668" font-size="12" fill="#1f2937">low</text>
+  <text x="180" y="668" font-size="12" fill="#1f2937">high</text>
+  <text x="250" y="668" font-size="12" fill="#1f2937">55DC</text>
+  <text x="320" y="668" font-size="12" fill="#1f2937">UART1 + I2C + SPI as HID, no driver (WebHID)</text>
+  <text x="40" y="692" font-size="12" fill="#1f2937">3</text>
+  <text x="110" y="692" font-size="12" fill="#1f2937">low</text>
+  <text x="180" y="692" font-size="12" fill="#1f2937">low</text>
+  <text x="250" y="692" font-size="12" fill="#1f2937">55DD</text>
+  <text x="320" y="692" font-size="12" fill="#1f2937">UART1 + JTAG</text>
+  <text x="40" y="732" font-size="12" fill="#374151">• VCC wants 3.3 V from outside (0.1 uF to ground); the I/O run at 3.3 V, the 5V-marked inputs take 5 V.</text>
+  <text x="40" y="752" font-size="12" fill="#374151">• Modes 1/2: SDA and SCL have pull-ups inside. ACT goes low once USB is configured.</text>
+  <text x="40" y="772" font-size="12" fill="#374151">• A pull-down on ACT at power-up turns DTR1 into TNOW1 (RS485 enable); on DTR0 (mode 0), DTR0 and DTR1 both.</text>
+  <text x="40" y="792" font-size="12" fill="#374151">• A pull-down on RTS0 (pin 7, mode 0) at power-up: the chip ignores its EEPROM settings and runs on its defaults.</text>
+  <text x="40" y="812" font-size="12" fill="#374151">• No series resistors on UD+ / UD−. GPIO names as the datasheet's pin tables give them (modes 0 and 3).</text>
+  <text x="40" y="850" font-size="10" fill="#6b7280">Source: WCH CH347DS1 V1.6, §4.3 (tables 4-8 to 4-12) and §5.2. atiic docs/ch347.md.</text>
+</svg>

@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.2
+
+- `docs/ch347t-pinout.svg`: a cheatsheet of the CH347T's 20 pins (TSSOP20),
+  each pin's function in modes 1/2 (atiic's), 0 and 3, the mode straps
+  (pins 10 and 13) and their PIDs, the 5 V-tolerant inputs, and the
+  power-up pull-down options; every label from CH347DS1 V1.6 (§4.3, §5.2).
+  In `docs/ch347.md`.
+
 ## 1.4.1
 
 - `docs/i2c_adapters.md`: the CH341 and the CH347 side by side on I2C
