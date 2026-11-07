@@ -1,5 +1,10 @@
 # Releases
 
+## 1.4.22
+
+- The CH341A's USB-A in the CH341T's proportions (the user: far too long):
+  13 wide, 15 out, 4 over the board, at 0.4 of the board's width.
+
 ## 1.4.21
 
 - The CH341A and CH341T sheets share their header pins and jumpers (the
