@@ -5,6 +5,9 @@ a GY-521 board, four wires, a Linux PC (r8845 here).
 
 ![CH341T in I2C mode at 3.3V, wired to a GY-521](setup.svg)
 
+The dongle on its own, each header pin's chip pin and its I2C and TTL
+roles: [ch341t-board.svg](ch341t-board.svg).
+
 ## Parts
 
 - A CH341T "2-in-1" dongle (USB to I2C / TTL): USB-A, a 6-pin header

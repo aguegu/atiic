@@ -1,5 +1,16 @@
 # Releases
 
+## 1.4.9
+
+- `docs/ch341t-board.svg`: the CH341T "2-in-1" dongle (the user: the same
+  for the CH341 dongles): its 6-pin header, the chip pin behind each
+  (CH341DS1's CH341C/T column: SDA 15, SCL 16, TXD 3, RXD 4, VCC 20/13,
+  GND 11/12), each in I2C mode (1a86:5512) and TTL mode, the two jumpers
+  (the chip reads SDA at reset for its mode, §5.3), wiring to a GY-521;
+  the board as `setup.svg` draws it. In `docs/ch341.md` and `setup.md`,
+  with the note that the CH341T has I2C only (no D0-D7: SPI and pins()
+  take the CH341A).
+
 ## 1.4.8
 
 - The board sheet with the board's back (the user's photo): it's the
