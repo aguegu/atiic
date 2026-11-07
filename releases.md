@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.17
+
+- The board sheets say what "p15" means (the user didn't know): a legend
+  line on each, "p15: the CH341A chip's pin 15 (numbered as in its
+  datasheet): the pin that hole is wired to" (the CH347T's, the CH341T's
+  on theirs).
+
 ## 1.4.16
 
 - The cheatsheets without the bench's name or a list of what ran on them

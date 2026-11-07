@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1705" width="1200" height="1705" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1731" width="1200" height="1731" font-family="Helvetica, Arial, sans-serif">
   <title>CH341T "2-in-1" dongle (USB to I2C / TTL)</title>
-  <rect width="1200" height="1705" fill="#ffffff"/>
+  <rect width="1200" height="1731" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341T "2-in-1" dongle (USB to I2C / TTL)</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down, to scale (the board 18 x 35 mm). The 6-pin header, the chip pin behind each, each pin in I2C mode (atiic's) and TTL mode.</text>
   <rect x="444.29999999999995" y="450" width="311.40000000000003" height="605.5" rx="6" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
@@ -109,16 +109,17 @@
   <text x="363" y="1383.0" font-size="12" fill="#374151">ground</text>
   <rect x="427" y="1370.0" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
   <text x="451" y="1383.0" font-size="12" fill="#374151">unused in that mode</text>
-  <text x="40" y="1419.0" font-size="14" font-weight="bold" fill="#222">The jumpers: set them unplugged, the chip reads them at power-up</text>
-  <text x="40" y="1443.0" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on I2C:</tspan> 1a86:5512, EPP/MEM and I2C: atiic's mode (lsusb: "CH341 in EPP/MEM/I2C mode")</text>
-  <text x="40" y="1463.0" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on TTL:</tspan> USB to UART on TXD/RXD (ttyUSB); atiic can't open it</text>
-  <text x="40" y="1483.0" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 3.3:</tspan> VCC and the chip at 3.3 V: SDA, SCL swing to 3.3 V (for 3.3 V parts: the MPU-6050)</text>
-  <text x="40" y="1503.0" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 5V:</tspan> VCC and the chip at 5 V: SDA, SCL pulled up to 5 V</text>
-  <text x="40" y="1547.0" font-size="12" fill="#374151">• The mode, per the datasheet (§5.3): the chip reads its SDA pin at reset, low for 5512 (I2C), open for a serial port. How the jumper does it isn't traced.</text>
-  <text x="40" y="1567.0" font-size="12" fill="#374151">• I2C at 20, 100, 400 or 750 kHz. Only the address's ack comes back: a missing device throws, a refused data byte doesn't (docs/ch341.md).</text>
-  <text x="40" y="1587.0" font-size="12" fill="#374151">• SDA and SCL have weak pull-ups inside (100-500 uA, the datasheet): a module's own pull-ups (the GY-521 has them) set the edges.</text>
-  <text x="40" y="1607.0" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
-  <text x="40" y="1627.0" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins RDY# and TNOW (17, 18); not traced.</text>
-  <text x="40" y="1661.0" font-size="10" fill="#6b7280">Board and parts from the vendor's photo (YouXin; 35 x 18 mm); chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3); traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1160" y="1685.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="40" y="1409.0" font-size="11" fill="#475569">p15</text><text x="66" y="1409.0" font-size="12" fill="#374151">the CH341T chip's pin 15 (numbered as in its datasheet): the pin that header pin is wired to</text>
+  <text x="40" y="1445.0" font-size="14" font-weight="bold" fill="#222">The jumpers: set them unplugged, the chip reads them at power-up</text>
+  <text x="40" y="1469.0" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on I2C:</tspan> 1a86:5512, EPP/MEM and I2C: atiic's mode (lsusb: "CH341 in EPP/MEM/I2C mode")</text>
+  <text x="40" y="1489.0" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on TTL:</tspan> USB to UART on TXD/RXD (ttyUSB); atiic can't open it</text>
+  <text x="40" y="1509.0" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 3.3:</tspan> VCC and the chip at 3.3 V: SDA, SCL swing to 3.3 V (for 3.3 V parts: the MPU-6050)</text>
+  <text x="40" y="1529.0" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 5V:</tspan> VCC and the chip at 5 V: SDA, SCL pulled up to 5 V</text>
+  <text x="40" y="1573.0" font-size="12" fill="#374151">• The mode, per the datasheet (§5.3): the chip reads its SDA pin at reset, low for 5512 (I2C), open for a serial port. How the jumper does it isn't traced.</text>
+  <text x="40" y="1593.0" font-size="12" fill="#374151">• I2C at 20, 100, 400 or 750 kHz. Only the address's ack comes back: a missing device throws, a refused data byte doesn't (docs/ch341.md).</text>
+  <text x="40" y="1613.0" font-size="12" fill="#374151">• SDA and SCL have weak pull-ups inside (100-500 uA, the datasheet): a module's own pull-ups (the GY-521 has them) set the edges.</text>
+  <text x="40" y="1633.0" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
+  <text x="40" y="1653.0" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins RDY# and TNOW (17, 18); not traced.</text>
+  <text x="40" y="1687.0" font-size="10" fill="#6b7280">Board and parts from the vendor's photo (YouXin; 35 x 18 mm); chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3); traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1711.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

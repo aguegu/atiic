@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1226" width="1200" height="1226" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1252" width="1200" height="1252" font-family="Helvetica, Arial, sans-serif">
   <title>LXC-CH347 (CH347T board) in mode 1: the headers</title>
-  <rect width="1200" height="1226" fill="#ffffff"/>
+  <rect width="1200" height="1252" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">LXC-CH347 (CH347T board) in mode 1: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C down. Each pin: its silkscreen, the chip pin behind it (and the back's IO label), its function in mode 1, its pins() name.</text>
   <rect x="460" y="100" width="280" height="680" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
@@ -303,45 +303,46 @@
   <text x="638" y="864" font-size="12" fill="#374151">same chip pin as another header</text>
   <text x="858.4" y="864" font-size="13" fill="#15803d">✓</text><text x="874.4" y="864" font-size="12" fill="#374151">tested</text>
   <text x="934.8" y="864" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="960.8" y="864" font-size="12" fill="#374151">the back's label</text>
-  <text x="40" y="900" font-size="14" font-weight="bold" fill="#222">The mode switch (its silkscreen)</text>
-  <text x="40" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S1</tspan></text>
-  <text x="90" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S2</tspan></text>
-  <text x="140" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">Mode</tspan></text>
-  <text x="200" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">USB ID</tspan></text>
-  <text x="300" y="924" font-size="12" font-weight="bold" fill="#1f2937"></text>
-  <text x="40" y="946" font-size="12" fill="#1f2937">off</text>
-  <text x="90" y="946" font-size="12" fill="#1f2937">off</text>
-  <text x="140" y="946" font-size="12" fill="#1f2937">0</text>
-  <text x="200" y="946" font-size="12" fill="#1f2937">1a86:55da</text>
-  <text x="300" y="946" font-size="12" fill="#1f2937">two serial ports</text>
-  <rect x="32" y="953" width="520" height="21" rx="4" fill="#dcfce7"/>
-  <text x="40" y="968" font-size="12" fill="#1f2937">on</text>
-  <text x="90" y="968" font-size="12" fill="#1f2937">off</text>
-  <text x="140" y="968" font-size="12" fill="#1f2937">1</text>
-  <text x="200" y="968" font-size="12" fill="#1f2937">1a86:55db</text>
-  <text x="300" y="968" font-size="12" fill="#1f2937">UART1 + I2C + SPI: atiic</text>
-  <text x="40" y="990" font-size="12" fill="#1f2937">off</text>
-  <text x="90" y="990" font-size="12" fill="#1f2937">on</text>
-  <text x="140" y="990" font-size="12" fill="#1f2937">2</text>
-  <text x="200" y="990" font-size="12" fill="#1f2937">1a86:55dc</text>
-  <text x="300" y="990" font-size="12" fill="#1f2937">UART1 + I2C + SPI as HID</text>
-  <text x="40" y="1012" font-size="12" fill="#1f2937">on</text>
-  <text x="90" y="1012" font-size="12" fill="#1f2937">on</text>
-  <text x="140" y="1012" font-size="12" fill="#1f2937">3</text>
-  <text x="200" y="1012" font-size="12" fill="#1f2937">1a86:55dd</text>
-  <text x="300" y="1012" font-size="12" fill="#1f2937">UART1 + JTAG</text>
-  <text x="640" y="900" font-size="14" font-weight="bold" fill="#222">Wiring an SPI display</text>
-  <text x="640" y="924" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → SPI SCK</text>
-  <text x="640" y="944" font-size="12" fill="#374151"><tspan font-weight="bold">SDA / MOSI</tspan> → SPI MO</text>
-  <text x="640" y="964" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → SPI CS0 (CS0)</text>
-  <text x="640" y="984" font-size="12" fill="#374151"><tspan font-weight="bold">DC</tspan> → UART1 CTS (GPIO6)</text>
-  <text x="640" y="1004" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → UART0 DCD (GPIO4)</text>
-  <text x="640" y="1024" font-size="12" fill="#374151"><tspan font-weight="bold">VCC, BL</tspan> → 3V3; <tspan font-weight="bold">GND</tspan> → GND</text>
-  <text x="40" y="1068" font-size="12" fill="#374151">• In mode 1 the UART0 and JTAG headers are mode 0's and mode 3's names: the same chip pins as the SPI and I2C headers (dashed).</text>
-  <text x="40" y="1088" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
-  <text x="40" y="1108" font-size="12" fill="#374151">• The back labels IO0-IO7: mode 0's GPIO numbers. In mode 1 WCH's driver offers IO4, IO6, IO7 only; the rest are SPI's and I2C's.</text>
-  <text x="40" y="1128" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
-  <text x="40" y="1148" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
-  <text x="40" y="1182" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
-  <text x="1160" y="1206" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="40" y="890" font-size="11" fill="#475569">p15</text><text x="66" y="890" font-size="12" fill="#374151">the CH347T chip's pin 15 (numbered as in its datasheet): the pin that hole is wired to</text>
+  <text x="40" y="926" font-size="14" font-weight="bold" fill="#222">The mode switch (its silkscreen)</text>
+  <text x="40" y="950" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S1</tspan></text>
+  <text x="90" y="950" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S2</tspan></text>
+  <text x="140" y="950" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">Mode</tspan></text>
+  <text x="200" y="950" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">USB ID</tspan></text>
+  <text x="300" y="950" font-size="12" font-weight="bold" fill="#1f2937"></text>
+  <text x="40" y="972" font-size="12" fill="#1f2937">off</text>
+  <text x="90" y="972" font-size="12" fill="#1f2937">off</text>
+  <text x="140" y="972" font-size="12" fill="#1f2937">0</text>
+  <text x="200" y="972" font-size="12" fill="#1f2937">1a86:55da</text>
+  <text x="300" y="972" font-size="12" fill="#1f2937">two serial ports</text>
+  <rect x="32" y="979" width="520" height="21" rx="4" fill="#dcfce7"/>
+  <text x="40" y="994" font-size="12" fill="#1f2937">on</text>
+  <text x="90" y="994" font-size="12" fill="#1f2937">off</text>
+  <text x="140" y="994" font-size="12" fill="#1f2937">1</text>
+  <text x="200" y="994" font-size="12" fill="#1f2937">1a86:55db</text>
+  <text x="300" y="994" font-size="12" fill="#1f2937">UART1 + I2C + SPI: atiic</text>
+  <text x="40" y="1016" font-size="12" fill="#1f2937">off</text>
+  <text x="90" y="1016" font-size="12" fill="#1f2937">on</text>
+  <text x="140" y="1016" font-size="12" fill="#1f2937">2</text>
+  <text x="200" y="1016" font-size="12" fill="#1f2937">1a86:55dc</text>
+  <text x="300" y="1016" font-size="12" fill="#1f2937">UART1 + I2C + SPI as HID</text>
+  <text x="40" y="1038" font-size="12" fill="#1f2937">on</text>
+  <text x="90" y="1038" font-size="12" fill="#1f2937">on</text>
+  <text x="140" y="1038" font-size="12" fill="#1f2937">3</text>
+  <text x="200" y="1038" font-size="12" fill="#1f2937">1a86:55dd</text>
+  <text x="300" y="1038" font-size="12" fill="#1f2937">UART1 + JTAG</text>
+  <text x="640" y="926" font-size="14" font-weight="bold" fill="#222">Wiring an SPI display</text>
+  <text x="640" y="950" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → SPI SCK</text>
+  <text x="640" y="970" font-size="12" fill="#374151"><tspan font-weight="bold">SDA / MOSI</tspan> → SPI MO</text>
+  <text x="640" y="990" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → SPI CS0 (CS0)</text>
+  <text x="640" y="1010" font-size="12" fill="#374151"><tspan font-weight="bold">DC</tspan> → UART1 CTS (GPIO6)</text>
+  <text x="640" y="1030" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → UART0 DCD (GPIO4)</text>
+  <text x="640" y="1050" font-size="12" fill="#374151"><tspan font-weight="bold">VCC, BL</tspan> → 3V3; <tspan font-weight="bold">GND</tspan> → GND</text>
+  <text x="40" y="1094" font-size="12" fill="#374151">• In mode 1 the UART0 and JTAG headers are mode 0's and mode 3's names: the same chip pins as the SPI and I2C headers (dashed).</text>
+  <text x="40" y="1114" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
+  <text x="40" y="1134" font-size="12" fill="#374151">• The back labels IO0-IO7: mode 0's GPIO numbers. In mode 1 WCH's driver offers IO4, IO6, IO7 only; the rest are SPI's and I2C's.</text>
+  <text x="40" y="1154" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
+  <text x="40" y="1174" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
+  <text x="40" y="1208" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
+  <text x="1160" y="1232" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
