@@ -1,5 +1,15 @@
 # Releases
 
+## 1.4.3
+
+- `docs/ch347t-pinout.svg` redrawn for mode 1 alone (the user: mode 1 for
+  now, every GPIO numbered): each pin's mode-1 function, its GPIO number
+  where it has one (GPIO0 pin 6 SCK, 1 pin 7 MISO, 2 pin 5 SCS0, 3 pin 11
+  SCL, 4 pin 15 ACT, 5 pin 9 SCS1, 6 pin 2 CTS1, 7 pin 13 RTS1), a strip
+  of GPIO0-7 in order, which stay free while I2C and SPI run, and the
+  sources: the numbers from the datasheet's mode 0 table and WCH's EVT
+  schematic and guide, not yet tried on the board.
+
 ## 1.4.2
 
 - `docs/ch347t-pinout.svg`: a cheatsheet of the CH347T's 20 pins (TSSOP20),
