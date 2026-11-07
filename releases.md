@@ -1,5 +1,14 @@
 # Releases
 
+## 1.4.24
+
+- The CH341A sheet names CS0-CS2 as what they are to atiic, D0-D2 (the
+  user): plain lines like D4 ("a free line"), the header cells D0, D1, D2
+  with "printed CS0 ..." beneath; a note that CS0-CS2 are WCH's names for
+  them in SPI mode, the handy ones beside SCK, MOSI, MISO, and that a chip
+  select is any free line. (The CH347T's CS0/CS1 stay: there they are the
+  chip's own chip-select outputs.)
+
 ## 1.4.23
 
 - Every pin and hole on the board sheets round (the user: squares are the

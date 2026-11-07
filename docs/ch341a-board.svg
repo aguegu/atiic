@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1337" width="1200" height="1337" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1357" width="1200" height="1357" font-family="Helvetica, Arial, sans-serif">
   <title>CH341A dongle (V357) in I2C/SPI mode: the headers</title>
-  <rect width="1200" height="1337" fill="#ffffff"/>
+  <rect width="1200" height="1357" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341A dongle (V357) in I2C/SPI mode: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down. Each hole: its silkscreen (the side rows' from the back), its role in mode 1a86:5512, atiic's name.</text>
   <rect x="440" y="230" width="320" height="610" rx="8" fill="#1f6fa8" stroke="#164e78" stroke-width="2"/>
@@ -35,9 +35,9 @@
   <text x="432.0" y="121" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SCL</text>
   <text x="432.0" y="135" text-anchor="middle" font-size="10" fill="#1f2937">I2C clock</text>
   <text x="477.0" y="120" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
-  <rect x="379.0" y="149" width="106" height="38" rx="8" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="432.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">CS0</text>
-  <text x="432.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">chip select 0 · D0</text>
+  <rect x="379.0" y="149" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="432.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D0</text>
+  <text x="432.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">printed CS0</text>
   <text x="477.0" y="164" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="580.0" cy="260" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="577.0" y="257" width="6" height="6" fill="#7a5b10"/>
@@ -46,9 +46,9 @@
   <path d="M544.0 192 L544.0 202 L580.0 232 L580.0 249" fill="none" stroke="#94a3b8"/>
   <rect x="491.0" y="105" width="106" height="38" rx="8" fill="#e5e7eb" stroke="#9ca3af"/>
   <text x="544.0" y="121" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
-  <rect x="491.0" y="149" width="106" height="38" rx="8" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="544.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">CS1</text>
-  <text x="544.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">chip select 1 · D1</text>
+  <rect x="491.0" y="149" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="544.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D1</text>
+  <text x="544.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">printed CS1</text>
   <text x="589.0" y="164" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="620.0" cy="260" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="617.0" y="257" width="6" height="6" fill="#7a5b10"/>
@@ -57,9 +57,9 @@
   <path d="M656.0 192 L656.0 202 L620.0 232 L620.0 249" fill="none" stroke="#94a3b8"/>
   <rect x="603.0" y="105" width="106" height="38" rx="8" fill="#fde2e2" stroke="#d97b7b"/>
   <text x="656.0" y="121" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">VCC</text>
-  <rect x="603.0" y="149" width="106" height="38" rx="8" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="656.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">CS2</text>
-  <text x="656.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">chip select 2 · D2</text>
+  <rect x="603.0" y="149" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="656.0" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D2</text>
+  <text x="656.0" y="179" text-anchor="middle" font-size="10" fill="#1f2937">printed CS2</text>
   <text x="701.0" y="164" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="660.0" cy="260" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="657.0" y="257" width="6" height="6" fill="#7a5b10"/>
@@ -101,25 +101,25 @@
   <circle cx="466" cy="370" r="4" fill="#164e78"/>
   <text x="482" y="374" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">D0</text>
   <line x1="456" y1="370" x2="432" y2="370" stroke="#94a3b8"/>
-  <rect x="270" y="359" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="329.0" y="374" text-anchor="middle" font-size="11.5" fill="#6b7280">CS0</text>
-  <rect x="196" y="359" width="66" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <rect x="270" y="359" width="118" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="329.0" y="374" text-anchor="middle" font-size="11.5" fill="#6b7280">a free line</text>
+  <rect x="196" y="359" width="66" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
   <text x="229.0" y="374" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">D0</text>
   <circle cx="466" cy="410" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="466" cy="410" r="4" fill="#164e78"/>
   <text x="482" y="414" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">D1</text>
   <line x1="456" y1="410" x2="432" y2="410" stroke="#94a3b8"/>
-  <rect x="270" y="399" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="329.0" y="414" text-anchor="middle" font-size="11.5" fill="#6b7280">CS1</text>
-  <rect x="196" y="399" width="66" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <rect x="270" y="399" width="118" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="329.0" y="414" text-anchor="middle" font-size="11.5" fill="#6b7280">a free line</text>
+  <rect x="196" y="399" width="66" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
   <text x="229.0" y="414" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">D1</text>
   <circle cx="466" cy="450" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="466" cy="450" r="4" fill="#164e78"/>
   <text x="482" y="454" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">D2</text>
   <line x1="456" y1="450" x2="432" y2="450" stroke="#94a3b8"/>
-  <rect x="270" y="439" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="329.0" y="454" text-anchor="middle" font-size="11.5" fill="#6b7280">CS2</text>
-  <rect x="196" y="439" width="66" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <rect x="270" y="439" width="118" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="329.0" y="454" text-anchor="middle" font-size="11.5" fill="#6b7280">a free line</text>
+  <rect x="196" y="439" width="66" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
   <text x="229.0" y="454" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">D2</text>
   <circle cx="466" cy="490" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="466" cy="490" r="4" fill="#164e78"/>
@@ -313,11 +313,12 @@
   <text x="40" y="1091.6923076923076" font-size="14" font-weight="bold" fill="#222">The jumpers (set unplugged)</text>
   <text x="40" y="1115.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The pair by the USB, right: 3V3.</tspan> VCC and the chip at 3.3 V (the board comes on 5 V)</text>
   <text x="40" y="1135.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The one by the USB, left: I2C/SPI.</tspan> 1a86:5512, atiic's mode; UART is a serial port (1a86:5523)</text>
-  <text x="40" y="1179.6923076923076" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7, chip selects any of D0-D5.</text>
-  <text x="40" y="1199.6923076923076" font-size="12" fill="#374151">• The header's CS0-CS2, SCK, MOSI, MISO are D0-D3, D5, D7 again on the left-hand row (dashed); D4 and D6 are on that row only.</text>
-  <text x="40" y="1219.6923076923076" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
-  <text x="40" y="1239.6923076923076" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
-  <text x="40" y="1259.6923076923076" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
-  <text x="40" y="1293.6923076923076" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1160" y="1317.6923076923076" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="40" y="1179.6923076923076" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7, a chip select any free line.</text>
+  <text x="40" y="1199.6923076923076" font-size="12" fill="#374151">• The header's CS0-CS2 are D0-D2: WCH's names for them in SPI mode, plain lines to atiic like D4. They're the handy ones, beside SCK, MOSI, MISO.</text>
+  <text x="40" y="1219.6923076923076" font-size="12" fill="#374151">• The header's D0-D2, SCK, MOSI, MISO are on the left-hand row again (dashed); D4 and D6 are on that row only.</text>
+  <text x="40" y="1239.6923076923076" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
+  <text x="40" y="1259.6923076923076" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
+  <text x="40" y="1279.6923076923076" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
+  <text x="40" y="1313.6923076923076" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1337.6923076923076" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
