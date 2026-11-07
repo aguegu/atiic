@@ -171,9 +171,11 @@ export function spiPackets(bytes) {
   return out;
 }
 
-// GPIO: the CH347T in mode 1 has three, GPIO4 (pin 15, ACT), GPIO6 (pin 2,
-// CTS1) and GPIO7 (pin 13, RTS1) (WCH's ch347t_board_config); the CH347F
-// eight. A byte a GPIO: bit 7 and 6 set it, bit 5 an output, bit 4 with an
+// GPIO: WCH's driver offers the CH347T in mode 1 three, GPIO4 (pin 15,
+// ACT), GPIO6 (pin 2, CTS1) and GPIO7 (pin 13, RTS1) (ch347t_board_config);
+// measured on r8845, GPIO2 and GPIO5 (pins 5 and 9, CS0 and CS1) too: the
+// first GPIO command driving one takes it from its chip select until the
+// next USB reset (docs/ch347.md). The CH347F has eight. A byte a GPIO: bit 7 and 6 set it, bit 5 an output, bit 4 with an
 // output's level in bit 3; 0 leaves it. The reply's bytes: bit 7 an output,
 // bit 6 the level.
 export const GPIO_PINS = ['GPIO0', 'GPIO1', 'GPIO2', 'GPIO3', 'GPIO4', 'GPIO5', 'GPIO6', 'GPIO7'];

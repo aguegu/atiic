@@ -166,9 +166,9 @@ class Ch347 {
     return job;
   }
 
-  // GPIOn (the CH347T in mode 1: GPIO4, GPIO6, GPIO7) high (true), low
-  // (false) or an input (null); CS0 and CS1 high or low. Lines not named
-  // keep what they had
+  // GPIOn (the CH347T in mode 1: GPIO4, GPIO6, GPIO7, and GPIO2, GPIO5 on
+  // CS0's and CS1's pins, taken from them) high (true), low (false) or an
+  // input (null); CS0 and CS1 high or low. Lines not named keep what they had
   pins(lines) {
     for (const name of Object.keys(lines)) {
       if (!CS_PINS.includes(name) && !GPIO_PINS.includes(name)) throw new Error(`no such pin ${name}: ${[...GPIO_PINS, ...CS_PINS].join(', ')}`);
