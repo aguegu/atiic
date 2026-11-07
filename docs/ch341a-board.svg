@@ -255,13 +255,13 @@
   <text transform="translate(536.0 614.7) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#e0f2fe">V357</text>
   <rect x="637.2" y="532.5" width="28" height="104" rx="13" fill="#e9ecef" stroke="#8a9096"/>
   <text transform="translate(655.2 584.5) rotate(-90)" text-anchor="middle" font-size="9" fill="#555">12.0M</text>
-  <rect x="603.6" y="825.3" width="44" height="34" rx="2" fill="#2b2b2b"/>
-  <rect x="647.6" y="829.3" width="12" height="26" fill="#c9ccd1"/>
-  <rect x="593.6" y="829.3" width="10" height="5" fill="#c9ccd1"/>
-  <rect x="593.6" y="839.3" width="10" height="5" fill="#c9ccd1"/>
-  <rect x="593.6" y="849.3" width="10" height="5" fill="#c9ccd1"/>
-  <text x="625.6" y="840.3" text-anchor="middle" font-size="7.5" fill="#ddd">AMS1117</text><text x="625.6" y="851.3" text-anchor="middle" font-size="7.5" fill="#ddd">3.3</text>
-  <text x="625.6" y="873.3" text-anchor="middle" font-size="9" fill="#e0f2fe">3.3 V regulator</text>
+  <rect x="621.2" y="807.0" width="28" height="56" rx="2" fill="#2b2b2b"/>
+  <rect x="609.2" y="815.0" width="12" height="40" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="814.0" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="832.0" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="850.0" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text transform="translate(639.2 835.0) rotate(-90)" text-anchor="middle" font-size="7.5" fill="#ddd">AMS1117 3.3</text>
+  <text x="635.2" y="877.0" text-anchor="middle" font-size="9" fill="#e0f2fe">3.3 V regulator</text>
   <rect x="689.0" y="913.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="689.0" y="931.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="689.0" y="949.75" width="14" height="14" fill="#f3d77a" stroke="#b8922a"/>

@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.18
+
+- The CH341A sheet's AMS1117-3.3 as on the photo (the user): SOT-223, its
+  three pins toward the 3V3 jumpers and its wide tab toward the chip, so on
+  the turned board pins right, tab left, the body standing. (The photo also
+  shows the 3V3 caps as shipped on the two pins by the USB, the "3V3" print
+  by the far ones: the sheet's 3V3 setting stands.)
+
 ## 1.4.17
 
 - The board sheets say what "p15" means (the user didn't know): a legend
