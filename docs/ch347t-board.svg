@@ -276,8 +276,8 @@
   <text x="40" y="988" font-size="12" fill="#374151">• The UART0 and JTAG headers carry the same chip pins as the SPI and I2C headers (dashed).</text>
   <text x="40" y="1008" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
   <text x="40" y="1028" font-size="12" fill="#374151">• The back prints IO0-IO7, but only IO4, IO6 and IO7 are GPIOs here (WCH's driver); the others are SPI's and I2C's.</text>
-  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO4 and GPIO6 serve as digital I/O or as chip selects. GPIO7 (UART1 RTS) is the mode switch's pin (S1): leave it to the switch.</text>
-  <text x="40" y="1068" font-size="12" fill="#374151">• CS0 and CS1 are the SPI's chip selects, output only: one not selecting a device is a digital output (pins({ CS1: true })).</text>
+  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO4 and GPIO6: digital inputs or outputs, or chip selects. GPIO7 is the mode switch's pin (S1): leave it to the switch.</text>
+  <text x="40" y="1068" font-size="12" fill="#374151">• CS0 and CS1 (IO2, IO5 on the back): digital outputs, chip selects or not. Not inputs: the chip select drives them.</text>
   <text x="40" y="1088" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
   <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
   <text x="1160" y="1146" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
