@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.27
+
+- The CH341A board drawn with its header's silkscreen, as on the front
+  photo (the user): the outer row's names above its pins, the inner row's
+  below (CS0, CS1, CS2 there as printed), so the table's D0-D2 meet the
+  board's CS0-CS2 along the leader lines; the table a little higher for
+  them.
+
 ## 1.4.26
 
 - The CH341A sheet without CS0-CS2 (the user): the header's three cells
