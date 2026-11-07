@@ -108,8 +108,14 @@ more of the chip's lines out.
 
 ### The dongle: the V357 CH341A
 
-The USB plug on the right, a 2x8 header on the left (two rows of 10 holes
-along the edges, the parallel port, unused here):
+![The CH341A dongle V357 in I2C/SPI mode: the 2x8 header and both edge rows, each hole's chip pin and what atiic drives](ch341a-board.svg)
+
+The USB plug on the right, a 2x8 header on the left, and two rows of 10
+holes along the edges, named on the back (the back is the front flipped
+top to bottom): along the top edge SLCT, INT, PEMP, ERR, DS, AS, RST,
+WAIT, GND, 3V3, the parallel port's; along the bottom D0-D7, WR, VCC. D4,
+the e-papers' BUSY and the SPI benches' NCS or PS, is the bottom edge's
+fifth hole: it's on no header pin. The 2x8 header:
 
 | Outer column | Inner column |
 |---|---|

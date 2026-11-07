@@ -1,5 +1,17 @@
 # Releases
 
+## 1.4.11
+
+- `docs/ch341a-board.svg`: the CH341A dongle V357 (the user's photos,
+  front and back), the third dongle atiic has run on: the 2x8 header and
+  both 10-hole edge rows, each hole's chip pin (CH341DS1's CH341A SOP-28
+  column), its role in I2C/SPI mode, atiic's name (D0-D7), what ran on it;
+  the edge rows named from the back (flipped top to bottom): D0-D7, WR,
+  VCC along the bottom (D4 the fifth hole, on no header pin), the parallel
+  port's along the top; the header's TXD/RXD are ERR/PEMP inputs in this
+  mode. Credited as the others. In `docs/setup.md` (with the edge rows
+  written out) and `docs/ch341.md`.
+
 ## 1.4.10
 
 - The three cheatsheets credited (the user): `ch347t-pinout.svg`,
