@@ -3,8 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Hmc5883l } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf, sclFor } from './bench.js';
+import { onlyWith, addressOf, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // its fast mode
 // Earth's field is 25-65 uT over its surface; a room's steel bends it, so a little wider
@@ -17,7 +16,7 @@ const fmt = (m) => `${m.x?.toFixed(1)} ${m.y?.toFixed(1)} ${m.z?.toFixed(1)}`;
 describe('hmc5883l (board)', onlyWith(Hmc5883l), () => {
   let bus, mag;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     mag = new Hmc5883l(bus, addressOf(Hmc5883l));
   });
 

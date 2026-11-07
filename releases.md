@@ -1,5 +1,24 @@
 # Releases
 
+## 1.4.0
+
+- **The CH347 as an I2C bus** (`atiic/adapters/ch347`, `.../ch347/node`):
+  a CH347T in mode 1 (`1a86:55db`) or a CH347F (`55de`), over WebUSB in a
+  browser or Node, its vendor interface found by class. WCH's EVT
+  (`CH347EVT.ZIP`) has only the Windows DLL and its demo, so the packets
+  were measured on r8845's CH347T with an MPU-6050: the CH341's I2C stream
+  commands, but every written byte replies its ack (0x01 acked), OUT 0
+  breaks a transaction (never sent), and a packet and its reply go up to
+  512 bytes (the CH341's 32). A refused data byte now throws too, naming
+  it. `docs/ch347.md`.
+- Host tests: the packets, and a fake CH347 running the stream against
+  pretend devices (scan, a refused byte, a 1,000-byte read).
+- The bench: `BENCH_ADAPTER=ch347` runs every chip's I2C test on the
+  CH347 (`openBus` in `test/board/bench.js`); `test/board/ch347.test.js`
+  as `ch341.test.js`, with a 1,200-byte read across packets. On r8845
+  `ch347.test.js` and `mpu6050.test.js` pass, the rest skipping (only the
+  MPU-6050 on its bus).
+
 ## 1.3.23
 
 - README: an I2C address table: each driver's addresses, what picks them

@@ -3,8 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Adxl345 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf, sclFor } from './bench.js';
+import { onlyWith, addressOf, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // its fast mode
 // |a| at rest: 1 g; its sensitivity is 230-282 LSb/g (Table 1), the
@@ -18,7 +17,7 @@ const fmt = (a) => `${a.x.toFixed(3)} ${a.y.toFixed(3)} ${a.z.toFixed(3)}`;
 describe('adxl345 (board)', onlyWith(Adxl345), () => {
   let bus, acc;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     acc = new Adxl345(bus, addressOf(Adxl345));
   });
 

@@ -5,11 +5,11 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { reference as ref } from './bench.js';
+import { reference as ref, ADAPTER } from './bench.js';
 
 const ABSENT = 0x2a; // none of the bench's chips answers here
 
-describe('ch341', { skip: ref ? false : 'no known chip on the bench to read registers from' }, () => {
+describe('ch341', { skip: ADAPTER !== 'ch341' ? `the bench's adapter is ${ADAPTER}` : ref ? false : 'no known chip on the bench to read registers from' }, () => {
   let bus;
   before(async () => {
     bus = await openCh341();

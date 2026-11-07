@@ -2,6 +2,7 @@
 // own ID register, once before the tests are laid out, so each chip's tests
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
+import { openCh347 } from '../../src/adapters/ch347/node.js';
 import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3200, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
@@ -28,6 +29,15 @@ export const REFERENCES = [
 // by its three ID bytes; Adxl345: not tried as the CH341's reference;
 // Itg3200: WHO_AM_I and not an MPU's, after the MPUs are looked for)
 const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3200];
+
+// BENCH_ADAPTER (from .env.local, or the environment): the I2C bus the
+// chips' tests run on, ch341 (the default) or ch347 (a CH347T in mode 1 or a
+// CH347F). The SPI and pin tests stay on the CH341 (the CH347 adapter has no
+// SPI or pins yet)
+export const ADAPTER = process.env.BENCH_ADAPTER || 'ch341';
+const OPENERS = { ch341: openCh341, ch347: openCh347 };
+if (!OPENERS[ADAPTER]) throw new Error(`BENCH_ADAPTER ${ADAPTER}: ch341 or ch347`);
+export const openBus = (hz) => OPENERS[ADAPTER](hz);
 
 // BENCH_PS (from .env.local, or the environment): the CH341 line wired to a
 // BMX055's PS pin (D0 on r8845's CH341A). PS picks the BMX055's interface:
@@ -61,9 +71,9 @@ export const AT24C08 = process.env.BENCH_AT24C08 ? Number(process.env.BENCH_AT24
 
 async function probe() {
   const found = new Map(); // Driver -> address
-  const bus = await openCh341();
+  const bus = await openBus();
   try {
-    if (PS) await bus.pins({ [PS]: true });
+    if (PS && ADAPTER === 'ch341') await bus.pins({ [PS]: true });
     for (const Driver of [...REFERENCES.map((r) => r.Driver), ...OTHERS]) {
       for (const a of Driver.addresses) {
         // an address a chip found before holds: not asked again (an
@@ -112,7 +122,7 @@ export function bmx055Benches(Driver, chip, sclHz) {
     {
       label: 'on I2C', skip: onlyWith(Driver),
       open: async () => {
-        const bus = await openCh341(sclFor(sclHz));
+        const bus = await openBus(sclFor(sclHz));
         return { bus, regs: bus, address: addressOf(Driver) };
       },
     },

@@ -3,8 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Mpu6050 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, sclFor } from './bench.js';
+import { onlyWith, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // the MPU-6050's fast mode, its rated top
 const FIFO_TEST_MS = 300;
@@ -16,7 +15,7 @@ const GYRO_AGREE = 1; // deg/s: the first reading after init() against a settled
 describe('mpu6050 (board)', onlyWith(Mpu6050), () => {
   let bus, mpu;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     mpu = new Mpu6050(bus);
   });
 

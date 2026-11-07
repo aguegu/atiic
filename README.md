@@ -1,14 +1,16 @@
 # atiic
 
 JavaScript drivers for I2C and SPI sensors and displays, run from a PC
-through WCH's CH341 USB adapter (`1a86:5512`, in its I2C/SPI mode): in
-Node.js, and in the browser over WebUSB. Write and test a device driver on
+through WCH's CH341 USB adapter (`1a86:5512`, in its I2C/SPI mode) or its
+high-speed successor the CH347 (I2C so far: a CH347T in mode 1, or a
+CH347F): in Node.js, and in the browser over WebUSB. Write and test a device driver on
 your desktop in a modern language, with unit tests, instead of reflashing a
 microcontroller; or chart the readings in a web app, such as
 [i2c.ninja](https://i2c.ninja).
 
 - **Adapter-free drivers:** a driver takes any bus with `write`, `read`,
-  `writeRead` (I2C), or `spi` and `pins` (SPI); the CH341 is one such bus.
+  `writeRead` (I2C), or `spi` and `pins` (SPI); the CH341 and the CH347
+  are such buses.
 - **I2C and SPI on one dongle:** the CH341's I2C at 20-750 kHz, its SPI
   (mode 0, ~110 KB/s), its D0-D5 lines as chip selects, resets, BUSY inputs.
 - **The same driver on either bus:** `SpiRegisters` turns SPI and a chip
@@ -101,6 +103,7 @@ under, below the CH341's slowest (20 kHz).
 
 - The bench, wiring, each device: [docs/setup.md](docs/setup.md)
 - The CH341 adapter (I2C, SPI, D0-D7, speeds): [docs/ch341.md](docs/ch341.md)
+- The CH347 adapter (its modes, I2C as measured): [docs/ch347.md](docs/ch347.md)
 - Releases: [releases.md](releases.md)
 
 1.0.0 started over from an empty tree. The STC8H Atiic serial-to-I2C bridge

@@ -2,8 +2,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Aht21 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf, sclFor } from './bench.js';
+import { onlyWith, addressOf, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 100000; // as tried; the datasheet gives no top
 const EVERY_MS = 2000; // 4.4: a measurement every 2 s, not to warm it
@@ -13,7 +12,7 @@ const AGREE_RH = 2;
 describe('aht21 (board)', onlyWith(Aht21), () => {
   let bus, a;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     a = new Aht21(bus, addressOf(Aht21));
   });
 

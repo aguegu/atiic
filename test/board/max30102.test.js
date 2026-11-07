@@ -3,8 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Max30102 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, sclFor } from './bench.js';
+import { onlyWith, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // the MAX30102's top on I2C
 const RATE_MS = 2000; // the count good to a poll's few samples in 200
@@ -14,7 +13,7 @@ const POLL_MS = 50; // the FIFO's 32 samples last 320 ms at 100 a second
 describe('max30102 (board)', onlyWith(Max30102), () => {
   let bus, m;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     m = new Max30102(bus);
   });
 

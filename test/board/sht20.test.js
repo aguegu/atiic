@@ -2,8 +2,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Sht20 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf, sclFor } from './bench.js';
+import { onlyWith, addressOf, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 100000; // the SHT20's I2C: up to 400 kHz; 100 as tried
 const AGREE_C = 0.5; // two readings a second apart, at rest
@@ -12,7 +11,7 @@ const AGREE_RH = 2;
 describe('sht20 (board)', onlyWith(Sht20), () => {
   let bus, s;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     s = new Sht20(bus, addressOf(Sht20));
   });
 

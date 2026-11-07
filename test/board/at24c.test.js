@@ -4,8 +4,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { At24c } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { AT24C08, sclFor } from './bench.js';
+import { AT24C08, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // 2.7-5.5 V
 const AT = 0x2f8; // block 2's last half page and block 3's first page
@@ -14,7 +13,7 @@ const N = 24;
 describe('at24c08 (board)', { skip: AT24C08 === null ? 'no BENCH_AT24C08: no AT24C08 named on the bench' : false }, () => {
   let bus, eeprom, saved;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     // all four blocks answering before anything is written: named but gone
     // (or another chip on one of its addresses) fails here, untouched
     for (let b = 0; b < 4; b++) {

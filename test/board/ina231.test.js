@@ -3,8 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Ina231 } from '../../src/index.js';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
-import { onlyWith, addressOf, sclFor } from './bench.js';
+import { onlyWith, addressOf, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000;
 const CONVERSION_MS = 5; // shunt and bus, 1.1 ms each: a fresh pair after the reset
@@ -13,7 +12,7 @@ const AGREE = 0.02; // the chip's current against shunt / R, relative
 describe('ina231 (board)', onlyWith(Ina231), () => {
   let bus, ina;
   before(async () => {
-    bus = await openCh341(sclFor(SCL_HZ));
+    bus = await openBus(sclFor(SCL_HZ));
     ina = new Ina231(bus, addressOf(Ina231));
   });
 
