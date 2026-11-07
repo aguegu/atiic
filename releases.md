@@ -1,5 +1,11 @@
 # Releases
 
+## 1.4.25
+
+- The CH341A sheet's D0-D2 and D4 as "digital I/O" (the user: "a free
+  line" misleads), D6 "digital input", the legend to match; SPI's chip
+  select "any of D0-D2, D4".
+
 ## 1.4.24
 
 - The CH341A sheet names CS0-CS2 as what they are to atiic, D0-D2 (the
