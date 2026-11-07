@@ -1,5 +1,16 @@
 # Releases
 
+## 1.4.33
+
+- **docs/ch347.md, which line for which job** (the user's GC9A01 wiring and
+  what they saw at plug-in): IO4 (ACT) is high from power-up and low once
+  USB is configured, so a backlight on it lights at plug-in, then stays
+  dark until the program turns it on; good for a backlight or a RES, not a
+  chip select. The GC9A01 example wired so: RES IO2, DC IO5, CS IO6, the
+  backlight IO4, run at 60 MHz.
+- Tagged `1.4.33`: the CH347 with its lines as IO0-IO7, for what depends
+  on atiic by tag (i2c.ninja; ch32v00x's ch347/apps/attitude pins a commit).
+
 ## 1.4.32
 
 - **The CH347's lines are IO0-IO7** (the user: one name, as the board's back
