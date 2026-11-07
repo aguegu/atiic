@@ -25,7 +25,7 @@ details: [ch341.md](ch341.md), [ch347.md](ch347.md).
 | WCH's docs | the Windows DLL (`CH341DLL.H` names the stream commands) | the Windows DLL (`CH347DLL_EN.H`, the same command names); the EVT has no USB packets |
 | Where the packets come from | the open drivers (flashrom, `i2c-ch341`), checked on a CH341T | measured on r8845's CH347T with an MPU-6050 |
 | Board-tested on r8845 | every I2C chip in the README | the MPU-6050 (`ch347.test.js`, `mpu6050.test.js`) |
-| SPI, GPIO in atiic | yes: SPI mode 0, D0-D5 driven, D0-D7 read | not yet |
+| SPI, GPIO in atiic | yes: SPI mode 0, D0-D5 driven, D0-D7 read | yes: SPI modes 0-3 at 0.47-60 MHz, CS0/CS1 and three GPIOs (CH347T mode 1) driven |
 
 ## What it means
 
@@ -38,5 +38,5 @@ details: [ch341.md](ch341.md), [ch347.md](ch347.md).
   scan of 0x08-0x77 took about 280 ms on r8845; the CH341's isn't measured.
 - **Drivers.** Nothing changes for them: the same tests pass on either bus,
   picked on the bench by `BENCH_ADAPTER` (`ch341`, the default, or `ch347`).
-- **SPI.** Only the CH341 has it in atiic so far, so the displays, the
-  e-papers and the SPI IMUs still need a CH341.
+- **SPI.** Both have it; on the CH347 the ST7735S has run so far
+  ([ch347.md](ch347.md#spi-and-pins)), the e-papers and SPI IMUs untried.

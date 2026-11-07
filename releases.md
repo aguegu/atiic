@@ -1,5 +1,25 @@
 # Releases
 
+## 1.4.4
+
+- **The CH347's SPI and pins** (the user wired an ST7735 to it): `spi()`
+  (0xC2 write-read, 507 bytes a command; the 0xC0 config once: SPI modes
+  0-3, 60 MHz / 2^0..7, 7.5 MHz by default) and `pins()` (CS0/CS1 by 0xC1;
+  GPIOs by 0xCC). The commands from flashrom's `ch347_spi.c` and WCH's
+  Linux `ch34x_mphsi_master`, checked on r8845: the config's status 0,
+  GPIO6's status following it. The ST7735S's whole board test passed on
+  the CH347T (DC on GPIO6, RES on CS1, CS on CS0), its card right by eye
+  (the user).
+- **Three GPIOs on the CH347T in mode 1**, not eight: WCH's driver offers
+  GPIO4 (pin 15), GPIO6 (pin 2) and GPIO7 (pin 13); 1.4.3's sheet showed
+  all eight. `docs/ch347t-pinout.svg` redrawn: what `pins()` drives, and
+  the ST7735's wiring.
+- The panels' board tests open the bench's adapter (`openBus`); host tests
+  for the config, chip select, GPIO and write-read packets, and spi()/pins()
+  on a fake.
+- Not yet: the speed (a 16-bit 80x160 screen in 162 ms, each 507 bytes
+  waiting for its reply).
+
 ## 1.4.3
 
 - `docs/ch347t-pinout.svg` redrawn for mode 1 alone (the user: mode 1 for

@@ -2,8 +2,8 @@
 
 JavaScript drivers for I2C and SPI sensors and displays, run from a PC
 through WCH's CH341 USB adapter (`1a86:5512`, in its I2C/SPI mode) or its
-high-speed successor the CH347 (I2C so far: a CH347T in mode 1, or a
-CH347F): in Node.js, and in the browser over WebUSB. Write and test a device driver on
+high-speed successor the CH347 (I2C, SPI and its GPIOs: a CH347T in mode
+1, or a CH347F): in Node.js, and in the browser over WebUSB. Write and test a device driver on
 your desktop in a modern language, with unit tests, instead of reflashing a
 microcontroller; or chart the readings in a web app, such as
 [i2c.ninja](https://i2c.ninja).

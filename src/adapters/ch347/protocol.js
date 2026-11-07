@@ -102,3 +102,83 @@ export function packets(commands) {
 
 // a stop alone: the bus released after a transaction cut short
 export const stopPacket = () => Uint8Array.of(CMD_I2C_STREAM, STM_STO, STM_END);
+
+// SPI and GPIO, from the open drivers: flashrom's ch347_spi.c (0xC0, 0xC1,
+// 0xC3, 0xC4, the 507-byte packets) and WCH's Linux ch34x_mphsi_master
+// (0xC2 write-read, 0xCC GPIO, the CH347T's three GPIOs in mode 1). Each
+// command: the byte, a 16-bit length (LSB first), the payload.
+export const CMD_SPI_SET_CFG = 0xc0; // reply: c0 01 00 status (0 ok)
+export const CMD_SPI_CS = 0xc1; // no reply
+export const CMD_SPI_OUT_IN = 0xc2; // reply: c2 n n, the n bytes read
+export const CMD_GPIO = 0xcc; // reply: cc 08 00, a status byte a GPIO
+export const SPI_CHUNK = 507; // a write-read's bytes, so its reply fits one 512-byte packet (flashrom: 510 - 3)
+
+// SCK: 60 MHz divided by 2^0..2^7 (the config's byte 15, bits 5:3)
+export const SPI_CLOCKS = [60e6, 30e6, 15e6, 7.5e6, 3.75e6, 1.875e6, 937500, 468750];
+
+// the config packet (flashrom's ch347_spi_config, the CH32V's SPI_CTLR1 as
+// u16 fields): master (0x0104), 8-bit, mode 0-3 (CPOL byte 9 bit 1, CPHA
+// byte 11 bit 0), chip selects by software (0x0200: CS by CMD_SPI_CS), the
+// divisor, MSB first, CRC polynomial 7 as the vendor sets it, CS active low
+export function spiConfigPacket(hz = 7.5e6, mode = 0) {
+  const divisor = SPI_CLOCKS.indexOf(hz);
+  if (divisor < 0) throw new Error(`CH347 runs SPI at ${SPI_CLOCKS.join(', ')} Hz, not ${hz}`);
+  const p = new Uint8Array(29);
+  p[0] = CMD_SPI_SET_CFG;
+  p[1] = 26;
+  p[5] = 0x04; p[6] = 0x01; // SPI_Mode: master
+  p[9] = mode & 2; // CPOL
+  p[11] = mode & 1; // CPHA
+  p[14] = 0x02; // SPI_NSS: software
+  p[15] = divisor << 3;
+  p[19] = 0x07; // SPI_CRCPolynomial
+  return p;
+}
+
+// the chip selects: CS0 in byte 3, CS1 in byte 8; bit 7 changes it, bit 6
+// set deasserts (high, active low). levels: { CS0: true|false, CS1: ... },
+// true high (deasserted), false low; one not named is left as it is
+export const CS_PINS = ['CS0', 'CS1'];
+export function csPacket(levels) {
+  const p = new Uint8Array(13);
+  p[0] = CMD_SPI_CS;
+  p[1] = 10;
+  for (const [name, at] of [['CS0', 3], ['CS1', 8]]) {
+    if (levels[name] === undefined) continue;
+    p[at] = 0x80 | (levels[name] ? 0x40 : 0);
+  }
+  return p;
+}
+
+// SPI out and in: a write-read command a chunk; all but the last full
+export function spiPackets(bytes) {
+  const out = [];
+  for (let i = 0; i < bytes.length; i += SPI_CHUNK) {
+    const part = bytes.slice(i, i + SPI_CHUNK);
+    const p = new Uint8Array(3 + part.length);
+    p[0] = CMD_SPI_OUT_IN;
+    p[1] = part.length & 0xff;
+    p[2] = part.length >> 8;
+    p.set(part, 3);
+    out.push(p);
+  }
+  return out;
+}
+
+// GPIO: the CH347T in mode 1 has three, GPIO4 (pin 15, ACT), GPIO6 (pin 2,
+// CTS1) and GPIO7 (pin 13, RTS1) (WCH's ch347t_board_config); the CH347F
+// eight. A byte a GPIO: bit 7 and 6 set it, bit 5 an output, bit 4 with an
+// output's level in bit 3; 0 leaves it. The reply's bytes: bit 7 an output,
+// bit 6 the level.
+export const GPIO_PINS = ['GPIO0', 'GPIO1', 'GPIO2', 'GPIO3', 'GPIO4', 'GPIO5', 'GPIO6', 'GPIO7'];
+export function gpioPacket(lines) {
+  const p = new Uint8Array(11);
+  p[0] = CMD_GPIO;
+  p[1] = 8;
+  for (const [name, v] of Object.entries(lines)) {
+    const i = GPIO_PINS.indexOf(name);
+    if (i < 0) continue;
+    p[3 + i] = 0xc0 | (v === null ? 0 : 0x30 | (v ? 0x08 : 0));
+  }
+  return p;
+}

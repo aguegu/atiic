@@ -172,3 +172,64 @@ describe('ch347 bus (fake)', () => {
     assert.ok(fake.sent.length > 2);
   });
 });
+
+describe('ch347 spi and pins', async () => {
+  const { spiConfigPacket, csPacket, gpioPacket, spiPackets, SPI_CHUNK } = await import('../../src/adapters/ch347/protocol.js');
+
+  it('the SPI config: master, mode 0, software chip selects, 7.5 MHz (flashrom\'s layout)', () => {
+    const p = spiConfigPacket(7.5e6, 0);
+    assert.equal(p.length, 29);
+    assert.deepEqual(Array.from(p.slice(0, 3)), [0xc0, 26, 0]);
+    assert.equal(p[5], 0x04); assert.equal(p[6], 0x01);
+    assert.equal(p[14], 0x02);
+    assert.equal(p[15], 3 << 3);
+    assert.equal(p[19], 0x07);
+    assert.equal(spiConfigPacket(15e6, 3)[9], 2);
+    assert.equal(spiConfigPacket(15e6, 3)[11], 1);
+    assert.throws(() => spiConfigPacket(10e6));
+  });
+
+  it('chip selects: bit 7 changes one, bit 6 high; one not named untouched', () => {
+    assert.deepEqual(Array.from(csPacket({ CS0: false })), [0xc1, 10, 0, 0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    assert.deepEqual(Array.from(csPacket({ CS0: true, CS1: false })), [0xc1, 10, 0, 0xc0, 0, 0, 0, 0, 0x80, 0, 0, 0, 0]);
+  });
+
+  it('GPIO: a byte a line, as WCH\'s driver sets them; 0 leaves one alone', () => {
+    // measured on r8845: GPIO6 high replied c0 (an output, high) in its byte, low 80
+    assert.deepEqual(Array.from(gpioPacket({ GPIO6: true })), [0xcc, 8, 0, 0, 0, 0, 0, 0, 0, 0xf8, 0]);
+    assert.deepEqual(Array.from(gpioPacket({ GPIO6: false, GPIO4: null })), [0xcc, 8, 0, 0, 0, 0, 0, 0xc0, 0, 0xf0, 0]);
+  });
+
+  it('SPI write-reads of 507 bytes at most, the length LSB first', () => {
+    const ps = spiPackets(Uint8Array.from({ length: 1200 }, (_, i) => i & 0xff));
+    assert.deepEqual(ps.map((p) => p.length - 3), [SPI_CHUNK, SPI_CHUNK, 1200 - 2 * SPI_CHUNK]);
+    assert.deepEqual(Array.from(ps[0].slice(0, 4)), [0xc2, SPI_CHUNK & 0xff, SPI_CHUNK >> 8, 0]);
+  });
+
+  it('Ch347.spi() and pins() on a fake: the config once, MISO back, GPIOs then chip selects', async () => {
+    const sent = [];
+    const replies = [];
+    const device = {
+      opened: true,
+      configuration: { interfaces: [{ interfaceNumber: 2, alternate: { interfaceClass: 255, endpoints: [{ endpointNumber: 6, direction: 'out', type: 'bulk' }, { endpointNumber: 6, direction: 'in', type: 'bulk' }] } }] },
+      claimInterface: async () => {},
+      transferOut: async (ep, data) => {
+        sent.push(Array.from(data));
+        if (data[0] === 0xc0) replies.push([0xc0, 1, 0, 0]);
+        if (data[0] === 0xcc) replies.push([0xcc, 8, 0, 0, 0, 0, 0, 0, 0, 0xc0, 0]);
+        if (data[0] === 0xc2) replies.push([0xc2, data[1], data[2], ...Array.from(data.slice(3), (b) => b ^ 0xff)]); // MISO: MOSI inverted
+        return { status: 'ok', bytesWritten: data.length };
+      },
+      transferIn: async () => {
+        const d = Uint8Array.from(replies.shift());
+        return { status: 'ok', data: new DataView(d.buffer) };
+      },
+    };
+    const bus = await new Ch347(device).open();
+    await bus.pins({ CS0: false, GPIO6: true });
+    assert.deepEqual(Array.from(await bus.spi([0x0f, 0xf0])), [0xf0, 0x0f]);
+    assert.deepEqual(sent.map((p) => p[0]), [0xaa, 0xc0, 0xcc, 0xc1, 0xc2]); // the I2C speed at open, then SPI's config once
+    assert.throws(() => bus.pins({ D0: true }), /no such pin D0/);
+    assert.throws(() => bus.pins({ CS1: null }), /can't be released/);
+  });
+});

@@ -10,7 +10,7 @@
 // circle's square, ramps black at the top to full at the bottom
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { openCh341 } from '../../src/adapters/ch341/node.js';
+import { openBus } from './bench.js';
 import { label } from './font.js';
 
 // a full screen's bytes at the CH341's measured ~110 KB/s, twice over
@@ -30,7 +30,7 @@ export function panelTests(Panel, lines, setting, { round = false } = {}) {
   describe(`${name} (board)`, { skip: lines ? false : `no ${setting}: no ${name} on the bench` }, () => {
     let bus, lcd;
     before(async () => {
-      bus = await openCh341();
+      bus = await openBus();
       lcd = new Panel(bus, lines);
     });
 
