@@ -277,6 +277,6 @@
   <text x="40" y="1048" font-size="12" fill="#374151">• GPIO2, GPIO4-GPIO7: digital I/O; any of them a chip select. CS0, CS1 are GPIO2, GPIO5 by their print (atiic takes them so).</text>
   <text x="40" y="1068" font-size="12" fill="#374151">• GPIO7 is on the mode switch S1: it reads low when undriven, and must be low or undriven at power-up.</text>
   <text x="40" y="1088" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
-  <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver, GPIO2/GPIO5 measured. atiic docs/ch347.md.</text>
+  <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; the GPIOs per WCH's driver and measured. atiic docs/ch347.md.</text>
   <text x="1160" y="1146" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
