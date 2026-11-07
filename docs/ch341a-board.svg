@@ -42,7 +42,7 @@
   <text x="432.0" y="155" text-anchor="middle" font-size="10" fill="#1f2937">I2C clock</text>
   <text x="477.0" y="140" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <rect x="379.0" y="169" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="432.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D0</text>
+  <text x="432.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D0 (CS0)</text>
   <text x="432.0" y="199" text-anchor="middle" font-size="10" fill="#1f2937">digital I/O</text>
   <text x="477.0" y="184" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="580.0" cy="330" r="9" fill="#f3d77a" stroke="#b8922a"/>
@@ -55,7 +55,7 @@
   <rect x="491.0" y="125" width="106" height="38" rx="8" fill="#e5e7eb" stroke="#9ca3af"/>
   <text x="544.0" y="141" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
   <rect x="491.0" y="169" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="544.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D1</text>
+  <text x="544.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D1 (CS1)</text>
   <text x="544.0" y="199" text-anchor="middle" font-size="10" fill="#1f2937">digital I/O</text>
   <text x="589.0" y="184" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="620.0" cy="330" r="9" fill="#f3d77a" stroke="#b8922a"/>
@@ -68,7 +68,7 @@
   <rect x="603.0" y="125" width="106" height="38" rx="8" fill="#fde2e2" stroke="#d97b7b"/>
   <text x="656.0" y="141" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">VCC</text>
   <rect x="603.0" y="169" width="106" height="38" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="656.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D2</text>
+  <text x="656.0" y="185" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">D2 (CS2)</text>
   <text x="656.0" y="199" text-anchor="middle" font-size="10" fill="#1f2937">digital I/O</text>
   <text x="701.0" y="184" text-anchor="middle" font-size="11" fill="#15803d">✓</text>
   <circle cx="660.0" cy="330" r="9" fill="#f3d77a" stroke="#b8922a"/>

@@ -1,5 +1,10 @@
 # Releases
 
+## 1.4.28
+
+- The CH341A table's cells D0 (CS0), D1 (CS1), D2 (CS2) (the user): atiic's
+  name, the print beside it.
+
 ## 1.4.27
 
 - The CH341A board drawn with its header's silkscreen, as on the front
