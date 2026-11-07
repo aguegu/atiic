@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.29
+
+- The CH341A's jumpers on the side rows' grid (the user: the same span,
+  nothing overlapping): each jumper's first pin a pitch below the last
+  hole, its pins a pitch apart, the I2C/SPI jumper under the left row and
+  the 3V3 pair under the right; the board a little longer for them, the
+  regulator beside the chip.
+
 ## 1.4.28
 
 - The CH341A table's cells D0 (CS0), D1 (CS1), D2 (CS2) (the user): atiic's

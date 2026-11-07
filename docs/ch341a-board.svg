@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1427" width="1200" height="1427" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1481" width="1200" height="1481" font-family="Helvetica, Arial, sans-serif">
   <title>CH341A dongle (V357) in I2C/SPI mode: the headers</title>
-  <rect width="1200" height="1427" fill="#ffffff"/>
+  <rect width="1200" height="1481" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341A dongle (V357) in I2C/SPI mode: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down. Each hole: its name (the side rows' from the back's print), its role in mode 1a86:5512.</text>
-  <rect x="440" y="278" width="320" height="632" rx="8" fill="#1f6fa8" stroke="#164e78" stroke-width="2"/>
+  <rect x="440" y="278" width="320" height="686" rx="8" fill="#1f6fa8" stroke="#164e78" stroke-width="2"/>
   <text x="140.0" y="148.0" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">outer row</text>
   <text x="140.0" y="192.0" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">inner row</text>
   <circle cx="460.0" cy="330" r="9" fill="#f3d77a" stroke="#b8922a"/>
@@ -250,91 +250,91 @@
   <line x1="744" y1="800" x2="768" y2="800" stroke="#94a3b8"/>
   <rect x="812" y="789" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
   <text x="871.0" y="804" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
-  <rect x="551.0" y="448.64" width="66" height="230" rx="3" fill="#1d1d1d"/>
-  <rect x="543.0" y="454.8542857142857" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="454.8542857142857" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="471.2828571428571" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="471.2828571428571" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="487.71142857142854" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="487.71142857142854" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="504.14" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="504.14" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="520.5685714285714" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="520.5685714285714" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="536.9971428571429" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="536.9971428571429" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="553.4257142857143" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="553.4257142857143" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="569.8542857142857" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="569.8542857142857" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="586.2828571428571" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="586.2828571428571" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="602.7114285714285" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="602.7114285714285" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="619.14" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="619.14" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="635.5685714285714" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="635.5685714285714" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="651.9971428571428" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="651.9971428571428" width="8" height="4" fill="#c9ccd1"/>
-  <rect x="543.0" y="668.4257142857143" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="668.4257142857143" width="8" height="4" fill="#c9ccd1"/>
-  <text transform="translate(589.0 563.64) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH341A</text>
-  <text transform="translate(536.0 518.64) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#e0f2fe">V357</text>
-  <rect x="637.2" y="436.0" width="28" height="104" rx="13" fill="#e9ecef" stroke="#8a9096"/>
-  <text transform="translate(655.2 488.0) rotate(-90)" text-anchor="middle" font-size="9" fill="#555">12.0M</text>
-  <rect x="621.2" y="720.4" width="28" height="56" rx="2" fill="#2b2b2b"/>
-  <rect x="609.2" y="728.4" width="12" height="40" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="649.2" y="727.4" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="649.2" y="745.4" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="649.2" y="763.4" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <text transform="translate(639.2 748.4) rotate(-90)" text-anchor="middle" font-size="7.5" fill="#ddd">AMS1117 3.3</text>
-  <text x="635.2" y="790.4" text-anchor="middle" font-size="9" fill="#e0f2fe">3.3 V regulator</text>
-  <rect x="684.8" y="810.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="815.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="684.8" y="838.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="843.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="684.8" y="866.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="689.8" y="871.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="679.8" y="805.36" width="26" height="54" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="685.8" y="813.36" width="14" height="38" rx="2" fill="#000" opacity="0.18"/>
-  <rect x="720.0" y="810.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="815.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="720.0" y="838.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="843.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="720.0" y="866.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="725.0" y="871.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="715.0" y="805.36" width="26" height="54" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="721.0" y="813.36" width="14" height="38" rx="2" fill="#000" opacity="0.18"/>
-  <text x="710.4" y="904.36" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
-  <rect x="454.4" y="810.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="815.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="454.4" y="838.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="843.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="454.4" y="866.36" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="459.4" y="871.36" width="6" height="6" fill="#7a5b10"/>
-  <rect x="449.4" y="833.36" width="26" height="54" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
-  <rect x="455.4" y="841.36" width="14" height="38" rx="2" fill="#000" opacity="0.18"/>
-  <text x="480.4" y="822.36" font-size="9.5" fill="#fff">UART</text>
-  <text x="480.4" y="878.36" font-size="9.5" fill="#fff">I2C/SPI</text>
-  <rect x="557.76" y="845.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="582.08" y="845.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="606.4" y="845.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="630.72" y="845.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
-  <rect x="536.0" y="870.6153846153846" width="128.0" height="187.07692307692307" rx="6" fill="#cfd4da" stroke="#8a9096"/>
-  <rect x="565.44" y="942.4923076923077" width="21.76" height="19.2" fill="#6b7178"/>
-  <rect x="612.8" y="942.4923076923077" width="21.76" height="19.2" fill="#6b7178"/>
-  <text x="600.0" y="1077.6923076923076" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
-  <rect x="40" y="1112.6923076923076" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="64" y="1125.6923076923076" font-size="12" fill="#374151">I2C</text>
-  <rect x="107" y="1112.6923076923076" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="131" y="1125.6923076923076" font-size="12" fill="#374151">SPI</text>
-  <rect x="174" y="1112.6923076923076" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="198" y="1125.6923076923076" font-size="12" fill="#374151">digital I/O</text>
-  <rect x="297" y="1112.6923076923076" width="18" height="18" rx="9" fill="#fef9c3" stroke="#ca8a04"/>
-  <text x="321" y="1125.6923076923076" font-size="12" fill="#374151">digital input</text>
-  <rect x="434" y="1112.6923076923076" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="458" y="1125.6923076923076" font-size="12" fill="#374151">power</text>
-  <rect x="515" y="1112.6923076923076" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="539" y="1125.6923076923076" font-size="12" fill="#374151">same chip pin as a header hole</text>
-  <rect x="753.0" y="1112.6923076923076" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="777.0" y="1125.6923076923076" font-size="12" fill="#374151">not used by atiic</text>
-  <text x="907.8" y="1125.6923076923076" font-size="13" fill="#15803d">✓</text><text x="923.8" y="1125.6923076923076" font-size="12" fill="#374151">tested</text>
-  <text x="40" y="1161.6923076923076" font-size="14" font-weight="bold" fill="#222">The jumpers (set unplugged)</text>
-  <text x="40" y="1185.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The pair by the USB, right: 3V3.</tspan> VCC and the chip at 3.3 V (the board comes on 5 V)</text>
-  <text x="40" y="1205.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The one by the USB, left: I2C/SPI.</tspan> 1a86:5512, atiic's mode; UART is a serial port (1a86:5523)</text>
-  <text x="40" y="1249.6923076923076" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7.</text>
-  <text x="40" y="1269.6923076923076" font-size="12" fill="#374151">• D0, D1, D2 and D4 can each be a chip select: up to four SPI devices on SCK, MOSI, MISO at once (a BMX055's three chips ran on D0-D2).</text>
-  <text x="40" y="1289.6923076923076" font-size="12" fill="#374151">• The header's D0-D2, SCK, MOSI, MISO are on the left-hand row again (dashed); D4 and D6 are on that row only.</text>
-  <text x="40" y="1309.6923076923076" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
-  <text x="40" y="1329.6923076923076" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
-  <text x="40" y="1349.6923076923076" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
-  <text x="40" y="1383.6923076923076" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1160" y="1407.6923076923076" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <rect x="551.0" y="463.22" width="66" height="230" rx="3" fill="#1d1d1d"/>
+  <rect x="543.0" y="469.43428571428575" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="469.43428571428575" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="485.86285714285714" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="485.86285714285714" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="502.2914285714286" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="502.2914285714286" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="518.72" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="518.72" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="535.1485714285715" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="535.1485714285715" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="551.5771428571429" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="551.5771428571429" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="568.0057142857142" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="568.0057142857142" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="584.4342857142857" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="584.4342857142857" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="600.8628571428571" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="600.8628571428571" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="617.2914285714286" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="617.2914285714286" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="633.72" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="633.72" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="650.1485714285715" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="650.1485714285715" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="666.5771428571429" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="666.5771428571429" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="543.0" y="683.0057142857142" width="8" height="4" fill="#c9ccd1"/><rect x="617.0" y="683.0057142857142" width="8" height="4" fill="#c9ccd1"/>
+  <text transform="translate(589.0 578.22) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH341A</text>
+  <text transform="translate(536.0 533.22) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#e0f2fe">V357</text>
+  <rect x="637.2" y="449.5" width="28" height="104" rx="13" fill="#e9ecef" stroke="#8a9096"/>
+  <text transform="translate(655.2 501.5) rotate(-90)" text-anchor="middle" font-size="9" fill="#555">12.0M</text>
+  <rect x="621.2" y="716" width="28" height="56" rx="2" fill="#2b2b2b"/>
+  <rect x="609.2" y="724" width="12" height="40" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="723" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="741" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="649.2" y="759" width="10" height="6" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <text transform="translate(639.2 744) rotate(-90)" text-anchor="middle" font-size="7.5" fill="#ddd">AMS1117 3.3</text>
+  <text x="635.2" y="786" text-anchor="middle" font-size="9" fill="#e0f2fe">3.3 V regulator</text>
+  <rect x="684.8" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="689.8" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="684.8" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="689.8" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="684.8" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="689.8" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="679.8" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="685.8" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <rect x="720.0" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="725.0" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="720.0" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="725.0" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="720.0" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="725.0" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="715.0" y="827" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="721.0" y="835" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <text x="710.4" y="950" text-anchor="middle" font-size="9.5" fill="#fff">3V3 (both)</text>
+  <rect x="454.4" y="832" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="459.4" y="837" width="6" height="6" fill="#7a5b10"/>
+  <rect x="454.4" y="872" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="459.4" y="877" width="6" height="6" fill="#7a5b10"/>
+  <rect x="454.4" y="912" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="459.4" y="917" width="6" height="6" fill="#7a5b10"/>
+  <rect x="449.4" y="867" width="26" height="66" rx="4" fill="#222" stroke="#333" opacity="0.94"/>
+  <rect x="455.4" y="875" width="14" height="50" rx="2" fill="#000" opacity="0.18"/>
+  <text x="480.4" y="844" font-size="9.5" fill="#fff">UART</text>
+  <text x="480.4" y="924" font-size="9.5" fill="#fff">I2C/SPI</text>
+  <rect x="557.76" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="582.08" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="606.4" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="630.72" y="899.0153846153846" width="11.52" height="23.04" rx="2" fill="#c9ccd1" stroke="#9aa0a6"/>
+  <rect x="536.0" y="924.6153846153846" width="128.0" height="187.07692307692307" rx="6" fill="#cfd4da" stroke="#8a9096"/>
+  <rect x="565.44" y="996.4923076923077" width="21.76" height="19.2" fill="#6b7178"/>
+  <rect x="612.8" y="996.4923076923077" width="21.76" height="19.2" fill="#6b7178"/>
+  <text x="600.0" y="1131.6923076923076" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
+  <rect x="40" y="1166.6923076923076" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="1179.6923076923076" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="1166.6923076923076" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="131" y="1179.6923076923076" font-size="12" fill="#374151">SPI</text>
+  <rect x="174" y="1166.6923076923076" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="198" y="1179.6923076923076" font-size="12" fill="#374151">digital I/O</text>
+  <rect x="297" y="1166.6923076923076" width="18" height="18" rx="9" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="321" y="1179.6923076923076" font-size="12" fill="#374151">digital input</text>
+  <rect x="434" y="1166.6923076923076" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="458" y="1179.6923076923076" font-size="12" fill="#374151">power</text>
+  <rect x="515" y="1166.6923076923076" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="539" y="1179.6923076923076" font-size="12" fill="#374151">same chip pin as a header hole</text>
+  <rect x="753.0" y="1166.6923076923076" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="777.0" y="1179.6923076923076" font-size="12" fill="#374151">not used by atiic</text>
+  <text x="907.8" y="1179.6923076923076" font-size="13" fill="#15803d">✓</text><text x="923.8" y="1179.6923076923076" font-size="12" fill="#374151">tested</text>
+  <text x="40" y="1215.6923076923076" font-size="14" font-weight="bold" fill="#222">The jumpers (set unplugged)</text>
+  <text x="40" y="1239.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The pair by the USB, right: 3V3.</tspan> VCC and the chip at 3.3 V (the board comes on 5 V)</text>
+  <text x="40" y="1259.6923076923076" font-size="12" fill="#374151"><tspan font-weight="bold">The one by the USB, left: I2C/SPI.</tspan> 1a86:5512, atiic's mode; UART is a serial port (1a86:5523)</text>
+  <text x="40" y="1303.6923076923076" font-size="12" fill="#374151">• atiic drives D0-D5 high, low or released (pins()) and reads D0-D7 (readPins()); SPI is SCK D3, MOSI D5, MISO D7.</text>
+  <text x="40" y="1323.6923076923076" font-size="12" fill="#374151">• D0, D1, D2 and D4 can each be a chip select: up to four SPI devices on SCK, MOSI, MISO at once (a BMX055's three chips ran on D0-D2).</text>
+  <text x="40" y="1343.6923076923076" font-size="12" fill="#374151">• The header's D0-D2, SCK, MOSI, MISO are on the left-hand row again (dashed); D4 and D6 are on that row only.</text>
+  <text x="40" y="1363.6923076923076" font-size="12" fill="#374151">• SPI shifts least significant bit first: atiic reverses each byte. About 110 KB/s; mode 0 only.</text>
+  <text x="40" y="1383.6923076923076" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins are ERR and PEMP, inputs.</text>
+  <text x="40" y="1403.6923076923076" font-size="12" fill="#374151">• The right-hand row is the EPP/MEM parallel port's (DS, AS, WAIT, RST, SLCT, INT, ERR, PEMP), and WR on the left: atiic doesn't use them.</text>
+  <text x="40" y="1437.6923076923076" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1461.6923076923076" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
