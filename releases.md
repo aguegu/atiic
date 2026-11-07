@@ -1,5 +1,15 @@
 # Releases
 
+## 1.4.8
+
+- The board sheet with the board's back (the user's photo): it's the
+  LXC-CH347, and its back labels IO0-IO7 on eight headers, each the one
+  whose chip pin is that GPIO in the datasheet's mode 0 table (IO0 JTAG
+  TCK, pin 6; IO1 TDO, 7; IO2 TMS, 5; IO3 I2C SCL, 11; IO4 UART0 DCD, 15;
+  IO5 UART0 DTR, 9; IO6 UART1 CTS, 2; IO7 UART1 RTS, 13): the header-to-pin
+  mapping borne out. Shown beside the chip pins, with the note that in
+  mode 1 only IO4, IO6, IO7 are GPIOs.
+
 ## 1.4.7
 
 - `docs/ch347t-board.svg`: r8845's CH347T development board in mode 1 (the

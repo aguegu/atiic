@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1296" width="1200" height="1296" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1316" width="1200" height="1316" font-family="Helvetica, Arial, sans-serif">
   <title>The CH347T development board in mode 1: its headers, the chip pins behind them, and what atiic drives</title>
-  <rect width="1200" height="1296" fill="#ffffff"/>
-  <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347T board in mode 1: the headers</text>
+  <rect width="1200" height="1316" fill="#ffffff"/>
+  <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">LXC-CH347 (CH347T board) in mode 1: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C left. Each header: its silkscreen, the chip pin behind it, its function in mode 1, and its pins() name.</text>
   <rect x="196" y="366" width="784" height="338" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
   <rect x="150" y="501.0" width="86" height="68" rx="12" fill="#cfd4da" stroke="#8a9096"/>
@@ -77,7 +77,7 @@
   <circle cx="538" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="538" cy="400" r="4.5" fill="#4c1d95"/>
   <text transform="translate(542 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DTR</text>
-  <text x="538" y="352" text-anchor="middle" font-size="10" fill="#475569">p9</text>
+  <text x="538" y="352" text-anchor="middle" font-size="10" fill="#475569">p9<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO5</tspan></text>
   <rect x="526" y="236" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text transform="translate(542.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS1</text>
   <rect x="526" y="168" width="24" height="62" rx="12.0" fill="#ffffff" stroke="#6366f1" stroke-dasharray="4 3"/>
@@ -99,7 +99,7 @@
   <circle cx="676" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="676" cy="400" r="4.5" fill="#4c1d95"/>
   <text transform="translate(680 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">DCD</text>
-  <text x="676" y="352" text-anchor="middle" font-size="10" fill="#475569">p15</text>
+  <text x="676" y="352" text-anchor="middle" font-size="10" fill="#475569">p15<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO4</tspan></text>
   <rect x="664" y="236" width="24" height="104" rx="12.0" fill="#f5f5f4" stroke="#a8a29e"/>
   <text transform="translate(680.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">ACT</text>
   <rect x="664" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
@@ -120,7 +120,7 @@
   <circle cx="814" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="814" cy="400" r="4.5" fill="#4c1d95"/>
   <text transform="translate(818 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">CTS</text>
-  <text x="814" y="352" text-anchor="middle" font-size="10" fill="#475569">p2</text>
+  <text x="814" y="352" text-anchor="middle" font-size="10" fill="#475569">p2<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO6</tspan></text>
   <rect x="802" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
   <text transform="translate(818.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">CTS1</text>
   <rect x="802" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
@@ -129,7 +129,7 @@
   <circle cx="860" cy="400" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="860" cy="400" r="4.5" fill="#4c1d95"/>
   <text transform="translate(864 418) rotate(-90)" text-anchor="end" font-size="11" font-weight="bold" fill="#ffffff">RTS</text>
-  <text x="860" y="352" text-anchor="middle" font-size="10" fill="#475569">p13</text>
+  <text x="860" y="352" text-anchor="middle" font-size="10" fill="#475569">p13<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO7</tspan></text>
   <rect x="848" y="236" width="24" height="104" rx="12.0" fill="#ffedd5" stroke="#e59a52"/>
   <text transform="translate(864.0 288.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
   <rect x="848" y="168" width="24" height="62" rx="12.0" fill="#ccfbf1" stroke="#2f9e8f"/>
@@ -162,7 +162,7 @@
   <circle cx="354" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="354" cy="670" r="4.5" fill="#4c1d95"/>
   <text transform="translate(358 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">SCL</text>
-  <text x="354" y="728" text-anchor="middle" font-size="10" fill="#475569">p11</text>
+  <text x="354" y="728" text-anchor="middle" font-size="10" fill="#475569">p11<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO3</tspan></text>
   <rect x="342" y="736" width="24" height="104" rx="12.0" fill="#dcfce7" stroke="#4fb879"/>
   <text transform="translate(358.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#1f2937">SCL</text>
   <text x="354" y="862" text-anchor="middle" font-size="12" fill="#15803d">✓</text>
@@ -176,13 +176,13 @@
   <circle cx="446" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="446" cy="670" r="4.5" fill="#4c1d95"/>
   <text transform="translate(450 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TCK</text>
-  <text x="446" y="728" text-anchor="middle" font-size="10" fill="#475569">p6</text>
+  <text x="446" y="728" text-anchor="middle" font-size="10" fill="#475569">p6<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO0</tspan></text>
   <rect x="434" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text transform="translate(450.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
   <circle cx="492" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="492" cy="670" r="4.5" fill="#4c1d95"/>
   <text transform="translate(496 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TMS</text>
-  <text x="492" y="728" text-anchor="middle" font-size="10" fill="#475569">p5</text>
+  <text x="492" y="728" text-anchor="middle" font-size="10" fill="#475569">p5<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO2</tspan></text>
   <rect x="480" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text transform="translate(496.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
   <rect x="480" y="846" width="24" height="62" rx="12.0" fill="#ffffff" stroke="#6366f1" stroke-dasharray="4 3"/>
@@ -196,7 +196,7 @@
   <circle cx="584" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="584" cy="670" r="4.5" fill="#4c1d95"/>
   <text transform="translate(588 652) rotate(-90)" text-anchor="start" font-size="11" font-weight="bold" fill="#ffffff">TDO</text>
-  <text x="584" y="728" text-anchor="middle" font-size="10" fill="#475569">p7</text>
+  <text x="584" y="728" text-anchor="middle" font-size="10" fill="#475569">p7<tspan font-size="9" font-style="italic" fill="#7c3aed">·IO1</tspan></text>
   <rect x="572" y="736" width="24" height="104" rx="12.0" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text transform="translate(588.0 788.0) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
   <circle cx="630" cy="670" r="10" fill="#e5e7eb" stroke="#b8bec5"/>
@@ -275,7 +275,8 @@
   <text x="557" y="962" font-size="12" fill="#374151">reset</text>
   <rect x="614" y="949" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text x="638" y="962" font-size="12" fill="#374151">the same chip pin as another header</text>
-  <text x="874" y="962" font-size="12" fill="#15803d">✓</text><text x="888" y="962" font-size="12" fill="#374151">ran on r8845</text>
+  <text x="866" y="962" font-size="12" fill="#15803d">✓</text><text x="880" y="962" font-size="12" fill="#374151">ran on r8845</text>
+  <text x="976" y="962" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="1000" y="962" font-size="12" fill="#374151">the back's label</text>
   <text x="40" y="998" font-size="14" font-weight="bold" fill="#222">The mode switch (its silkscreen)</text>
   <text x="40" y="1022" font-size="12" font-weight="bold" fill="#1f2937">S1</text>
   <text x="90" y="1022" font-size="12" font-weight="bold" fill="#1f2937">S2</text>
@@ -313,7 +314,8 @@
   <text x="620" y="1142" font-size="12" fill="#374151"><tspan font-weight="bold">GND</tspan> → GND</text>
   <text x="40" y="1182" font-size="12" fill="#374151">• In mode 1 the UART0 and JTAG headers are mode 0's and mode 3's names: the same chip pins as the SPI and I2C headers (dashed).</text>
   <text x="40" y="1202" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
-  <text x="40" y="1222" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
-  <text x="40" y="1242" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
-  <text x="40" y="1280" font-size="10" fill="#6b7280">Headers from the vendor's photo; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), not traced on the board; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
+  <text x="40" y="1222" font-size="12" fill="#374151">• The back labels IO0-IO7: mode 0's GPIO numbers. In mode 1 WCH's driver offers IO4, IO6, IO7 only; the rest are SPI's and I2C's.</text>
+  <text x="40" y="1242" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
+  <text x="40" y="1262" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
+  <text x="40" y="1300" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
 </svg>
