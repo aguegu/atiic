@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.14
+
+- The CH341A sheet's parts placed as on the vendor's photo, turned with
+  the board (the user): the 12 MHz crystal upright between the chip and the
+  right-hand row, the chip a little left of centre, the AMS1117-3.3
+  regulator (U3) drawn below it, the 3V3 jumper pair bottom right and the
+  I2C/SPI jumper far left by the USB.
+
 ## 1.4.13
 
 - The three dongle sheets in one layout (the user: all USB toward the
