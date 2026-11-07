@@ -194,5 +194,5 @@
   <text x="40" y="846" font-size="12" fill="#374151">• GPIO4 is ACT: low once USB is up, so a RES on it resets the panel then; the driver resets it again at init.</text>
   <text x="40" y="866" font-size="12" fill="#374151">• GPIO6 shares pin 2 with UART1's CTS: no hardware flow control on UART1 while it's a GPIO.</text>
   <text x="40" y="904" font-size="10" fill="#6b7280">Sources: WCH CH347DS1 V1.6 §4.3 (tables 4-8, 4-9, 4-11), §5.2; WCH ch34x_mphsi_master_linux (ch347t_board_config, the 0xCC and 0xC1 commands); flashrom ch347_spi.c.</text>
-  <text x="960" y="930" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with Claude</text>
+  <text x="960" y="930" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

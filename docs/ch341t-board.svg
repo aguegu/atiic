@@ -119,5 +119,5 @@
   <text x="40" y="614" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
   <text x="40" y="634" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins RDY# and TNOW (17, 18); not traced.</text>
   <text x="40" y="672" font-size="10" fill="#6b7280">Chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3). The board as docs/setup.svg draws it; its traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1140" y="698" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with Claude</text>
+  <text x="1140" y="698" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.12
+
+- The cheatsheets' credit names the user in full (the user): "atiic ·
+  github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with
+  Claude", on all four (`ch347t-pinout`, `ch347t-board`, `ch341t-board`,
+  `ch341a-board`).
+
 ## 1.4.11
 
 - `docs/ch341a-board.svg`: the CH341A dongle V357 (the user's photos,

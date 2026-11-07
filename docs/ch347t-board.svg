@@ -318,5 +318,5 @@
   <text x="40" y="1242" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
   <text x="40" y="1262" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
   <text x="40" y="1300" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
-  <text x="1160" y="1326" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with Claude</text>
+  <text x="1160" y="1326" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

@@ -288,5 +288,5 @@
   <text x="40" y="1222" font-size="12" fill="#374151">• The header's TXD and RXD are UART mode's; in I2C/SPI mode the same chip pins (5, 6) are ERR and PEMP, inputs.</text>
   <text x="40" y="1242" font-size="12" fill="#374151">• The top edge is the EPP/MEM parallel port's (DS, AS, WR, WAIT, RST, SLCT, INT, ERR, PEMP): atiic doesn't use it.</text>
   <text x="40" y="1280" font-size="10" fill="#6b7280">Holes from the vendor's photos (YouXin, front and back: the back flipped top to bottom); chip pins from WCH CH341DS1, the CH341A (SOP-28) column (§4.2-4.6); not traced on the board. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1280" y="1306" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with Claude</text>
+  <text x="1280" y="1306" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
