@@ -100,8 +100,8 @@
   <text x="448" y="224" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO7</text>
   <rect x="290" y="209" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
   <text x="349.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
-  <rect x="216" y="209" width="66" height="22" rx="11" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="249.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#94a3b8">GPIO7</text>
+  <rect x="216" y="209" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="249.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO7</text>
   <circle cx="486" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="180" r="4" fill="#4c1d95"/>
   <text x="502" y="184" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
@@ -275,8 +275,8 @@
   <text x="40" y="944" font-size="12" fill="#374151">Set it unplugged: the chip reads it at power-up.</text>
   <text x="40" y="988" font-size="12" fill="#374151">• The UART0 and JTAG headers carry the same chip pins as the SPI and I2C headers (dashed).</text>
   <text x="40" y="1008" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
-  <text x="40" y="1028" font-size="12" fill="#374151">• The back prints IO0-IO7: IO2, IO4, IO5, IO6 are GPIOs here (IO7 too, the switch's); IO0, IO1, IO3 are SPI's and I2C's.</text>
-  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO4 and GPIO6: digital inputs or outputs, or chip selects. GPIO7 is the mode switch's pin (S1): leave it to the switch.</text>
+  <text x="40" y="1028" font-size="12" fill="#374151">• The back prints IO0-IO7: IO2, IO4, IO5, IO6, IO7 are GPIOs here; IO0, IO1, IO3 are SPI's and I2C's.</text>
+  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO4, GPIO6, GPIO7: digital I/O, or chip selects. GPIO7 is on S1: it reads low when undriven, and must be low or undriven at power-up.</text>
   <text x="40" y="1068" font-size="12" fill="#374151">• CS0/CS1 are also GPIO2/GPIO5, full digital I/O, once a GPIO command drives them; back to CS0 by the SPI config, to CS1 only by a replug.</text>
   <text x="40" y="1088" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
   <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver, GPIO2/GPIO5 measured. atiic docs/ch347.md.</text>
