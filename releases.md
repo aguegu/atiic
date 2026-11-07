@@ -1,5 +1,15 @@
 # Releases
 
+## 1.4.13
+
+- The three dongle sheets in one layout (the user: all USB toward the
+  bottom): each board turned so its USB plug points down, the pin rows on
+  its sides with horizontal callouts (the CH347T's both rows, the CH341A's
+  two edge rows), a header on the top edge with vertical ones above it
+  (the CH341A's 2x8, outer row nearest, the CH341T's 6 pins); the jumpers
+  and the mode switch turned with their boards. Drawn by one generator, so
+  the three share their pills, legend and notes.
+
 ## 1.4.12
 
 - The cheatsheets' credit names the user in full (the user): "atiic ·

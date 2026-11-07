@@ -1,123 +1,115 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 718" width="1180" height="718" font-family="Helvetica, Arial, sans-serif">
-  <title>The CH341T 2-in-1 dongle: its header, the chip pins behind it, I2C and TTL modes, the jumpers</title>
-  <rect width="1180" height="718" fill="#ffffff"/>
-  <text x="590.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341T "2-in-1" dongle (USB to I2C / TTL)</text>
-  <text x="590.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A left. The 6-pin header, the chip pin behind each, each pin in I2C mode (atiic's) and TTL mode.</text>
-  <rect x="40" y="187.0" width="116" height="96" rx="3" fill="#cfd4da" stroke="#8a9096"/>
-  <rect x="58" y="209.0" width="18" height="14" fill="#6b7178"/><rect x="58" y="247.0" width="18" height="14" fill="#6b7178"/>
-  <text x="98" y="303.0" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
-  <rect x="150" y="110" width="410" height="250" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
-  <rect x="172" y="128" width="12" height="8" fill="#f1f1f1" stroke="#999"/><text x="190" y="136" font-size="10" fill="#fff">RDY</text>
-  <rect x="172" y="334" width="12" height="8" fill="#f1f1f1" stroke="#999"/><text x="190" y="342" font-size="10" fill="#fff">TNOW</text>
-  <rect x="182" y="219.0" width="76" height="32" rx="15" fill="#e9ecef" stroke="#8a9096"/><text x="220" y="239.0" text-anchor="middle" font-size="9" fill="#555">12.000</text>
-  <rect x="282" y="205.0" width="96" height="60" rx="3" fill="#1d1d1d"/>
-  <rect x="286" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="286" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="295" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="295" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="304" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="304" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="313" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="313" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="322" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="322" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="331" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="331" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="340" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="340" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="349" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="349" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="358" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="358" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <rect x="367" y="197.0" width="4" height="8" fill="#c9ccd1"/><rect x="367" y="265.0" width="4" height="8" fill="#c9ccd1"/>
-  <text x="330" y="240.0" text-anchor="middle" font-size="13" font-weight="bold" fill="#e5e5e5">CH341T</text>
-  <rect x="410" y="144" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="432" y="144" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="454" y="144" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="429" y="140" width="38" height="24" rx="3" fill="#f2c200" stroke="#333" opacity="0.92"/>
-  <text x="418" y="134" text-anchor="middle" font-size="10" fill="#fff">TTL</text>
-  <text x="462" y="134" text-anchor="middle" font-size="10" fill="#fff">I2C</text>
-  <rect x="410" y="310" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="432" y="310" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="454" y="310" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="407" y="306" width="38" height="24" rx="3" fill="#22a34a" stroke="#333" opacity="0.92"/>
-  <text x="418" y="342" text-anchor="middle" font-size="10" fill="#fff">3V3</text>
-  <text x="462" y="342" text-anchor="middle" font-size="10" fill="#fff">5V</text>
-  <rect x="519" y="141" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="147" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="154" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">RXD</text>
-  <rect x="519" y="175" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="181" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="188" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TXD</text>
-  <rect x="519" y="209" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="215" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="222" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SDA</text>
-  <rect x="519" y="243" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="249" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="256" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCL</text>
-  <rect x="519" y="277" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="283" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="290" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
-  <rect x="519" y="311" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
-  <rect x="525" y="317" width="6" height="6" fill="#7a5b10"/>
-  <text x="512" y="324" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">VCC</text>
-  <text x="600" y="122" font-size="12" font-weight="bold" fill="#334155">chip pin</text>
-  <text x="670" y="122" font-size="12" font-weight="bold" fill="#334155">I2C mode (1a86:5512): atiic</text>
-  <text x="930" y="122" font-size="12" font-weight="bold" fill="#334155">TTL mode (serial)</text>
-  <text x="1110" y="122" font-size="12" font-weight="bold" fill="#334155">GY-521</text>
-  <line x1="538" y1="150" x2="594" y2="150" stroke="#94a3b8"/>
-  <text x="600" y="154" font-size="12" fill="#475569">4</text>
-  <rect x="666" y="138" width="252" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="678" y="154" font-size="11.5" fill="#94a3b8">unused</text>
-  <rect x="926" y="138" width="172" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="938" y="154" font-size="11.5" fill="#1f2937">RXD: UART in, pulled up</text>
-  <text x="1110" y="154" font-size="12" font-weight="bold" fill="#1f2937">—</text>
-  <line x1="538" y1="184" x2="594" y2="184" stroke="#94a3b8"/>
-  <text x="600" y="188" font-size="12" fill="#475569">3</text>
-  <rect x="666" y="172" width="252" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="678" y="188" font-size="11.5" fill="#94a3b8">unused</text>
-  <rect x="926" y="172" width="172" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="938" y="188" font-size="11.5" fill="#1f2937">TXD: UART out</text>
-  <text x="1110" y="188" font-size="12" font-weight="bold" fill="#1f2937">—</text>
-  <line x1="538" y1="218" x2="594" y2="218" stroke="#94a3b8"/>
-  <text x="600" y="222" font-size="12" fill="#475569">15</text>
-  <rect x="666" y="206" width="252" height="24" rx="12" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="678" y="222" font-size="11.5" fill="#1f2937">SDA: I2C data, open drain, pulled up</text>
-  <rect x="926" y="206" width="172" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="938" y="222" font-size="11.5" fill="#94a3b8">mode pin (read at reset)</text>
-  <text x="1110" y="222" font-size="12" font-weight="bold" fill="#1f2937">SDA</text>
-  <line x1="538" y1="252" x2="594" y2="252" stroke="#94a3b8"/>
-  <text x="600" y="256" font-size="12" fill="#475569">16</text>
-  <rect x="666" y="240" width="252" height="24" rx="12" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="678" y="256" font-size="11.5" fill="#1f2937">SCL: I2C clock, open drain, pulled up</text>
-  <rect x="926" y="240" width="172" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="938" y="256" font-size="11.5" fill="#94a3b8">mode pin (read at reset)</text>
-  <text x="1110" y="256" font-size="12" font-weight="bold" fill="#1f2937">SCL</text>
-  <line x1="538" y1="286" x2="594" y2="286" stroke="#94a3b8"/>
-  <text x="600" y="290" font-size="12" fill="#475569">11, 12</text>
-  <rect x="666" y="274" width="252" height="24" rx="12" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="678" y="290" font-size="11.5" fill="#1f2937">GND</text>
-  <rect x="926" y="274" width="172" height="24" rx="12" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="938" y="290" font-size="11.5" fill="#1f2937">GND</text>
-  <text x="1110" y="290" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
-  <line x1="538" y1="320" x2="594" y2="320" stroke="#94a3b8"/>
-  <text x="600" y="324" font-size="12" fill="#475569">20, 13</text>
-  <rect x="666" y="308" width="252" height="24" rx="12" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="678" y="324" font-size="11.5" fill="#1f2937">VCC: 3.3 V or 5 V, the green jumper</text>
-  <rect x="926" y="308" width="172" height="24" rx="12" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="938" y="324" font-size="11.5" fill="#1f2937">the same</text>
-  <text x="1110" y="324" font-size="12" font-weight="bold" fill="#1f2937">VCC</text>
-  <text x="40" y="416" font-size="14" font-weight="bold" fill="#222">The jumpers: set them unplugged, the chip reads them at power-up</text>
-  <rect x="32" y="427" width="1116" height="21" rx="4" fill="#dcfce7"/>
-  <text x="40" y="442" font-size="12" font-weight="bold" fill="#1f2937">Yellow, I2C</text>
-  <text x="150" y="442" font-size="12" fill="#1f2937">1a86:5512</text>
-  <text x="260" y="442" font-size="12" fill="#1f2937">EPP/MEM and I2C: atiic's mode (lsusb: "CH341 in EPP/MEM/I2C mode")</text>
-  <text x="40" y="464" font-size="12" font-weight="bold" fill="#1f2937">Yellow, TTL</text>
-  <text x="150" y="464" font-size="12" fill="#1f2937">a serial port</text>
-  <text x="260" y="464" font-size="12" fill="#1f2937">USB to UART on TXD/RXD (ttyUSB); atiic can't open it</text>
-  <rect x="32" y="471" width="1116" height="21" rx="4" fill="#dcfce7"/>
-  <text x="40" y="486" font-size="12" font-weight="bold" fill="#1f2937">Green, 3V3</text>
-  <text x="150" y="486" font-size="12" fill="#1f2937"></text>
-  <text x="260" y="486" font-size="12" fill="#1f2937">VCC and the chip at 3.3 V: SDA, SCL swing to 3.3 V (for 3.3 V parts: the MPU-6050)</text>
-  <text x="40" y="508" font-size="12" font-weight="bold" fill="#1f2937">Green, 5V</text>
-  <text x="150" y="508" font-size="12" fill="#1f2937"></text>
-  <text x="260" y="508" font-size="12" fill="#1f2937">VCC and the chip at 5 V: SDA, SCL pulled up to 5 V</text>
-  <text x="40" y="554" font-size="12" fill="#374151">• The mode, per the datasheet (§5.3): the chip reads its SDA pin at reset, low for 5512 (I2C), open for a serial port. How the jumper does it isn't traced.</text>
-  <text x="40" y="574" font-size="12" fill="#374151">• I2C at 20, 100, 400 or 750 kHz. Only the address's ack comes back: a missing device throws, a refused data byte doesn't (docs/ch341.md).</text>
-  <text x="40" y="594" font-size="12" fill="#374151">• SDA and SCL have weak pull-ups inside (100-500 uA, the datasheet): a module's own pull-ups (the GY-521 has them) set the edges.</text>
-  <text x="40" y="614" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
-  <text x="40" y="634" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins RDY# and TNOW (17, 18); not traced.</text>
-  <text x="40" y="672" font-size="10" fill="#6b7280">Chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3). The board as docs/setup.svg draws it; its traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1140" y="698" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1322" width="1200" height="1322" font-family="Helvetica, Arial, sans-serif">
+  <title>CH341T "2-in-1" dongle (USB to I2C / TTL)</title>
+  <rect width="1200" height="1322" fill="#ffffff"/>
+  <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341T "2-in-1" dongle (USB to I2C / TTL)</text>
+  <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down. The 6-pin header, the chip pin behind each, each pin in I2C mode (atiic's) and TTL mode.</text>
+  <rect x="410.0" y="440" width="380.0" height="420" rx="8" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
+  <text x="420.0" y="410" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">chip pin</text>
+  <text x="420.0" y="330" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">I2C mode</text>
+  <text x="420.0" y="315" text-anchor="end" font-size="10" fill="#475569">1a86:5512 (atiic)</text>
+  <text x="420.0" y="190" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">TTL mode</text>
+  <text x="420.0" y="144" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">to a GY-521</text>
+  <rect x="451.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="457.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="460.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">RXD</text>
+  <line x1="460.0" y1="458" x2="460.0" y2="422" stroke="#94a3b8"/>
+  <text x="460.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p4</text>
+  <rect x="448.0" y="274" width="24" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text transform="translate(464.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#94a3b8">unused</text>
+  <rect x="448.0" y="164" width="24" height="100" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(464.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">RXD: UART in</text>
+  <text x="460.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">—</text>
+  <rect x="507.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="513.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="516.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">TXD</text>
+  <line x1="516.0" y1="458" x2="516.0" y2="422" stroke="#94a3b8"/>
+  <text x="516.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p3</text>
+  <rect x="504.0" y="274" width="24" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text transform="translate(520.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#94a3b8">unused</text>
+  <rect x="504.0" y="164" width="24" height="100" rx="12" fill="#ffedd5" stroke="#e59a52"/>
+  <text transform="translate(520.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">TXD: UART out</text>
+  <text x="516.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">—</text>
+  <rect x="563.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="569.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="572.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">SDA</text>
+  <line x1="572.0" y1="458" x2="572.0" y2="422" stroke="#94a3b8"/>
+  <text x="572.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p15</text>
+  <rect x="560.0" y="274" width="24" height="120" rx="12" fill="#dcfce7" stroke="#4fb879"/>
+  <text transform="translate(576.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">SDA: I2C data</text>
+  <rect x="560.0" y="164" width="24" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text transform="translate(576.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#94a3b8">mode pin</text>
+  <text x="572.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SDA</text>
+  <rect x="619.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="625.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="628.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">SCL</text>
+  <line x1="628.0" y1="458" x2="628.0" y2="422" stroke="#94a3b8"/>
+  <text x="628.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p16</text>
+  <rect x="616.0" y="274" width="24" height="120" rx="12" fill="#dcfce7" stroke="#4fb879"/>
+  <text transform="translate(632.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">SCL: I2C clock</text>
+  <rect x="616.0" y="164" width="24" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text transform="translate(632.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#94a3b8">mode pin</text>
+  <text x="628.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SCL</text>
+  <rect x="675.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="681.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="684.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">GND</text>
+  <line x1="684.0" y1="458" x2="684.0" y2="422" stroke="#94a3b8"/>
+  <text x="684.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p11, 12</text>
+  <rect x="672.0" y="274" width="24" height="120" rx="12" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text transform="translate(688.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">GND</text>
+  <rect x="672.0" y="164" width="24" height="100" rx="12" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text transform="translate(688.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">GND</text>
+  <text x="684.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
+  <rect x="731.0" y="461" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/><rect x="737.0" y="467" width="6" height="6" fill="#7a5b10"/>
+  <text x="740.0" y="498" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">VCC</text>
+  <line x1="740.0" y1="458" x2="740.0" y2="422" stroke="#94a3b8"/>
+  <text x="740.0" y="414" text-anchor="middle" font-size="10.5" fill="#475569">p20, 13</text>
+  <rect x="728.0" y="274" width="24" height="120" rx="12" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(744.0 334.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">VCC: 3.3 / 5 V</text>
+  <rect x="728.0" y="164" width="24" height="100" rx="12" fill="#fde2e2" stroke="#d97b7b"/>
+  <text transform="translate(744.0 214.0) rotate(-90)" text-anchor="middle" font-size="11" fill="#1f2937">VCC</text>
+  <text x="740.0" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">VCC</text>
+  <rect x="440.0" y="526" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="440.0" y="548" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="440.0" y="570" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="436.0" y="523" width="24" height="38" rx="3" fill="#f2c200" stroke="#333" opacity="0.92"/>
+  <text x="464.0" y="538" font-size="10" fill="#fff">I2C</text><text x="464.0" y="582" font-size="10" fill="#fff">TTL</text>
+  <rect x="710.0" y="526" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="710.0" y="548" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="710.0" y="570" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="706.0" y="545" width="24" height="38" rx="3" fill="#22a34a" stroke="#333" opacity="0.92"/>
+  <text x="734.0" y="538" font-size="10" fill="#fff">5V</text><text x="734.0" y="582" font-size="10" fill="#fff">3V3</text>
+  <rect x="570.0" y="600" width="60" height="110" rx="3" fill="#1d1d1d"/>
+  <rect x="562.0" y="603.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="603.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="614.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="614.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="625.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="625.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="636.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="636.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="647.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="647.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="658.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="658.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="669.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="669.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="680.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="680.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="691.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="691.5" width="8" height="4" fill="#c9ccd1"/>
+  <rect x="562.0" y="702.5" width="8" height="4" fill="#c9ccd1"/><rect x="630.0" y="702.5" width="8" height="4" fill="#c9ccd1"/>
+  <text transform="translate(605.0 655.0) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH341T</text>
+  <rect x="586.0" y="738" width="28" height="70" rx="13" fill="#e9ecef" stroke="#8a9096"/><text transform="translate(604.0 773) rotate(-90)" text-anchor="middle" font-size="9" fill="#555">12.000</text>
+  <rect x="434.0" y="820" width="12" height="8" fill="#f1f1f1" stroke="#999"/><text x="450.0" y="828" font-size="10" fill="#fff">RDY</text>
+  <rect x="726.0" y="820" width="12" height="8" fill="#f1f1f1" stroke="#999"/><text x="742.0" y="828" font-size="10" fill="#fff">TNOW</text>
+  <rect x="545.0" y="854" width="110" height="96" rx="6" fill="#cfd4da" stroke="#8a9096"/>
+  <text x="600.0" y="970" text-anchor="middle" font-size="12" fill="#475569">USB-A</text>
+  <rect x="40" y="987" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="1000" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="987" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="131" y="1000" font-size="12" fill="#374151">UART (TTL mode)</text>
+  <rect x="258" y="987" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="282" y="1000" font-size="12" fill="#374151">power</text>
+  <rect x="339" y="987" width="18" height="18" rx="9" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="363" y="1000" font-size="12" fill="#374151">ground</text>
+  <rect x="427" y="987" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="451" y="1000" font-size="12" fill="#374151">unused in that mode</text>
+  <text x="40" y="1036" font-size="14" font-weight="bold" fill="#222">The jumpers: set them unplugged, the chip reads them at power-up</text>
+  <text x="40" y="1060" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on I2C:</tspan> 1a86:5512, EPP/MEM and I2C: atiic's mode (lsusb: "CH341 in EPP/MEM/I2C mode")</text>
+  <text x="40" y="1080" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on TTL:</tspan> USB to UART on TXD/RXD (ttyUSB); atiic can't open it</text>
+  <text x="40" y="1100" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 3V3:</tspan> VCC and the chip at 3.3 V: SDA, SCL swing to 3.3 V (for 3.3 V parts: the MPU-6050)</text>
+  <text x="40" y="1120" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 5V:</tspan> VCC and the chip at 5 V: SDA, SCL pulled up to 5 V</text>
+  <text x="40" y="1164" font-size="12" fill="#374151">• The mode, per the datasheet (§5.3): the chip reads its SDA pin at reset, low for 5512 (I2C), open for a serial port. How the jumper does it isn't traced.</text>
+  <text x="40" y="1184" font-size="12" fill="#374151">• I2C at 20, 100, 400 or 750 kHz. Only the address's ack comes back: a missing device throws, a refused data byte doesn't (docs/ch341.md).</text>
+  <text x="40" y="1204" font-size="12" fill="#374151">• SDA and SCL have weak pull-ups inside (100-500 uA, the datasheet): a module's own pull-ups (the GY-521 has them) set the edges.</text>
+  <text x="40" y="1224" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
+  <text x="40" y="1244" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins RDY# and TNOW (17, 18); not traced.</text>
+  <text x="40" y="1278" font-size="10" fill="#6b7280">Chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3). The board as docs/setup.svg draws it; its traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1302" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
