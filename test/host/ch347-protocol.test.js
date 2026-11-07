@@ -174,7 +174,7 @@ describe('ch347 bus (fake)', () => {
 });
 
 describe('ch347 spi and pins', async () => {
-  const { spiConfigPacket, csPacket, gpioPacket, spiPackets, SPI_CHUNK } = await import('../../src/adapters/ch347/protocol.js');
+  const { spiConfigPacket, csPacket, gpioPacket, spiPackets, SPI_CHUNK, GPIO_PINS, PIN_ALIASES } = await import('../../src/adapters/ch347/protocol.js');
 
   it('the SPI config: master, mode 0, software chip selects, 7.5 MHz (flashrom\'s layout)', () => {
     const p = spiConfigPacket(7.5e6, 0);
@@ -195,9 +195,17 @@ describe('ch347 spi and pins', async () => {
   });
 
   it('GPIO: a byte a line, as WCH\'s driver sets them; 0 leaves one alone', () => {
-    // measured on r8845: GPIO6 high replied c0 (an output, high) in its byte, low 80
-    assert.deepEqual(Array.from(gpioPacket({ GPIO6: true })), [0xcc, 8, 0, 0, 0, 0, 0, 0, 0, 0xf8, 0]);
-    assert.deepEqual(Array.from(gpioPacket({ GPIO6: false, GPIO4: null })), [0xcc, 8, 0, 0, 0, 0, 0, 0xc0, 0, 0xf0, 0]);
+    // measured on r8845: IO6 high replied c0 (an output, high) in its byte, low 80
+    assert.deepEqual(Array.from(gpioPacket({ IO6: true })), [0xcc, 8, 0, 0, 0, 0, 0, 0, 0, 0xf8, 0]);
+    assert.deepEqual(Array.from(gpioPacket({ IO6: false, IO4: null })), [0xcc, 8, 0, 0, 0, 0, 0, 0xc0, 0, 0xf0, 0]);
+  });
+
+  it('the lines\' names: IO0-IO7; WCH\'s GPIOn and the print\'s CS0, CS1 as aliases', () => {
+    assert.deepEqual(GPIO_PINS, ['IO0', 'IO1', 'IO2', 'IO3', 'IO4', 'IO5', 'IO6', 'IO7']);
+    assert.equal(PIN_ALIASES.GPIO0, 'IO0');
+    assert.equal(PIN_ALIASES.GPIO7, 'IO7');
+    assert.equal(PIN_ALIASES.CS0, 'IO2');
+    assert.equal(PIN_ALIASES.CS1, 'IO5');
   });
 
   it('SPI write-reads of 4,093 bytes at most (WCH\'s driver), the length LSB first', () => {
@@ -206,7 +214,7 @@ describe('ch347 spi and pins', async () => {
     assert.deepEqual(Array.from(ps[0].slice(0, 4)), [0xc2, SPI_CHUNK & 0xff, SPI_CHUNK >> 8, 0]);
   });
 
-  it('Ch347.spi() and pins() on a fake: the config once, then pins 5 and 9 taken as GPIOs; CS0 is GPIO2; MISO back', async () => {
+  it('Ch347.spi() and pins() on a fake: the config once, then pins 5 and 9 taken as IO2, IO5; CS0 and GPIO6 aliases; MISO back', async () => {
     const sent = [];
     const replies = [];
     const device = {
@@ -228,16 +236,18 @@ describe('ch347 spi and pins', async () => {
     const bus = await new Ch347(device).open();
     await bus.pins({ CS0: false, GPIO6: true });
     assert.deepEqual(Array.from(await bus.spi([0x0f, 0xf0])), [0xf0, 0x0f]);
-    // the I2C speed at open; SPI's config once, GPIO2 and GPIO5 taken high; the pins (CS0 as GPIO2); the SPI
+    // the I2C speed at open; SPI's config once, IO2 and IO5 taken high; the pins (CS0 as IO2, GPIO6 as IO6); the SPI
     assert.deepEqual(sent.map((p) => p[0]), [0xaa, 0xc0, 0xcc, 0xcc, 0xc2]);
     assert.deepEqual(sent[2].slice(3), [0, 0, 0xf8, 0, 0, 0xf8, 0, 0]);
     assert.deepEqual(sent[3].slice(3), [0, 0, 0xf0, 0, 0, 0, 0xf8, 0]);
-    assert.deepEqual(await bus.readPins(), { GPIO0: false, GPIO1: false, GPIO2: false, GPIO3: false, GPIO4: false, GPIO5: false, GPIO6: true, GPIO7: false });
+    assert.deepEqual(await bus.readPins(), { IO0: false, IO1: false, IO2: false, IO3: false, IO4: false, IO5: false, IO6: true, IO7: false });
     const long = Uint8Array.from({ length: 10000 }, (_, i) => (i * 7) & 0xff);
     assert.deepEqual(Array.from(await bus.spi(long)), Array.from(long, (b) => b ^ 0xff)); // three commands, two in flight, in order
     assert.deepEqual(sent.slice(-3).map((p) => p.length - 3), [4093, 4093, 10000 - 2 * 4093]);
     assert.throws(() => bus.pins({ D0: true }), /no such pin D0/);
-    await bus.pins({ CS1: null }); // GPIO5 an input
+    await bus.pins({ CS1: null }); // IO5 an input
     assert.deepEqual(sent.at(-1).slice(3), [0, 0, 0, 0, 0, 0xc0, 0, 0]);
+    await bus.pins({ IO7: false, IO4: true }); // by their own names
+    assert.deepEqual(sent.at(-1).slice(3), [0, 0, 0, 0, 0xf8, 0, 0, 0xf0]);
   });
 });

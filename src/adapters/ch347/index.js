@@ -7,15 +7,16 @@
 //   writeRead(address, bytes, n)   -> Uint8Array, a repeated start between
 //   acks(address)                  -> whether a device answers there
 //   spi(bytes)                     -> Uint8Array: SPI, as many bytes back
-//   pins({ GPIO6: true, CS1: false }) GPIOs driven high or low (null: an
-//                                     input); CS0, CS1 are GPIO2, GPIO5
-//   readPins()                     -> { GPIO0: true, ... }: the levels
+//   pins({ IO6: true, IO5: false }) lines driven high or low (null: an
+//                                     input); CS0, CS1 are IO2, IO5, and
+//                                     WCH's GPIOn is IOn
+//   readPins()                     -> { IO0: true, ... }: the levels
 // A device that doesn't ack its address throws "no ack from 0x..": so does a
 // written byte it refuses (the CH347 replies every byte's ack).
 import {
   VENDOR_ID, PRODUCT_IDS, VENDOR_CLASS, PACKET_SIZE, ACKED,
   speedPacket, stopPacket, transaction, packets,
-  spiConfigPacket, CMD_SPI_SET_CFG, CMD_SPI_OUT_IN, CS_PINS, spiPackets, gpioPacket, GPIO_PINS, CMD_GPIO,
+  spiConfigPacket, CMD_SPI_SET_CFG, CMD_SPI_OUT_IN, spiPackets, gpioPacket, GPIO_PINS, PIN_ALIASES, CMD_GPIO,
 } from './protocol.js';
 
 export const FILTERS = PRODUCT_IDS.map((productId) => ({ vendorId: VENDOR_ID, productId }));
@@ -23,7 +24,6 @@ export const SCAN_FIRST = 0x08; // 0x00-0x07 and 0x78-0x7f are reserved
 export const SCAN_LAST = 0x77;
 
 const hex = (a) => `0x${a.toString(16).padStart(2, '0')}`;
-const CS_ALIASES = { CS0: 'GPIO2', CS1: 'GPIO5' }; // the pins' print, their GPIO
 
 // the vendor-class interface and its bulk endpoints: interface 2 on a CH347T
 // in mode 1 (0 and 1 its serial port), another number on the CH347F
@@ -132,21 +132,21 @@ class Ch347 {
 
   // SPI set up once (master, the mode and clock asked at open, chip selects
   // by software), its status checked
-  // then pins 5 and 9 taken as GPIO2 and GPIO5 (outputs, high: a chip
-  // select's idle level), so every line is a GPIO and a chip select is any
-  // of them driven by pins(): the config hands pin 5 back to CS0, the GPIO
-  // command takes it (measured, docs/ch347.md)
+  // then pins 5 and 9 taken as IO2 and IO5 (outputs, high: a chip select's
+  // idle level), so every line is an I/O and a chip select is any of them
+  // driven by pins(): the config hands pin 5 back to CS0, the GPIO command
+  // takes it (measured, docs/ch347.md)
   async spiSetup() {
     if (this.spiReady) return;
     await this.out(spiConfigPacket(this.spiHz, this.spiMode));
     const r = await this.in(4);
     if (r[0] !== CMD_SPI_SET_CFG || r[3] !== 0) throw new Error(`CH347 SPI config refused: ${r.map((b) => b.toString(16)).join(' ')}`);
-    await this.gpio({ GPIO2: true, GPIO5: true });
+    await this.gpio({ IO2: true, IO5: true });
     this.spiReady = true;
   }
 
   // the GPIO command: the lines named set, every line's status back as
-  // { GPIO0: { output, level }, ... }
+  // { IO0: { output, level }, ... }
   async gpio(lines) {
     await this.out(gpioPacket(lines));
     const r = await this.in(11);
@@ -155,7 +155,7 @@ class Ch347 {
   }
 
   // SPI, full duplex: the bytes out on MOSI, as many read from MISO. No chip
-  // select: drive CS0/CS1 (or a GPIO) with pins() around it. Each command
+  // select: drive a line (IO2, IO5, any) with pins() around it. Each command
   // goes out before the last one's reply is read (two in flight), so the
   // wire isn't left idle for a USB round trip between commands
   spi(bytes) {
@@ -182,17 +182,14 @@ class Ch347 {
     return job;
   }
 
-  // GPIOn (the CH347T in mode 1: GPIO4, GPIO6, GPIO7, and GPIO2, GPIO5 on
-  // CS0's and CS1's pins, taken from them) high (true), low (false) or an
-  // input (null); CS0 and CS1 high or low. Lines not named keep what they had
-  // GPIO2, GPIO4-GPIO7 (the CH347T in mode 1) high (true), low (false) or
-  // an input (null); CS0 and CS1 are GPIO2 and GPIO5 by their print. Lines
-  // not named keep what they had
+  // IO2, IO4, IO5, IO6, IO7 (the CH347T in mode 1; the CH347F all eight)
+  // high (true), low (false) or an input (null); CS0 and CS1 name IO2 and
+  // IO5 by their print, GPIOn names IOn. Lines not named keep what they had
   pins(lines) {
     const gpio = {};
     for (const [name, v] of Object.entries(lines)) {
-      const g = CS_ALIASES[name] ?? name;
-      if (!GPIO_PINS.includes(g)) throw new Error(`no such pin ${name}: ${[...GPIO_PINS, ...CS_PINS].join(', ')}`);
+      const g = PIN_ALIASES[name] ?? name;
+      if (!GPIO_PINS.includes(g)) throw new Error(`no such pin ${name}: ${GPIO_PINS.join(', ')} (or CS0, CS1, GPIO0-GPIO7)`);
       gpio[g] = v;
     }
     const job = this.queue.then(async () => {
@@ -203,7 +200,7 @@ class Ch347 {
     return job;
   }
 
-  // the lines' levels, driven or not: { GPIO0: true, ... GPIO7 }
+  // the lines' levels, driven or not: { IO0: true, ... IO7 }
   readPins() {
     const job = this.queue.then(async () => {
       await this.spiSetup();

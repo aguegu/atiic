@@ -1,5 +1,25 @@
 # Releases
 
+## 1.4.32
+
+- **The CH347's lines are IO0-IO7** (the user: one name, as the board's back
+  prints it; "less noun terms in sight"): `pins()`, `readPins()` and the
+  GPIO status use `IO2`, `IO4` ...; `pins()` still takes WCH's `GPIOn` and
+  the print's `CS0`, `CS1` (IO2, IO5), so code written with them runs.
+  `readPins()`'s keys change from `GPIOn` to `IOn`. docs/ch347.md says where
+  the names come from (WCH's datasheet and DLL GPIOn, its EVT schematics
+  GPn, the board IOn: the same numbers; digital only, no ADC).
+- Since 1.4.31, in plain commits: every CH347T line in mode 1 an I/O (IO2
+  and IO5 taken from the chip selects right after the SPI config, measured
+  on a loopback: the config gives pin 5 back, pin 9 only a replug); IO7
+  measured a full digital I/O on the mode switch; `readPins()`; the board
+  sheets without the "tested" ticks, the SPI display's wiring or pin
+  ranges.
+- **The CH347T sheets in IOx**: the board sheet's badges `IO2 (CS0)` ... and
+  its notes; the pinout sheet brought up to date (five I/O lines in a row,
+  was three GPIOs and two chip selects; the display wiring out, as on the
+  board sheet).
+
 ## 1.4.31
 
 - The jumper caps see-through, their spring contact inside (the user: to

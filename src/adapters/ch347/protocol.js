@@ -105,12 +105,12 @@ export const stopPacket = () => Uint8Array.of(CMD_I2C_STREAM, STM_STO, STM_END);
 
 // SPI and GPIO, from the open drivers: flashrom's ch347_spi.c (0xC0, 0xC1,
 // 0xC3, 0xC4) and WCH's Linux ch34x_mphsi_master
-// (0xC2 write-read, 0xCC GPIO, the CH347T's three GPIOs in mode 1). Each
+// (0xC2 write-read, 0xCC GPIO, the CH347T's three GPIOs in mode 1 per WCH). Each
 // command: the byte, a 16-bit length (LSB first), the payload.
 export const CMD_SPI_SET_CFG = 0xc0; // reply: c0 01 00 status (0 ok)
 export const CMD_SPI_CS = 0xc1; // no reply
 export const CMD_SPI_OUT_IN = 0xc2; // reply: c2 n n, the n bytes read
-export const CMD_GPIO = 0xcc; // reply: cc 08 00, a status byte a GPIO
+export const CMD_GPIO = 0xcc; // reply: cc 08 00, a status byte a line
 // a write-read's bytes: WCH's driver's CH347_SPI_MAX_BULK_SIZE (4096 - 3),
 // its reply then 4,096 bytes, eight USB packets. Measured on r8845 (25,600
 // bytes at 7.5 MHz, 27.3 ms on the wire): 34.4 ms in flashrom's 507-byte
@@ -171,14 +171,22 @@ export function spiPackets(bytes) {
   return out;
 }
 
-// GPIO: WCH's driver offers the CH347T in mode 1 three, GPIO4 (pin 15,
-// ACT), GPIO6 (pin 2, CTS1) and GPIO7 (pin 13, RTS1) (ch347t_board_config);
-// measured on r8845, GPIO2 and GPIO5 (pins 5 and 9, CS0 and CS1) too: the
-// first GPIO command driving one takes it from its chip select until the
-// next USB reset (docs/ch347.md). The CH347F has eight. A byte a GPIO: bit 7 and 6 set it, bit 5 an output, bit 4 with an
-// output's level in bit 3; 0 leaves it. The reply's bytes: bit 7 an output,
-// bit 6 the level.
-export const GPIO_PINS = ['GPIO0', 'GPIO1', 'GPIO2', 'GPIO3', 'GPIO4', 'GPIO5', 'GPIO6', 'GPIO7'];
+// The I/O lines, named IO0-IO7 as the CH347T board's back prints them (WCH's
+// datasheet and DLL say GPIO0-GPIO7, its EVT schematics GP0-GP7: the same
+// numbers). WCH's driver offers the CH347T in mode 1 three, IO4 (pin 15,
+// ACT), IO6 (pin 2, CTS1) and IO7 (pin 13, RTS1) (ch347t_board_config);
+// measured on r8845, IO2 and IO5 (pins 5 and 9, CS0 and CS1) too: the first
+// GPIO command driving one takes it from its chip select (docs/ch347.md).
+// The CH347F has eight. A byte a line: bit 7 and 6 set it, bit 5 an output,
+// bit 4 with an output's level in bit 3; 0 leaves it. The reply's bytes:
+// bit 7 an output, bit 6 the level.
+export const GPIO_PINS = ['IO0', 'IO1', 'IO2', 'IO3', 'IO4', 'IO5', 'IO6', 'IO7'];
+// other names a line answers to: WCH's GPIOn, and CS0, CS1 by the pins' print
+export const PIN_ALIASES = {
+  ...Object.fromEntries(GPIO_PINS.map((name, i) => [`GPIO${i}`, name])),
+  CS0: 'IO2',
+  CS1: 'IO5',
+};
 export function gpioPacket(lines) {
   const p = new Uint8Array(11);
   p[0] = CMD_GPIO;

@@ -25,7 +25,7 @@ details: [ch341.md](ch341.md), [ch347.md](ch347.md).
 | WCH's docs | the Windows DLL (`CH341DLL.H` names the stream commands) | the Windows DLL (`CH347DLL_EN.H`, the same command names); the EVT has no USB packets |
 | Where the packets come from | the open drivers (flashrom, `i2c-ch341`), checked on a CH341T | measured on r8845's CH347T with an MPU-6050 |
 | Board-tested on r8845 | every I2C chip in the README | the MPU-6050 (`ch347.test.js`, `mpu6050.test.js`) |
-| SPI, GPIO in atiic | yes: SPI mode 0, D0-D5 driven, D0-D7 read | yes: SPI modes 0-3 at 0.47-60 MHz, CS0/CS1 and three GPIOs (CH347T mode 1) driven |
+| SPI, I/O lines in atiic | yes: SPI mode 0, D0-D5 driven, D0-D7 read | yes: SPI modes 0-3 at 0.47-60 MHz; IO2, IO4, IO5, IO6, IO7 (CH347T mode 1) driven and read |
 
 ## What it means
 

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 950" width="1000" height="950" font-family="Helvetica, Arial, sans-serif">
-  <title>CH347T (TSSOP20) in mode 1: pins, GPIOs and chip selects, from WCH CH347DS1 V1.6 and WCH's Linux driver</title>
-  <rect width="1000" height="950" fill="#ffffff"/>
-  <text x="500.0" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347T in mode 1: pins and GPIO</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 862" width="1000" height="862" font-family="Helvetica, Arial, sans-serif">
+  <title>CH347T (TSSOP20) in mode 1: pins and I/O lines, from WCH CH347DS1 V1.6, WCH's Linux driver and measurements</title>
+  <rect width="1000" height="862" fill="#ffffff"/>
+  <text x="500.0" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347T in mode 1: pins and I/O</text>
   <text x="500.0" y="64" text-anchor="middle" font-size="13" fill="#555">TSSOP20, top view. Mode 1 (1a86:55db): UART1, and I2C and SPI on a vendor interface, as atiic uses it.</text>
   <text x="334.0" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#334155">Mode 1</text>
   <text x="231.0" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#334155">pins()</text>
@@ -24,7 +24,7 @@
   <text x="327.0" y="202" text-anchor="middle" font-size="12" fill="#1f2937">CTS1</text>
   <text x="386" y="201.5" text-anchor="end" font-size="8" font-weight="bold" fill="#b45309">5V</text>
   <rect x="196" y="186" width="70" height="24" rx="12" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="231.0" y="202" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GPIO6</text>
+  <text x="231.0" y="202" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">IO6</text>
   <text x="186" y="202" text-anchor="end" font-size="11" fill="#6b7280">UART1 clear to send</text>
   <rect x="406" y="231" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
   <text x="432" y="240" font-size="12" fill="#e5e5e5">3</text>
@@ -44,8 +44,8 @@
   <line x1="406" y1="312" x2="394" y2="312" stroke="#9aa0a6"/>
   <rect x="274" y="300" width="120" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
   <text x="334.0" y="316" text-anchor="middle" font-size="12" fill="#1f2937">SCS0</text>
-  <rect x="196" y="300" width="70" height="24" rx="12" fill="#e0e7ff" stroke="#6366f1"/>
-  <text x="231.0" y="316" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">CS0</text>
+  <rect x="196" y="300" width="70" height="24" rx="12" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="231.0" y="316" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">IO2</text>
   <text x="186" y="316" text-anchor="end" font-size="11" fill="#6b7280">SPI chip select 0</text>
   <rect x="406" y="345" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
   <text x="432" y="354" font-size="12" fill="#e5e5e5">6</text>
@@ -71,8 +71,8 @@
   <line x1="406" y1="464" x2="394" y2="464" stroke="#9aa0a6"/>
   <rect x="274" y="452" width="120" height="24" rx="12" fill="#dbeafe" stroke="#5b8fd9"/>
   <text x="334.0" y="468" text-anchor="middle" font-size="12" fill="#1f2937">SCS1</text>
-  <rect x="196" y="452" width="70" height="24" rx="12" fill="#e0e7ff" stroke="#6366f1"/>
-  <text x="231.0" y="468" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">CS1</text>
+  <rect x="196" y="452" width="70" height="24" rx="12" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="231.0" y="468" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">IO5</text>
   <text x="186" y="468" text-anchor="end" font-size="11" fill="#6b7280">SPI chip select 1</text>
   <rect x="406" y="497" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
   <text x="432" y="506" font-size="12" fill="#e5e5e5">10</text>
@@ -100,7 +100,7 @@
   <rect x="606" y="414" width="120" height="24" rx="12" fill="#ffedd5" stroke="#e59a52"/>
   <text x="666.0" y="430" text-anchor="middle" font-size="12" fill="#1f2937">RTS1</text>
   <rect x="734" y="414" width="70" height="24" rx="12" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="769.0" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GPIO7</text>
+  <text x="769.0" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">IO7</text>
   <text x="814" y="430" font-size="11" fill="#6b7280">mode strap: low for mode 1</text>
   <path d="M600 419 L607 426 L600 433 L593 426 Z" fill="#f59e0b" stroke="#92400e"/>
   <rect x="580" y="383" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
@@ -115,7 +115,7 @@
   <rect x="606" y="338" width="120" height="24" rx="12" fill="#f5f5f4" stroke="#a8a29e"/>
   <text x="666.0" y="354" text-anchor="middle" font-size="12" fill="#1f2937">ACT</text>
   <rect x="734" y="338" width="70" height="24" rx="12" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="769.0" y="354" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GPIO4</text>
+  <text x="769.0" y="354" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">IO4</text>
   <text x="814" y="354" font-size="11" fill="#6b7280">low once USB is configured</text>
   <rect x="580" y="307" width="14" height="10" fill="#c9ccd1" stroke="#9aa0a6"/>
   <text x="568" y="316" text-anchor="end" font-size="12" fill="#e5e5e5">16</text>
@@ -146,53 +146,43 @@
   <rect x="606" y="148" width="120" height="24" rx="12" fill="#f3f4f6" stroke="#9ca3af"/>
   <text x="666.0" y="164" text-anchor="middle" font-size="12" fill="#1f2937">XO</text>
   <text x="814" y="164" font-size="11" fill="#6b7280">crystal</text>
-  <text x="40" y="562" font-size="14" font-weight="bold" fill="#222">What pins() drives in mode 1: three GPIOs and the two chip selects</text>
+  <text x="40" y="562" font-size="14" font-weight="bold" fill="#222">What pins() drives in mode 1: five I/O lines</text>
   <rect x="40" y="576" width="150" height="48" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="115.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">GPIO4</text>
-  <text x="115.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 15 · ACT</text>
+  <text x="115.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">IO2</text>
+  <text x="115.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 5 · SCS0</text>
   <rect x="202" y="576" width="150" height="48" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="277.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">GPIO6</text>
-  <text x="277.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 2 · CTS1</text>
+  <text x="277.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">IO4</text>
+  <text x="277.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 15 · ACT</text>
   <rect x="364" y="576" width="150" height="48" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="439.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">GPIO7</text>
-  <text x="439.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 13 · RTS1</text>
-  <rect x="526" y="576" width="150" height="48" rx="8" fill="#e0e7ff" stroke="#6366f1"/>
-  <text x="601.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">CS0</text>
-  <text x="601.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 5 · SCS0</text>
-  <rect x="688" y="576" width="150" height="48" rx="8" fill="#e0e7ff" stroke="#6366f1"/>
-  <text x="763.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">CS1</text>
-  <text x="763.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 9 · SCS1</text>
-  <text x="40" y="658" font-size="14" font-weight="bold" fill="#222">Wiring an SPI display (an ST7735's pins)</text>
-  <text x="40" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → pin 6 SCK</text>
-  <text x="272" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">SDA (MOSI)</tspan> → pin 8 MOSI</text>
-  <text x="504" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → pin 5 · CS0</text>
-  <text x="736" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">DC</tspan> → pin 2 · GPIO6</text>
-  <text x="40" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">RES</tspan> → pin 15 · GPIO4</text>
-  <text x="272" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">VCC, BL</tspan> → 3.3 V</text>
-  <text x="504" y="706" font-size="12" fill="#374151"><tspan font-weight="bold">GND</tspan> → GND</text>
-  <rect x="40" y="741" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="64" y="754" font-size="12" fill="#374151">I2C</text>
-  <rect x="107" y="741" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="131" y="754" font-size="12" fill="#374151">SPI</text>
-  <rect x="174" y="741" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="198" y="754" font-size="12" fill="#374151">UART1</text>
-  <rect x="255" y="741" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="279" y="754" font-size="12" fill="#374151">GPIO</text>
-  <rect x="329" y="741" width="18" height="18" rx="9" fill="#e0e7ff" stroke="#6366f1"/>
-  <text x="353" y="754" font-size="12" fill="#374151">chip select</text>
-  <rect x="452" y="741" width="18" height="18" rx="9" fill="#fce7f3" stroke="#db7fb4"/>
-  <text x="476" y="754" font-size="12" fill="#374151">USB</text>
-  <rect x="519" y="741" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="543" y="754" font-size="12" fill="#374151">power</text>
-  <path d="M607 743 L614 750 L607 757 L600 750 Z" fill="#f59e0b" stroke="#92400e"/>
-  <text x="620" y="754" font-size="12" fill="#374151">mode strap</text>
-  <text x="710" y="754" font-size="9" font-weight="bold" fill="#b45309">5V</text>
-  <text x="726" y="754" font-size="12" fill="#374151">input tolerates 5 V</text>
-  <text x="40" y="786" font-size="12" fill="#374151">• Mode 1 at reset: pin 10 (DTR1) open or high, pin 13 (RTS1) low; both are pulled up inside.</text>
-  <text x="40" y="806" font-size="12" fill="#374151">• Only three GPIOs in mode 1: WCH's Linux driver offers GPIO4, GPIO6, GPIO7 on the CH347T (the CH347F has eight).</text>
-  <text x="40" y="826" font-size="12" fill="#374151">• GPIO7 is the mode strap: usable once reset is over if the strap is a pull-down, not a short to GND.</text>
-  <text x="40" y="846" font-size="12" fill="#374151">• GPIO4 is ACT: low once USB is up, so a RES on it resets the panel then; the driver resets it again at init.</text>
-  <text x="40" y="866" font-size="12" fill="#374151">• GPIO6 shares pin 2 with UART1's CTS: no hardware flow control on UART1 while it's a GPIO.</text>
-  <text x="40" y="904" font-size="10" fill="#6b7280">Sources: WCH CH347DS1 V1.6 §4.3 (tables 4-8, 4-9, 4-11), §5.2; WCH ch34x_mphsi_master_linux (ch347t_board_config, the 0xCC and 0xC1 commands); flashrom ch347_spi.c.</text>
-  <text x="960" y="930" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="439.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">IO5</text>
+  <text x="439.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 9 · SCS1</text>
+  <rect x="526" y="576" width="150" height="48" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="601.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">IO6</text>
+  <text x="601.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 2 · CTS1</text>
+  <rect x="688" y="576" width="150" height="48" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="763.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">IO7</text>
+  <text x="763.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 13 · RTS1</text>
+  <rect x="40" y="653" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="64" y="666" font-size="12" fill="#374151">I2C</text>
+  <rect x="107" y="653" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="131" y="666" font-size="12" fill="#374151">SPI</text>
+  <rect x="174" y="653" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="198" y="666" font-size="12" fill="#374151">UART1</text>
+  <rect x="255" y="653" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="279" y="666" font-size="12" fill="#374151">I/O</text>
+  <rect x="322" y="653" width="18" height="18" rx="9" fill="#fce7f3" stroke="#db7fb4"/>
+  <text x="346" y="666" font-size="12" fill="#374151">USB</text>
+  <rect x="389" y="653" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="413" y="666" font-size="12" fill="#374151">power</text>
+  <path d="M477 655 L484 662 L477 669 L470 662 Z" fill="#f59e0b" stroke="#92400e"/>
+  <text x="490" y="666" font-size="12" fill="#374151">mode strap</text>
+  <text x="580" y="666" font-size="9" font-weight="bold" fill="#b45309">5V</text>
+  <text x="596" y="666" font-size="12" fill="#374151">input tolerates 5 V</text>
+  <text x="40" y="698" font-size="12" fill="#374151">• Mode 1 at reset: pin 10 (DTR1) open or high, pin 13 (RTS1) low; both are pulled up inside.</text>
+  <text x="40" y="718" font-size="12" fill="#374151">• IO2, IO4, IO5, IO6, IO7: digital I/O; any of them a chip select. pins() also takes CS0, CS1 for IO2, IO5.</text>
+  <text x="40" y="738" font-size="12" fill="#374151">• IO7 is the mode strap: usable once reset is over if the strap is a pull-down, not a short to GND.</text>
+  <text x="40" y="758" font-size="12" fill="#374151">• IO4 is ACT: low once USB is configured.</text>
+  <text x="40" y="778" font-size="12" fill="#374151">• IO6 shares pin 2 with UART1's CTS: no hardware flow control on UART1 while it's an I/O line.</text>
+  <text x="40" y="816" font-size="10" fill="#6b7280">Sources: WCH CH347DS1 V1.6 §4.3 (tables 4-8, 4-9, 4-11), §5.2; WCH ch34x_mphsi_master_linux (ch347t_board_config, the 0xCC command); measured, atiic docs/ch347.md.</text>
+  <text x="960" y="842" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

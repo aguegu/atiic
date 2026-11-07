@@ -48,7 +48,7 @@
   <rect x="290" y="489" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text x="349.0" y="504" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS1</text>
   <rect x="186" y="489" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="234.0" y="504" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">GPIO5 (CS1)</text>
+  <text x="234.0" y="504" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO5 (CS1)</text>
   <circle cx="486" cy="460" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="460" r="4" fill="#4c1d95"/>
   <text x="502" y="464" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DSR</text>
@@ -56,7 +56,7 @@
   <rect x="290" y="449" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text x="349.0" y="464" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
   <rect x="186" y="449" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="234.0" y="464" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">GPIO2 (CS0)</text>
+  <text x="234.0" y="464" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
   <circle cx="486" cy="420" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="420" r="4" fill="#4c1d95"/>
   <text x="502" y="424" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RI</text>
@@ -71,7 +71,7 @@
   <rect x="290" y="369" width="118" height="22" rx="11" fill="#f5f5f4" stroke="#a8a29e"/>
   <text x="349.0" y="384" text-anchor="middle" font-size="10" fill="#1f2937">ACT: USB ready, low</text>
   <rect x="216" y="369" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="384" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO4</text>
+  <text x="249.0" y="384" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO4</text>
   <circle cx="486" cy="340" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="340" r="4" fill="#4c1d95"/>
   <text x="502" y="344" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RX</text>
@@ -92,7 +92,7 @@
   <rect x="290" y="249" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
   <text x="349.0" y="264" text-anchor="middle" font-size="11.5" fill="#1f2937">CTS1</text>
   <rect x="216" y="249" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO6</text>
+  <text x="249.0" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO6</text>
   <circle cx="486" cy="220" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="220" r="4" fill="#4c1d95"/>
   <text x="502" y="224" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RTS</text>
@@ -101,7 +101,7 @@
   <rect x="290" y="209" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
   <text x="349.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
   <rect x="216" y="209" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO7</text>
+  <text x="249.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO7</text>
   <circle cx="486" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="180" r="4" fill="#4c1d95"/>
   <text x="502" y="184" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
@@ -154,7 +154,7 @@
   <rect x="792" y="529" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text x="851.0" y="544" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
   <rect x="918" y="529" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="966.0" y="544" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">GPIO2 (CS0)</text>
+  <text x="966.0" y="544" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
   <circle cx="714" cy="500" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="714" cy="500" r="4" fill="#4c1d95"/>
   <text x="698" y="504" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TDI</text>
@@ -187,7 +187,7 @@
   <rect x="792" y="329" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
   <text x="851.0" y="344" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS0</text>
   <rect x="918" y="329" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="966.0" y="344" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO2 (CS0)</text>
+  <text x="966.0" y="344" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO2 (CS0)</text>
   <circle cx="714" cy="300" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="714" cy="300" r="4" fill="#4c1d95"/>
   <text x="698" y="304" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">CS1</text>
@@ -195,7 +195,7 @@
   <rect x="792" y="289" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
   <text x="851.0" y="304" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS1</text>
   <rect x="918" y="289" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="966.0" y="304" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">GPIO5 (CS1)</text>
+  <text x="966.0" y="304" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO5 (CS1)</text>
   <circle cx="714" cy="260" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="714" cy="260" r="4" fill="#4c1d95"/>
   <text x="698" y="264" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCK</text>
@@ -260,23 +260,23 @@
   <rect x="174" y="851" width="18" height="18" rx="9" fill="#ffedd5" stroke="#e59a52"/>
   <text x="198" y="864" font-size="12" fill="#374151">UART1</text>
   <rect x="255" y="851" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="279" y="864" font-size="12" fill="#374151">GPIO</text>
-  <rect x="329" y="851" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="353" y="864" font-size="12" fill="#374151">power</text>
-  <rect x="410" y="851" width="18" height="18" rx="9" fill="#fef3c7" stroke="#d6a738"/>
-  <text x="434" y="864" font-size="12" fill="#374151">reset</text>
-  <rect x="491" y="851" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="515" y="864" font-size="12" fill="#374151">same chip pin as another header</text>
-  <text x="735.4" y="864" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="761.4" y="864" font-size="12" fill="#374151">the back's label</text>
+  <text x="279" y="864" font-size="12" fill="#374151">I/O</text>
+  <rect x="322" y="851" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="346" y="864" font-size="12" fill="#374151">power</text>
+  <rect x="403" y="851" width="18" height="18" rx="9" fill="#fef3c7" stroke="#d6a738"/>
+  <text x="427" y="864" font-size="12" fill="#374151">reset</text>
+  <rect x="484" y="851" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="508" y="864" font-size="12" fill="#374151">same chip pin as another header</text>
+  <text x="728.4" y="864" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="754.4" y="864" font-size="12" fill="#374151">the back's label</text>
   <text x="40" y="900" font-size="14" font-weight="bold" fill="#222">The mode switch</text>
   <text x="40" y="924" font-size="12" fill="#374151"><tspan font-weight="bold">S1 on, S2 off:</tspan> mode 1, USB ID 1a86:55db (UART1 + I2C + SPI)</text>
   <text x="40" y="944" font-size="12" fill="#374151">Set it unplugged: the chip reads it at power-up.</text>
   <text x="40" y="988" font-size="12" fill="#374151">• The UART0 and JTAG headers carry the same chip pins as the SPI and I2C headers (dashed).</text>
   <text x="40" y="1008" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
-  <text x="40" y="1028" font-size="12" fill="#374151">• The back's IO labels: IO2, IO4, IO5, IO6, IO7 are GPIOs here; IO0, IO1, IO3 are SPI's and I2C's.</text>
-  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO2, GPIO4, GPIO5, GPIO6, GPIO7: digital I/O; any of them a chip select. CS0, CS1 are GPIO2, GPIO5 by their print (atiic takes them so).</text>
-  <text x="40" y="1068" font-size="12" fill="#374151">• GPIO7 is on the mode switch S1: it reads low when undriven, and must be low or undriven at power-up.</text>
+  <text x="40" y="1028" font-size="12" fill="#374151">• The back's IO labels: IO2, IO4, IO5, IO6, IO7 are I/O lines here; IO0, IO1, IO3 are SPI's and I2C's.</text>
+  <text x="40" y="1048" font-size="12" fill="#374151">• IO2, IO4, IO5, IO6, IO7: digital I/O, named as the back prints them; any of them a chip select. pins() also takes CS0, CS1 for IO2, IO5.</text>
+  <text x="40" y="1068" font-size="12" fill="#374151">• IO7 is on the mode switch S1: it reads low when undriven, and must be low or undriven at power-up.</text>
   <text x="40" y="1088" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
-  <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; the GPIOs per WCH's driver and measured. atiic docs/ch347.md.</text>
+  <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; the I/O lines per WCH's driver and measured. atiic docs/ch347.md.</text>
   <text x="1160" y="1146" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
