@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1316" width="1200" height="1316" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1346" width="1200" height="1346" font-family="Helvetica, Arial, sans-serif">
   <title>The CH347T development board in mode 1: its headers, the chip pins behind them, and what atiic drives</title>
-  <rect width="1200" height="1316" fill="#ffffff"/>
+  <rect width="1200" height="1346" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">LXC-CH347 (CH347T board) in mode 1: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C left. Each header: its silkscreen, the chip pin behind it, its function in mode 1, and its pins() name.</text>
   <rect x="196" y="366" width="784" height="338" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
@@ -318,4 +318,5 @@
   <text x="40" y="1242" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
   <text x="40" y="1262" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
   <text x="40" y="1300" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
+  <text x="1160" y="1326" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with Claude</text>
 </svg>

@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.10
+
+- The three cheatsheets credited (the user): `ch347t-pinout.svg`,
+  `ch347t-board.svg` and `ch341t-board.svg` each end with "atiic ·
+  github.com/aguegu/atiic · MIT · © 2026 aGuegu (Weihong), drawn with
+  Claude", under their sources line.
+
 ## 1.4.9
 
 - `docs/ch341t-board.svg`: the CH341T "2-in-1" dongle (the user: the same
