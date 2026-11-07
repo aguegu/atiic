@@ -4,7 +4,7 @@
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">LXC-CH347 (CH347T board) in mode 1: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C down. Each pin: its silkscreen, the back's IO label where it has one, its function in mode 1, its pins() name.</text>
   <rect x="460" y="100" width="280" height="680" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
-  <rect x="477" y="731" width="18" height="18" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="486" cy="740" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="486" cy="740" r="4" fill="#4c1d95"/>
   <text x="502" y="744" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">GND</text>
   <line x1="476" y1="740" x2="452" y2="740" stroke="#94a3b8"/>
@@ -222,7 +222,7 @@
   <rect x="792" y="169" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
   <text x="851.0" y="184" text-anchor="middle" font-size="11.5" fill="#1f2937">MOSI</text>
   <text x="992" y="184" text-anchor="middle" font-size="13" fill="#15803d">✓</text>
-  <rect x="705" y="131" width="18" height="18" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="714" cy="140" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
   <circle cx="714" cy="140" r="4" fill="#4c1d95"/>
   <text x="698" y="144" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
   <line x1="724" y1="140" x2="748" y2="140" stroke="#94a3b8"/>

@@ -8,7 +8,7 @@
   <text x="252.0" y="194.32999999999998" text-anchor="end" font-size="10" fill="#475569">1a86:5512 (atiic)</text>
   <text x="252.0" y="222.32999999999998" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">TTL mode</text>
   <text x="252.0" y="258.33" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">to a GY-521</text>
-  <rect x="481.145" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="490.145" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="487.145" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(494.145 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">RXD</text>
   <text x="320.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">RXD</text>
@@ -18,7 +18,7 @@
   <rect x="267.0" y="203.32999999999998" width="106" height="30" rx="8" fill="#ffedd5" stroke="#e59a52"/>
   <text x="320.0" y="222.32999999999998" text-anchor="middle" font-size="10.5" fill="#1f2937">RXD: UART in</text>
   <text x="320.0" y="258.33" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">—</text>
-  <rect x="525.087" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="534.087" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="531.087" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(538.087 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">TXD</text>
   <text x="432.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">TXD</text>
@@ -28,7 +28,7 @@
   <rect x="379.0" y="203.32999999999998" width="106" height="30" rx="8" fill="#ffedd5" stroke="#e59a52"/>
   <text x="432.0" y="222.32999999999998" text-anchor="middle" font-size="10.5" fill="#1f2937">TXD: UART out</text>
   <text x="432.0" y="258.33" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">—</text>
-  <rect x="569.029" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="578.029" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="575.029" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(582.029 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">SDA</text>
   <text x="544.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SDA</text>
@@ -38,7 +38,7 @@
   <rect x="491.0" y="203.32999999999998" width="106" height="30" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
   <text x="544.0" y="222.32999999999998" text-anchor="middle" font-size="10.5" fill="#94a3b8">mode pin</text>
   <text x="544.0" y="258.33" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SDA</text>
-  <rect x="612.971" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="621.971" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="618.971" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(625.971 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">SCL</text>
   <text x="656.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SCL</text>
@@ -48,7 +48,7 @@
   <rect x="603.0" y="203.32999999999998" width="106" height="30" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
   <text x="656.0" y="222.32999999999998" text-anchor="middle" font-size="10.5" fill="#94a3b8">mode pin</text>
   <text x="656.0" y="258.33" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SCL</text>
-  <rect x="656.913" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="665.913" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="662.913" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(669.913 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">GND</text>
   <text x="768.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
@@ -58,7 +58,7 @@
   <rect x="715.0" y="203.32999999999998" width="106" height="30" rx="8" fill="#e5e7eb" stroke="#9ca3af"/>
   <text x="768.0" y="222.32999999999998" text-anchor="middle" font-size="10.5" fill="#1f2937">GND</text>
   <text x="768.0" y="258.33" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">GND</text>
-  <rect x="700.855" y="327.33" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <circle cx="709.855" cy="336.33" r="9" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="706.855" y="333.33" width="6" height="6" fill="#7a5b10"/>
   <text transform="translate(713.855 354.33) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">VCC</text>
   <text x="880.0" y="154.32999999999998" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">VCC</text>
@@ -83,19 +83,19 @@
   <rect x="500.352" y="633.0250000000001" width="185.10999999999999" height="81.31" rx="39.79" fill="#e9ecef" stroke="#8a9096"/>
   <text x="592.9069999999999" y="677.6800000000001" text-anchor="middle" font-size="11" fill="#555">12.000</text>
   <rect x="581.316" y="729.905" width="20" height="12" rx="2" fill="#b45309"/><text x="607.316" y="739.905" font-size="9" fill="#e0f2fe">C3</text>
-  <rect x="466.43999999999994" y="490.815" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="467.43999999999994" y="491.815" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="472.43999999999994" y="496.815" width="6" height="6" fill="#7a5b10"/>
-  <rect x="466.43999999999994" y="534.757" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="467.43999999999994" y="535.757" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="472.43999999999994" y="540.757" width="6" height="6" fill="#7a5b10"/>
-  <rect x="466.43999999999994" y="578.699" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="467.43999999999994" y="579.699" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="472.43999999999994" y="584.699" width="6" height="6" fill="#7a5b10"/>
   <rect x="462.43999999999994" y="486.815" width="26" height="69.94200000000001" rx="4" fill="#f2c200" stroke="#333" opacity="0.94"/>
   <rect x="468.43999999999994" y="494.815" width="14" height="53.942" rx="2" fill="#000" opacity="0.18"/>
-  <rect x="715.56" y="490.815" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="716.56" y="491.815" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="496.815" width="6" height="6" fill="#7a5b10"/>
-  <rect x="715.56" y="534.757" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="716.56" y="535.757" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="540.757" width="6" height="6" fill="#7a5b10"/>
-  <rect x="715.56" y="578.699" width="18" height="18" fill="#f3d77a" stroke="#b8922a"/>
+  <rect x="716.56" y="579.699" width="16" height="16" fill="#f3d77a" stroke="#b8922a"/>
   <rect x="721.56" y="584.699" width="6" height="6" fill="#7a5b10"/>
   <rect x="711.56" y="530.757" width="26" height="69.94200000000001" rx="4" fill="#22a34a" stroke="#333" opacity="0.94"/>
   <rect x="717.56" y="538.757" width="14" height="53.942" rx="2" fill="#000" opacity="0.18"/>

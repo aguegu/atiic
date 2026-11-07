@@ -1,5 +1,12 @@
 # Releases
 
+## 1.4.23
+
+- Every pin and hole on the board sheets round (the user: squares are the
+  jumpers'): the soldered header pins gold circles, the bare holes grey
+  ones (the CH347T's and CH341A's square pin-1 pads too); only the
+  jumpers' pins square.
+
 ## 1.4.22
 
 - The CH341A's USB-A in the CH341T's proportions (the user: far too long):
