@@ -273,8 +273,8 @@
   <text x="40" y="944" font-size="12" fill="#374151">Set it unplugged: the chip reads it at power-up.</text>
   <text x="40" y="988" font-size="12" fill="#374151">• The UART0 and JTAG headers carry the same chip pins as the SPI and I2C headers (dashed).</text>
   <text x="40" y="1008" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
-  <text x="40" y="1028" font-size="12" fill="#374151">• The back prints IO0-IO7: IO2, IO4, IO5, IO6, IO7 are GPIOs here; IO0, IO1, IO3 are SPI's and I2C's.</text>
-  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO2, GPIO4-GPIO7: digital I/O; any of them a chip select. CS0, CS1 are GPIO2, GPIO5 by their print (atiic takes them so).</text>
+  <text x="40" y="1028" font-size="12" fill="#374151">• The back's IO labels: IO2, IO4, IO5, IO6, IO7 are GPIOs here; IO0, IO1, IO3 are SPI's and I2C's.</text>
+  <text x="40" y="1048" font-size="12" fill="#374151">• GPIO2, GPIO4, GPIO5, GPIO6, GPIO7: digital I/O; any of them a chip select. CS0, CS1 are GPIO2, GPIO5 by their print (atiic takes them so).</text>
   <text x="40" y="1068" font-size="12" fill="#374151">• GPIO7 is on the mode switch S1: it reads low when undriven, and must be low or undriven at power-up.</text>
   <text x="40" y="1088" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
   <text x="40" y="1122" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; the GPIOs per WCH's driver and measured. atiic docs/ch347.md.</text>
