@@ -162,7 +162,7 @@
   <rect x="688" y="576" width="150" height="48" rx="8" fill="#e0e7ff" stroke="#6366f1"/>
   <text x="763.0" y="596" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">CS1</text>
   <text x="763.0" y="614" text-anchor="middle" font-size="11" fill="#1f2937">pin 9 · SCS1</text>
-  <text x="40" y="658" font-size="14" font-weight="bold" fill="#222">An ST7735 (SPI display), as run on r8845</text>
+  <text x="40" y="658" font-size="14" font-weight="bold" fill="#222">Wiring an SPI display (an ST7735's pins)</text>
   <text x="40" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → pin 6 SCK</text>
   <text x="272" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">SDA (MOSI)</tspan> → pin 8 MOSI</text>
   <text x="504" y="682" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → pin 5 · CS0</text>

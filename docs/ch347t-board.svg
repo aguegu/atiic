@@ -301,8 +301,8 @@
   <text x="557" y="864" font-size="12" fill="#374151">reset</text>
   <rect x="614" y="851" width="18" height="18" rx="9" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
   <text x="638" y="864" font-size="12" fill="#374151">same chip pin as another header</text>
-  <text x="858.4" y="864" font-size="13" fill="#15803d">✓</text><text x="874.4" y="864" font-size="12" fill="#374151">ran on r8845</text>
-  <text x="973.2" y="864" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="999.2" y="864" font-size="12" fill="#374151">the back's label</text>
+  <text x="858.4" y="864" font-size="13" fill="#15803d">✓</text><text x="874.4" y="864" font-size="12" fill="#374151">tested</text>
+  <text x="934.8" y="864" font-size="11" font-style="italic" fill="#7c3aed">IO5</text><text x="960.8" y="864" font-size="12" fill="#374151">the back's label</text>
   <text x="40" y="900" font-size="14" font-weight="bold" fill="#222">The mode switch (its silkscreen)</text>
   <text x="40" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S1</tspan></text>
   <text x="90" y="924" font-size="12" font-weight="bold" fill="#1f2937"><tspan font-weight="bold">S2</tspan></text>
@@ -330,7 +330,7 @@
   <text x="140" y="1012" font-size="12" fill="#1f2937">3</text>
   <text x="200" y="1012" font-size="12" fill="#1f2937">1a86:55dd</text>
   <text x="300" y="1012" font-size="12" fill="#1f2937">UART1 + JTAG</text>
-  <text x="640" y="900" font-size="14" font-weight="bold" fill="#222">An SPI display (ST7735, GC9A01), as run</text>
+  <text x="640" y="900" font-size="14" font-weight="bold" fill="#222">Wiring an SPI display</text>
   <text x="640" y="924" font-size="12" fill="#374151"><tspan font-weight="bold">SCK</tspan> → SPI SCK</text>
   <text x="640" y="944" font-size="12" fill="#374151"><tspan font-weight="bold">SDA / MOSI</tspan> → SPI MO</text>
   <text x="640" y="964" font-size="12" fill="#374151"><tspan font-weight="bold">CS</tspan> → SPI CS0 (CS0)</text>
@@ -341,7 +341,7 @@
   <text x="40" y="1088" font-size="12" fill="#374151">• Wire to the SPI and I2C headers, and leave the dashed ones free: a wire there sits on the bus too.</text>
   <text x="40" y="1108" font-size="12" fill="#374151">• The back labels IO0-IO7: mode 0's GPIO numbers. In mode 1 WCH's driver offers IO4, IO6, IO7 only; the rest are SPI's and I2C's.</text>
   <text x="40" y="1128" font-size="12" fill="#374151">• GPIO7 (UART1 RTS) and UART1 DTR carry the mode switch: GPIO7 is driven only if S1 pulls it through a resistor.</text>
-  <text x="40" y="1148" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: the displays and the MPU-6050 ran from it.</text>
+  <text x="40" y="1148" font-size="12" fill="#374151">• UART1 (TX, RX) is the serial port, ttyACM on Linux. 5V is USB's, 3V3 the board's 3.3 V: power 3.3 V parts from it.</text>
   <text x="40" y="1182" font-size="10" fill="#6b7280">Headers from the vendor's photos, front and back; chip pins from the silkscreen names and WCH CH347DS1 V1.6 (§4.3), borne out by the back's IO labels; GPIOs per WCH's Linux driver. atiic docs/ch347.md.</text>
   <text x="1160" y="1206" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>

@@ -1,5 +1,13 @@
 # Releases
 
+## 1.4.16
+
+- The cheatsheets without the bench's name or a list of what ran on them
+  (the user): the CH341A's "as run on r8845" devices out; the ticks'
+  legend just "tested" (CH341A, CH347T); the CH347T's and the pinout's
+  display wiring as "Wiring an SPI display"; the CH341A's notes name its
+  rows as drawn (left-hand, right-hand), not by the unturned board's edges.
+
 ## 1.4.15
 
 - The CH341T sheet redrawn from the vendor's photo (the user), to scale:
