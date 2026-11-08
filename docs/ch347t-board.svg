@@ -243,13 +243,13 @@
   <rect x="564.0" y="430.5" width="8" height="4" fill="#c9ccd1"/><rect x="628.0" y="430.5" width="8" height="4" fill="#c9ccd1"/>
   <text transform="translate(605.0 365.0) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH347T</text>
   <rect x="582.0" y="528" width="36" height="40" rx="4" fill="#e9ecef" stroke="#9aa0a6"/><text x="600.0" y="552" text-anchor="middle" font-size="9" fill="#555">8 MHz</text>
-  <rect x="570.0" y="158" width="60" height="58" rx="4" fill="#f2c200" stroke="#a68400"/>
-  <rect x="578.0" y="166" width="34" height="16" rx="2" fill="#fff7cc" stroke="#a68400"/>
-  <rect x="594.0" y="168" width="16" height="12" fill="#5c4a00"/>
-  <text x="622.0" y="178" text-anchor="middle" font-size="9" fill="#5c4a00">S2</text>
-  <rect x="578.0" y="190" width="34" height="16" rx="2" fill="#fff7cc" stroke="#a68400"/>
-  <rect x="580.0" y="192" width="16" height="12" fill="#5c4a00"/>
-  <text x="622.0" y="202" text-anchor="middle" font-size="9" fill="#5c4a00">S1</text>
+  <rect x="570.0" y="158" width="60" height="58" rx="4" fill="#1b1b1b" stroke="#000"/>
+  <rect x="578.0" y="166" width="34" height="16" rx="2" fill="#3a3a3a" stroke="#555"/>
+  <rect x="594.0" y="168" width="16" height="12" rx="1" fill="#ffffff"/>
+  <text x="622.0" y="178" text-anchor="middle" font-size="9" fill="#e5e5e5">S2</text>
+  <rect x="578.0" y="190" width="34" height="16" rx="2" fill="#3a3a3a" stroke="#555"/>
+  <rect x="580.0" y="192" width="16" height="12" rx="1" fill="#ffffff"/>
+  <text x="622.0" y="202" text-anchor="middle" font-size="9" fill="#e5e5e5">S1</text>
   <text x="600.0" y="152" text-anchor="middle" font-size="9.5" fill="#f5f3ff">← ON · mode 1: S1 on</text>
   <rect x="565.0" y="774" width="70" height="46" rx="6" fill="#cfd4da" stroke="#8a9096"/>
   <text x="600.0" y="840" text-anchor="middle" font-size="12" fill="#475569">USB-C</text>
