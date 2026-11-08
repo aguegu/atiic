@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1463" width="1200" height="1463" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1503" width="1200" height="1503" font-family="Helvetica, Arial, sans-serif">
   <title>CH341T "2-in-1" dongle (USB to I2C / TTL)</title>
-  <rect width="1200" height="1463" fill="#ffffff"/>
+  <rect width="1200" height="1503" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH341T "2-in-1" dongle (USB to I2C / TTL)</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-A down, to scale (the board 18 x 35 mm). The 6-pin header, each pin in I2C mode (atiic's).</text>
   <rect x="444.29999999999995" y="228" width="311.40000000000003" height="605.5" rx="6" fill="#1f5fa8" stroke="#163f70" stroke-width="2"/>
@@ -17,13 +17,13 @@
   <text transform="translate(494.145 283.60383333333334) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">RXD</text>
   <text x="320.0" y="93.21258333333333" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">RXD</text>
   <path d="M320.0 141.21258333333333 L320.0 151.21258333333333 L490.145 173.21258333333333 L490.145 190.21258333333333" fill="none" stroke="#94a3b8"/>
-  <rect x="267.0" y="106.21258333333333" width="106" height="30" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="320.0" y="125.21258333333333" text-anchor="middle" font-size="10.5" fill="#94a3b8">unused</text>
+  <rect x="267.0" y="106.21258333333333" width="106" height="30" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="320.0" y="125.21258333333333" text-anchor="middle" font-size="10.5" fill="#1f2937">I/O (PEMP)</text>
   <text transform="translate(538.087 283.60383333333334) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">TXD</text>
   <text x="432.0" y="93.21258333333333" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">TXD</text>
   <path d="M432.0 141.21258333333333 L432.0 151.21258333333333 L534.087 173.21258333333333 L534.087 190.21258333333333" fill="none" stroke="#94a3b8"/>
-  <rect x="379.0" y="106.21258333333333" width="106" height="30" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="432.0" y="125.21258333333333" text-anchor="middle" font-size="10.5" fill="#94a3b8">unused</text>
+  <rect x="379.0" y="106.21258333333333" width="106" height="30" rx="8" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="432.0" y="125.21258333333333" text-anchor="middle" font-size="10.5" fill="#1f2937">I/O (ERR#)</text>
   <text transform="translate(582.029 283.60383333333334) rotate(-90)" text-anchor="end" font-size="10.5" font-weight="bold" fill="#fff">SDA</text>
   <text x="544.0" y="93.21258333333333" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">SDA</text>
   <path d="M544.0 141.21258333333333 L544.0 151.21258333333333 L578.029 173.21258333333333 L578.029 190.21258333333333" fill="none" stroke="#94a3b8"/>
@@ -101,12 +101,12 @@
   <text x="600.0" y="994.39" text-anchor="middle" font-size="19.0" font-weight="bold" fill="#6b7178">USB-A</text>
   <rect x="40" y="1148.0" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
   <text x="64" y="1161.0" font-size="12" fill="#374151">I2C</text>
-  <rect x="107" y="1148.0" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="131" y="1161.0" font-size="12" fill="#374151">power</text>
-  <rect x="188" y="1148.0" width="18" height="18" rx="9" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="212" y="1161.0" font-size="12" fill="#374151">ground</text>
-  <rect x="276" y="1148.0" width="18" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-  <text x="300" y="1161.0" font-size="12" fill="#374151">unused in I2C mode</text>
+  <rect x="107" y="1148.0" width="18" height="18" rx="9" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="131" y="1161.0" font-size="12" fill="#374151">I/O</text>
+  <rect x="174" y="1148.0" width="18" height="18" rx="9" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="198" y="1161.0" font-size="12" fill="#374151">power</text>
+  <rect x="255" y="1148.0" width="18" height="18" rx="9" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="279" y="1161.0" font-size="12" fill="#374151">ground</text>
   <text x="40" y="1197.0" font-size="14" font-weight="bold" fill="#222">The jumpers: set them unplugged, the chip reads them at power-up</text>
   <text x="40" y="1221.0" font-size="12" fill="#374151"><tspan font-weight="bold">Yellow on I2C:</tspan> 1a86:5512, EPP/MEM and I2C: atiic's mode (lsusb: "CH341 in EPP/MEM/I2C mode")</text>
   <text x="40" y="1241.0" font-size="12" fill="#374151"><tspan font-weight="bold">Green on 3V3:</tspan> VCC and the chip at 3.3 V: SDA, SCL swing to 3.3 V (for 3.3 V parts: the MPU-6050)</text>
@@ -115,7 +115,9 @@
   <text x="40" y="1325.0" font-size="12" fill="#374151">• I2C at 20, 100, 400 or 750 kHz. Only the address's ack comes back: a missing device throws, a refused data byte doesn't (docs/ch341.md).</text>
   <text x="40" y="1345.0" font-size="12" fill="#374151">• SDA and SCL have weak pull-ups inside (100-500 uA, the datasheet): a module's own pull-ups set the edges.</text>
   <text x="40" y="1365.0" font-size="12" fill="#374151">• No SPI and no D0-D7 on the CH341T (SSOP-20): for SPI, the displays and pins(), the CH341A (docs/setup.md) or the CH347.</text>
-  <text x="40" y="1385.0" font-size="12" fill="#374151">• TXD and RXD stay free in I2C mode. The LEDs are named after the serial mode's status pins, RDY# and TNOW; not traced.</text>
-  <text x="40" y="1419.0" font-size="10" fill="#6b7280">Board and parts from the vendor's photo (YouXin; 35 x 18 mm); chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3); traces not followed. atiic docs/ch341.md, docs/setup.md.</text>
-  <text x="1160" y="1443.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="40" y="1385.0" font-size="12" fill="#374151">• TXD and RXD in I2C mode: digital I/O, pulled up as inputs, driven high or low as outputs, usable beside the I2C bus.</text>
+  <text x="40" y="1405.0" font-size="12" fill="#374151">• WCH's status read (0xA0) and output command (0xA1) name them ERR# and PEMP, as on the CH341A; the datasheet gives them no job in this mode (measured).</text>
+  <text x="40" y="1425.0" font-size="12" fill="#374151">• The LEDs are named after the serial mode's status pins, RDY# and TNOW; not traced.</text>
+  <text x="40" y="1459.0" font-size="10" fill="#6b7280">Board and parts from the vendor's photo (YouXin; 35 x 18 mm); chip pins: WCH CH341DS1, the CH341C/T (SSOP-20) column (§4.2, §4.3, §5.3); TXD, RXD as I/O measured. atiic docs/ch341.md, docs/setup.md.</text>
+  <text x="1160" y="1483.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
