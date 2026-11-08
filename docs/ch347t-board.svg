@@ -3,233 +3,250 @@
   <rect width="1200" height="1166" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">LXC-CH347 (CH347T board) in mode 1: the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-C down. Each pin: its silkscreen, the back's IO label where it has one, its function in mode 1, its pins() name.</text>
-  <rect x="460" y="100" width="280" height="680" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
-  <circle cx="486" cy="740" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="740" r="4" fill="#4c1d95"/>
-  <text x="502" y="744" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">GND</text>
-  <line x1="476" y1="740" x2="452" y2="740" stroke="#94a3b8"/>
-  <rect x="290" y="729" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="349.0" y="744" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
-  <circle cx="486" cy="700" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="700" r="4" fill="#4c1d95"/>
-  <text x="502" y="704" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">5V</text>
-  <line x1="476" y1="700" x2="452" y2="700" stroke="#94a3b8"/>
-  <rect x="290" y="689" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="349.0" y="704" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
-  <circle cx="486" cy="660" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="660" r="4" fill="#4c1d95"/>
-  <text x="502" y="664" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">CTS</text>
-  <line x1="476" y1="660" x2="452" y2="660" stroke="#94a3b8"/>
-  <rect x="290" y="649" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="349.0" y="664" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
-  <circle cx="486" cy="620" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="620" r="4" fill="#4c1d95"/>
-  <text x="502" y="624" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">TX</text>
-  <line x1="476" y1="620" x2="452" y2="620" stroke="#94a3b8"/>
-  <rect x="290" y="609" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="349.0" y="624" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
-  <circle cx="486" cy="580" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="580" r="4" fill="#4c1d95"/>
-  <text x="502" y="584" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RX</text>
-  <line x1="476" y1="580" x2="452" y2="580" stroke="#94a3b8"/>
-  <rect x="290" y="569" width="118" height="22" rx="11" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
-  <text x="349.0" y="584" text-anchor="middle" font-size="11.5" fill="#6b7280">SDA</text>
-  <circle cx="486" cy="540" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="540" r="4" fill="#4c1d95"/>
-  <text x="502" y="544" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RTS</text>
-  <line x1="476" y1="540" x2="452" y2="540" stroke="#94a3b8"/>
-  <rect x="290" y="529" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="349.0" y="544" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
-  <circle cx="486" cy="500" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="500" r="4" fill="#4c1d95"/>
-  <text x="502" y="504" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
-  <line x1="476" y1="500" x2="452" y2="500" stroke="#94a3b8"/>
-  <text x="448" y="504" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO5</text>
-  <rect x="290" y="489" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="349.0" y="504" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS1</text>
-  <rect x="186" y="489" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="234.0" y="504" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO5 (CS1)</text>
-  <circle cx="486" cy="460" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="460" r="4" fill="#4c1d95"/>
-  <text x="502" y="464" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DSR</text>
-  <line x1="476" y1="460" x2="452" y2="460" stroke="#94a3b8"/>
-  <rect x="290" y="449" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="349.0" y="464" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
-  <rect x="186" y="449" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="234.0" y="464" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
-  <circle cx="486" cy="420" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="420" r="4" fill="#4c1d95"/>
-  <text x="502" y="424" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RI</text>
-  <line x1="476" y1="420" x2="452" y2="420" stroke="#94a3b8"/>
-  <rect x="290" y="409" width="118" height="22" rx="11" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
-  <text x="349.0" y="424" text-anchor="middle" font-size="11.5" fill="#6b7280">SCL</text>
-  <circle cx="486" cy="380" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="380" r="4" fill="#4c1d95"/>
-  <text x="502" y="384" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DCD</text>
-  <line x1="476" y1="380" x2="452" y2="380" stroke="#94a3b8"/>
-  <text x="448" y="384" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO4</text>
-  <rect x="290" y="369" width="118" height="22" rx="11" fill="#f5f5f4" stroke="#a8a29e"/>
-  <text x="349.0" y="384" text-anchor="middle" font-size="10" fill="#1f2937">ACT: USB ready, low</text>
-  <rect x="216" y="369" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="384" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO4</text>
-  <circle cx="486" cy="340" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="340" r="4" fill="#4c1d95"/>
-  <text x="502" y="344" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RX</text>
-  <line x1="476" y1="340" x2="452" y2="340" stroke="#94a3b8"/>
-  <rect x="290" y="329" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="349.0" y="344" text-anchor="middle" font-size="11.5" fill="#1f2937">RXD1</text>
-  <circle cx="486" cy="300" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="300" r="4" fill="#4c1d95"/>
-  <text x="502" y="304" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">TX</text>
-  <line x1="476" y1="300" x2="452" y2="300" stroke="#94a3b8"/>
-  <rect x="290" y="289" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="349.0" y="304" text-anchor="middle" font-size="11.5" fill="#1f2937">TXD1</text>
-  <circle cx="486" cy="260" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="260" r="4" fill="#4c1d95"/>
-  <text x="502" y="264" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">CTS</text>
-  <line x1="476" y1="260" x2="452" y2="260" stroke="#94a3b8"/>
-  <text x="448" y="264" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO6</text>
-  <rect x="290" y="249" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="349.0" y="264" text-anchor="middle" font-size="11.5" fill="#1f2937">CTS1</text>
-  <rect x="216" y="249" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO6</text>
-  <circle cx="486" cy="220" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="220" r="4" fill="#4c1d95"/>
-  <text x="502" y="224" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RTS</text>
-  <line x1="476" y1="220" x2="452" y2="220" stroke="#94a3b8"/>
-  <text x="448" y="224" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO7</text>
-  <rect x="290" y="209" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="349.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
-  <rect x="216" y="209" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="249.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO7</text>
-  <circle cx="486" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="180" r="4" fill="#4c1d95"/>
-  <text x="502" y="184" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
-  <line x1="476" y1="180" x2="452" y2="180" stroke="#94a3b8"/>
-  <rect x="290" y="169" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
-  <text x="349.0" y="184" text-anchor="middle" font-size="11.5" fill="#1f2937">DTR1 · S2</text>
-  <circle cx="486" cy="140" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="486" cy="140" r="4" fill="#4c1d95"/>
-  <text x="502" y="144" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">3V3</text>
-  <line x1="476" y1="140" x2="452" y2="140" stroke="#94a3b8"/>
-  <rect x="290" y="129" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="349.0" y="144" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
-  <circle cx="714" cy="740" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="740" r="4" fill="#4c1d95"/>
-  <text x="698" y="744" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
-  <line x1="724" y1="740" x2="748" y2="740" stroke="#94a3b8"/>
-  <rect x="792" y="729" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="851.0" y="744" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
-  <circle cx="714" cy="700" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="700" r="4" fill="#4c1d95"/>
-  <text x="698" y="704" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">5V</text>
-  <line x1="724" y1="700" x2="748" y2="700" stroke="#94a3b8"/>
-  <rect x="792" y="689" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="851.0" y="704" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
-  <circle cx="714" cy="660" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="660" r="4" fill="#4c1d95"/>
-  <text x="698" y="664" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCL</text>
-  <line x1="724" y1="660" x2="748" y2="660" stroke="#94a3b8"/>
-  <text x="752" y="664" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO3</text>
-  <rect x="792" y="649" width="118" height="22" rx="11" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="851.0" y="664" text-anchor="middle" font-size="11.5" fill="#1f2937">SCL</text>
-  <circle cx="714" cy="620" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="620" r="4" fill="#4c1d95"/>
-  <text x="698" y="624" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SDA</text>
-  <line x1="724" y1="620" x2="748" y2="620" stroke="#94a3b8"/>
-  <rect x="792" y="609" width="118" height="22" rx="11" fill="#dcfce7" stroke="#4fb879"/>
-  <text x="851.0" y="624" text-anchor="middle" font-size="11.5" fill="#1f2937">SDA</text>
-  <circle cx="714" cy="580" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="580" r="4" fill="#4c1d95"/>
-  <text x="698" y="584" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TCK</text>
-  <line x1="724" y1="580" x2="748" y2="580" stroke="#94a3b8"/>
-  <text x="752" y="584" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO0</text>
-  <rect x="792" y="569" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="851.0" y="584" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
-  <circle cx="714" cy="540" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="540" r="4" fill="#4c1d95"/>
-  <text x="698" y="544" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TMS</text>
-  <line x1="724" y1="540" x2="748" y2="540" stroke="#94a3b8"/>
-  <text x="752" y="544" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO2</text>
-  <rect x="792" y="529" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="851.0" y="544" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
-  <rect x="918" y="529" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
-  <text x="966.0" y="544" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
-  <circle cx="714" cy="500" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="500" r="4" fill="#4c1d95"/>
-  <text x="698" y="504" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TDI</text>
-  <line x1="724" y1="500" x2="748" y2="500" stroke="#94a3b8"/>
-  <rect x="792" y="489" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="851.0" y="504" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
-  <circle cx="714" cy="460" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="460" r="4" fill="#4c1d95"/>
-  <text x="698" y="464" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TDO</text>
-  <line x1="724" y1="460" x2="748" y2="460" stroke="#94a3b8"/>
-  <text x="752" y="464" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO1</text>
-  <rect x="792" y="449" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
-  <text x="851.0" y="464" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
-  <circle cx="714" cy="420" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="420" r="4" fill="#4c1d95"/>
-  <text x="698" y="424" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">RST</text>
-  <line x1="724" y1="420" x2="748" y2="420" stroke="#94a3b8"/>
-  <rect x="792" y="409" width="118" height="22" rx="11" fill="#fef3c7" stroke="#d6a738"/>
-  <text x="851.0" y="424" text-anchor="middle" font-size="11.5" fill="#1f2937">RST#</text>
-  <circle cx="714" cy="380" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="380" r="4" fill="#4c1d95"/>
-  <text x="698" y="384" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">3V3</text>
-  <line x1="724" y1="380" x2="748" y2="380" stroke="#94a3b8"/>
-  <rect x="792" y="369" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
-  <text x="851.0" y="384" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
-  <circle cx="714" cy="340" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="340" r="4" fill="#4c1d95"/>
-  <text x="698" y="344" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">CS0</text>
-  <line x1="724" y1="340" x2="748" y2="340" stroke="#94a3b8"/>
-  <rect x="792" y="329" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="851.0" y="344" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS0</text>
-  <rect x="918" y="329" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="966.0" y="344" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO2 (CS0)</text>
-  <circle cx="714" cy="300" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="300" r="4" fill="#4c1d95"/>
-  <text x="698" y="304" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">CS1</text>
-  <line x1="724" y1="300" x2="748" y2="300" stroke="#94a3b8"/>
-  <rect x="792" y="289" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="851.0" y="304" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS1</text>
-  <rect x="918" y="289" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
-  <text x="966.0" y="304" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO5 (CS1)</text>
-  <circle cx="714" cy="260" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="260" r="4" fill="#4c1d95"/>
-  <text x="698" y="264" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCK</text>
-  <line x1="724" y1="260" x2="748" y2="260" stroke="#94a3b8"/>
-  <rect x="792" y="249" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="851.0" y="264" text-anchor="middle" font-size="11.5" fill="#1f2937">SCK</text>
-  <circle cx="714" cy="220" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="220" r="4" fill="#4c1d95"/>
-  <text x="698" y="224" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">MI</text>
-  <line x1="724" y1="220" x2="748" y2="220" stroke="#94a3b8"/>
-  <rect x="792" y="209" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="851.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">MISO</text>
-  <circle cx="714" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="180" r="4" fill="#4c1d95"/>
-  <text x="698" y="184" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">MO</text>
-  <line x1="724" y1="180" x2="748" y2="180" stroke="#94a3b8"/>
-  <rect x="792" y="169" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
-  <text x="851.0" y="184" text-anchor="middle" font-size="11.5" fill="#1f2937">MOSI</text>
-  <circle cx="714" cy="140" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
-  <circle cx="714" cy="140" r="4" fill="#4c1d95"/>
-  <text x="698" y="144" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
-  <line x1="724" y1="140" x2="748" y2="140" stroke="#94a3b8"/>
-  <rect x="792" y="129" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
-  <text x="851.0" y="144" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
-  <line x1="544" y1="366" x2="544" y2="674" stroke="#e9d5ff" stroke-width="1.2"/>
-  <text transform="translate(560 520.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">UART0</text>
-  <line x1="544" y1="166" x2="544" y2="354" stroke="#e9d5ff" stroke-width="1.2"/>
-  <text transform="translate(560 260.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">UART1</text>
-  <line x1="656" y1="606" x2="656" y2="674" stroke="#e9d5ff" stroke-width="1.2"/>
-  <text transform="translate(648 640.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">I2C</text>
-  <line x1="656" y1="446" x2="656" y2="594" stroke="#e9d5ff" stroke-width="1.2"/>
-  <text transform="translate(648 520.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">JTAG</text>
-  <line x1="656" y1="166" x2="656" y2="354" stroke="#e9d5ff" stroke-width="1.2"/>
-  <text transform="translate(648 260.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">SPI</text>
+  <rect x="420" y="100" width="360" height="680" rx="10" fill="#6d28d9" stroke="#4c1d95" stroke-width="2"/>
+  <rect x="533.1102362204724" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="544.8425196850393" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="556.5748031496063" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="568.3070866141732" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="580.0393700787401" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="591.771653543307" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="603.503937007874" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="615.2362204724409" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="626.9685039370078" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="638.7007874015748" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="650.4330708661416" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="662.1653543307086" y="675.275590551181" width="4.724409448818897" height="16.173228346456696" fill="#c9ccd1"/>
+  <rect x="518.5826771653543" y="739.0551181102362" width="15.748031496062993" height="31.496062992125985" rx="2" fill="#d9dde1" stroke="#8a9096"/>
+  <rect x="665.6692913385828" y="739.0551181102362" width="15.748031496062993" height="31.496062992125985" rx="2" fill="#d9dde1" stroke="#8a9096"/>
+  <rect x="529.6062992125984" y="689.4488188976377" width="140.78740157480314" height="115.74803149606299" rx="3" fill="#cfd4da" stroke="#8a9096"/>
+  <line x1="532.6062992125984" y1="791.0236220472441" x2="667.3937007874016" y2="791.0236220472441" stroke="#8a9096"/>
+  <text x="600.0" y="825.1968503937007" text-anchor="middle" font-size="12" fill="#475569">USB-C</text>
+  <circle cx="446" cy="740" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="740" r="4" fill="#4c1d95"/>
+  <text x="462" y="744" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">GND</text>
+  <line x1="436" y1="740" x2="412" y2="740" stroke="#94a3b8"/>
+  <rect x="250" y="729" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="309.0" y="744" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <circle cx="446" cy="700" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="700" r="4" fill="#4c1d95"/>
+  <text x="462" y="704" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">5V</text>
+  <line x1="436" y1="700" x2="412" y2="700" stroke="#94a3b8"/>
+  <rect x="250" y="689" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="309.0" y="704" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
+  <circle cx="446" cy="660" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="660" r="4" fill="#4c1d95"/>
+  <text x="462" y="664" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">CTS</text>
+  <line x1="436" y1="660" x2="412" y2="660" stroke="#94a3b8"/>
+  <rect x="250" y="649" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="309.0" y="664" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
+  <circle cx="446" cy="620" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="620" r="4" fill="#4c1d95"/>
+  <text x="462" y="624" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">TX</text>
+  <line x1="436" y1="620" x2="412" y2="620" stroke="#94a3b8"/>
+  <rect x="250" y="609" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="309.0" y="624" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
+  <circle cx="446" cy="580" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="580" r="4" fill="#4c1d95"/>
+  <text x="462" y="584" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RX</text>
+  <line x1="436" y1="580" x2="412" y2="580" stroke="#94a3b8"/>
+  <rect x="250" y="569" width="118" height="22" rx="11" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
+  <text x="309.0" y="584" text-anchor="middle" font-size="11.5" fill="#6b7280">SDA</text>
+  <circle cx="446" cy="540" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="540" r="4" fill="#4c1d95"/>
+  <text x="462" y="544" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RTS</text>
+  <line x1="436" y1="540" x2="412" y2="540" stroke="#94a3b8"/>
+  <rect x="250" y="529" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="309.0" y="544" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
+  <circle cx="446" cy="500" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="500" r="4" fill="#4c1d95"/>
+  <text x="462" y="504" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
+  <line x1="436" y1="500" x2="412" y2="500" stroke="#94a3b8"/>
+  <text x="408" y="504" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO5</text>
+  <rect x="250" y="489" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="309.0" y="504" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS1</text>
+  <rect x="146" y="489" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="194.0" y="504" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO5 (CS1)</text>
+  <circle cx="446" cy="460" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="460" r="4" fill="#4c1d95"/>
+  <text x="462" y="464" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DSR</text>
+  <line x1="436" y1="460" x2="412" y2="460" stroke="#94a3b8"/>
+  <rect x="250" y="449" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="309.0" y="464" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
+  <rect x="146" y="449" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="194.0" y="464" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
+  <circle cx="446" cy="420" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="420" r="4" fill="#4c1d95"/>
+  <text x="462" y="424" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RI</text>
+  <line x1="436" y1="420" x2="412" y2="420" stroke="#94a3b8"/>
+  <rect x="250" y="409" width="118" height="22" rx="11" fill="#ffffff" stroke="#4fb879" stroke-dasharray="4 3"/>
+  <text x="309.0" y="424" text-anchor="middle" font-size="11.5" fill="#6b7280">SCL</text>
+  <circle cx="446" cy="380" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="380" r="4" fill="#4c1d95"/>
+  <text x="462" y="384" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DCD</text>
+  <line x1="436" y1="380" x2="412" y2="380" stroke="#94a3b8"/>
+  <text x="408" y="384" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO4</text>
+  <rect x="250" y="369" width="118" height="22" rx="11" fill="#f5f5f4" stroke="#a8a29e"/>
+  <text x="309.0" y="384" text-anchor="middle" font-size="10" fill="#1f2937">ACT: USB ready, low</text>
+  <rect x="176" y="369" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="209.0" y="384" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO4</text>
+  <circle cx="446" cy="340" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="340" r="4" fill="#4c1d95"/>
+  <text x="462" y="344" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RX</text>
+  <line x1="436" y1="340" x2="412" y2="340" stroke="#94a3b8"/>
+  <rect x="250" y="329" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="309.0" y="344" text-anchor="middle" font-size="11.5" fill="#1f2937">RXD1</text>
+  <circle cx="446" cy="300" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="300" r="4" fill="#4c1d95"/>
+  <text x="462" y="304" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">TX</text>
+  <line x1="436" y1="300" x2="412" y2="300" stroke="#94a3b8"/>
+  <rect x="250" y="289" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="309.0" y="304" text-anchor="middle" font-size="11.5" fill="#1f2937">TXD1</text>
+  <circle cx="446" cy="260" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="260" r="4" fill="#4c1d95"/>
+  <text x="462" y="264" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">CTS</text>
+  <line x1="436" y1="260" x2="412" y2="260" stroke="#94a3b8"/>
+  <text x="408" y="264" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO6</text>
+  <rect x="250" y="249" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="309.0" y="264" text-anchor="middle" font-size="11.5" fill="#1f2937">CTS1</text>
+  <rect x="176" y="249" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="209.0" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO6</text>
+  <circle cx="446" cy="220" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="220" r="4" fill="#4c1d95"/>
+  <text x="462" y="224" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">RTS</text>
+  <line x1="436" y1="220" x2="412" y2="220" stroke="#94a3b8"/>
+  <text x="408" y="224" text-anchor="end" font-size="10" font-style="italic" fill="#7c3aed">IO7</text>
+  <rect x="250" y="209" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="309.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">RTS1 · S1</text>
+  <rect x="176" y="209" width="66" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="209.0" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO7</text>
+  <circle cx="446" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="180" r="4" fill="#4c1d95"/>
+  <text x="462" y="184" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">DTR</text>
+  <line x1="436" y1="180" x2="412" y2="180" stroke="#94a3b8"/>
+  <rect x="250" y="169" width="118" height="22" rx="11" fill="#ffedd5" stroke="#e59a52"/>
+  <text x="309.0" y="184" text-anchor="middle" font-size="11.5" fill="#1f2937">DTR1 · S2</text>
+  <circle cx="446" cy="140" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="446" cy="140" r="4" fill="#4c1d95"/>
+  <text x="462" y="144" text-anchor="start" font-size="11" font-weight="bold" fill="#fff">3V3</text>
+  <line x1="436" y1="140" x2="412" y2="140" stroke="#94a3b8"/>
+  <rect x="250" y="129" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="309.0" y="144" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
+  <circle cx="754" cy="740" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="740" r="4" fill="#4c1d95"/>
+  <text x="738" y="744" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
+  <line x1="764" y1="740" x2="788" y2="740" stroke="#94a3b8"/>
+  <rect x="832" y="729" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="891.0" y="744" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <circle cx="754" cy="700" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="700" r="4" fill="#4c1d95"/>
+  <text x="738" y="704" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">5V</text>
+  <line x1="764" y1="700" x2="788" y2="700" stroke="#94a3b8"/>
+  <rect x="832" y="689" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="891.0" y="704" text-anchor="middle" font-size="11.5" fill="#1f2937">5 V (USB)</text>
+  <circle cx="754" cy="660" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="660" r="4" fill="#4c1d95"/>
+  <text x="738" y="664" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCL</text>
+  <line x1="764" y1="660" x2="788" y2="660" stroke="#94a3b8"/>
+  <text x="792" y="664" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO3</text>
+  <rect x="832" y="649" width="118" height="22" rx="11" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="891.0" y="664" text-anchor="middle" font-size="11.5" fill="#1f2937">SCL</text>
+  <circle cx="754" cy="620" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="620" r="4" fill="#4c1d95"/>
+  <text x="738" y="624" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SDA</text>
+  <line x1="764" y1="620" x2="788" y2="620" stroke="#94a3b8"/>
+  <rect x="832" y="609" width="118" height="22" rx="11" fill="#dcfce7" stroke="#4fb879"/>
+  <text x="891.0" y="624" text-anchor="middle" font-size="11.5" fill="#1f2937">SDA</text>
+  <circle cx="754" cy="580" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="580" r="4" fill="#4c1d95"/>
+  <text x="738" y="584" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TCK</text>
+  <line x1="764" y1="580" x2="788" y2="580" stroke="#94a3b8"/>
+  <text x="792" y="584" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO0</text>
+  <rect x="832" y="569" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="891.0" y="584" text-anchor="middle" font-size="11.5" fill="#6b7280">SCK</text>
+  <circle cx="754" cy="540" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="540" r="4" fill="#4c1d95"/>
+  <text x="738" y="544" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TMS</text>
+  <line x1="764" y1="540" x2="788" y2="540" stroke="#94a3b8"/>
+  <text x="792" y="544" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO2</text>
+  <rect x="832" y="529" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="891.0" y="544" text-anchor="middle" font-size="11.5" fill="#6b7280">SCS0</text>
+  <rect x="958" y="529" width="96" height="22" rx="11" fill="#ffffff" stroke="#2f9e8f" stroke-dasharray="4 3"/>
+  <text x="1006.0" y="544" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b7280">IO2 (CS0)</text>
+  <circle cx="754" cy="500" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="500" r="4" fill="#4c1d95"/>
+  <text x="738" y="504" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TDI</text>
+  <line x1="764" y1="500" x2="788" y2="500" stroke="#94a3b8"/>
+  <rect x="832" y="489" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="891.0" y="504" text-anchor="middle" font-size="11.5" fill="#6b7280">MOSI</text>
+  <circle cx="754" cy="460" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="460" r="4" fill="#4c1d95"/>
+  <text x="738" y="464" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">TDO</text>
+  <line x1="764" y1="460" x2="788" y2="460" stroke="#94a3b8"/>
+  <text x="792" y="464" text-anchor="start" font-size="10" font-style="italic" fill="#7c3aed">IO1</text>
+  <rect x="832" y="449" width="118" height="22" rx="11" fill="#ffffff" stroke="#5b8fd9" stroke-dasharray="4 3"/>
+  <text x="891.0" y="464" text-anchor="middle" font-size="11.5" fill="#6b7280">MISO</text>
+  <circle cx="754" cy="420" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="420" r="4" fill="#4c1d95"/>
+  <text x="738" y="424" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">RST</text>
+  <line x1="764" y1="420" x2="788" y2="420" stroke="#94a3b8"/>
+  <rect x="832" y="409" width="118" height="22" rx="11" fill="#fef3c7" stroke="#d6a738"/>
+  <text x="891.0" y="424" text-anchor="middle" font-size="11.5" fill="#1f2937">RST#</text>
+  <circle cx="754" cy="380" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="380" r="4" fill="#4c1d95"/>
+  <text x="738" y="384" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">3V3</text>
+  <line x1="764" y1="380" x2="788" y2="380" stroke="#94a3b8"/>
+  <rect x="832" y="369" width="118" height="22" rx="11" fill="#fde2e2" stroke="#d97b7b"/>
+  <text x="891.0" y="384" text-anchor="middle" font-size="11.5" fill="#1f2937">3.3 V</text>
+  <circle cx="754" cy="340" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="340" r="4" fill="#4c1d95"/>
+  <text x="738" y="344" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">CS0</text>
+  <line x1="764" y1="340" x2="788" y2="340" stroke="#94a3b8"/>
+  <rect x="832" y="329" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="891.0" y="344" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS0</text>
+  <rect x="958" y="329" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="1006.0" y="344" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO2 (CS0)</text>
+  <circle cx="754" cy="300" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="300" r="4" fill="#4c1d95"/>
+  <text x="738" y="304" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">CS1</text>
+  <line x1="764" y1="300" x2="788" y2="300" stroke="#94a3b8"/>
+  <rect x="832" y="289" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="891.0" y="304" text-anchor="middle" font-size="11.5" fill="#1f2937">SCS1</text>
+  <rect x="958" y="289" width="96" height="22" rx="11" fill="#ccfbf1" stroke="#2f9e8f"/>
+  <text x="1006.0" y="304" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1f2937">IO5 (CS1)</text>
+  <circle cx="754" cy="260" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="260" r="4" fill="#4c1d95"/>
+  <text x="738" y="264" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">SCK</text>
+  <line x1="764" y1="260" x2="788" y2="260" stroke="#94a3b8"/>
+  <rect x="832" y="249" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="891.0" y="264" text-anchor="middle" font-size="11.5" fill="#1f2937">SCK</text>
+  <circle cx="754" cy="220" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="220" r="4" fill="#4c1d95"/>
+  <text x="738" y="224" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">MI</text>
+  <line x1="764" y1="220" x2="788" y2="220" stroke="#94a3b8"/>
+  <rect x="832" y="209" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="891.0" y="224" text-anchor="middle" font-size="11.5" fill="#1f2937">MISO</text>
+  <circle cx="754" cy="180" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="180" r="4" fill="#4c1d95"/>
+  <text x="738" y="184" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">MO</text>
+  <line x1="764" y1="180" x2="788" y2="180" stroke="#94a3b8"/>
+  <rect x="832" y="169" width="118" height="22" rx="11" fill="#dbeafe" stroke="#5b8fd9"/>
+  <text x="891.0" y="184" text-anchor="middle" font-size="11.5" fill="#1f2937">MOSI</text>
+  <circle cx="754" cy="140" r="9" fill="#e5e7eb" stroke="#b8bec5"/>
+  <circle cx="754" cy="140" r="4" fill="#4c1d95"/>
+  <text x="738" y="144" text-anchor="end" font-size="11" font-weight="bold" fill="#fff">GND</text>
+  <line x1="764" y1="140" x2="788" y2="140" stroke="#94a3b8"/>
+  <rect x="832" y="129" width="118" height="22" rx="11" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="891.0" y="144" text-anchor="middle" font-size="11.5" fill="#1f2937">GND</text>
+  <line x1="504" y1="366" x2="504" y2="674" stroke="#e9d5ff" stroke-width="1.2"/>
+  <text transform="translate(520 520.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">UART0</text>
+  <line x1="504" y1="166" x2="504" y2="354" stroke="#e9d5ff" stroke-width="1.2"/>
+  <text transform="translate(520 260.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">UART1</text>
+  <line x1="696" y1="606" x2="696" y2="674" stroke="#e9d5ff" stroke-width="1.2"/>
+  <text transform="translate(688 640.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">I2C</text>
+  <line x1="696" y1="446" x2="696" y2="594" stroke="#e9d5ff" stroke-width="1.2"/>
+  <text transform="translate(688 520.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">JTAG</text>
+  <line x1="696" y1="166" x2="696" y2="354" stroke="#e9d5ff" stroke-width="1.2"/>
+  <text transform="translate(688 260.0) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="#f5f3ff">SPI</text>
   <rect x="572.0" y="290" width="56" height="150" rx="3" fill="#1d1d1d"/>
   <rect x="564.0" y="295.5" width="8" height="4" fill="#c9ccd1"/><rect x="628.0" y="295.5" width="8" height="4" fill="#c9ccd1"/>
   <rect x="564.0" y="310.5" width="8" height="4" fill="#c9ccd1"/><rect x="628.0" y="310.5" width="8" height="4" fill="#c9ccd1"/>
@@ -242,7 +259,7 @@
   <rect x="564.0" y="415.5" width="8" height="4" fill="#c9ccd1"/><rect x="628.0" y="415.5" width="8" height="4" fill="#c9ccd1"/>
   <rect x="564.0" y="430.5" width="8" height="4" fill="#c9ccd1"/><rect x="628.0" y="430.5" width="8" height="4" fill="#c9ccd1"/>
   <text transform="translate(605.0 365.0) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#e5e5e5">CH347T</text>
-  <rect x="582.0" y="528" width="36" height="40" rx="4" fill="#e9ecef" stroke="#9aa0a6"/><text x="600.0" y="552" text-anchor="middle" font-size="9" fill="#555">8 MHz</text>
+  <rect x="578.0" y="241.0" width="44" height="24" rx="4" fill="#e9ecef" stroke="#9aa0a6"/><text x="600.0" y="256.0" text-anchor="middle" font-size="9" fill="#555">8 MHz</text>
   <rect x="570.0" y="158" width="60" height="58" rx="4" fill="#1b1b1b" stroke="#000"/>
   <rect x="578.0" y="166" width="34" height="16" rx="2" fill="#3a3a3a" stroke="#555"/>
   <rect x="594.0" y="168" width="16" height="12" rx="1" fill="#ffffff"/>
@@ -251,8 +268,6 @@
   <rect x="580.0" y="192" width="16" height="12" rx="1" fill="#ffffff"/>
   <text x="622.0" y="202" text-anchor="middle" font-size="9" fill="#e5e5e5">S1</text>
   <text x="576.0" y="152" font-size="8.5" fill="#f5f3ff">ON</text><text x="614.0" y="152" text-anchor="end" font-size="8.5" fill="#f5f3ff">OFF</text>
-  <rect x="565.0" y="774" width="70" height="46" rx="6" fill="#cfd4da" stroke="#8a9096"/>
-  <text x="600.0" y="840" text-anchor="middle" font-size="12" fill="#475569">USB-C</text>
   <rect x="40" y="851" width="18" height="18" rx="9" fill="#dcfce7" stroke="#4fb879"/>
   <text x="64" y="864" font-size="12" fill="#374151">I2C</text>
   <rect x="107" y="851" width="18" height="18" rx="9" fill="#dbeafe" stroke="#5b8fd9"/>
