@@ -1,5 +1,19 @@
 # Releases
 
+## 1.5.4
+
+- **The MPU board tests check the driver, not the module** (the user: "fix
+  both in atiic", after a CH347 and dart side by side on r8845, a module on
+  each). `test/board/imu.js`, one copy for the MPU-6050, MPU-6500 and
+  MPU-6500 SPI tests: |a| at rest within 0.75-1.25 g (a wrong range reads
+  0.5 or 2 g; one module read 1.19 g every run, on any adapter: its offset,
+  now a diagnostic, not a failure); the FIFO's rate counted from its first
+  sample, not from `startFifo()` (from there both adapters read 0.943-0.996
+  samples a ms, under the old 0.95 now and then: the sensor's start-up), and
+  each sample's |a| against the same module's reading at rest (within
+  0.05 g). The MPU-6500's test: 10/10 on the CH347 and 10/10 on dart, 300
+  samples in 300-301 ms after the first on both.
+
 ## 1.5.3
 
 - **A dart is told by its answer, not its name** (the user: "but why there
