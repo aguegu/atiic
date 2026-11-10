@@ -30,7 +30,7 @@ const bus = await openDart(400000); // 100 kHz by default
 console.log(await bus.scan()); // e.g. [ 104 ]: 0x68
 const [whoAmI] = await bus.writeRead(0x68, [0x75], 1);
 await bus.speed(100000, 90); // a sensor holding SCL up to 90 ms
-console.log(await bus.info()); // { version, speed, stretchMs, payloadMax, readMax, uniqueId }
+console.log(await bus.info()); // { protocol, version, speed, stretchMs, payloadMax, readMax, uniqueId }
 await bus.close();
 ```
 
@@ -44,7 +44,9 @@ const bus = await new Dart(device).open(400000);
 ```
 
 `0xffff` is nobody's vendor ID, so `open()` also checks the product string
-is "dart".
+is "dart". The command set is dart's, the same whatever chip a dart is
+built on; `open()` reads its version from INFO and refuses a major it
+doesn't speak (this adapter: 1.x; a minor only adds).
 
 ## The command set
 
@@ -60,7 +62,7 @@ time; numbers little-endian.
 
 | Op | Payload | Reply data |
 |---|---|---|
-| 0x01 INFO | none | version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID |
+| 0x01 INFO | none | the command set's version (uint16: major high byte, minor low; 1.0), the firmware's version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID |
 | 0x02 SPEED | Hz (uint32: 100000 or 400000), stretch limit (uint16 ms, optional) | none |
 | 0x10 I2C | address, read length (uint16), the bytes to write | the bytes read |
 | 0x11 SCAN | first, last address | the addresses that acknowledge |

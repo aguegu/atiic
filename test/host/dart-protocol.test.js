@@ -9,7 +9,7 @@ const SLAVE = 0x52;
 
 // a fake dart: the bytes of each request kept, replies built as the
 // firmware's main.c does (op, tag, status, 0, count; data on OK)
-function fakeDart({ productName = 'dart', writable = 0x100, stale = null } = {}) {
+function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protocol = 0x0100 } = {}) {
   const regs = new Uint8Array(256);
   let pointer = 0;
   let pending = null;
@@ -22,7 +22,7 @@ function fakeDart({ productName = 'dart', writable = 0x100, stale = null } = {})
     const len = q[2] | (q[3] << 8);
     const p = q.slice(4);
     if (p.length !== len) return reply(q, -17);
-    if (q[0] === OP.INFO) return reply(q, 0, [1, 0, 0xa0, 0x86, 0x01, 0, 2, 0, 0, 4, 0, 4, 0x7f, 0x59, 0xcf, 0xcc, 0x52, 0x93, 0xd9, 0x46]);
+    if (q[0] === OP.INFO) return reply(q, 0, [protocol & 0xff, protocol >> 8, 1, 0, 0xa0, 0x86, 0x01, 0, 2, 0, 0, 4, 0, 4, 0x7f, 0x59, 0xcf, 0xcc, 0x52, 0x93, 0xd9, 0x46]);
     if (q[0] === OP.SPEED) {
       const hz = p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
       return reply(q, hz === 100000 || hz === 400000 ? 0 : -18);
@@ -78,10 +78,16 @@ function fakeDart({ productName = 'dart', writable = 0x100, stale = null } = {})
 }
 
 describe('dart protocol', () => {
-  it('opens: checks the product name, claims, sets 100 kHz', async () => {
+  it('opens: checks the product name, reads INFO, sets 100 kHz', async () => {
     const dev = fakeDart();
     await new Dart(dev).open();
-    assert.deepEqual([...dev.sent[0]], [OP.SPEED, 1, 4, 0, 0xa0, 0x86, 0x01, 0x00]);
+    assert.deepEqual([...dev.sent[0]], [OP.INFO, 1, 0, 0]);
+    assert.deepEqual([...dev.sent[1]], [OP.SPEED, 2, 4, 0, 0xa0, 0x86, 0x01, 0x00]);
+  });
+
+  it('takes a newer minor of the command set, refuses another major', async () => {
+    await new Dart(fakeDart({ protocol: 0x0103 })).open();
+    await assert.rejects(new Dart(fakeDart({ protocol: 0x0200 })).open(), /command set 2\.0, this atiic speaks 1\.x/);
   });
 
   it('refuses an ffff:da92 that isn\'t a dart', async () => {
@@ -93,7 +99,7 @@ describe('dart protocol', () => {
     const bus = await new Dart(dev).open();
     dev.regs.set([0x70, 0x71], 0x75);
     assert.deepEqual([...await bus.writeRead(SLAVE, [0x75], 2)], [0x70, 0x71]);
-    assert.deepEqual([...dev.sent.at(-1)], [OP.I2C, 2, 4, 0, SLAVE, 2, 0, 0x75]);
+    assert.deepEqual([...dev.sent.at(-1)], [OP.I2C, dev.sent.at(-1)[1], 4, 0, SLAVE, 2, 0, 0x75]);
   });
 
   it('write, read, acks, scan', async () => {
@@ -125,9 +131,9 @@ describe('dart protocol', () => {
     assert.equal((await bus.request(0x7e)).status, -16);
   });
 
-  it('info: version, speed, stretch limit, limits, the unique ID', async () => {
+  it('info: the protocol\'s and firmware\'s versions, speed, stretch limit, limits, the unique ID', async () => {
     const bus = await new Dart(fakeDart()).open();
-    assert.deepEqual(await bus.info(), { version: 1, speed: 100000, stretchMs: 2, payloadMax: 1024, readMax: 1024, uniqueId: '7F59CFCC5293D946' });
+    assert.deepEqual(await bus.info(), { protocol: 0x0100, version: 1, speed: 100000, stretchMs: 2, payloadMax: 1024, readMax: 1024, uniqueId: '7F59CFCC5293D946' });
   });
 
   it('a reply with another tag (a request cut short before) is skipped', async () => {

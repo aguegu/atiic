@@ -11,6 +11,9 @@ export const VENDOR_ID = 0xffff;
 export const PRODUCT_ID = 0xda92;
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
 export const PRODUCT_NAME = 'dart';
+// the command set's version this adapter speaks: a dart with another major
+// is refused at open; a minor only adds, so any minor is taken
+export const PROTOCOL_MAJOR = 1;
 
 const INTERFACE = 0;
 const ENDPOINT = 1;
@@ -59,6 +62,10 @@ export class Dart {
     }
     if (this.device.configuration === null) await this.device.selectConfiguration(1);
     await this.device.claimInterface(INTERFACE);
+    const { protocol } = await this.info();
+    if (protocol >> 8 !== PROTOCOL_MAJOR) {
+      throw new Error(`dart's command set ${protocol >> 8}.${protocol & 0xff}, this atiic speaks ${PROTOCOL_MAJOR}.x`);
+    }
     await this.speed(speed);
     return this;
   }
@@ -97,9 +104,9 @@ export class Dart {
     if (status) throw new DartError(status);
     const v = new DataView(data.buffer, data.byteOffset, data.byteLength);
     return {
-      version: v.getUint16(0, true), speed: v.getUint32(2, true), stretchMs: v.getUint16(6, true),
-      payloadMax: v.getUint16(8, true), readMax: v.getUint16(10, true),
-      uniqueId: [...data.slice(12, 20)].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase(),
+      protocol: v.getUint16(0, true), version: v.getUint16(2, true), speed: v.getUint32(4, true),
+      stretchMs: v.getUint16(8, true), payloadMax: v.getUint16(10, true), readMax: v.getUint16(12, true),
+      uniqueId: [...data.slice(14, 22)].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase(),
     };
   }
 

@@ -1,5 +1,14 @@
 # Releases
 
+## 1.5.1
+
+- **dart's command set has a version** (the user: "a protocol version is a
+  good idea", the command set kept whatever chip a dart is built on): INFO
+  starts with it (uint16, major high byte, minor low; 1.0), the firmware's
+  version after it. `open()` reads INFO and refuses a major it doesn't speak
+  (`PROTOCOL_MAJOR` 1), taking any minor. `info()` gives `protocol`. The
+  fake dart's tests: a newer minor taken, another major refused.
+
 ## 1.5.0
 
 - **dart, a third adapter** (the user: "let's move to atiic to support it",
