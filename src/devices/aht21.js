@@ -1,4 +1,5 @@
-// Aosong's AHT21B: relative humidity and temperature, at 0x38. Adapter-free:
+// Aosong's AHT21B and AHT30: relative humidity and temperature, at 0x38.
+// Adapter-free:
 // any I2C bus with write(address, bytes), read(address, n) and
 // writeRead(address, bytes, n).
 //
@@ -11,6 +12,14 @@
 //   RH = S / 2^20 x 100 (%),  T = S / 2^20 x 200 - 50 (C)
 // Measure every 2 s or more (4.4: the sensor warms itself, under 0.1 C so).
 // On r8845's module: status 0x18; 28.1 C, 67.7 % RH.
+//
+// The AHT30 (its datasheet, June 2024, docs/AHT30-datasheet.pdf, 5.2) is read
+// the same way: the same command and 80 ms, the same 7 bytes, CRC-8 and
+// formulas, status 0x18 (bit 3 calibration enabled, bit 4 its OTP's CRC
+// passed). No ID register: the two can't be told apart on the bus, so one
+// driver, named for both. The AHT30 differs in its power-up (5 ms, not
+// 100) and its pace: a reading every second or more (2.3), the AHT21B every
+// 2 s. On r8845's dart (2026-11-10), an AHT30 module: 21.9 C, 44.1 % RH.
 
 const ADDRESS = 0x38;
 const STATUS = 0x71;
@@ -36,7 +45,7 @@ export function crc8(bytes) {
 
 class Aht21 {
   static chip = {
-    name: 'AHT21B',
+    name: 'AHT21B / AHT30',
     // no ID: its status byte, the calibration bits set and not busy (no
     // measurement started): 0xFF, what a device with nothing at 0x71 reads
     // (a BH1745NUC at 0x38), isn't one
@@ -60,7 +69,7 @@ class Aht21 {
   async init() {
     const s = await this.status();
     if ((s & STATUS_READY) !== STATUS_READY) {
-      throw new Error(`AHT21B status 0x${s.toString(16)}: needs Aosong's initialisation of 0x1B, 0x1C, 0x1E first`);
+      throw new Error(`AHT2x status 0x${s.toString(16)}: needs Aosong's initialisation of 0x1B, 0x1C, 0x1E first`);
     }
   }
 
@@ -72,10 +81,10 @@ class Aht21 {
     for (let i = 0; ; i++) {
       d = await this.bus.read(this.address, 7);
       if (!(d[0] & BUSY)) break;
-      if (i >= BUSY_LIMIT) throw new Error('AHT21B still busy');
+      if (i >= BUSY_LIMIT) throw new Error('AHT2x still busy');
       await delay(BUSY_POLL_MS);
     }
-    if (crc8(d.slice(0, 6)) !== d[6]) throw new Error(`AHT21B CRC: 0x${d[6].toString(16)}`);
+    if (crc8(d.slice(0, 6)) !== d[6]) throw new Error(`AHT2x CRC: 0x${d[6].toString(16)}`);
     const rh = (d[1] << 12) | (d[2] << 4) | (d[3] >> 4);
     const t = ((d[3] & 0x0f) << 16) | (d[4] << 8) | d[5];
     return { temperature: (t / FULL_SCALE) * 200 - 50, humidity: (rh / FULL_SCALE) * 100 };

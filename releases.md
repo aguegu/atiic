@@ -1,5 +1,14 @@
 # Releases
 
+## Next
+
+- **The AHT30 is read by `Aht21`** (the user's module on r8845's dart, with
+  its datasheet, Aosong, June 2024, now in docs/): the same command, wait,
+  7 bytes, CRC-8 and formulas as the AHT21B, status 0x18 alike, and no ID
+  register, so the two aren't told apart: the driver's name is "AHT21B /
+  AHT30", its errors "AHT2x". The AHT30's power-up is 5 ms, its pace a
+  reading a second or more. Board test 2/2 on the AHT30: 21.9 C, 44.1 % RH.
+
 ## 1.5.10
 
 - **`Sht3x`, Sensirion's SHT3x-DIS** (SHT30, SHT31, SHT35; the user's
