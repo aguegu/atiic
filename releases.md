@@ -1,5 +1,23 @@
 # Releases
 
+## 1.5.7
+
+- **The VL53L1X's other numbers and its region of interest.** `measure()`
+  gives, besides the distance and status, `signal` (kcps of its own light
+  back), `ambient` (kcps of the background) and `spads` (the SPADs used),
+  as ST's GetSignalRate, GetAmbientRate and GetSpadNb, all from one 17-byte
+  read of 0x89-0x99 (as the ULD's GetResult). `roi({ width, height, centre
+  })` narrows its view to 4-16 SPADs a side, centred on SPAD 199 by default;
+  `Vl53l1x.spadAt(row, column)` gives ST's SPAD numbers (the table in
+  SparkFun's SparkFun_VL53L1X.h). On dart at r8845, a target at ~1 m:
+  16 x 16 215 SPADs and ~8.6 Mcps, 8 x 8 53 SPADs and ~2.5 Mcps, 4 x 4 12
+  SPADs and ~0.6 Mcps with status 2 (signal fail) every time.
+- **The timing budgets ST's datasheet allows** (DS12385 rev. 8, 3.5.2: 20 ms
+  the minimum, short mode only; 33 ms the minimum in every mode): the ULD's
+  15 ms short and 20 ms long, offered in 1.5.6, are refused now. Long mode
+  at 20 ms had read ~6 cm short of the others.
+- The board test, on dart at r8845: 11/11.
+
 ## 1.5.6
 
 - **The VL53L1X's distance mode and timing budget**: `configure({ mode,
