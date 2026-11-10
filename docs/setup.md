@@ -514,6 +514,31 @@ typical); 19.7-20.0 C and 46.9-47.3 % RH, where the SHT20 beside it read
 more apart than both, the air at each not the same). Board test 3/3, three
 runs, with the SHT20 and the BH1745NUC on the same bus.
 
+## Air pressure: the SPL06
+
+Goertek's SPL06-001 at 0x77 (SDO high; 0x76 to GND), r8845's on the purple
+CJMCU board (VCC, GND, SCK = SCL, SDI = SDA, CSB free, SDO): no regulator on
+it, so 3.3 V only (the chip: 1.7-3.6 V, 4 V absolute maximum). On dart
+beside an AHT30, 2026-11-10:
+
+```js
+const p = new Spl06(bus); // 0x77
+await p.init({ mode: 'indoor' }); // or 'weather', 'sports': its datasheet's Table 5
+const { pressure, temperature } = await p.measure(); // Pa, C
+```
+
+Its datasheet (Version 7.0) is marked confidential by Goertek, though
+distributors publish it: not copied into docs/. Known by its ID 0x10 at
+0Dh (Infineon's DPS310, of the same design, reads 0x10 too). Its 18
+coefficient bytes are decoded as its Table 10 lays them out (c0, c1 12
+bits; c00, c10 20 bits; the rest 16), compensated as its 5.6 says. On
+r8845: 1020.1 hPa and 20.5 C (the AHT30 beside it 20.57 C); the spread of
+a still room 0.9 Pa at indoor, 0.1 Pa at sports, ~2 Pa at weather; a
+reading every 1013, 509 and 255 ms. A mode change used to let one
+measurement from the old mode through, read with the new scale (833.63
+hPa among 1020.10s): the old mode's measurement is now waited out and its
+result cleared before the new one starts.
+
 ## Humidity again: the AHT21B
 
 Aosong's AHT21B at 0x38 (r8845: on the CH341T):

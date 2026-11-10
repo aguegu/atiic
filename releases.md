@@ -2,6 +2,17 @@
 
 ## Next
 
+- **`Spl06`, Goertek's SPL06-001 barometer** (the user's CJMCU module on
+  r8845's dart, from its datasheet, Version 7.0, not copied: Goertek marks
+  it confidential): at 0x77 or 0x76, known by its ID 0x10; a soft reset,
+  ready awaited, its coefficients decoded (Table 10: 12-, 20- and 16-bit),
+  its 5.6 compensation with Table 4's scale factors; its Table 5 modes,
+  weather, indoor (the default) and sports, measured in the background,
+  the result shift above 8 times. A mode change waits out the old mode's
+  measurement and clears its result: before, one could be read with the
+  new scale (833.63 hPa among 1020.10s). On r8845: 1020.1 hPa, 20.5 C (the
+  AHT30 beside it 20.57 C), a still room's spread 0.9 Pa at indoor, 0.1 at
+  sports. Host tests (198 in all); board test 3/3, twice.
 - **The AHT30 is read by `Aht21`** (the user's module on r8845's dart, with
   its datasheet, Aosong, June 2024, now in docs/): the same command, wait,
   7 bytes, CRC-8 and formulas as the AHT21B, status 0x18 alike, and no ID

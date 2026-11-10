@@ -6,6 +6,7 @@ import Bmx055Mag from './devices/bmx055-mag.js';
 import Max30102 from './devices/max30102.js';
 import Sht20 from './devices/sht20.js';
 import Sht3x from './devices/sht3x.js';
+import Spl06 from './devices/spl06.js';
 import Vl53l1x from './devices/vl53l1x.js';
 import Mlx90614 from './devices/mlx90614.js';
 import Aht21 from './devices/aht21.js';
@@ -32,6 +33,7 @@ export {
   Max30102,
   Sht20,
   Sht3x,
+  Spl06,
   Vl53l1x,
   Mlx90614,
   Aht21,
