@@ -3,6 +3,7 @@
 // run only with that chip there (and skip with the reason otherwise).
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 import { openCh347 } from '../../src/adapters/ch347/node.js';
+import { openDart } from '../../src/adapters/dart/node.js';
 import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3200, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
@@ -32,15 +33,16 @@ const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3
 
 // BENCH_ADAPTER (from .env.local, or the environment): the I2C bus the
 // chips' tests run on, ch341 (the default) or ch347 (a CH347T in mode 1 or a
-// CH347F). The displays' tests run on it too (their lines in its names:
+// CH347F), or dart (the user's bridge, docs/dart.md: I2C only so
+// far). The displays' tests run on it too (their lines in its names:
 // BENCH_ST7735=res=IO4,dc=IO6,cs=IO2); the BMX055 and MPU-6500 SPI benches
 // and the CH341's pin test stay on the CH341
 export const ADAPTER = process.env.BENCH_ADAPTER || 'ch341';
 // BENCH_SPI_HZ: the CH347's SCK (7.5 MHz by default; 60 MHz / 2^n); the
 // CH341's is fixed
 export const SPI_HZ = process.env.BENCH_SPI_HZ ? Number(process.env.BENCH_SPI_HZ) : undefined;
-const OPENERS = { ch341: (hz) => openCh341(hz), ch347: (hz) => openCh347(hz, SPI_HZ ? { spiHz: SPI_HZ } : {}) };
-if (!OPENERS[ADAPTER]) throw new Error(`BENCH_ADAPTER ${ADAPTER}: ch341 or ch347`);
+const OPENERS = { ch341: (hz) => openCh341(hz), ch347: (hz) => openCh347(hz, SPI_HZ ? { spiHz: SPI_HZ } : {}), dart: (hz) => openDart(hz) };
+if (!OPENERS[ADAPTER]) throw new Error(`BENCH_ADAPTER ${ADAPTER}: ch341, ch347 or dart`);
 export const openBus = (hz) => OPENERS[ADAPTER](hz);
 
 // BENCH_PS (from .env.local, or the environment): the CH341 line wired to a

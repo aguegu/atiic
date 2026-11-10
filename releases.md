@@ -1,5 +1,24 @@
 # Releases
 
+## 1.5.0
+
+- **dart, a third adapter** (the user: "let's move to atiic to support it",
+  a minor version for it): the user's USB-to-I2C bridge (docs/dart.md), `ffff:da92` "sourcekit" "dart", over WebUSB as the CH341
+  and CH347. `src/adapters/dart` (`Dart`, `FILTERS`, `DartError`;
+  `node.js`'s `openDart(speed)`), the same bus as the other two (`scan`,
+  `write`, `read`, `writeRead`, `acks`) and `info()`, `speed(hz,
+  stretchMs)`. What it adds: it waits for a held SCL (up to a stretch limit,
+  2 ms by default); a refused data byte throws `0x.. refused byte k`, told
+  from a missing device's `no ack from 0x..`; a transaction and a whole scan
+  each one USB round trip. `open()` checks the product string ("dart":
+  0xffff is nobody's vendor ID). `test/host/dart-protocol.test.js` (10, a
+  fake dart); `test/board/bench.js` takes `BENCH_ADAPTER=dart`. The
+  firmware's own bench test, on the same command set, 19/19; this adapter
+  on dart too: info, scan, a 40-byte write read back at 400 kHz, plain
+  reads continuing, acks, `0x52 refused byte 5`, `no ack from 0x2a`, 100
+  kHz with a 90 ms stretch limit read back by `info()`. No chip named (the
+  user). The firmware isn't published.
+
 ## 1.4.33
 
 - **docs/ch347.md, which line for which job** (the user's GC9A01 wiring and
