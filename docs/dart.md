@@ -82,12 +82,16 @@ time; numbers little-endian.
 ## Setup on Linux
 
 No kernel driver binds a vendor interface, so nothing to detach; the user
-needs the device node:
+needs the device node. Its own rule, for the user at the computer (a file
+named to sort before `73-seat-late.rules`, which turns `uaccess` into the
+user's access; as i2c.ninja's Get started gives it):
 
 ```
-# /etc/udev/rules.d/60-dart.rules
-SUBSYSTEM=="usb", ATTRS{idVendor}=="ffff", ATTRS{idProduct}=="da92", GROUP="plugdev", MODE="0660"
+# /etc/udev/rules.d/70-dart.rules
+SUBSYSTEM=="usb", ATTRS{idVendor}=="ffff", ATTRS{idProduct}=="da92", TAG+="uaccess"
 ```
+
+For a headless bench, a group instead (`GROUP="plugdev", MODE="0660"`).
 
 ## Tests
 
