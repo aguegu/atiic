@@ -1,5 +1,25 @@
 # Releases
 
+## 1.5.6
+
+- **The VL53L1X's distance mode and timing budget**: `configure({ mode,
+  budget, period })`, with the register values of ST's Ultra Lite Driver
+  (SetDistanceMode, SetTimingBudgetInMs, SetInterMeasurementInMs; BSD-3,
+  its notice in the file). Modes `'short'` and `'long'`; budgets 15 (short
+  only), 20, 33, 50, 100, 200, 500 ms; the period from one ranging to the
+  next defaults to the budget. Anything ST has no values for is refused.
+  The board test, on dart at r8845, a still target at ~0.94 m, ten readings
+  each:
+
+  | budget | short: ms a reading, sd | long: ms a reading, sd |
+  |---|---|---|
+  | 15 | 14.9, 4.0 mm | |
+  | 20 | 21.1, 3.3 mm | 19.8, 5.5 mm (~877 mm, 6 cm short) |
+  | 33 | 34.0, 1.3 mm | 32.7, 1.8 mm |
+  | 50 | 49.5, 0.9 mm | 49.6, 2.4 mm |
+  | 100 | 99.3, 0.6 mm | 99.3, 1.4 mm |
+  | 200 | | 198.7, 0.8 mm |
+
 ## 1.5.5
 
 - **The MPU-6500's datasheet tolerances as a diagnostic** (the user: "we just

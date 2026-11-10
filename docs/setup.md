@@ -448,6 +448,12 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
 - The VL53L1X has no public register map: atiic follows ST's Ultra Lite
   Driver (BSD-3) and its 91-byte default configuration, the same bytes
   pre-1.0 atiic used. On r8845: ~1966 mm to the room, ±2 mm, every ~98 ms.
+- `configure({ mode, budget, period })` sets the ULD's distance mode
+  (`'short'`, `'long'`), timing budget (15 (short only), 20, 33, 50, 100,
+  200 or 500 ms) and the period between readings (the budget by default).
+  On dart at r8845, a still target at ~0.94 m: a reading every budget in
+  both modes; the readings' sd 4 mm at 15 ms, under 1 mm at 50 ms short and
+  200 ms long; long mode at 20 ms read ~6 cm short.
 
 ## An IR thermometer: the MLX90614
 
