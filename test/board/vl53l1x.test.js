@@ -13,7 +13,7 @@ const PERIOD_MS = [80, 130]; // the default configuration's ~100 ms a reading (r
 // configure()'s modes and budgets, each READINGS readings: a reading every
 // budget, within PERIOD_SLACK (the sensor's oscillator against the host's
 // clock, and a reading's I2C after it)
-const CONFIGS = [['short', 15], ['short', 20], ['short', 33], ['short', 50], ['short', 100], ['long', 20], ['long', 33], ['long', 50], ['long', 100], ['long', 200]];
+const CONFIGS = [['short', 20], ['short', 33], ['short', 50], ['short', 100], ['long', 33], ['long', 50], ['long', 100], ['long', 200]];
 const PERIOD_SLACK = [0.85, 1.25];
 // the ROIs tried, sides in SPADs, largest first; at ROI_VALID_MIN and up
 // valid at ~1 m (a 4 x 4 gets too little light there)
@@ -55,8 +55,10 @@ describe('vl53l1x (board)', onlyWith(Vl53l1x), () => {
 
   // r8845, a target at ~1 m, long, 100 ms (2026-11-10): 16 x 16 215 SPADs,
   // ~8.7 Mcps; 8 x 8 53 SPADs, ~2.6 Mcps, valid; 4 x 4 12 SPADs, ~0.6
-  // Mcps, status 2 (signal fail) every time: under the sensor's minimum
-  // signal; an 8 x 8 centred at row 12 status 13, every number 0xffff
+  // Mcps, status 2 (signal fail) every time (DS12385 table 20, in the dark,
+  // the ROI on the optical centre: a 4 x 4 reaches 143-170 cm on white or
+  // gray, 45 cm on dark gray; r8845's target unknown); an 8 x 8 centred at
+  // row 12 status 13, every number 0xffff
   it('a reading\'s other numbers: its own light back, the background, the SPADs used; a smaller ROI uses fewer, gets less', async (t) => {
     await tof.configure({ mode: 'long', budget: 100 });
     const rois = {};

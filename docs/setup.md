@@ -449,11 +449,13 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
   Driver (BSD-3) and its 91-byte default configuration, the same bytes
   pre-1.0 atiic used. On r8845: ~1966 mm to the room, ±2 mm, every ~98 ms.
 - `configure({ mode, budget, period })` sets the ULD's distance mode
-  (`'short'`, `'long'`), timing budget (15 (short only), 20, 33, 50, 100,
-  200 or 500 ms) and the period between readings (the budget by default).
+  (`'short'`, `'long'`), timing budget (20 (short only), 33, 50, 100, 200
+  or 500 ms: the ULD's values the datasheet, DS12385 3.5.2, allows; the
+  ULD's 15 ms short and 20 ms long left out) and the period between readings (the budget by default).
   On dart at r8845, a still target at ~0.94 m: a reading every budget in
   both modes; the readings' sd 4 mm at 15 ms, under 1 mm at 50 ms short and
-  200 ms long; long mode at 20 ms read ~6 cm short.
+  200 ms long; long mode at 20 ms read ~6 cm short (1.5.6, before the
+  datasheet's minimums were followed).
 - `measure()` gives, besides the distance and status, `signal` (kcps of
   its own light back), `ambient` (kcps of the background) and `spads` (the
   SPADs used), as ST's GetSignalRate, GetAmbientRate and GetSpadNb.
@@ -461,7 +463,11 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
   SPADs (4-16 a side; `Vl53l1x.spadAt(row, column)` for a centre, ST's
   table as SparkFun's header has it). At ~1 m on r8845: 16 x 16 215 SPADs
   and ~8.6 Mcps; 8 x 8 53 SPADs and ~2.5 Mcps; 4 x 4 12 SPADs and ~0.6
-  Mcps, status 2 (signal fail) every time.
+  Mcps, status 2 (signal fail) every time (the datasheet's table 20: a
+  4 x 4 on the optical centre reaches 143-170 cm on white or gray in the
+  dark, 45 cm on dark gray; the target's reflectance unknown). `ambient`
+  over `spads` is the datasheet's kcps/SPAD: office light ~5, a sunny day
+  behind a window 50, direct sun 200.
 
 ## An IR thermometer: the MLX90614
 

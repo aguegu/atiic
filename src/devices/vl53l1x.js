@@ -2,7 +2,7 @@
 // registers at 16-bit addresses (high byte first). Adapter-free: any I2C bus
 // with write(address, bytes) and writeRead(address, bytes, n).
 //
-// ST's datasheet gives no register map: the sensor is driven by ST's Ultra
+// ST's datasheet (DS12385) gives no register map: the sensor is driven by ST's Ultra
 // Lite Driver (ULD, VL53L1X_api, STSW-IMG009). This follows it, as SparkFun's
 // library carries it (src/st_src/vl53l1x_class.cpp): VL53L1X_SensorInit (the
 // boot wait, the 91-byte default configuration at 0x2D-0x87, one ranging to
@@ -72,7 +72,7 @@ const RESULT_SIGNAL = 0x0098 - REG_RESULT_RANGE_STATUS; // 16 bits, Mcps, 9.7 fi
 // to whole ones (the ULD's >> 8)
 const KCPS_PER_LSB = 1000 / 128;
 const SPAD_FRACTION_BITS = 8;
-const ROI_MIN = 4; // SPADs a side (ST: a smaller ROI isn't ranged)
+const ROI_MIN = 4; // SPADs a side (DS12385 3.5: 4 x 4 the minimum, 16 x 16 the full FoV)
 const ROI_MAX = 16;
 const ROI_CENTRE_ONLY_MAX = 10; // the ULD: wider or taller, the centre forced to 199
 const ROI_CENTRE = 199; // the array's centre (the table below; ST's examples)
@@ -109,20 +109,24 @@ const OSC_CALIBRATE_MASK = 0x3ff;
 const INTERMEASUREMENT_FACTOR = 1.075;
 
 // the ULD's SetDistanceMode: short (to ~1.3 m, better in ambient light) and
-// long (to ~4 m, the default configuration's)
+// long (to ~4 m, the default configuration's; DS12385 3.5.1, its medium mode
+// not in the ULD)
 const DISTANCE_MODES = {
   short: { phasecal: 0x14, vcselA: 0x07, vcselB: 0x05, validPhaseHigh: 0x38, woiSd0: 0x0705, initialPhaseSd0: 0x0606 },
   long: { phasecal: 0x0a, vcselA: 0x0f, vcselB: 0x0d, validPhaseHigh: 0xb8, woiSd0: 0x0f0d, initialPhaseSd0: 0x0e0e },
 };
-// the ULD's SetTimingBudgetInMs: ms -> the timeouts A and B, per mode; 15 ms
-// short only
+// the ULD's SetTimingBudgetInMs: ms -> the timeouts A and B, per mode. The
+// budgets the datasheet allows (DS12385 rev. 8, 3.5.2: 20 ms the minimum,
+// in short mode only; 33 ms the minimum in every mode): the ULD's 15 ms
+// short and 20 ms long left out (dart on r8845: long at 20 ms read ~6 cm
+// short of the others, sd 5.5-9.3 mm)
 const TIMING_BUDGETS = {
   short: {
-    15: [0x001d, 0x0027], 20: [0x0051, 0x006e], 33: [0x00d6, 0x006e], 50: [0x01ae, 0x01e8],
+    20: [0x0051, 0x006e], 33: [0x00d6, 0x006e], 50: [0x01ae, 0x01e8],
     100: [0x02e1, 0x0388], 200: [0x03e1, 0x0496], 500: [0x0591, 0x05c1],
   },
   long: {
-    20: [0x001e, 0x0022], 33: [0x0060, 0x006e], 50: [0x00ad, 0x00c6],
+    33: [0x0060, 0x006e], 50: [0x00ad, 0x00c6],
     100: [0x01cc, 0x01ea], 200: [0x02d9, 0x02f8], 500: [0x048f, 0x04a4],
   },
 };
@@ -236,7 +240,7 @@ class Vl53l1x {
   }
 
   // the distance mode ('short' or 'long'), the timing budget (ms, one of the
-  // ULD's: 15 (short only), 20, 33, 50, 100, 200, 500) and the period from
+  // ULD's the datasheet allows: 20 (short only), 33, 50, 100, 200, 500) and the period from
   // one ranging's start to the next (ms, budget by default; not under it),
   // as the ULD sets them, ranging stopped and started again. After init()
   // the sensor runs the default configuration's long mode, ~100 ms

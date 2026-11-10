@@ -73,10 +73,11 @@ describe('vl53l1x (host)', () => {
     assert.equal((await s.measure()).distance, 1966);
   });
 
-  it('configure refuses what the ULD has no values for', async () => {
+  it('configure refuses what the ULD has no values for, and budgets under the datasheet\'s minimum', async () => {
     const s = new Vl53l1x(new FakeTof());
     await assert.rejects(s.configure({ mode: 'medium' }), /no distance mode medium: short, long/);
-    await assert.rejects(s.configure({ mode: 'long', budget: 15 }), /no 15 ms budget in long mode: 20, 33, 50, 100, 200, 500/);
+    await assert.rejects(s.configure({ mode: 'long', budget: 20 }), /no 20 ms budget in long mode: 33, 50, 100, 200, 500/);
+    await assert.rejects(s.configure({ mode: 'short', budget: 15 }), /no 15 ms budget in short mode: 20, 33, 50, 100, 200, 500/);
     await assert.rejects(s.configure({ budget: 50, period: 20 }), /a 20 ms period under the 50 ms budget/);
   });
 
