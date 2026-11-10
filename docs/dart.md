@@ -1,7 +1,8 @@
 # dart as the I2C bus
 
 dart is a USB-to-I2C bridge, reached over WebUSB as atiic reaches the CH341
-and CH347. It enumerates as `ffff:da92`, "sourcekit" "dart", one
+and CH347. It enumerates as `ffff:da92`, "Sourcekit" "Dart" (a browser's chooser
+shows "Dart"), one
 vendor interface with a bulk pair. Its firmware isn't published yet.
 
 What it does that WCH's adapters don't:
@@ -44,7 +45,7 @@ const bus = await new Dart(device).open(400000);
 ```
 
 `0xffff` is nobody's vendor ID, so `open()` also checks the product string
-is "dart". The command set is dart's, the same whatever chip a dart is
+ends in "Dart". The command set is dart's, the same whatever chip a dart is
 built on; `open()` reads its version from INFO and refuses a major it
 doesn't speak (this adapter: 1.x; a minor only adds).
 

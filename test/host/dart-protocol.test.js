@@ -56,7 +56,9 @@ function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protoc
     async open() { this.opened = true; },
     async close() { this.opened = false; },
     async selectConfiguration() { this.configuration = {}; },
-    async claimInterface() {},
+    claimed: false,
+    async claimInterface() { this.claimed = true; },
+    async releaseInterface() { this.claimed = false; },
     async transferOut(ep, data) {
       const q = Uint8Array.from(data);
       sent.push(q);
@@ -88,6 +90,15 @@ describe('dart protocol', () => {
   it('takes a newer minor of the command set, refuses another major', async () => {
     await new Dart(fakeDart({ protocol: 0x0103 })).open();
     await assert.rejects(new Dart(fakeDart({ protocol: 0x0200 })).open(), /command set 2\.0, this atiic speaks 1\.x/);
+  });
+
+  it('takes a product string ending in "dart", any case ("Dart"); close releases the interface, so it opens again', async () => {
+    const dev = fakeDart({ productName: 'Dart' });
+    const bus = await new Dart(dev).open();
+    await bus.close();
+    assert.equal(dev.claimed, false);
+    await new Dart(dev).open();
+    assert.equal(dev.claimed, true);
   });
 
   it('refuses an ffff:da92 that isn\'t a dart', async () => {

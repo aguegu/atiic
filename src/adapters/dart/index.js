@@ -10,7 +10,9 @@
 export const VENDOR_ID = 0xffff;
 export const PRODUCT_ID = 0xda92;
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
-export const PRODUCT_NAME = 'dart';
+// its product string ends in "dart", any case (it's "Dart", the manufacturer
+// "Sourcekit")
+export const PRODUCT_NAME = /\bdart$/i;
 // the command set's version this adapter speaks: a dart with another major
 // is refused at open; a minor only adds, so any minor is taken
 export const PROTOCOL_MAJOR = 1;
@@ -57,7 +59,7 @@ export class Dart {
   // the product string says it's a dart
   async open(speed = 100000) {
     if (!this.device.opened) await this.device.open();
-    if (this.device.productName !== PRODUCT_NAME) {
+    if (!PRODUCT_NAME.test(this.device.productName ?? '')) {
       throw new Error(`ffff:da92 is "${this.device.productName}", not a dart`);
     }
     if (this.device.configuration === null) await this.device.selectConfiguration(1);
@@ -72,6 +74,7 @@ export class Dart {
 
   async close() {
     await this.queue;
+    await this.device.releaseInterface(INTERFACE);
     await this.device.close();
   }
 

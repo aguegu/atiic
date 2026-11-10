@@ -1,5 +1,20 @@
 # Releases
 
+## 1.5.2
+
+- **dart's `close()` releases its interface** before closing the device, as
+  the CH341's and CH347's do: without it a second open in the same process
+  (`test/board/bench.js` probes the bus, then a test opens it) failed with
+  `claimInterface error: interface is busy` (found running the MPU-6500's
+  board test on dart, r8845).
+- dart's product string: one ending in "dart", any case, is taken; the
+  user named it "Dart" (it was "dart"), the manufacturer "Sourcekit" (was
+  "sourcekit"); a browser's USB chooser shows "Dart".
+- `test/board/mpu6500.test.js` on dart (r8845, `BENCH_ADAPTER=dart`), its
+  first chip test on it: 6 runs, 4 green; 2 failed the FIFO test narrowly
+  (a sample at |a| 1.109 g against 1.1; 285 samples in 300 ms against 95 %).
+  Not compared with a CH341 yet (none plugged in): open, in dart's notes.
+
 ## 1.5.1
 
 - **dart's command set has a version** (the user: "a protocol version is a
