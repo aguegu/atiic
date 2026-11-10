@@ -7,10 +7,8 @@ import assert from 'node:assert/strict';
 import { Mpu6500, SpiRegisters } from '../../src/index.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 import { MPU6500_SPI } from './bench.js';
+import { gravity, fifo } from './imu.js';
 
-const FIFO_TEST_MS = 300;
-const G_MIN = 0.9;
-const G_MAX = 1.1;
 const SETTLED_MS = 300;
 const GYRO_AGREE = 1; // deg/s
 
@@ -30,11 +28,9 @@ describe('mpu6500 over SPI (board)', { skip: MPU6500_SPI ? false : 'no BENCH_MPU
     await mpu.init();
   });
 
-  it('measures about 1 g at rest, a room temperature', async () => {
-    const r = await mpu.measure();
-    const g = Math.hypot(r.accelerometers.x, r.accelerometers.y, r.accelerometers.z);
-    assert.ok(g > G_MIN && g < G_MAX, `|a| ${g} g`);
-    assert.ok(r.temperature > 0 && r.temperature < 50, `${r.temperature} C`);
+  let restG; // |a| at rest, this module's
+  it('measures about 1 g at rest (a driver check: not the module\'s calibration), a room temperature', async (t) => {
+    restG = await gravity(t, mpu);
   });
 
   it('reads a settled gyro right after init() from sleep', async () => {
@@ -48,18 +44,8 @@ describe('mpu6500 over SPI (board)', { skip: MPU6500_SPI ? false : 'no BENCH_MPU
     }
   });
 
-  it('queues 1 kHz samples in its FIFO, none lost', async () => {
-    await mpu.startFifo();
-    const t0 = performance.now();
-    const samples = [];
-    while (performance.now() - t0 < FIFO_TEST_MS) samples.push(...await mpu.readFifo());
-    const ms = performance.now() - t0;
-    await mpu.stopFifo();
-    assert.ok(samples.length >= ms * 0.95 && samples.length <= ms * 1.05 + 1, `${samples.length} in ${ms.toFixed(0)} ms`);
-    for (const { accelerometers: { x, y, z } } of samples) {
-      const g = Math.hypot(x, y, z);
-      assert.ok(g > G_MIN && g < G_MAX, `|a| ${g} g`);
-    }
+  it('queues 1 kHz samples in its FIFO, none lost, each the module\'s |a| at rest', async (t) => {
+    await fifo(t, mpu, restG);
   });
 
   it('sleeps', async () => {
