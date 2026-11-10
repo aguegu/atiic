@@ -1,5 +1,17 @@
 # Releases
 
+## Next
+
+- **`Sht3x`, Sensirion's SHT3x-DIS** (SHT30, SHT31, SHT35; the user's
+  SHT30 on r8845's dart, from its datasheet, Version 7, 2022): at 0x44 or
+  0x45, single-shot measurements at high, medium or low repeatability
+  (Table 9's commands, Table 5's longest waits: 15.5, 6.5, 4.5 ms), both
+  words' CRCs checked, the datasheet's formulas; `hold: true` for a bus
+  that waits on a held SCL (dart: 13-14 ms a reading against 16-19);
+  known by its status register's CRC. The bench looks for it before the
+  INA231 (0x40-0x4F). Host tests; board test 3/3, three runs with an SHT20
+  and a BH1745NUC on the same bus (10/10 all three).
+
 ## 1.5.9
 
 - **`Sht20`: its resolution, and hold master on dart** (the user: "0.5hz

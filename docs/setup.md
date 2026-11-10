@@ -493,6 +493,27 @@ chips on the bench (`chip.maxSclHz`). Single or dual zone is the part
 number's (xAx single; xBx, xCx dual): this one's config register says dual,
 its can says single, its "zone 2" reads nonsense.
 
+## Humidity, the next generation: the SHT3x
+
+Sensirion's SHT3x-DIS (r8845's module: an SHT30) at 0x44 (ADDR low; 0x45
+high), on dart beside an SHT20 and a BH1745NUC (2026-11-10):
+
+```js
+const s = new Sht3x(bus, 0x44, { repeatability: 'high' }); // 'medium', 'low'
+await s.init(); // a soft reset, its status cleared
+const { temperature, humidity } = await s.measure(); // up to 15.5 ms
+// on dart: bus.speed(hz, Sht3x.STRETCH_MS); new Sht3x(bus, 0x44, { hold: true })
+```
+
+16-bit commands; temperature and humidity in one read, each word with its
+CRC (0x31 from 0xFF: the datasheet's CRC(0xBEEF) = 0x92). Known by its
+status register read back with a good CRC (no ID register). On r8845: a
+reading in 16-19 ms, 13-14 with hold (dart waiting on the held SCL; 12.5 ms
+typical); 19.7-20.0 C and 46.9-47.3 % RH, where the SHT20 beside it read
+19.5-19.7 C and 52.9-53.0 % (typically within +/-2 and +/-3 %RH: a little
+more apart than both, the air at each not the same). Board test 3/3, three
+runs, with the SHT20 and the BH1745NUC on the same bus.
+
 ## Humidity again: the AHT21B
 
 Aosong's AHT21B at 0x38 (r8845: on the CH341T):
