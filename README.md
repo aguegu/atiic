@@ -44,6 +44,7 @@ sections and quirks are in the driver's source.
 | Maxim / ADI MAX30102 | `Max30102` | pulse oximetry and heart rate (red and IR PPG), die temperature | I2C 0x57 |
 | Sensirion SHT20 | `Sht20` | relative humidity, temperature | I2C 0x40 |
 | Aosong AHT21B | `Aht21` | relative humidity, temperature | I2C 0x38 |
+| ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
 | Melexis MLX90614 | `Mlx90614` | non-contact infrared temperature, ambient temperature | I2C 0x5A (SMBus, 100 kHz) |
 | TI INA231 (INA226) | `Ina231` | current, bus voltage, power (shunt monitor) | I2C 0x40-0x4F |
@@ -75,6 +76,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | MAX30102 | **0x57** | fixed | 0x57 |
 | SHT20 | **0x40** | fixed | 0x40 |
 | AHT21B | **0x38** | fixed | 0x38 |
+| BH1745NUC | **0x38**, 0x39 | ADDR pin (low: 0x38) | 0x38 |
 | VL53L1X | **0x29** | 0x29 at power-up; software can move it (ST's driver; not in atiic) | 0x29 |
 | MLX90614 | **0x5A** | its EEPROM (SMBus address, 0x0E); not changed by atiic | 0x5A |
 | INA231 | **0x40**-0x4F | A0, A1 pins | 0x40 |

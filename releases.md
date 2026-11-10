@@ -1,5 +1,22 @@
 # Releases
 
+## Next
+
+- **`Bh1745`, ROHM's BH1745NUC colour sensor** (the user's module, on
+  r8845's dart with an SHT20), from its datasheet (Rev.002, 2016): known
+  by its part ID (0x0B in 40h) and ROHM's manufacturer ID (0xE0 in 92h),
+  at 0x38 or 0x39; a software reset, then the measurement time (160-5120
+  ms) and gain (1x, 2x, 16x); `measure()` waits for VALID and gives red,
+  green, blue and clear as counts (no lux: the datasheet gives no formula).
+  Host tests; a board test, 16x and 4x the time each giving about that
+  many counts (r8845, a dim room: 15.8-16.2 and 4.0-4.1 times), 5/5 with
+  the SHT20's twice.
+- **`Aht21`'s check wants the busy bit clear too**: a BH1745NUC at the same
+  0x38 reads 0xFF there, which had passed for the calibration bits.
+- **The bench looks for the SHT20 before the INA231** at 0x40: the INA231's
+  check reads 0xFE, an SHT20's soft-reset command (found on dart, where an
+  SHT20 stopped answering after it).
+
 ## 1.5.8
 
 - **dart's command set 1.1** (its firmware 0.02): `speed()` takes any SCL

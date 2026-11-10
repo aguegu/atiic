@@ -37,6 +37,11 @@ describe('aht21 (host)', () => {
     assert.equal(a.log.filter((e) => e[0] === 'read').length, 3);
   });
 
+  it('identify: calibrated and not busy; 0xFF (nothing at 0x71, a BH1745NUC at 0x38) isn\'t an AHT21B', async () => {
+    assert.equal(await Aht21.chip.identify(new FakeAht(R8845, 0x18), 0x38), true);
+    assert.equal(await Aht21.chip.identify(new FakeAht(R8845, 0xff), 0x38), false);
+  });
+
   it('a bad CRC throws', async () => {
     await assert.rejects(new Aht21(new FakeAht([...R8845.slice(0, 6), 0x00])).measure(), /CRC/);
   });

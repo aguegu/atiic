@@ -513,6 +513,27 @@ the bus for everything else on it (`bus held low: SCL`); with its SCL
 unplugged the bus is free. A faulty module or sensor (its datasheet: over
 3 V damages it at once); another one to try.
 
+## Colour: the BH1745NUC
+
+ROHM's colour sensor at 0x38 (ADDR low; 0x39 high), on r8845's dart with
+an SHT20 at 0x40 beside it (2026-11-10):
+
+```js
+const c = new Bh1745(bus);
+await c.init({ timeMs: 160, gain: 1 }); // a reset; 160-5120 ms, 1x, 2x or 16x
+const { red, green, blue, clear } = await c.measure(); // counts, once VALID
+```
+
+Known by its part ID (0x0B in 40h) and ROHM's manufacturer ID (0xE0 in
+92h). Counts only: its datasheet (Rev.002) plots the lux and the colour
+temperature worked out from the four but gives no formula. On r8845, a dim
+room: 4, 8, 5, 0 at 160 ms and 1x; 65, 125, 78, 14 at 16x (15.6-16.3 times);
+17, 31, 20, 3 at 640 ms (about 4 times). It shares 0x38 with the AHT21B:
+the AHT21B's check now wants its busy bit clear too, since the BH1745NUC
+reads 0xFF where the AHT21B's status would be. On the same bus the INA231's
+check (a read of 0xFE) is an SHT20's soft reset: the bench looks for the
+SHT20 first.
+
 ## Current and power: the INA231
 
 An INA231 module (its shunt marked R100: 0.1 ohm) at 0x40, in series with a

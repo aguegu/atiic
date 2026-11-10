@@ -8,6 +8,7 @@ import Sht20 from './devices/sht20.js';
 import Vl53l1x from './devices/vl53l1x.js';
 import Mlx90614 from './devices/mlx90614.js';
 import Aht21 from './devices/aht21.js';
+import Bh1745 from './devices/bh1745.js';
 import Ina231 from './devices/ina231.js';
 import Hmc5883l from './devices/hmc5883l.js';
 import Adxl345 from './devices/adxl345.js';
@@ -32,6 +33,7 @@ export {
   Vl53l1x,
   Mlx90614,
   Aht21,
+  Bh1745,
   Ina231,
   Hmc5883l,
   Adxl345,

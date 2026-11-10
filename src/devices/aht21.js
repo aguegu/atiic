@@ -37,10 +37,12 @@ export function crc8(bytes) {
 class Aht21 {
   static chip = {
     name: 'AHT21B',
-    // no ID: its status byte, the calibration bits set, at 0x38
+    // no ID: its status byte, the calibration bits set and not busy (no
+    // measurement started): 0xFF, what a device with nothing at 0x71 reads
+    // (a BH1745NUC at 0x38), isn't one
     async identify(bus, address) {
       const [s] = await bus.writeRead(address, [STATUS], 1);
-      return (s & STATUS_READY) === STATUS_READY;
+      return (s & STATUS_READY) === STATUS_READY && !(s & BUSY);
     },
   };
 

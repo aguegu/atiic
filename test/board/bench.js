@@ -4,7 +4,7 @@
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 import { openCh347 } from '../../src/adapters/ch347/node.js';
 import { openDart } from '../../src/adapters/dart/node.js';
-import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3200, SpiRegisters } from '../../src/index.js';
+import { Mpu6050, Mpu6500, Bmx055Accel, Bmx055Gyro, Bmx055Mag, Max30102, Sht20, Vl53l1x, Mlx90614, Aht21, Bh1745, Ina231, Hmc5883l, Adxl345, Itg3200, SpiRegisters } from '../../src/index.js';
 
 // for test/board/ch341.test.js, each chip's registers as the CH341's
 // reference: how to wake it, a range with no sensor data (a block read must
@@ -29,7 +29,9 @@ export const REFERENCES = [
 // Mlx90614: words with a PEC; Ina231: 16-bit registers; Hmc5883l: known
 // by its three ID bytes; Adxl345: not tried as the CH341's reference;
 // Itg3200: WHO_AM_I and not an MPU's, after the MPUs are looked for)
-const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Ina231, Hmc5883l, Adxl345, Itg3200];
+// the SHT20 before the INA231: the INA231's check reads 0xFE, an SHT20's
+// soft-reset command, at the same 0x40
+const OTHERS = [Sht20, Vl53l1x, Mlx90614, Aht21, Bh1745, Ina231, Hmc5883l, Adxl345, Itg3200];
 
 // BENCH_ADAPTER (from .env.local, or the environment): the I2C bus the
 // chips' tests run on, ch341 (the default) or ch347 (a CH347T in mode 1 or a
