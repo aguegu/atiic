@@ -1,5 +1,17 @@
 # Releases
 
+## Next
+
+- **dart's command set 1.1** (its firmware 0.02): `speed()` takes any SCL
+  from 7327 Hz to 400 kHz on a 1.1 dart (`SPEED_MIN`, `SPEED_MAX`; 1.0:
+  100 and 400 kHz), for a device that wants it slow (the AGS10: 15 kHz or
+  under). A bus held low names the line: `bus held low: SCL (at 0x1a)`,
+  `e.held`; a scan reports a bus error instead of an empty bus. A 1.0
+  dart's `BUS_BUSY` reads as before. `docs/dart.md` for 1.1; host tests
+  (179 in all). On r8845: a VL53L1X through dart at 10, 100 and 400 kHz,
+  the same distance within 4 mm. The AGS10 tried again on dart at 10 kHz:
+  its module holds SCL low from power-up (README, `docs/setup.md`).
+
 ## 1.5.7
 
 - **The VL53L1X's other numbers and its region of interest.** `measure()`

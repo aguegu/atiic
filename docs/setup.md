@@ -506,7 +506,12 @@ close to the SHT20's beside it.
 
 Tried and set aside: Aosong's AGS10 (a TVOC sensor) wants I2C at 15 kHz or
 under and a 3.0 V supply (± 0.1 V); the CH341 goes no slower than 20 kHz,
-and the dongle's 3.3 V is over. It didn't answer.
+and the dongle's 3.3 V is over. It didn't answer. Tried again on dart at
+10 kHz (2026-11-10), a module with its own regulator and 4.7 k pull-ups:
+the module holds SCL low from power-up, past its 120 s preheat, and blocks
+the bus for everything else on it (`bus held low: SCL`); with its SCL
+unplugged the bus is free. A faulty module or sensor (its datasheet: over
+3 V damages it at once); another one to try.
 
 ## Current and power: the INA231
 

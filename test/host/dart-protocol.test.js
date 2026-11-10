@@ -9,7 +9,7 @@ const SLAVE = 0x52;
 
 // a fake dart: the bytes of each request kept, replies built as the
 // firmware's main.c does (op, tag, status, 0, count; data on OK)
-function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protocol = 0x0100 } = {}) {
+function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protocol = 0x0100, held = null } = {}) {
   const regs = new Uint8Array(256);
   let pointer = 0;
   let pending = null;
@@ -25,8 +25,13 @@ function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protoc
     if (q[0] === OP.INFO) return reply(q, 0, [protocol & 0xff, protocol >> 8, 1, 0, 0xa0, 0x86, 0x01, 0, 2, 0, 0, 4, 0, 4, 0x7f, 0x59, 0xcf, 0xcc, 0x52, 0x93, 0xd9, 0x46]);
     if (q[0] === OP.SPEED) {
       const hz = p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
-      return reply(q, hz === 100000 || hz === 400000 ? 0 : -18);
+      const ok = protocol >= 0x0101 ? hz >= 7327 && hz <= 400000 : hz === 100000 || hz === 400000;
+      return reply(q, ok ? 0 : -18);
     }
+    // held: the lines a device holds low (BUS_BUSY; a 1.1 dart's count the
+    // lines read, a bit set when high: SCL 1, SDA 2; 1.0's count 0)
+    const busy = () => reply(q, -4, [], protocol >= 0x0101 ? (held.includes('SCL') ? 0 : 1) | (held.includes('SDA') ? 0 : 2) : 0);
+    if (held && (q[0] === OP.SCAN || q[0] === OP.I2C)) return busy();
     if (q[0] === OP.SCAN) return reply(q, 0, [SLAVE].filter((a) => a >= p[0] && a <= p[1]));
     if (q[0] === OP.I2C) {
       const [a, rl, rh, ...w] = p;
@@ -164,6 +169,29 @@ describe('dart protocol', () => {
     dev.regs[0] = 0x42;
     Object.assign(dev, fakeDart({ stale: true }), { regs: dev.regs }); // the next read sees a stale reply first
     assert.ok((await bus.scan()).includes(SLAVE));
+  });
+
+  it('1.1: any speed from 7327 Hz to 400 kHz (10 kHz for a slow device); 1.0 only 100 and 400', async () => {
+    const dev = fakeDart({ protocol: 0x0101 });
+    const bus = await new Dart(dev).open(10000);
+    assert.deepEqual([...dev.sent.at(-1)], [OP.SPEED, dev.sent.at(-1)[1], 4, 0, 0x10, 0x27, 0, 0]);
+    await assert.rejects(bus.speed(7326), (e) => e.status === 'BAD_SPEED');
+    await assert.rejects(new Dart(fakeDart()).open(10000), (e) => e.status === 'BAD_SPEED');
+  });
+
+  it('1.1: a bus held low names the line, from a transfer and from a scan', async () => {
+    const bus = await new Dart(fakeDart({ protocol: 0x0101 })).open();
+    const dev = fakeDart({ protocol: 0x0101, held: ['SCL'] });
+    Object.assign(bus.device, { transferOut: dev.transferOut.bind(dev), transferIn: dev.transferIn.bind(dev) });
+    await assert.rejects(bus.read(0x1a, 5), (e) => e.status === 'BUS_BUSY' && e.message === 'bus held low: SCL (at 0x1a)' && e.held.join() === 'SCL');
+    await assert.rejects(bus.scan(), (e) => e.message === 'bus held low: SCL');
+  });
+
+  it('1.0: BUS_BUSY as it was (its count isn\'t the lines)', async () => {
+    const bus = await new Dart(fakeDart()).open();
+    const dev = fakeDart({ held: ['SDA'] });
+    Object.assign(bus.device, { transferOut: dev.transferOut.bind(dev), transferIn: dev.transferIn.bind(dev) });
+    await assert.rejects(bus.read(0x1a, 1), (e) => e.status === 'BUS_BUSY' && e.message === 'BUS_BUSY at 0x1a' && e.held === undefined);
   });
 
   it('speed with a stretch limit: six bytes, the limit in ms', async () => {

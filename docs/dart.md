@@ -19,10 +19,18 @@ What it does that WCH's adapters don't:
 - **A transaction is one request**: write, a repeated start and read, then a
   stop, in one USB round trip, its result in one reply; a scan of the whole
   bus is one request too.
+- **Slower, too** (command set 1.1): any SCL from 7327 Hz to 400 kHz, for
+  a device that wants it slow (Aosong's AGS10: 15 kHz or under; the CH341
+  goes no lower than 20 kHz, the CH347 no lower than its 20 kHz mode).
+- **A bus held low is told apart.** `BUS_BUSY` from a 1.1 dart names the
+  line, `bus held low: SCL (at 0x1a)`, read with its controller off, so
+  only what's outside pulls on it (`e.held`: `['SCL']`); a scan reports it
+  instead of an empty bus; and every `speed()` runs the I2C spec's bus
+  clear (nine clocks, then a STOP) for a device stuck mid-byte.
 - On Windows the device binds WinUSB by itself (Microsoft OS 2.0
   descriptors), no driver to install.
 
-Not faster: its I2C is 100 and 400 kHz only, its USB full speed.
+Not faster: its I2C tops at 400 kHz, its USB is full speed.
 
 ```js
 import { openDart } from 'atiic/adapters/dart/node';
@@ -31,6 +39,7 @@ const bus = await openDart(400000); // 100 kHz by default
 console.log(await bus.scan()); // e.g. [ 104 ]: 0x68
 const [whoAmI] = await bus.writeRead(0x68, [0x75], 1);
 await bus.speed(100000, 90); // a sensor holding SCL up to 90 ms
+await bus.speed(10000); // a device that wants 15 kHz or under (1.1)
 console.log(await bus.info()); // { protocol, version, speed, stretchMs, payloadMax, readMax, uniqueId }
 await bus.close();
 ```
@@ -49,7 +58,9 @@ INFO (the op and tag echoed, a command set it speaks), not by its name: a
 device that doesn't answer within a second, or answers something else, is
 refused, and closed. The command set is dart's, the same whatever chip a dart is
 built on; `open()` reads its version from INFO and refuses a major it
-doesn't speak (this adapter: 1.x; a minor only adds).
+doesn't speak (this adapter: 1.x; a minor only adds). 1.1 added the speeds
+between 100 and 400 kHz and under 100 kHz, the lines in `BUS_BUSY`, and a
+scan's bus errors; a 1.0 dart takes 100 and 400 kHz only.
 
 ## The command set
 
@@ -65,10 +76,10 @@ time; numbers little-endian.
 
 | Op | Payload | Reply data |
 |---|---|---|
-| 0x01 INFO | none | the command set's version (uint16: major high byte, minor low; 1.0), the firmware's version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID |
-| 0x02 SPEED | Hz (uint32: 100000 or 400000), stretch limit (uint16 ms, optional) | none |
+| 0x01 INFO | none | the command set's version (uint16: major high byte, minor low; 1.1 = 0x0101), the firmware's version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID |
+| 0x02 SPEED | Hz (uint32: 7327 to 400000; 1.0: 100000 or 400000), stretch limit (uint16 ms, past a byte's own time; optional) | none |
 | 0x10 I2C | address, read length (uint16), the bytes to write | the bytes read |
-| 0x11 SCAN | first, last address | the addresses that acknowledge |
+| 0x11 SCAN | first, last address | the addresses that acknowledge; a bus error ends it with that status (1.1) |
 
 | Status | | |
 |---|---|---|
@@ -76,7 +87,7 @@ time; numbers little-endian.
 | `NO_DEVICE` | -1 | nobody acknowledged the address |
 | `TIMEOUT` | -2 | a flag not reached, or SCL held past the stretch limit |
 | `BUS_ERROR` | -3 | a bus error, or arbitration lost |
-| `BUS_BUSY` | -4 | the bus busy before the start |
+| `BUS_BUSY` | -4 | the bus busy before the start; count (1.1): the lines, bit 0 SCL, bit 1 SDA, set when high |
 | `REFUSED` | -5 | a data byte refused; count: the bytes taken before it |
 | `UNKNOWN_OP` | -16 | |
 | `BAD_LENGTH` | -17 | over 1024 bytes, or not as the header says |
@@ -104,4 +115,10 @@ tests (`test/board/bench.js`) on it. The firmware's own bench test (dart and
 an I2C slave that stretches SCL, at 100 and 400 kHz: writes, register reads
 over several USB packets, a refused write) passed 19/19, and this adapter
 on dart (scan, a write read back at 400 kHz, a refused write, a missing
-device, a speed and stretch limit set) did too (2026-11-10).
+device, a speed and stretch limit set) did too (2026-11-10). Command set
+1.1, the same day: its own bench test at 10, 100 and 400 kHz, 24/24; a
+VL53L1X through this adapter at 10, 100 and 400 kHz, the same distance
+within 4 mm (its start-up and first reading 494, 155 and 181 ms: the 91
+bytes of configuration take longer at 10 kHz). An AGS10 module held SCL
+low from its power-up: `bus held low: SCL`, the bus free with its SCL
+unplugged.

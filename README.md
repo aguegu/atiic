@@ -96,8 +96,10 @@ answered, reads looked right, and the ADXL's writes landed in the EEPROM).
 | Solomon Systech SSD1681 | `Ssd1681` | 1.54" 200x200 e-paper (e-ink) | SPI, BUSY |
 | Sitronix ST7302 | `St7302` | 2.13" 122x250 reflective mono TFT (low power) | SPI |
 
-Tried and not supported: Aosong's AGS10 (TVOC) wants I2C at 15 kHz or
-under, below the CH341's slowest (20 kHz).
+Tried and not supported yet: Aosong's AGS10 (TVOC) wants I2C at 15 kHz or
+under, below the CH341's slowest (20 kHz); dart goes to 10 kHz
+([docs/dart.md](docs/dart.md)), but the one AGS10 module tried holds SCL
+low from power-up.
 
 ## Docs
 

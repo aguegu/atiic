@@ -17,6 +17,15 @@ export const IDENTIFY_MS = 1000;
 // the command set's version this adapter speaks: a dart with another major
 // is refused at open; a minor only adds, so any minor is taken
 export const PROTOCOL_MAJOR = 1;
+// 1.1: SPEED takes any Hz from SPEED_MIN to SPEED_MAX (1.0: 100000 and
+// 400000 only); BUS_BUSY's count carries the lines; SCAN reports a bus
+// error instead of an empty bus
+export const PROTOCOL_LINES = 0x0101;
+export const SPEED_MIN = 7327; // dart's slowest SCL: its divider's largest
+export const SPEED_MAX = 400000;
+// BUS_BUSY's count (1.1): the lines as dart reads them, a bit set when high
+const LINE_SCL = 0x01;
+const LINE_SDA = 0x02;
 
 const INTERFACE = 0;
 const ENDPOINT = 1;
@@ -38,14 +47,21 @@ export const SCAN_LAST = 0x77;
 
 const hex = (a) => `0x${a.toString(16).padStart(2, '0')}`;
 
+// a bus held low (BUS_BUSY from a 1.1 dart): the lines held, by name
+const held = (count) => ['SCL', 'SDA'].filter((_, i) => !(count & [LINE_SCL, LINE_SDA][i]));
+
 export class DartError extends Error {
-  constructor(status, address, count) {
+  // lines: BUS_BUSY's count is the lines (a 1.1 dart), not 0
+  constructor(status, address, count, { lines = false } = {}) {
     const name = STATUS[status] ?? `status ${status}`;
+    const low = name === 'BUS_BUSY' && lines ? held(count) : null;
     const message = name === 'NO_DEVICE' ? `no ack from ${hex(address)}`
       : name === 'REFUSED' ? `${hex(address)} refused byte ${count}`
-        : `${name}${address === undefined ? '' : ` at ${hex(address)}`}`;
+        : low?.length ? `bus held low: ${low.join(' and ')}${address === undefined ? '' : ` (at ${hex(address)})`}`
+          : `${name}${address === undefined ? '' : ` at ${hex(address)}`}`;
     super(message);
     Object.assign(this, { status: name, code: status, address, count });
+    if (low) this.held = low;
   }
 }
 
@@ -56,7 +72,8 @@ export class Dart {
     this.tag = 0;
   }
 
-  // speed: I2C's SCL, 100000 or 400000. A dart is told by its answer to
+  // speed: I2C's SCL, Hz (100000 or 400000; a 1.1 dart any from SPEED_MIN
+  // to SPEED_MAX). A dart is told by its answer to
   // INFO, not by its name (0xffff is nobody's vendor ID, and a name can
   // change): the op and tag echoed, the reply whole, a command set this
   // speaks; nothing within identifyMs, or anything else, isn't a dart
@@ -82,6 +99,7 @@ export class Dart {
     if (protocol >> 8 !== PROTOCOL_MAJOR) {
       throw new Error(`dart's command set ${protocol >> 8}.${protocol & 0xff}, this atiic speaks ${PROTOCOL_MAJOR}.x`);
     }
+    this.protocol = protocol;
     await this.speed(speed);
     return this;
   }
@@ -128,7 +146,9 @@ export class Dart {
     };
   }
 
-  // hz: 100000 or 400000; stretchMs: how long a device may hold SCL
+  // hz: SCL (100000 or 400000; a 1.1 dart any from SPEED_MIN to SPEED_MAX,
+  // e.g. 10000 for a device that wants 15 kHz or under); stretchMs: how
+  // long a device may hold SCL, past a byte's own time
   async speed(hz, stretchMs) {
     const p = [hz & 0xff, (hz >> 8) & 0xff, (hz >> 16) & 0xff, hz >>> 24];
     if (stretchMs !== undefined) p.push(stretchMs & 0xff, stretchMs >> 8);
@@ -140,7 +160,7 @@ export class Dart {
   // bytes read
   async transfer(address, bytes = [], n = 0) {
     const { status, count, data } = await this.request(OP.I2C, [address, n & 0xff, n >> 8, ...bytes]);
-    if (status) throw new DartError(status, address, count);
+    if (status) throw new DartError(status, address, count, { lines: this.protocol >= PROTOCOL_LINES });
     return data;
   }
 
@@ -167,8 +187,8 @@ export class Dart {
   }
 
   async scan(first = SCAN_FIRST, last = SCAN_LAST) {
-    const { status, data } = await this.request(OP.SCAN, [first, last]);
-    if (status) throw new DartError(status);
+    const { status, count, data } = await this.request(OP.SCAN, [first, last]);
+    if (status) throw new DartError(status, undefined, count, { lines: this.protocol >= PROTOCOL_LINES });
     return [...data];
   }
 }

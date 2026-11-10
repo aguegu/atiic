@@ -5,7 +5,8 @@
 import { WebUSB } from 'usb';
 import Dart, { FILTERS } from './index.js';
 
-// speed: I2C's SCL, 100000 or 400000
+// speed: I2C's SCL, Hz (100000 or 400000; a 1.1 dart any from 7327 to
+// 400000)
 export async function openDart(speed = 100000) {
   const webusb = new WebUSB({ allowAllDevices: true });
   const device = await webusb.requestDevice({ filters: FILTERS });
