@@ -1,5 +1,17 @@
 # Releases
 
+## 1.5.5
+
+- **The MPU-6500's datasheet tolerances as a diagnostic** (the user: "we just
+  show what we get from the sensors taking no credit on it"): from
+  PS-MPU-6500A-01 rev. 1.1, table 2 (sensitivity initial tolerance +/-3 %,
+  zero-g +/-60 mg on every axis, both tested in production; cross-axis
+  +/-2 %): |a| at rest, any orientation, within 1 +/- 0.154 g; outside it
+  the test says so ("the module, not the driver") and still passes, its
+  pass window the driver's 0.75-1.25 g. On r8845 the CH347's module (1.19 g)
+  is outside, dart's (0.975 g) inside. The MPU-6050's test gets no
+  tolerance until its datasheet is read.
+
 ## 1.5.4
 
 - **The MPU board tests check the driver, not the module** (the user: "fix
