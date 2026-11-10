@@ -442,7 +442,12 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
 
 - The SHT20 is measured in "no hold master" mode, the datasheet's maximum
   time waited (85 ms T, 29 ms RH), each reading's CRC-8 checked: hold
-  master mode would need the bridge to wait on a held-low SCL. r8845's
+  master mode needs the bridge to wait on a held-low SCL, which dart does:
+  `new Sht20(bus, 0x40, { hold: true })` after `bus.speed(hz,
+  Sht20.STRETCH_MS)`, a reading in 91 ms instead of 117 on r8845.
+  `setResolution('11/11')` (or '8/12', '10/13'; '12/14' the default) reads
+  faster: 23-29 ms, so every 260 ms within the datasheet's 10 % active
+  (`periodMs()`). r8845's
   reads its user register 0x3A where the datasheet's example shows 0x02
   (reserved bits); the bench knows it by its electronic ID's CRCs.
 - The VL53L1X has no public register map: atiic follows ST's Ultra Lite

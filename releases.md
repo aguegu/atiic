@@ -2,6 +2,18 @@
 
 ## Next
 
+- **`Sht20`: its resolution, and hold master on dart** (the user: "0.5hz
+  looks not that active", then "dart is waiting sht20 on the bus, right?").
+  `setResolution('12/14' | '8/12' | '10/13' | '11/11')` reads the user
+  register and changes only bits 7 and 0 (Table 8: its reserved bits "must
+  not be changed"; r8845's module keeps 0x3A's); the waits follow Table 7;
+  `periodMs()`, the shortest period at 10 % active (2.3: self-heating under
+  0.1 C): 1140 ms at 12/14 bits, 520 at 10/13, 260 at 11/11 and 8/12.
+  `new Sht20(bus, 0x40, { hold: true })`: hold master mode (0xE3, 0xE5), the
+  trigger and the read one transaction, the sensor holding SCL until done,
+  for a bus that waits on it (dart, `bus.speed(hz, Sht20.STRETCH_MS)`). On
+  r8845's dart: a reading 117/55/28/28 ms without hold, 91/42/23/22 with
+  (12/14, 10/13, 11/11, 8/12 bits), the same air. Board test 5/5 on dart.
 - **`Bh1745`, ROHM's BH1745NUC colour sensor** (the user's module, on
   r8845's dart with an SHT20), from its datasheet (Rev.002, 2016): known
   by its part ID (0x0B in 40h) and ROHM's manufacturer ID (0xE0 in 92h),
