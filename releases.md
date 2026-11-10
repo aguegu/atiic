@@ -1,6 +1,6 @@
 # Releases
 
-## Next
+## 1.5.11
 
 - **`Spl06`, Goertek's SPL06-001 barometer** (the user's CJMCU module on
   r8845's dart, from its datasheet, Version 7.0, not copied: Goertek marks
