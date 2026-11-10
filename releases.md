@@ -1,6 +1,6 @@
 # Releases
 
-## Next
+## 1.5.10
 
 - **`Sht3x`, Sensirion's SHT3x-DIS** (SHT30, SHT31, SHT35; the user's
   SHT30 on r8845's dart, from its datasheet, Version 7, 2022): at 0x44 or
