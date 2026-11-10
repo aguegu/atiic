@@ -1,6 +1,6 @@
 # Releases
 
-## Next
+## 1.5.8
 
 - **dart's command set 1.1** (its firmware 0.02): `speed()` takes any SCL
   from 7327 Hz to 400 kHz on a 1.1 dart (`SPEED_MIN`, `SPEED_MAX`; 1.0:
