@@ -454,6 +454,14 @@ const { distance, status } = await tof.measure(); // mm; status 0 valid
   On dart at r8845, a still target at ~0.94 m: a reading every budget in
   both modes; the readings' sd 4 mm at 15 ms, under 1 mm at 50 ms short and
   200 ms long; long mode at 20 ms read ~6 cm short.
+- `measure()` gives, besides the distance and status, `signal` (kcps of
+  its own light back), `ambient` (kcps of the background) and `spads` (the
+  SPADs used), as ST's GetSignalRate, GetAmbientRate and GetSpadNb.
+  `roi({ width, height, centre })` narrows its view to part of the 16 x 16
+  SPADs (4-16 a side; `Vl53l1x.spadAt(row, column)` for a centre, ST's
+  table as SparkFun's header has it). At ~1 m on r8845: 16 x 16 215 SPADs
+  and ~8.6 Mcps; 8 x 8 53 SPADs and ~2.5 Mcps; 4 x 4 12 SPADs and ~0.6
+  Mcps, status 2 (signal fail) every time.
 
 ## An IR thermometer: the MLX90614
 

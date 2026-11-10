@@ -6,7 +6,7 @@ import { Vl53l1x } from '../../src/index.js';
 
 class FakeTof {
   constructor() {
-    this.regs = new Map([[0x010f, 0xea], [0x0110, 0xcc], [0x00e5, 0x03], [0x0030, 0x01], [0x0031, 0x02], [0x0089, 0x09], [0x0096, 0x07], [0x0097, 0xae]]);
+    this.regs = new Map([[0x010f, 0xea], [0x0110, 0xcc], [0x00e5, 0x03], [0x0030, 0x01], [0x0031, 0x02], [0x0089, 0x09], [0x0096, 0x07], [0x0097, 0xae], [0x008c, 0x0c], [0x008d, 0x80], [0x0090, 0x00], [0x0091, 0x40], [0x0098, 0x02], [0x0099, 0x00]]);
     this.writes = [];
   }
   async write(address, [hi, lo, ...data]) {
@@ -36,12 +36,13 @@ describe('vl53l1x (host)', () => {
     ]);
   });
 
-  it('measure: data ready, the range status mapped (9 -> 0 valid), mm high byte first, the interrupt cleared', async () => {
+  it('measure: data ready, the range status mapped (9 -> 0 valid), mm high byte first, the rates and SPADs as the ULD scales them, the interrupt cleared', async () => {
     const tof = new FakeTof();
     const s = new Vl53l1x(tof);
     await s.init();
     tof.writes.length = 0;
-    assert.deepEqual(await s.measure(), { distance: 1966, status: 0 });
+    // signal 0x0200 (9.7: 4 Mcps), ambient 0x0040 (0.5 Mcps), SPADs 0x0c80 (8.8: 12.5)
+    assert.deepEqual(await s.measure(), { distance: 1966, status: 0, signal: 4000, ambient: 500, spads: 12 });
     assert.deepEqual(tof.writes, [[0x0086, [1]]]);
   });
 
@@ -69,7 +70,7 @@ describe('vl53l1x (host)', () => {
       [0x0086, [1]], [0x0087, [0x40]], // ranging
     ]);
     assert.deepEqual([0x6c, 0x6d, 0x6e, 0x6f].map((r) => tof.regs.get(r)), [0, 0, 0x07, 0xfa]);
-    assert.deepEqual(await s.measure(), { distance: 1966, status: 0 });
+    assert.equal((await s.measure()).distance, 1966);
   });
 
   it('configure refuses what the ULD has no values for', async () => {
@@ -77,6 +78,31 @@ describe('vl53l1x (host)', () => {
     await assert.rejects(s.configure({ mode: 'medium' }), /no distance mode medium: short, long/);
     await assert.rejects(s.configure({ mode: 'long', budget: 15 }), /no 15 ms budget in long mode: 20, 33, 50, 100, 200, 500/);
     await assert.rejects(s.configure({ budget: 50, period: 20 }), /a 20 ms period under the 50 ms budget/);
+  });
+
+  it('spadAt: ST\'s table (SparkFun_VL53L1X.h), its corners and centre', () => {
+    assert.equal(Vl53l1x.spadAt(0, 0), 128);
+    assert.equal(Vl53l1x.spadAt(7, 8), 199);
+    assert.equal(Vl53l1x.spadAt(8, 0), 127);
+    assert.equal(Vl53l1x.spadAt(9, 7), 70);
+    assert.equal(Vl53l1x.spadAt(15, 15), 0);
+    assert.equal(Vl53l1x.spadAt(0, 15), 248);
+    assert.throws(() => Vl53l1x.spadAt(16, 0), /no SPAD at row 16/);
+  });
+
+  it('roi: the size as the ULD packs it, the centre 199 by default and when wider than 10', async () => {
+    const tof = new FakeTof();
+    const s = new Vl53l1x(tof);
+    await s.roi({ width: 4, height: 6 });
+    await s.roi({ width: 8, height: 8, centre: 0xa0 });
+    await s.roi({ centre: 0xa0 });
+    assert.deepEqual(tof.writes, [
+      [0x007f, [199]], [0x0080, [0x53]],
+      [0x007f, [0xa0]], [0x0080, [0x77]],
+      [0x007f, [199]], [0x0080, [0xff]],
+    ]);
+    await assert.rejects(s.roi({ width: 3 }), /ROI width 3: 4-16/);
+    await assert.rejects(s.roi({ height: 17 }), /ROI height 17: 4-16/);
   });
 
   it('init refuses another sensor (model ID, module type)', async () => {

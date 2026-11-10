@@ -7,9 +7,10 @@
 // library carries it (src/st_src/vl53l1x_class.cpp): VL53L1X_SensorInit (the
 // boot wait, the 91-byte default configuration at 0x2D-0x87, one ranging to
 // settle, the VHV loop bound), VL53L1X_StartRanging, CheckForDataReady,
-// GetRangeStatus, GetDistance, ClearInterrupt, StopRanging, and
+// GetRangeStatus, GetDistance, ClearInterrupt, StopRanging;
 // SetDistanceMode, SetTimingBudgetInMs, SetInterMeasurementInMs for
-// configure(). The default configuration (DEFAULT_CONFIGURATION) and the
+// configure(); GetSignalRate, GetAmbientRate, GetSpadNb for measure()'s
+// other numbers; SetROI for roi(). The default configuration (DEFAULT_CONFIGURATION) and the
 // modes' and budgets' register values (DISTANCE_MODES, TIMING_BUDGETS) are
 // ST's, under its licence:
 //
@@ -58,8 +59,37 @@ const REG_SD_CONFIG_INITIAL_PHASE_SD0 = 0x007a; // 16 bits
 const REG_RESULT_OSC_CALIBRATE_VAL = 0x00de; // 16 bits, bits 9:0 the oscillator's clocks a ms
 const REG_SYSTEM_INTERRUPT_CLEAR = 0x0086;
 const REG_SYSTEM_MODE_START = 0x0087; // 0x40 continuous, 0x10 one shot, 0x00 stop
+const REG_ROI_CENTRE_SPAD = 0x007f;
+const REG_ROI_XY_SIZE = 0x0080; // (height - 1) << 4 | (width - 1)
+// a reading's results, 0x89-0x99 in one read (as the ULD's GetResult)
 const REG_RESULT_RANGE_STATUS = 0x0089; // bits 4:0
-const REG_RESULT_DISTANCE_MM = 0x0096; // 16 bits, the final crosstalk-corrected range
+const RESULT_BYTES = 17;
+const RESULT_SPADS = 0x008c - REG_RESULT_RANGE_STATUS; // 16 bits, SPADs used, 8.8 fixed point
+const RESULT_AMBIENT = 0x0090 - REG_RESULT_RANGE_STATUS; // 16 bits, Mcps, 9.7 fixed point
+const RESULT_DISTANCE = 0x0096 - REG_RESULT_RANGE_STATUS; // 16 bits, mm, the final crosstalk-corrected range
+const RESULT_SIGNAL = 0x0098 - REG_RESULT_RANGE_STATUS; // 16 bits, Mcps, 9.7 fixed point, crosstalk corrected
+// 9.7 Mcps to kcps (the ULD multiplies by 8, rounding 7.8125 up); 8.8 SPADs
+// to whole ones (the ULD's >> 8)
+const KCPS_PER_LSB = 1000 / 128;
+const SPAD_FRACTION_BITS = 8;
+const ROI_MIN = 4; // SPADs a side (ST: a smaller ROI isn't ranged)
+const ROI_MAX = 16;
+const ROI_CENTRE_ONLY_MAX = 10; // the ULD: wider or taller, the centre forced to 199
+const ROI_CENTRE = 199; // the array's centre (the table below; ST's examples)
+const SPAD_ROWS = 16;
+const SPAD_HALF = 8;
+
+// ST's SPAD numbers by place in the 16 x 16 array (row 0 top, column 0 left,
+// pin 1 at the bottom right), as SparkFun's SparkFun_VL53L1X.h tabulates
+// them: the top eight rows 128 + 8 * column + row, the bottom eight
+// 127 - 8 * column - (row - 8). A ROI's centre is the SPAD right of and
+// above the middle of the region wanted
+export function spadAt(row, column) {
+  if (!(Number.isInteger(row) && Number.isInteger(column) && row >= 0 && row < SPAD_ROWS && column >= 0 && column < SPAD_ROWS)) {
+    throw new Error(`VL53L1X: no SPAD at row ${row}, column ${column}: 0-${SPAD_ROWS - 1} each`);
+  }
+  return row < SPAD_HALF ? 128 + SPAD_HALF * column + row : 127 - SPAD_HALF * column - (row - SPAD_HALF);
+}
 const REG_FIRMWARE_SYSTEM_STATUS = 0x00e5; // non-zero once booted
 const REG_MODEL_ID = 0x010f; // 0xEA, then the module type 0xCC
 const MODE_CONTINUOUS = 0x40;
@@ -174,13 +204,35 @@ class Vl53l1x {
     return (s & 1) === this.polarity;
   }
 
-  // the next ranging: { distance: mm, status: 0 valid (the ULD's codes) }
+  // the next ranging: { distance: mm, status: 0 valid (the ULD's codes),
+  // signal: kcps of its own light back, ambient: kcps of the background,
+  // spads: SPADs it used (signal and ambient per SPAD: divide) }
   async measure() {
     await this.until(() => this.dataReady(), this.readyLimitMs ?? READY_LIMIT_MS, 'ranging');
-    const [s] = await this.read(REG_RESULT_RANGE_STATUS);
-    const [hi, lo] = await this.read(REG_RESULT_DISTANCE_MM, 2);
+    const r = await this.read(REG_RESULT_RANGE_STATUS, RESULT_BYTES);
     await this.write(REG_SYSTEM_INTERRUPT_CLEAR, 1);
-    return { distance: (hi << 8) | lo, status: RANGE_STATUS[s & RANGE_STATUS_MASK] ?? RANGE_STATUS_UNKNOWN };
+    const u16 = (i) => (r[i] << 8) | r[i + 1];
+    return {
+      distance: u16(RESULT_DISTANCE),
+      status: RANGE_STATUS[r[0] & RANGE_STATUS_MASK] ?? RANGE_STATUS_UNKNOWN,
+      signal: u16(RESULT_SIGNAL) * KCPS_PER_LSB,
+      ambient: u16(RESULT_AMBIENT) * KCPS_PER_LSB,
+      spads: u16(RESULT_SPADS) >> SPAD_FRACTION_BITS,
+    };
+  }
+
+  // the region of interest: width x height of the 16 x 16 SPADs (4-16
+  // each; smaller: a narrower view, less light), around centre (ST's SPAD
+  // number, spadAt(); 199 the array's centre). As the ULD's SetROI: wider
+  // or taller than 10, the centre is 199. Takes effect from the ranging
+  // after the next
+  async roi({ width = ROI_MAX, height = ROI_MAX, centre } = {}) {
+    for (const [name, v] of [['width', width], ['height', height]]) {
+      if (!(Number.isInteger(v) && v >= ROI_MIN && v <= ROI_MAX)) throw new Error(`VL53L1X: ROI ${name} ${v}: ${ROI_MIN}-${ROI_MAX}`);
+    }
+    const c = width > ROI_CENTRE_ONLY_MAX || height > ROI_CENTRE_ONLY_MAX ? ROI_CENTRE : centre ?? ROI_CENTRE;
+    await this.write(REG_ROI_CENTRE_SPAD, c);
+    await this.write(REG_ROI_XY_SIZE, ((height - 1) << 4) | (width - 1));
   }
 
   // the distance mode ('short' or 'long'), the timing budget (ms, one of the
@@ -217,5 +269,6 @@ class Vl53l1x {
 }
 
 Vl53l1x.addresses = [0x29];
+Vl53l1x.spadAt = spadAt;
 
 export default Vl53l1x;
