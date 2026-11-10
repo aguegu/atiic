@@ -44,8 +44,10 @@ const device = await navigator.usb.requestDevice({ filters: FILTERS });
 const bus = await new Dart(device).open(400000);
 ```
 
-`0xffff` is nobody's vendor ID, so `open()` also checks the product string
-ends in "Dart". The command set is dart's, the same whatever chip a dart is
+`0xffff` is nobody's vendor ID, so `open()` tells a dart by its answer to
+INFO (the op and tag echoed, a command set it speaks), not by its name: a
+device that doesn't answer within a second, or answers something else, is
+refused, and closed. The command set is dart's, the same whatever chip a dart is
 built on; `open()` reads its version from INFO and refuses a major it
 doesn't speak (this adapter: 1.x; a minor only adds).
 

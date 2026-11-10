@@ -92,8 +92,8 @@ describe('dart protocol', () => {
     await assert.rejects(new Dart(fakeDart({ protocol: 0x0200 })).open(), /command set 2\.0, this atiic speaks 1\.x/);
   });
 
-  it('takes a product string ending in "dart", any case ("Dart"); close releases the interface, so it opens again', async () => {
-    const dev = fakeDart({ productName: 'Dart' });
+  it('any name: a dart is told by its INFO reply; close releases the interface, so it opens again', async () => {
+    const dev = fakeDart({ productName: 'anything at all' });
     const bus = await new Dart(dev).open();
     await bus.close();
     assert.equal(dev.claimed, false);
@@ -101,8 +101,19 @@ describe('dart protocol', () => {
     assert.equal(dev.claimed, true);
   });
 
-  it('refuses an ffff:da92 that isn\'t a dart', async () => {
-    await assert.rejects(new Dart(fakeDart({ productName: 'other' })).open(), /not a dart/);
+  it('a device that never answers INFO: not a dart, closed, after identifyMs', async () => {
+    const dev = fakeDart();
+    dev.transferIn = () => new Promise(() => {}); // never
+    const t0 = Date.now();
+    await assert.rejects(new Dart(dev).open(100000, { identifyMs: 50 }), /no answer to INFO in 50 ms: not a dart/);
+    assert.ok(Date.now() - t0 < 500);
+    assert.equal(dev.opened, false);
+  });
+
+  it('a device that answers something else: not a dart', async () => {
+    const dev = fakeDart();
+    dev.transferIn = async () => ({ status: 'ok', data: new DataView(Uint8Array.of(0x42, 1, 0, 0, 0, 0).buffer) }); // another op, tag 1
+    await assert.rejects(new Dart(dev).open(), /not a dart: a reply to op 66, not 1/);
   });
 
   it('a register read: one request, address, read length, the register; the bytes back', async () => {

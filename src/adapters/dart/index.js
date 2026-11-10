@@ -10,9 +10,10 @@
 export const VENDOR_ID = 0xffff;
 export const PRODUCT_ID = 0xda92;
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
-// its product string ends in "dart", any case (it's "Dart", the manufacturer
-// "Sourcekit")
-export const PRODUCT_NAME = /\bdart$/i;
+// how long open() waits for INFO's reply: a dart answers in a few ms; a
+// device that isn't one (0xffff is nobody's vendor ID) may never answer
+export const IDENTIFY_MS = 1000;
+
 // the command set's version this adapter speaks: a dart with another major
 // is refused at open; a minor only adds, so any minor is taken
 export const PROTOCOL_MAJOR = 1;
@@ -55,16 +56,29 @@ export class Dart {
     this.tag = 0;
   }
 
-  // speed: I2C's SCL, 100000 or 400000. 0xffff is nobody's vendor ID, so
-  // the product string says it's a dart
-  async open(speed = 100000) {
+  // speed: I2C's SCL, 100000 or 400000. A dart is told by its answer to
+  // INFO, not by its name (0xffff is nobody's vendor ID, and a name can
+  // change): the op and tag echoed, the reply whole, a command set this
+  // speaks; nothing within identifyMs, or anything else, isn't a dart
+  async open(speed = 100000, { identifyMs = IDENTIFY_MS } = {}) {
     if (!this.device.opened) await this.device.open();
-    if (!PRODUCT_NAME.test(this.device.productName ?? '')) {
-      throw new Error(`ffff:da92 is "${this.device.productName}", not a dart`);
-    }
     if (this.device.configuration === null) await this.device.selectConfiguration(1);
     await this.device.claimInterface(INTERFACE);
-    const { protocol } = await this.info();
+    let timer;
+    const silent = new Promise((resolve, reject) => {
+      timer = setTimeout(() => reject(new Error(`no answer to INFO in ${identifyMs} ms: not a dart`)), identifyMs);
+    });
+    let protocol;
+    try {
+      ({ protocol } = await Promise.race([this.info(), silent]));
+    } catch (e) {
+      // the read left waiting ends with the device closed
+      this.queue = Promise.resolve();
+      await this.device.close().catch(() => {});
+      throw e.message.startsWith('no answer') ? e : new Error(`not a dart: ${e.message}`);
+    } finally {
+      clearTimeout(timer);
+    }
     if (protocol >> 8 !== PROTOCOL_MAJOR) {
       throw new Error(`dart's command set ${protocol >> 8}.${protocol & 0xff}, this atiic speaks ${PROTOCOL_MAJOR}.x`);
     }
@@ -93,6 +107,7 @@ export class Dart {
         const b = new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength);
         if (b.length < REPLY_HEADER) throw new Error(`dart read: ${b.length} bytes`);
         if (b[1] !== tag) continue; // a reply to a request cut short before
+        if (b[0] !== op) throw new Error(`a reply to op ${b[0]}, not ${op}`);
         const status = (b[2] << 24) >> 24;
         const count = b[4] | (b[5] << 8);
         return { status, count, data: b.slice(REPLY_HEADER) };

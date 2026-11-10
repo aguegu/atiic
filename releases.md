@@ -1,5 +1,17 @@
 # Releases
 
+## 1.5.3
+
+- **A dart is told by its answer, not its name** (the user: "but why there
+  is a hard coded string match for it?"): `open()` no longer matches the
+  product string (a rename broke every host that knew the old one: i2c.ninja
+  1.6.1 refused "Dart"). It sends INFO and takes a dart by the reply: the op
+  and tag echoed, the reply whole, a command set major it speaks. No answer
+  within `IDENTIFY_MS` (1 s; `open(speed, { identifyMs })`), or another
+  reply, is "not a dart", the device closed. `PRODUCT_NAME` gone. Tests: any
+  name opens; a device that never answers is refused in identifyMs; one
+  answering another op is refused.
+
 ## 1.5.2
 
 - **dart's `close()` releases its interface** before closing the device, as
