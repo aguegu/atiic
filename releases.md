@@ -1,6 +1,6 @@
 # Releases
 
-## Next
+## 1.5.9
 
 - **`Sht20`: its resolution, and hold master on dart** (the user: "0.5hz
   looks not that active", then "dart is waiting sht20 on the bus, right?").
