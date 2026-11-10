@@ -20,11 +20,25 @@ export const FIFO_RATE_MAX = 1.05;
 
 export const size = ({ x, y, z }) => Math.hypot(x, y, z);
 
-// one reading at rest: |a| within G_MIN-G_MAX, a room temperature; its |a|
-export async function gravity(t, mpu) {
+// A chip's accelerometer tolerances from its datasheet, for a diagnostic
+// only: a module outside them is shown, not failed (atiic shows what the
+// sensor gives, taking no credit for it; the user, 2026-11-10). |a| at rest,
+// any orientation, can be off by the sensitivity's and cross-axis'
+// tolerances and by the three axes' zero-g offsets lined up with gravity.
+// The MPU-6500: PS-MPU-6500A-01 rev. 1.1, table 2: sensitivity initial
+// tolerance +/-3 % and zero-g initial tolerance +/-60 mg, all axes (tested
+// in production), cross-axis +/-2 % (characterized): 1 +/- 0.154 g
+export const MPU6500_TOLERANCE = { name: 'the MPU-6500', g: 0.03 + 0.02 + Math.sqrt(3) * 0.060 };
+
+// one reading at rest: |a| within G_MIN-G_MAX, a room temperature; its |a|.
+// tolerance (a chip's, above): a diagnostic when |a| is outside it
+export async function gravity(t, mpu, tolerance) {
   const r = await mpu.measure();
   const g = size(r.accelerometers);
   t.diagnostic(`|a| ${g.toFixed(3)} g at rest, ${r.temperature.toFixed(1)} C`);
+  if (tolerance && Math.abs(g - 1) > tolerance.g) {
+    t.diagnostic(`outside ${tolerance.name}'s datasheet tolerances (1 +/- ${tolerance.g.toFixed(3)} g): the module, not the driver`);
+  }
   assert.ok(g > G_MIN && g < G_MAX, `|a| ${g} g`);
   assert.ok(r.temperature > 0 && r.temperature < 50, `${r.temperature} C`);
   return g;

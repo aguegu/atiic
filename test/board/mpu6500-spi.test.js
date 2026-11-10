@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { Mpu6500, SpiRegisters } from '../../src/index.js';
 import { openCh341 } from '../../src/adapters/ch341/node.js';
 import { MPU6500_SPI } from './bench.js';
-import { gravity, fifo } from './imu.js';
+import { gravity, fifo, MPU6500_TOLERANCE } from './imu.js';
 
 const SETTLED_MS = 300;
 const GYRO_AGREE = 1; // deg/s
@@ -30,7 +30,7 @@ describe('mpu6500 over SPI (board)', { skip: MPU6500_SPI ? false : 'no BENCH_MPU
 
   let restG; // |a| at rest, this module's
   it('measures about 1 g at rest (a driver check: not the module\'s calibration), a room temperature', async (t) => {
-    restG = await gravity(t, mpu);
+    restG = await gravity(t, mpu, MPU6500_TOLERANCE);
   });
 
   it('reads a settled gyro right after init() from sleep', async () => {

@@ -3,7 +3,7 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Mpu6500 } from '../../src/index.js';
-import { gravity, fifo } from './imu.js';
+import { gravity, fifo, MPU6500_TOLERANCE } from './imu.js';
 import { onlyWith, sclFor, openBus } from './bench.js';
 
 const SCL_HZ = 400000; // the MPU-6500's fast mode on I2C, its rated top
@@ -27,7 +27,7 @@ describe('mpu6500 (board)', onlyWith(Mpu6500), () => {
 
   let restG; // |a| at rest, this module's
   it('measures about 1 g at rest (a driver check: not the module\'s calibration), a room temperature', async (t) => {
-    restG = await gravity(t, mpu);
+    restG = await gravity(t, mpu, MPU6500_TOLERANCE);
   });
 
   it('reads a settled gyro right after init() from sleep', async () => {
