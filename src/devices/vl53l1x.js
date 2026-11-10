@@ -7,8 +7,11 @@
 // library carries it (src/st_src/vl53l1x_class.cpp): VL53L1X_SensorInit (the
 // boot wait, the 91-byte default configuration at 0x2D-0x87, one ranging to
 // settle, the VHV loop bound), VL53L1X_StartRanging, CheckForDataReady,
-// GetRangeStatus, GetDistance, ClearInterrupt, StopRanging. The default
-// configuration (DEFAULT_CONFIGURATION) is ST's, under its licence:
+// GetRangeStatus, GetDistance, ClearInterrupt, StopRanging, and
+// SetDistanceMode, SetTimingBudgetInMs, SetInterMeasurementInMs for
+// configure(). The default configuration (DEFAULT_CONFIGURATION) and the
+// modes' and budgets' register values (DISTANCE_MODES, TIMING_BUDGETS) are
+// ST's, under its licence:
 //
 //   COPYRIGHT(c) 2018 STMicroelectronics
 //
@@ -43,6 +46,16 @@ const REG_VHV_CONFIG_INIT = 0x000b;
 const REG_CONFIG_FIRST = 0x002d;
 const REG_GPIO_HV_MUX_CTRL = 0x0030; // bit 4: interrupt polarity, 0 active high
 const REG_GPIO_TIO_HV_STATUS = 0x0031; // bit 0: the interrupt line, data ready at the polarity
+const REG_PHASECAL_CONFIG_TIMEOUT_MACROP = 0x004b;
+const REG_RANGE_CONFIG_TIMEOUT_MACROP_A_HI = 0x005e; // 16 bits
+const REG_RANGE_CONFIG_VCSEL_PERIOD_A = 0x0060;
+const REG_RANGE_CONFIG_TIMEOUT_MACROP_B_HI = 0x0061; // 16 bits
+const REG_RANGE_CONFIG_VCSEL_PERIOD_B = 0x0063;
+const REG_RANGE_CONFIG_VALID_PHASE_HIGH = 0x0069;
+const REG_SYSTEM_INTERMEASUREMENT_PERIOD = 0x006c; // 32 bits
+const REG_SD_CONFIG_WOI_SD0 = 0x0078; // 16 bits
+const REG_SD_CONFIG_INITIAL_PHASE_SD0 = 0x007a; // 16 bits
+const REG_RESULT_OSC_CALIBRATE_VAL = 0x00de; // 16 bits, bits 9:0 the oscillator's clocks a ms
 const REG_SYSTEM_INTERRUPT_CLEAR = 0x0086;
 const REG_SYSTEM_MODE_START = 0x0087; // 0x40 continuous, 0x10 one shot, 0x00 stop
 const REG_RESULT_RANGE_STATUS = 0x0089; // bits 4:0
@@ -60,6 +73,29 @@ const RANGE_STATUS_UNKNOWN = 255;
 const POLL_MS = 2;
 const BOOT_LIMIT_MS = 1000;
 const READY_LIMIT_MS = 1000; // a ranging every ~100 ms with the default configuration
+const OSC_CALIBRATE_MASK = 0x3ff;
+// the ULD's SetInterMeasurementInMs: the period in oscillator clocks is the
+// calibrated clocks a ms times ms times 1.075 (ST's factor, unexplained)
+const INTERMEASUREMENT_FACTOR = 1.075;
+
+// the ULD's SetDistanceMode: short (to ~1.3 m, better in ambient light) and
+// long (to ~4 m, the default configuration's)
+const DISTANCE_MODES = {
+  short: { phasecal: 0x14, vcselA: 0x07, vcselB: 0x05, validPhaseHigh: 0x38, woiSd0: 0x0705, initialPhaseSd0: 0x0606 },
+  long: { phasecal: 0x0a, vcselA: 0x0f, vcselB: 0x0d, validPhaseHigh: 0xb8, woiSd0: 0x0f0d, initialPhaseSd0: 0x0e0e },
+};
+// the ULD's SetTimingBudgetInMs: ms -> the timeouts A and B, per mode; 15 ms
+// short only
+const TIMING_BUDGETS = {
+  short: {
+    15: [0x001d, 0x0027], 20: [0x0051, 0x006e], 33: [0x00d6, 0x006e], 50: [0x01ae, 0x01e8],
+    100: [0x02e1, 0x0388], 200: [0x03e1, 0x0496], 500: [0x0591, 0x05c1],
+  },
+  long: {
+    20: [0x001e, 0x0022], 33: [0x0060, 0x006e], 50: [0x00ad, 0x00c6],
+    100: [0x01cc, 0x01ea], 200: [0x02d9, 0x02f8], 500: [0x048f, 0x04a4],
+  },
+};
 
 const DEFAULT_CONFIGURATION = [ // 0x2D-0x87, ST's VL51L1X_DEFAULT_CONFIGURATION
   0x00, 0x01, 0x01, 0x01, 0x02, 0x00, 0x02, 0x08, 0x00, 0x08, 0x10, 0x01,
@@ -92,6 +128,10 @@ class Vl53l1x {
 
   async write(reg, ...bytes) {
     await this.bus.write(this.address, [...at(reg), ...bytes]);
+  }
+
+  async write16(reg, v) {
+    await this.write(reg, v >> 8, v & 0xff);
   }
 
   async read(reg, n = 1) {
@@ -136,11 +176,38 @@ class Vl53l1x {
 
   // the next ranging: { distance: mm, status: 0 valid (the ULD's codes) }
   async measure() {
-    await this.until(() => this.dataReady(), READY_LIMIT_MS, 'ranging');
+    await this.until(() => this.dataReady(), this.readyLimitMs ?? READY_LIMIT_MS, 'ranging');
     const [s] = await this.read(REG_RESULT_RANGE_STATUS);
     const [hi, lo] = await this.read(REG_RESULT_DISTANCE_MM, 2);
     await this.write(REG_SYSTEM_INTERRUPT_CLEAR, 1);
     return { distance: (hi << 8) | lo, status: RANGE_STATUS[s & RANGE_STATUS_MASK] ?? RANGE_STATUS_UNKNOWN };
+  }
+
+  // the distance mode ('short' or 'long'), the timing budget (ms, one of the
+  // ULD's: 15 (short only), 20, 33, 50, 100, 200, 500) and the period from
+  // one ranging's start to the next (ms, budget by default; not under it),
+  // as the ULD sets them, ranging stopped and started again. After init()
+  // the sensor runs the default configuration's long mode, ~100 ms
+  async configure({ mode = 'long', budget = 100, period = budget } = {}) {
+    const m = DISTANCE_MODES[mode];
+    if (!m) throw new Error(`VL53L1X: no distance mode ${mode}: ${Object.keys(DISTANCE_MODES).join(', ')}`);
+    const timeouts = TIMING_BUDGETS[mode][budget];
+    if (!timeouts) throw new Error(`VL53L1X: no ${budget} ms budget in ${mode} mode: ${Object.keys(TIMING_BUDGETS[mode]).join(', ')}`);
+    if (!(period >= budget)) throw new Error(`VL53L1X: a ${period} ms period under the ${budget} ms budget`);
+    await this.sleep();
+    await this.write(REG_PHASECAL_CONFIG_TIMEOUT_MACROP, m.phasecal);
+    await this.write(REG_RANGE_CONFIG_VCSEL_PERIOD_A, m.vcselA);
+    await this.write(REG_RANGE_CONFIG_VCSEL_PERIOD_B, m.vcselB);
+    await this.write(REG_RANGE_CONFIG_VALID_PHASE_HIGH, m.validPhaseHigh);
+    await this.write16(REG_SD_CONFIG_WOI_SD0, m.woiSd0);
+    await this.write16(REG_SD_CONFIG_INITIAL_PHASE_SD0, m.initialPhaseSd0);
+    await this.write16(REG_RANGE_CONFIG_TIMEOUT_MACROP_A_HI, timeouts[0]);
+    await this.write16(REG_RANGE_CONFIG_TIMEOUT_MACROP_B_HI, timeouts[1]);
+    const [hi, lo] = await this.read(REG_RESULT_OSC_CALIBRATE_VAL, 2);
+    const clocks = Math.floor((((hi << 8) | lo) & OSC_CALIBRATE_MASK) * period * INTERMEASUREMENT_FACTOR);
+    await this.write(REG_SYSTEM_INTERMEASUREMENT_PERIOD, clocks >>> 24, (clocks >> 16) & 0xff, (clocks >> 8) & 0xff, clocks & 0xff);
+    this.readyLimitMs = Math.max(READY_LIMIT_MS, 2 * period);
+    await this.start();
   }
 
   // ranging stopped

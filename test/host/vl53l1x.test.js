@@ -53,6 +53,32 @@ describe('vl53l1x (host)', () => {
     assert.equal((await s.measure()).status, 255);
   });
 
+  it('configure: the ULD\'s mode and budget registers, the period in oscillator clocks, ranging again', async () => {
+    const tof = new FakeTof();
+    const s = new Vl53l1x(tof);
+    await s.init();
+    tof.regs.set(0x00de, 0x04).set(0x00df, 0x26); // 0x426: bits 9:0 0x026, 38 clocks a ms
+    tof.writes.length = 0;
+    await s.configure({ mode: 'short', budget: 20, period: 50 });
+    assert.deepEqual(tof.writes, [
+      [0x0087, [0x00]], // stopped
+      [0x004b, [0x14]], [0x0060, [0x07]], [0x0063, [0x05]], [0x0069, [0x38]],
+      [0x0078, [0x07, 0x05]], [0x007a, [0x06, 0x06]], // short
+      [0x005e, [0x00, 0x51]], [0x0061, [0x00, 0x6e]], // 20 ms
+      [0x006c, 4], // 38 * 50 * 1.075 = 2042
+      [0x0086, [1]], [0x0087, [0x40]], // ranging
+    ]);
+    assert.deepEqual([0x6c, 0x6d, 0x6e, 0x6f].map((r) => tof.regs.get(r)), [0, 0, 0x07, 0xfa]);
+    assert.deepEqual(await s.measure(), { distance: 1966, status: 0 });
+  });
+
+  it('configure refuses what the ULD has no values for', async () => {
+    const s = new Vl53l1x(new FakeTof());
+    await assert.rejects(s.configure({ mode: 'medium' }), /no distance mode medium: short, long/);
+    await assert.rejects(s.configure({ mode: 'long', budget: 15 }), /no 15 ms budget in long mode: 20, 33, 50, 100, 200, 500/);
+    await assert.rejects(s.configure({ budget: 50, period: 20 }), /a 20 ms period under the 50 ms budget/);
+  });
+
   it('init refuses another sensor (model ID, module type)', async () => {
     const tof = new FakeTof();
     tof.regs.set(0x0110, 0xaa);
