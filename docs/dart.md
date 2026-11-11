@@ -1,8 +1,8 @@
 # dart as the I2C bus
 
 dart is a USB-to-I2C bridge, reached over WebUSB as atiic reaches the CH341
-and CH347. It enumerates as `ffff:da92`, "Sourcekit" "Dart" (a browser's chooser
-shows "Dart"), one
+and CH347. It enumerates as `ffff:da92`, "MeshMass" "Dart" (a browser's chooser
+shows "Dart"; firmware 0.02 and before said "Sourcekit"), one
 vendor interface with a bulk pair. Its firmware isn't published yet.
 
 What it does that WCH's adapters don't:
