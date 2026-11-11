@@ -18,9 +18,24 @@
 //    faulted the read; 512 came back in one).
 
 export const VENDOR_ID = 0x1a86;
-export const PRODUCT_IDS = [0x55db, 0x55de]; // CH347T mode 1, CH347F
+export const CH347F = 0x55de;
+export const PRODUCT_IDS = [0x55db, CH347F]; // CH347T mode 1, CH347F
 export const VENDOR_CLASS = 0xff; // the I2C/SPI interface, found by its class
 export const PACKET_SIZE = 512;
+
+// The CH347F (no modes) starts with its I2C pins as UART1's flow control
+// (SCL/CTS1, SDA/RTS1): "the function of multiplexing pins can be switched
+// and controlled by the driver" (its datasheet, 5.2). WCH's Linux driver
+// (WCHSoftGroup/ch34x_mphsi_master_linux, ch34x_mphsi_master_i2c.c) switches
+// them with USB20_CMD_FUNC_SWITCH, 0xe2, its index 3 ("CH347F switch I2C"):
+// a 3-byte header (0xe2, 8, 0), 8 payload bytes with the third and fourth
+// 0x81; a 4-byte reply, 0xe2 first and 0x00 fourth for success. Measured on
+// a CH347F EVT on r8845 (2026-11-11): without it every I2C transfer hangs
+// (its GPIO command answers); with it the board's 24C02 acks at 0x50, the
+// reply e2 01 00 00.
+export const CMD_FUNC_SWITCH = 0xe2;
+export const FUNC_SWITCH_REPLY = 4;
+export const funcSwitchI2cPacket = () => Uint8Array.from([CMD_FUNC_SWITCH, 8, 0, 0, 0, 0x81, 0x81, 0, 0, 0, 0]);
 
 export const CMD_I2C_STREAM = 0xaa; // each packet starts with it
 export const STM_STA = 0x74; // start (or repeated start)

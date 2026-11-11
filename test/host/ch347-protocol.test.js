@@ -93,17 +93,24 @@ describe('ch347 protocol', () => {
 });
 
 // a fake CH347: runs the stream commands against devices on a pretend bus,
-// { address: { regs, refuse } } (refuse: a register index it won't take)
-function fakeCh347(devices) {
+// { address: { regs, refuse } } (refuse: a register index it won't take);
+// productId 0x55de (a CH347F) answers the pin switch (0xe2) with
+// switchReply, success as the real board's by default
+function fakeCh347(devices, { productId = 0x55db, switchReply = [0xe2, 0x01, 0x00, 0x00] } = {}) {
   const replies = [];
   let target = null, pointer = 0, first = false;
   const device = {
+    productId,
     opened: true,
     configuration: { interfaces: [{ interfaceNumber: 2, alternate: { interfaceClass: 255, endpoints: [{ endpointNumber: 6, direction: 'out', type: 'bulk' }, { endpointNumber: 6, direction: 'in', type: 'bulk' }] } }] },
     claimInterface: async () => {},
     sent: [],
     transferOut: async (ep, data) => {
       device.sent.push(Array.from(data));
+      if (data[0] === 0xe2) {
+        replies.push(Uint8Array.from(switchReply));
+        return { status: 'ok', bytesWritten: data.length };
+      }
       const reply = [];
       for (let i = 1; i < data.length;) {
         const c = data[i++];
@@ -170,6 +177,28 @@ describe('ch347 bus (fake)', () => {
     const got = await bus.writeRead(0x50, [0x00], 1000);
     assert.deepEqual(Array.from(got), dev.regs.slice(0, 1000));
     assert.ok(fake.sent.length > 2);
+  });
+});
+
+describe('ch347f: its I2C pins switched on open', () => {
+  const eeprom = () => ({ regs: new Array(256).fill(0) });
+
+  it('sends WCH\'s switch (0xe2, index 3) before anything else; then I2C works', async () => {
+    const dev = fakeCh347({ 0x50: eeprom() }, { productId: 0x55de });
+    const bus = await new Ch347(dev).open(100000);
+    assert.deepEqual(dev.sent[0], [0xe2, 8, 0, 0, 0, 0x81, 0x81, 0, 0, 0, 0]);
+    assert.deepEqual(await bus.scan(), [0x50]);
+  });
+
+  it('a CH347T in mode 1 never gets it', async () => {
+    const dev = fakeCh347({ 0x50: eeprom() });
+    await new Ch347(dev).open(100000);
+    assert.ok(!dev.sent.some((p) => p[0] === 0xe2));
+  });
+
+  it('a refused switch fails the open, the reply named', async () => {
+    const dev = fakeCh347({}, { productId: 0x55de, switchReply: [0xe2, 0x01, 0x00, 0x01] });
+    await assert.rejects(new Ch347(dev).open(100000), /CH347F: switching its pins to I2C failed \(reply 0xe2 0x01 0x00 0x01\)/);
   });
 });
 

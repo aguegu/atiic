@@ -15,6 +15,7 @@
 // written byte it refuses (the CH347 replies every byte's ack).
 import {
   VENDOR_ID, PRODUCT_IDS, VENDOR_CLASS, PACKET_SIZE, ACKED,
+  CH347F, CMD_FUNC_SWITCH, FUNC_SWITCH_REPLY, funcSwitchI2cPacket,
   speedPacket, stopPacket, transaction, packets,
   spiConfigPacket, CMD_SPI_SET_CFG, CMD_SPI_OUT_IN, spiPackets, gpioPacket, GPIO_PINS, PIN_ALIASES, CMD_GPIO,
 } from './protocol.js';
@@ -53,8 +54,18 @@ class Ch347 {
     if (this.device.configuration === null) await this.device.selectConfiguration(1);
     this.iface = findInterface(this.device.configuration);
     await this.device.claimInterface(this.iface.number);
+    if (this.device.productId === CH347F) await this.switchToI2c();
     await this.out(speedPacket(speed));
     return this;
+  }
+
+  // the CH347F's I2C pins taken from UART1's flow control (protocol.js)
+  async switchToI2c() {
+    await this.out(funcSwitchI2cPacket());
+    const r = await this.in(FUNC_SWITCH_REPLY);
+    if (r[0] !== CMD_FUNC_SWITCH || r[3] !== 0x00) {
+      throw new Error(`CH347F: switching its pins to I2C failed (reply ${Array.from(r.slice(0, FUNC_SWITCH_REPLY), hex).join(' ')})`);
+    }
   }
 
   async close() {

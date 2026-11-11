@@ -1,5 +1,18 @@
 # Releases
 
+## 1.5.12
+
+- **The CH347F's I2C works** (the user's CH347F EVT on r8845: "I would
+  like to know about the jumper setup, so we could get it on mode 1"; it has
+  no modes and no jumper for it). Its SCL and SDA start as UART1's flow
+  control, and every I2C transfer hung. On opening a CH347F (55DE) the
+  adapter now sends WCH's pin switch for I2C, as WCH's Linux driver does
+  (USB20_CMD_FUNC_SWITCH 0xe2, its index 3), and refuses to open if the
+  reply isn't success. Measured: the EVT board's 24C02 at 0x50 scanned,
+  written and read back. A CH347T in mode 1 is untouched. docs/ch347.md has
+  the CH347F's interfaces and the command; host tests for both chips and a
+  refused switch.
+
 ## 1.5.11
 
 - **`Spl06`, Goertek's SPL06-001 barometer** (the user's CJMCU module on
