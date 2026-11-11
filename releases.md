@@ -15,7 +15,7 @@ version with new dongle support").
   written and read back. A CH347T in mode 1 is untouched. docs/ch347.md has
   the CH347F's interfaces and the command; host tests for both chips and a
   refused switch.
-- **`docs/ch347f-board.svg`**, the CH347F EVT's cheatsheet (from WCH's
+- **`docs/ch347f-evt.svg`**, the CH347F EVT's cheatsheet (from WCH's
   photo and KiCad design, drawn by ch32v00x's `scripts/cheatsheets`): its
   headers pin by pin, IO0-IO7 where they are, the three jumpers (JP1 for
   VIO, P8 the flash's chip select, P7 JTAG's pin 7), I2C on UART1's
