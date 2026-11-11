@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1150" width="1200" height="1150" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1238" width="1200" height="1238" font-family="Helvetica, Arial, sans-serif">
   <title>CH347F EVT (CH347F-EVT-R0): the headers</title>
-  <rect width="1200" height="1150" fill="#ffffff"/>
+  <rect width="1200" height="1238" fill="#ffffff"/>
   <text x="600.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">CH347F EVT (CH347F-EVT-R0): the headers</text>
   <text x="600.0" y="62" text-anchor="middle" font-size="13" fill="#555">Top view, USB-B down, as WCH's photo. Each pin: its silkscreen, its function, and for the I/O lines their pins() name (IOn: WCH's GPIOn).</text>
   <rect x="300" y="100" width="600" height="660" rx="24" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="2"/>
@@ -139,6 +139,8 @@
   <rect x="598.8" y="169.6" width="60" height="48" rx="2" fill="#1d1d1d"/>
   <text x="628.8" y="197.6" text-anchor="middle" font-size="10" fill="#e5e5e5">W25Q16</text>
   <text x="628.8" y="150.39999999999998" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">U3</text>
+  <text x="542.4" y="256.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#f8fafc">I2C · 0x50</text>
+  <text x="628.8" y="256.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#f8fafc">SPI · CS by P8</text>
   <rect x="574.8" y="397.6" width="48" height="48" rx="2" fill="#1d1d1d"/>
   <rect x="578.5999999999999" y="394.6" width="3" height="3" fill="#c9ccd1"/><rect x="578.5999999999999" y="445.6" width="3" height="3" fill="#c9ccd1"/>
   <rect x="571.8" y="401.40000000000003" width="3" height="3" fill="#c9ccd1"/><rect x="622.8" y="401.40000000000003" width="3" height="3" fill="#c9ccd1"/>
@@ -313,11 +315,14 @@
   <text x="40" y="908.0" font-size="12" fill="#374151"><tspan font-weight="bold">JP1, on its bottom pair (3V3 to VIO):</tspan> the I/O lines and the I2C pull-ups at 3.3 V. Never on its top pair: that shorts VIO to GND.</text>
   <text x="40" y="928.0" font-size="12" fill="#374151"><tspan font-weight="bold">P8:</tspan> the flash's chip select. On its bottom pair (as delivered): SCS0; on its top pair: SCS1.</text>
   <text x="40" y="948.0" font-size="12" fill="#374151"><tspan font-weight="bold">P7:</tspan> what JTAG pin 7 (KEY) carries. On its bottom pair (as delivered): GND; on its top pair: 3.3 V.</text>
-  <text x="40" y="992.0" font-size="12" fill="#374151">• I2C is on UART1's flow-control pins: SDA on RTS1, SCL on CTS1, switched to I2C by a USB command (WCH's driver, and atiic, send it on opening).</text>
-  <text x="40" y="1012.0" font-size="12" fill="#374151">• With I2C on, UART1 runs without flow control. DTR1 is also SPI's SCS1 (dashed: the same chip pin as on P4 and P8).</text>
-  <text x="40" y="1032.0" font-size="12" fill="#374151">• SDA and SCL are pulled up on the board, 2 kΩ to VIO (R1, R3). The board's 24C02 EEPROM answers at 0x50; the W25Q16 flash is on the SPI.</text>
-  <text x="40" y="1052.0" font-size="12" fill="#374151">• IO0 is CTS0, IO1 RTS0, IO2 DTR0 (UART0's modem lines); IO3 TRST, IO4 TCK, IO5 TDO, IO6 TDI, IO7 TMS (JTAG): none shares the SPI or I2C.</text>
-  <text x="40" y="1072.0" font-size="12" fill="#374151">• UART0 and UART1 are the two serial ports, ttyACM on Linux. 3V3 is the board's 3.3 V (U1, from USB): power 3.3 V parts from it.</text>
-  <text x="40" y="1106.0" font-size="10" fill="#6b7280">Board: WCH's photo (CH347EVT_EN V1.5), its KiCad design (CH347F-R0, 50 x 55 mm), CH347SCH. GPIOs: CH347DS1 V1.6. The I2C switch: WCH's Linux driver. atiic docs/ch347.md.</text>
-  <text x="1160" y="1130.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
+  <text x="40" y="992.0" font-size="14" font-weight="bold" fill="#222">The chips on its buses</text>
+  <text x="40" y="1016.0" font-size="12" fill="#374151"><tspan font-weight="bold">U4, 24C02 EEPROM, on the I2C:</tspan> SDA, SCL to the P5 lines; A0, A1, A2 to GND: address 0x50; WP to GND: writable; VCC 3.3 V.</text>
+  <text x="40" y="1036.0" font-size="12" fill="#374151"><tspan font-weight="bold">U3, W25Q16 flash, on the SPI:</tspan> CLK SCK, DI MOSI, DO MISO; /CS to P8's middle pin (SCS0 or SCS1 by its jumper); /WP, /HOLD to 3.3 V.</text>
+  <text x="40" y="1080.0" font-size="12" fill="#374151">• I2C is on UART1's flow-control pins: SDA on RTS1, SCL on CTS1, switched to I2C by a USB command (WCH's driver, and atiic, send it on opening).</text>
+  <text x="40" y="1100.0" font-size="12" fill="#374151">• With I2C on, UART1 runs without flow control. DTR1 is also SPI's SCS1 (dashed: the same chip pin as on P4 and P8).</text>
+  <text x="40" y="1120.0" font-size="12" fill="#374151">• SDA and SCL are pulled up on the board, 2 kΩ to VIO (R3 on SDA, R1 on SCL): a module's own pull-ups add to them.</text>
+  <text x="40" y="1140.0" font-size="12" fill="#374151">• IO0 is CTS0, IO1 RTS0, IO2 DTR0 (UART0's modem lines); IO3 TRST, IO4 TCK, IO5 TDO, IO6 TDI, IO7 TMS (JTAG): none shares the SPI or I2C.</text>
+  <text x="40" y="1160.0" font-size="12" fill="#374151">• UART0 and UART1 are the two serial ports, ttyACM on Linux. 3V3 is the board's 3.3 V (U1, from USB): power 3.3 V parts from it.</text>
+  <text x="40" y="1194.0" font-size="10" fill="#6b7280">Board: WCH's photo (CH347EVT_EN V1.5), its KiCad design (CH347F-R0, 50 x 55 mm: the chips' pins by its nets), CH347SCH. GPIOs: CH347DS1 V1.6. The I2C switch: WCH's Linux driver. atiic docs/ch347.md.</text>
+  <text x="1160" y="1218.0" text-anchor="end" font-size="10" fill="#6b7280">atiic · github.com/aguegu/atiic · MIT · © 2026 Weihong Guan (aGuegu), drawn with Claude</text>
 </svg>
