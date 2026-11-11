@@ -1,6 +1,9 @@
 # Releases
 
-## 1.5.12
+## 1.6.0
+
+A new dongle: WCH's CH347F (a minor version, the user: "we can bump atiic minor
+version with new dongle support").
 
 - **The CH347F's I2C works** (the user's CH347F EVT on r8845: "I would
   like to know about the jumper setup, so we could get it on mode 1"; it has
@@ -12,6 +15,11 @@
   written and read back. A CH347T in mode 1 is untouched. docs/ch347.md has
   the CH347F's interfaces and the command; host tests for both chips and a
   refused switch.
+- **`docs/ch347f-board.svg`**, the CH347F EVT's cheatsheet (from WCH's
+  photo and KiCad design, drawn by ch32v00x's `scripts/cheatsheets`): its
+  headers pin by pin, IO0-IO7 where they are, the three jumpers (JP1 for
+  VIO, P8 the flash's chip select, P7 JTAG's pin 7), I2C on UART1's
+  flow-control pins.
 
 ## 1.5.11
 
