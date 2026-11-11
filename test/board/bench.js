@@ -58,7 +58,8 @@ export const PS = process.env.BENCH_PS || null;
 // BENCH_GC9107 (r8845's 1.45" 60x160), BENCH_GC9A01 (r8845's round 240x240),
 // BENCH_SSD1680 (r8845's 1.54" 152x152 e-paper, its BUSY too: "...,busy=D4"),
 // BENCH_SSD1681 (r8845's 1.54" 200x200 e-paper, the same), BENCH_ST7302
-// (r8845's 2.13" 122x250 reflective mono TFT), BENCH_MPU6500_SPI (an
+// (r8845's 2.13" 122x250 reflective mono TFT), BENCH_ST7789 (r8845's 240x320,
+// on the CH347F: "res=IO0,dc=IO1,cs=IO2"), BENCH_MPU6500_SPI (an
 // MPU-6500 on the CH341A's SPI, its NCS: "cs=D4"), BENCH_BMX055_SPI (a BMX055
 // on the CH341A's SPI: its three chip selects and PS, "accel=D0,gyro=D1,
 // mag=D2,ps=D4"; PS driven low, the module on SPI)
@@ -69,6 +70,7 @@ export const GC9A01 = lines(process.env.BENCH_GC9A01);
 export const SSD1680 = lines(process.env.BENCH_SSD1680);
 export const SSD1681 = lines(process.env.BENCH_SSD1681);
 export const ST7302 = lines(process.env.BENCH_ST7302);
+export const ST7789 = lines(process.env.BENCH_ST7789);
 export const MPU6500_SPI = lines(process.env.BENCH_MPU6500_SPI);
 export const BMX055_SPI = lines(process.env.BENCH_BMX055_SPI);
 

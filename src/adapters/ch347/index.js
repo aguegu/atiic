@@ -92,6 +92,21 @@ class Ch347 {
     return got;
   }
 
+  // a packet's reply, whole or cut short: the CH347T answers every byte of
+  // it, the CH347F stops at a refused byte (an address not acked: its 0x00
+  // and nothing after, measured on r8845 2026-11-11), so a refusal ends the
+  // wait; waiting on, the read was cancelled and the next transfers with it
+  async replyTo(p) {
+    const got = [];
+    while (got.length < p.reply) {
+      const r = await this.device.transferIn(this.iface.in, Math.ceil((p.reply - got.length) / PACKET_SIZE) * PACKET_SIZE);
+      if (r.status !== 'ok') throw new Error(`CH347 read: ${r.status}`);
+      got.push(...new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength));
+      if (p.acks.some((i) => i < got.length && got[i] !== ACKED)) break;
+    }
+    return got;
+  }
+
   // a transaction's packets out, their replies in; the read bytes back
   run(address, writes, reads) {
     const job = this.queue.then(async () => {
@@ -101,11 +116,14 @@ class Ch347 {
       for (const [k, p] of all.entries()) {
         await this.out(p.data);
         if (!p.reply) continue;
-        const reply = await this.in(p.reply);
+        const reply = await this.replyTo(p);
         const refused = p.acks.find((i) => reply[i] !== ACKED);
         if (refused !== undefined) {
-          // the packet ran on to its end; the stop is still owed if it wasn't the last
-          if (k < all.length - 1) await this.out(stopPacket());
+          // the CH347T's packet ran on to its end: the stop is still owed if
+          // it wasn't the last. The CH347F's stopped at the refusal (its
+          // reply cut short), so whether it sent its stop isn't known: one
+          // more, which costs nothing on an idle bus
+          if (k < all.length - 1 || reply.length < p.reply) await this.out(stopPacket());
           if (p.addresses.includes(refused)) throw new Error(`no ack from ${hex(address)}`);
           const before = p.acks.filter((i) => i < refused && !p.addresses.includes(i)).length;
           throw new Error(`no ack from ${hex(address)} for byte ${written + before}`);

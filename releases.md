@@ -1,5 +1,22 @@
 # Releases
 
+## 1.6.1
+
+- **`St7789`, Sitronix's ST7789** (a 240x320 module, the user's, on the
+  CH347F EVT: "it is a ST7789, 240x320"), from its datasheet (ST7789V
+  Version 1.3, 2014/03): a 240x320 frame memory, COLMOD 0x53/0x55/0x66, the
+  scroll definition with BFA; DcsPanel's commands, no setup beyond them.
+  The module's settings found by eye with the user: inverted (without INVON
+  each colour showed its complement), RGB order, at 0, 0. `st7789.test.js`
+  (BENCH_ST7789) 7/7 on the CH347F; a full screen in 28.5 ms at 60 MHz.
+- **The CH347F after a missing device**: it answers a refused address and
+  nothing more of that packet (the CH347T answers every byte), and atiic
+  waited on, its read cancelled and the transfers after it with it. A
+  refusal now ends the wait, a stop following. `ch347.test.js` 5/5 on the
+  CH347F (was 1/5); host tests for it.
+- docs/ch347.md: the CH347F's SPI and I/O lines, an ST7789's wiring and
+  speeds, and a wedge still open.
+
 ## 1.6.0
 
 A new dongle: WCH's CH347F (a minor version, the user: "we can bump atiic minor

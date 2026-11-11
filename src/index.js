@@ -19,6 +19,7 @@ import At24c from './devices/at24c.js';
 import St7735s from './devices/st7735s.js';
 import Gc9107 from './devices/gc9107.js';
 import Gc9a01 from './devices/gc9a01.js';
+import St7789 from './devices/st7789.js';
 import Ssd1680 from './devices/ssd1680.js';
 import Ssd1681 from './devices/ssd1681.js';
 import St7302 from './devices/st7302.js';
@@ -46,6 +47,7 @@ export {
   St7735s,
   Gc9107,
   Gc9a01,
+  St7789,
   Ssd1680,
   Ssd1681,
   St7302,

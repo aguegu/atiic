@@ -96,7 +96,8 @@ describe('ch347 protocol', () => {
 // { address: { regs, refuse } } (refuse: a register index it won't take);
 // productId 0x55de (a CH347F) answers the pin switch (0xe2) with
 // switchReply, success as the real board's by default
-function fakeCh347(devices, { productId = 0x55db, switchReply = [0xe2, 0x01, 0x00, 0x00] } = {}) {
+// cutAtRefusal: as the CH347F, a packet's reply stops at a refused byte
+function fakeCh347(devices, { productId = 0x55db, switchReply = [0xe2, 0x01, 0x00, 0x00], cutAtRefusal = false } = {}) {
   const replies = [];
   let target = null, pointer = 0, first = false;
   const device = {
@@ -125,6 +126,7 @@ function fakeCh347(devices, { productId = 0x55db, switchReply = [0xe2, 0x01, 0x0
               target = devices[b >> 1] ?? false;
               first = true;
               reply.push(target ? 1 : 0);
+              if (!target && cutAtRefusal) { i = data.length; break; } // the packet abandoned
             } else if (!target) reply.push(0);
             else if (first) { pointer = b; first = false; reply.push(1); }
             else if (pointer === target.refuse) reply.push(0);
@@ -199,6 +201,27 @@ describe('ch347f: its I2C pins switched on open', () => {
   it('a refused switch fails the open, the reply named', async () => {
     const dev = fakeCh347({}, { productId: 0x55de, switchReply: [0xe2, 0x01, 0x00, 0x01] });
     await assert.rejects(new Ch347(dev).open(100000), /CH347F: switching its pins to I2C failed \(reply 0xe2 0x01 0x00 0x01\)/);
+  });
+});
+
+describe('ch347f: a refused address ends its reply', () => {
+  const mpu = () => ({ regs: Object.assign(new Array(128).fill(0), { 0x75: 0x70 }), refuse: 0x7f });
+
+  it('a write and a read to a missing device throw at once; the bus goes on', async () => {
+    const dev = fakeCh347({ 0x68: mpu() }, { productId: 0x55de, cutAtRefusal: true });
+    const bus = await new Ch347(dev).open(100000);
+    await assert.rejects(bus.write(0x2a, [0x00, 0x01]), /no ack from 0x2a/);
+    await assert.rejects(bus.writeRead(0x2a, [0x00], 40), /no ack from 0x2a/);
+    assert.deepEqual(Array.from(await bus.writeRead(0x68, [0x75], 1)), [0x70]);
+    assert.deepEqual(await bus.scan(), [0x68]);
+  });
+
+  it('after a cut-short reply a stop goes out', async () => {
+    const dev = fakeCh347({}, { productId: 0x55de, cutAtRefusal: true });
+    const bus = await new Ch347(dev).open(100000);
+    const before = dev.sent.length;
+    await assert.rejects(bus.write(0x2a, [0x00]), /no ack/);
+    assert.ok(dev.sent.slice(before).some((p) => p.includes(0x75) && p.length <= 3), 'a stop packet');
   });
 });
 
