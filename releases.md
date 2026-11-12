@@ -1,5 +1,31 @@
 # Releases
 
+## 1.7.2
+
+- **The MPU FIFO's overflow during a slow read is caught** (found from a
+  Dart over Bluetooth on the user's BLE 4.0 Mac, 2026-11-12: chunks of
+  samples on the chart that weren't there). `readFifo()` reads the count,
+  then the bytes: two transfers. On a slow link (150 ms a transfer) the
+  FIFO filled between them, the chip overwrote its oldest bytes, and what
+  came back was short and misaligned, with no overflow reported; and once
+  misaligned, every frame after stayed so (the count never reaching the
+  FIFO's size, nothing reset it). Now, when the count plus what could
+  arrive during a transfer (timed on the count's own, twice over) comes
+  near the FIFO's size, INT_STATUS is read after the bytes and its
+  FIFO_OFLOW_INT throws the overflow (the FIFO restarted), the batch not
+  handed out; `resetFifo()` reads INT_STATUS too, so an old overflow isn't
+  taken for a new one. A fast link never reads it. The flag sets with its
+  interrupt not enabled: measured on an MPU-6500 (0x11 after an overflow,
+  INT_ENABLE 0x00; 0x01 drained in time), as RM-MPU-6000A-00's Register 116
+  says. **On the bench** (an MPU-6500 over a Dart on Bluetooth, standing
+  still, 15 s, so every good sample reads 1 g): at 500 Hz the old driver
+  gave 7043 samples, 99 % of them misaligned, no overflow said; the new one
+  reported 124 overflows and handed out nothing damaged (that link can't
+  carry 500 Hz); at 250 Hz both read about 3750 samples, none damaged.
+  `test/host/mpu-fifo-overflow.test.js` (the fake MPU now has a clock: a
+  transfer's latency, the chip producing frames meanwhile, its overflow
+  and flag): red before on both chips, 217 host tests green.
+
 ## 1.7.1
 
 - **`BLE_REQUEST`: a dart chosen by its name, not by a service filter.**

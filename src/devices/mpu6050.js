@@ -25,6 +25,16 @@ const FIFO_EN_GYRO = 0x70; // XG, YG, ZG
 const FIFO_EN_ACCEL = 0x08;
 const USER_CTRL_FIFO_EN = 0x40;
 const USER_CTRL_FIFO_RESET = 0x04;
+// INT_STATUS (Register 58) and its FIFO_OFLOW_INT: set when the FIFO has
+// overflowed, the oldest data lost; cleared by reading the register
+// (RM-MPU-6000A-00 rev 4.0, Registers 58 and 116). It sets with its interrupt
+// not enabled: an MPU-6500 (GY-9250) read 0x11 after an overflow, INT_ENABLE
+// 0x00, and 0x01 when drained in time (2026-11-12)
+const REG_INT_STATUS = 0x3a;
+const INT_FIFO_OFLOW = 0x10;
+// how much more than the FIFO could take in during a read's transfer is
+// allowed for before INT_STATUS is read after it
+const OFLOW_MARGIN = 2;
 const DLPF_OFF = 0x00; // DLPF_CFG 0: the gyro sampled at 8 kHz, the accel still at 1 kHz
 const GYRO_RATE_DLPF_OFF = 8000; // Hz, the sample rate before SMPLRT_DIV
 const GYRO_RATE_DLPF_ON = 1000;
@@ -59,6 +69,7 @@ class Mpu6050 {
   constructor(bus, address = 0x68) {
     this.bus = bus;
     this.address = address;
+    this.now = () => (globalThis.performance ?? Date).now(); // ms; a test's own clock in its place
   }
 
   async init(gyroscopeScale = '500', accelerometerScale = '4') {
@@ -127,23 +138,44 @@ class Mpu6050 {
     await this.resetFifo();
   }
 
+  // the FIFO emptied and on again; INT_STATUS read, so an overflow from
+  // before isn't taken for a new one
   async resetFifo() {
     await this.bus.write(this.address, [REG_USER_CTRL, USER_CTRL_FIFO_RESET]);
     await this.bus.write(this.address, [REG_USER_CTRL, USER_CTRL_FIFO_EN]);
+    await this.bus.writeRead(this.address, [REG_INT_STATUS], 1);
   }
 
   // the whole frames queued, parsed; throws (and restarts the FIFO) when it
-  // filled up, frames lost
+  // filled up, frames lost. Its count and its bytes are two transfers: on a
+  // slow link (a dart over Bluetooth, 150 ms a transfer) the FIFO can fill
+  // between them, the chip overwriting the oldest bytes, and what's read
+  // would be short and misaligned. When the count plus what could arrive
+  // during a transfer (the count's own time, OFLOW_MARGIN over) comes near
+  // the FIFO's size, INT_STATUS is read after the bytes and an overflow
+  // thrown; a fast link never reads it
   async readFifo() {
+    const { chip } = this.constructor;
+    const t0 = this.now();
     const [h, l] = await this.bus.writeRead(this.address, [REG_FIFO_COUNT_H], 2);
+    const transferMs = this.now() - t0;
     const count = (h << 8) | l;
-    if (count >= this.constructor.chip.fifoSize) {
+    if (count >= chip.fifoSize) {
       await this.resetFifo();
-      throw new Error(`${this.constructor.chip.name} FIFO overflowed: samples lost`);
+      throw new Error(`${chip.name} FIFO overflowed: samples lost`);
     }
     const n = count - (count % this.fifoFrame);
     if (!n) return [];
+    const incoming = (transferMs / 1000) * this.sampleRate * this.fifoFrame * OFLOW_MARGIN;
+    const atRisk = count + incoming >= chip.fifoSize - this.fifoFrame;
     const d = await this.bus.writeRead(this.address, [REG_FIFO_R_W], n);
+    if (atRisk) {
+      const [status] = await this.bus.writeRead(this.address, [REG_INT_STATUS], 1);
+      if (status & INT_FIFO_OFLOW) {
+        await this.resetFifo();
+        throw new Error(`${chip.name} FIFO overflowed: samples lost`);
+      }
+    }
     const v = new DataView(d.buffer, d.byteOffset, d.byteLength);
     const samples = [];
     for (let o = 0; o < n; o += this.fifoFrame) {
