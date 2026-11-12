@@ -4,7 +4,7 @@
 // pieces of the link's MTU; no hardware
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import Dart, { OP, BLE_SERVICE, BLE_FILTERS, NAME_PREFIX } from '../../src/adapters/dart/index.js';
+import Dart, { OP, BLE_SERVICE, BLE_REQUEST, BLE_FILTERS, NAME_PREFIX } from '../../src/adapters/dart/index.js';
 import { REQUEST, REPLY, WRITE_CHUNK } from '../../src/adapters/dart/ble.js';
 import { fakeDart } from './fake-dart.js';
 
@@ -74,9 +74,10 @@ function fakeBle({ mtu = 23, silent = false, ...opts } = {}) {
 }
 
 describe('dart over Bluetooth LE', () => {
-  it('the filters: its service\'s UUID; its name\'s prefix', () => {
-    assert.deepEqual(BLE_FILTERS, [{ services: ['76600001-dace-4d07-9686-48b0186b7cd7'] }]);
+  it('requestDevice\'s options: by name, the service optional (no service filter: bluez 5.87); the filter kept apart', () => {
+    assert.deepEqual(BLE_REQUEST, { filters: [{ namePrefix: 'Dart-' }], optionalServices: ['76600001-dace-4d07-9686-48b0186b7cd7'] });
     assert.equal(NAME_PREFIX, 'Dart-');
+    assert.deepEqual(BLE_FILTERS, [{ services: ['76600001-dace-4d07-9686-48b0186b7cd7'] }]);
   });
 
   it('opens: connects, notifications on, INFO and SPEED as over USB', async () => {

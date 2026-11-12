@@ -1,5 +1,18 @@
 # Releases
 
+## 1.7.1
+
+- **`BLE_REQUEST`: a dart chosen by its name, not by a service filter.**
+  On Linux, bluez 5.87's bluetoothd crashes (SIGSEGV) on a scan with a
+  service filter as soon as a device advertising service UUIDs is heard:
+  `is_filter_match()` passes `queue_find()` its arguments in GLib's order
+  and calls the UUID string; fixed in 5.88 (bluez 82af2beafc39). With 1.7.0's
+  `requestDevice({ filters: BLE_FILTERS })` a page's chooser killed the
+  daemon on such a system (seen five times on an Arch machine with 5.87-2).
+  `requestDevice(BLE_REQUEST)`: `namePrefix` `Dart-`, the service in
+  `optionalServices`; `open()` still tells a dart by INFO. `BLE_FILTERS`
+  stays exported. docs/dart.md says why.
+
 ## 1.7.0
 
 - **dart over Bluetooth** (the user: "start the atiic web bluetooth

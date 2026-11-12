@@ -9,8 +9,15 @@ export const SERVICE = '76600001-dace-4d07-9686-48b0186b7cd7';
 export const REQUEST = '76600002-dace-4d07-9686-48b0186b7cd7';
 export const REPLY = '76600003-dace-4d07-9686-48b0186b7cd7';
 // a dart advertises its service's UUID and the name "Dart-XXXX"
-export const BLE_FILTERS = [{ services: [SERVICE] }];
 export const NAME_PREFIX = 'Dart-';
+// requestDevice()'s options for a dart: chosen by its name, its service
+// asked for as optional. Not by a service filter (BLE_FILTERS): bluez 5.87's
+// bluetoothd crashes on a scan with one as soon as a device advertising
+// service UUIDs is heard (fixed in 5.88: bluez 82af2beafc39); open() tells
+// a dart by its INFO reply anyway
+export const BLE_REQUEST = { filters: [{ namePrefix: NAME_PREFIX }], optionalServices: [SERVICE] };
+// by the advertised service: the tighter match, for systems past bluez 5.87
+export const BLE_FILTERS = [{ services: [SERVICE] }];
 // a request's frame written WRITE_CHUNK bytes at a time: ATT's least MTU (23)
 // less a write's 3-byte header, what every link takes. Web Bluetooth doesn't
 // tell a page the link's MTU, and a write over it fails or is cut on some

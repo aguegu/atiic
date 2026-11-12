@@ -11,7 +11,7 @@
 // info(), speed(hz, stretchMs).
 import { BleLink } from './ble.js';
 
-export { SERVICE as BLE_SERVICE, BLE_FILTERS, NAME_PREFIX } from './ble.js';
+export { SERVICE as BLE_SERVICE, BLE_REQUEST, BLE_FILTERS, NAME_PREFIX } from './ble.js';
 export const VENDOR_ID = 0xffff;
 export const PRODUCT_ID = 0xda92;
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];

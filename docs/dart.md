@@ -66,9 +66,9 @@ a browser with Web Bluetooth (Chrome or Edge; on Linux behind
 Safari):
 
 ```js
-import Dart, { BLE_FILTERS } from 'atiic/adapters/dart';
+import Dart, { BLE_REQUEST } from 'atiic/adapters/dart';
 
-const device = await navigator.bluetooth.requestDevice({ filters: BLE_FILTERS });
+const device = await navigator.bluetooth.requestDevice(BLE_REQUEST);
 const bus = await new Dart(device).open(400000); // connects, then as over USB
 const [whoAmI] = await bus.writeRead(0x68, [0x75], 1);
 await bus.close(); // disconnects
@@ -80,6 +80,14 @@ least MTU, since Web Bluetooth doesn't tell a page the link's), its reply
 notified on `...0003`, put together by the header's count. Everything else,
 INFO's check at `open()`, tags, statuses and errors, is the USB adapter's.
 A link lost mid-request rejects it (`dart disconnected`).
+
+`BLE_REQUEST` picks a dart by its name (`Dart-`), its service asked for as
+optional, not by a service filter: on Linux, bluez 5.87's bluetoothd
+crashes on any scan with a service filter as soon as a device advertising
+service UUIDs is heard (a page's chooser opens, the daemon dies, nothing
+listed; fixed in 5.88 by bluez commit 82af2beafc39). `BLE_FILTERS`, the
+filter by service, is still exported for systems past it. A name is a
+looser match; `open()` still tells a dart by its INFO reply.
 
 Each request waits a Bluetooth round trip, about two connection intervals:
 dart-ble asks for 7.5-15 ms, and the centrals tried take 15. Measured in
