@@ -32,6 +32,10 @@ What it does that WCH's adapters don't:
 
 Not faster: its I2C tops at 400 kHz, its USB is full speed.
 
+**Or without a cable**: dart-ble, the same command set over Bluetooth LE
+(firmware 0.03 on), for a page's Web Bluetooth. The same `Dart`, given a
+`BluetoothDevice` instead of a `USBDevice`; see [Over Bluetooth](#over-bluetooth).
+
 ```js
 import { openDart } from 'atiic/adapters/dart/node';
 
@@ -52,6 +56,39 @@ import Dart, { FILTERS } from 'atiic/adapters/dart';
 const device = await navigator.usb.requestDevice({ filters: FILTERS });
 const bus = await new Dart(device).open(400000);
 ```
+
+## Over Bluetooth
+
+dart-ble advertises as `Dart-XXXX` (the last two bytes of its unique ID)
+with its service's UUID, connectable, one browser at a time, no pairing. In
+a browser with Web Bluetooth (Chrome or Edge; on Linux behind
+`chrome://flags/#enable-experimental-web-platform-features`; not Firefox or
+Safari):
+
+```js
+import Dart, { BLE_FILTERS } from 'atiic/adapters/dart';
+
+const device = await navigator.bluetooth.requestDevice({ filters: BLE_FILTERS });
+const bus = await new Dart(device).open(400000); // connects, then as over USB
+const [whoAmI] = await bus.writeRead(0x68, [0x75], 1);
+await bus.close(); // disconnects
+```
+
+The service: `76600001-dace-4d07-9686-48b0186b7cd7`; a request's frame is
+written to `...0002` (Write Without Response, 20 bytes at a time: ATT's
+least MTU, since Web Bluetooth doesn't tell a page the link's), its reply
+notified on `...0003`, put together by the header's count. Everything else,
+INFO's check at `open()`, tags, statuses and errors, is the USB adapter's.
+A link lost mid-request rejects it (`dart disconnected`).
+
+Each request waits a Bluetooth round trip, about two connection intervals:
+dart-ble asks for 7.5-15 ms, and the centrals tried take 15. Measured in
+Chromium on Linux (2026-11-12, firmware 0.03): `open()`
+839 ms with the connection, a 14-byte register read 31.9 ms (median of 20), a
+200-byte write 56 ms (ten writes, sent back to back), a 200-byte read 32 ms.
+The I2C itself takes under a millisecond of that, so fewer, larger
+transactions go faster: a sensor's FIFO read in blocks (`Mpu6050`'s
+`startFifo()`/`readFifo()`) kept 250 samples a second without a loss.
 
 `0xffff` is nobody's vendor ID, so `open()` tells a dart by its answer to
 INFO (the op and tag echoed, a command set it speaks), not by its name: a
@@ -110,7 +147,9 @@ For a headless bench, a group instead (`GROUP="plugdev", MODE="0660"`).
 ## Tests
 
 `test/host/dart-protocol.test.js`: the framing, tags and statuses against a
-fake dart, no hardware. On a bench, `BENCH_ADAPTER=dart` runs the board
+fake dart, no hardware; `test/host/dart-ble.test.js`: the same over a fake
+Web Bluetooth device (writes in pieces, replies in notifications of an MTU
+of 23 or 247, the link lost, close). On a bench, `BENCH_ADAPTER=dart` runs the board
 tests (`test/board/bench.js`) on it. The firmware's own bench test (dart and
 an I2C slave that stretches SCL, at 100 and 400 kHz: writes, register reads
 over several USB packets, a refused write) passed 19/19, and this adapter

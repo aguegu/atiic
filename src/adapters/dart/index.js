@@ -1,12 +1,17 @@
 // dart, the user's USB-to-I2C bridge (docs/dart.md), as
 // atiic's I2C bus, on a WebUSB USBDevice: a browser's
 // (navigator.usb.requestDevice) or Node's (./node.js, the usb package's
-// WebUSB). Its command set: one request, one reply on the vendor
-// interface's bulk pair (EP1), each reply with a status that tells a
+// WebUSB); or over Bluetooth LE (firmware dart-ble) on a Web Bluetooth
+// BluetoothDevice (navigator.bluetooth.requestDevice, ./ble.js). Its command
+// set: one request, one reply (on USB the vendor interface's bulk pair, EP1;
+// on Bluetooth a written and a notified characteristic), each reply with a status that tells a
 // missing device (no ack from 0x..) from a refused data byte (0x.. refused
 // byte k), which the CH341 can't. The bus the device drivers use, as the
 // CH341's and CH347's: scan(), write(), read(), writeRead(), acks(); and
 // info(), speed(hz, stretchMs).
+import { BleLink } from './ble.js';
+
+export { SERVICE as BLE_SERVICE, BLE_FILTERS, NAME_PREFIX } from './ble.js';
 export const VENDOR_ID = 0xffff;
 export const PRODUCT_ID = 0xda92;
 export const FILTERS = [{ vendorId: VENDOR_ID, productId: PRODUCT_ID }];
@@ -66,10 +71,34 @@ export class DartError extends Error {
 }
 
 export class Dart {
+  // device: a WebUSB USBDevice, or a Web Bluetooth BluetoothDevice (it has
+  // gatt)
   constructor(device) {
     this.device = device;
+    this.ble = device.gatt ? new BleLink(device) : null;
     this.queue = Promise.resolve(); // one request on the wire at a time
     this.tag = 0;
+  }
+
+  async linkOpen() {
+    if (this.ble) return this.ble.open();
+    if (!this.device.opened) await this.device.open();
+    if (this.device.configuration === null) await this.device.selectConfiguration(1);
+    await this.device.claimInterface(INTERFACE);
+  }
+
+  async send(frame) {
+    if (this.ble) return this.ble.send(frame);
+    const w = await this.device.transferOut(ENDPOINT, frame);
+    if (w.status !== 'ok') throw new Error(`dart write: ${w.status}`);
+  }
+
+  // the next reply's bytes
+  async receive() {
+    if (this.ble) return this.ble.receive();
+    const r = await this.device.transferIn(ENDPOINT, REPLY_ROOM);
+    if (r.status !== 'ok') throw new Error(`dart read: ${r.status}`);
+    return new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength);
   }
 
   // speed: I2C's SCL, Hz (100000 or 400000; a 1.1 dart any from SPEED_MIN
@@ -78,9 +107,7 @@ export class Dart {
   // change): the op and tag echoed, the reply whole, a command set this
   // speaks; nothing within identifyMs, or anything else, isn't a dart
   async open(speed = 100000, { identifyMs = IDENTIFY_MS } = {}) {
-    if (!this.device.opened) await this.device.open();
-    if (this.device.configuration === null) await this.device.selectConfiguration(1);
-    await this.device.claimInterface(INTERFACE);
+    await this.linkOpen();
     let timer;
     const silent = new Promise((resolve, reject) => {
       timer = setTimeout(() => reject(new Error(`no answer to INFO in ${identifyMs} ms: not a dart`)), identifyMs);
@@ -91,7 +118,7 @@ export class Dart {
     } catch (e) {
       // the read left waiting ends with the device closed
       this.queue = Promise.resolve();
-      await this.device.close().catch(() => {});
+      await (this.ble ? this.ble.close() : this.device.close()).catch(() => {});
       throw e.message.startsWith('no answer') ? e : new Error(`not a dart: ${e.message}`);
     } finally {
       clearTimeout(timer);
@@ -106,6 +133,7 @@ export class Dart {
 
   async close() {
     await this.queue;
+    if (this.ble) return this.ble.close();
     await this.device.releaseInterface(INTERFACE);
     await this.device.close();
   }
@@ -117,12 +145,9 @@ export class Dart {
       const out = new Uint8Array(HEADER + payload.length);
       out.set([op, tag, payload.length & 0xff, payload.length >> 8]);
       out.set(payload, HEADER);
-      const w = await this.device.transferOut(ENDPOINT, out);
-      if (w.status !== 'ok') throw new Error(`dart write: ${w.status}`);
+      await this.send(out);
       for (;;) {
-        const r = await this.device.transferIn(ENDPOINT, REPLY_ROOM);
-        if (r.status !== 'ok') throw new Error(`dart read: ${r.status}`);
-        const b = new Uint8Array(r.data.buffer, r.data.byteOffset, r.data.byteLength);
+        const b = await this.receive();
         if (b.length < REPLY_HEADER) throw new Error(`dart read: ${b.length} bytes`);
         if (b[1] !== tag) continue; // a reply to a request cut short before
         if (b[0] !== op) throw new Error(`a reply to op ${b[0]}, not ${op}`);

@@ -1,5 +1,23 @@
 # Releases
 
+## 1.7.0
+
+- **dart over Bluetooth** (the user: "start the atiic web bluetooth
+  adapter"): the same `Dart` takes a Web Bluetooth `BluetoothDevice` as well
+  as a WebUSB `USBDevice`, for dart-ble, dart's Bluetooth LE firmware (0.03
+  on). `navigator.bluetooth.requestDevice({ filters: BLE_FILTERS })`, then
+  `new Dart(device).open()` as over USB: INFO's check, tags, statuses and
+  errors are shared; `src/adapters/dart/ble.js` writes a request's frame 20
+  bytes at a time (ATT's least MTU: a page isn't told the link's) and puts
+  the reply together from its notifications; a link lost mid-request
+  rejects it. Exports `BLE_SERVICE`, `BLE_FILTERS`, `NAME_PREFIX`.
+  `test/host/dart-ble.test.js` (a fake Web Bluetooth device, MTU 23 and 247,
+  a lost link, close and reopen); the fake dart moved to
+  `test/host/fake-dart.js`. In Chromium on Linux against a dart-ble 0.03
+  (2026-11-12): `open()` 839 ms with the connection, a 14-byte read 31.9 ms
+  (median of 20), a 200-byte write 56 ms, a 200-byte read 32 ms, a missing
+  device `no ack from 0x2a`. docs/dart.md: Over Bluetooth.
+
 ## 1.6.1
 
 - **`St7789`, Sitronix's ST7789** (a 240x320 module, the user's, on the
