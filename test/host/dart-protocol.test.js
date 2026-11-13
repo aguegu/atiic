@@ -124,4 +124,27 @@ describe('dart protocol', () => {
     await bus.speed(400000, 90);
     assert.deepEqual([...dev.sent.at(-1)], [OP.SPEED, dev.sent.at(-1)[1], 6, 0, 0x80, 0x1a, 0x06, 0x00, 90, 0]);
   });
+
+  it('1.2: fifoPump; fifoStart\'s request (address, count and data registers, frame, full, period); fifoTake\'s flags and frames; fifoStop', async () => {
+    const old = await new Dart(fakeDart({ protocol: 0x0101 })).open();
+    assert.equal(old.fifoPump, false);
+    const dev = fakeDart({ protocol: 0x0102 });
+    const bus = await new Dart(dev).open();
+    assert.equal(bus.fifoPump, true);
+    assert.equal((await bus.info()).fifoBuffer, 4096);
+    dev.regs.set([0x00, 24], 0x72); // a count of 24, big-endian
+    dev.regs.set(Array.from({ length: 24 }, (_, i) => i + 1), 0x74);
+    await bus.fifoStart(SLAVE, { count: 0x72, data: 0x74, frame: 12, full: 500, periodMs: 20 });
+    assert.deepEqual([...dev.sent.at(-1)], [OP.FIFO_START, dev.sent.at(-1)[1], 8, 0, SLAVE, 0x72, 0x74, 12, 0xf4, 0x01, 20, 0]);
+    const t = await bus.fifoTake(1020);
+    assert.deepEqual([t.running, t.full, t.error], [true, false, null]);
+    assert.deepEqual([...t.data], Array.from({ length: 24 }, (_, i) => i + 1));
+    dev.regs.set([0x01, 0xf4], 0x72); // 500: full
+    assert.deepEqual(Object.values(await bus.fifoTake()).slice(0, 2), [false, true]);
+    await bus.fifoStart(SLAVE + 1, { count: 0x72, data: 0x74, frame: 12, full: 500, periodMs: 20 });
+    const e = await bus.fifoTake();
+    assert.ok(e.error instanceof DartError && e.error.status === 'NO_DEVICE' && /no ack from 0x53/.test(e.error.message));
+    await bus.fifoStop();
+    assert.deepEqual([...dev.sent.at(-1)].filter((_, i) => i !== 1), [OP.FIFO_STOP, 0, 0]);
+  });
 });

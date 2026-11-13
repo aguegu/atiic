@@ -26,6 +26,9 @@ export const PROTOCOL_MAJOR = 1;
 // 400000 only); BUS_BUSY's count carries the lines; SCAN reports a bus
 // error instead of an empty bus
 export const PROTOCOL_LINES = 0x0101;
+// 1.2: the FIFO pump (FIFO_START, FIFO_TAKE, FIFO_STOP): dart reads a
+// sensor's FIFO itself every period into its RAM; INFO adds its buffer size
+export const PROTOCOL_FIFO = 0x0102;
 export const SPEED_MIN = 7327; // dart's slowest SCL: its divider's largest
 export const SPEED_MAX = 400000;
 // BUS_BUSY's count (1.1): the lines as dart reads them, a bit set when high
@@ -42,7 +45,11 @@ const READ_MAX = 1024;
 // at the reply's short (or zero-length) packet, never before it
 const REPLY_ROOM = Math.ceil((REPLY_HEADER + READ_MAX) / PACKET) * PACKET + PACKET;
 
-export const OP = { INFO: 0x01, SPEED: 0x02, I2C: 0x10, SCAN: 0x11 };
+export const OP = { INFO: 0x01, SPEED: 0x02, I2C: 0x10, SCAN: 0x11, FIFO_START: 0x13, FIFO_TAKE: 0x14, FIFO_STOP: 0x15 };
+// FIFO_TAKE's flags
+const FIFO_RUNNING = 0x01;
+const FIFO_FULL = 0x02;
+const FIFO_ERROR = 0x04;
 export const STATUS = {
   0: 'OK', [-1]: 'NO_DEVICE', [-2]: 'TIMEOUT', [-3]: 'BUS_ERROR', [-4]: 'BUS_BUSY', [-5]: 'REFUSED',
   [-16]: 'UNKNOWN_OP', [-17]: 'BAD_LENGTH', [-18]: 'BAD_SPEED',
@@ -168,6 +175,7 @@ export class Dart {
       protocol: v.getUint16(0, true), version: v.getUint16(2, true), speed: v.getUint32(4, true),
       stretchMs: v.getUint16(8, true), payloadMax: v.getUint16(10, true), readMax: v.getUint16(12, true),
       uniqueId: [...data.slice(14, 22)].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase(),
+      ...(data.length >= 24 && { fifoBuffer: v.getUint16(22, true) }), // 1.2
     };
   }
 
@@ -215,6 +223,41 @@ export class Dart {
     const { status, count, data } = await this.request(OP.SCAN, [first, last]);
     if (status) throw new DartError(status, undefined, count, { lines: this.protocol >= PROTOCOL_LINES });
     return [...data];
+  }
+
+  // a FIFO pump (1.2): a device driver with a FIFO (Mpu6050's startFifo())
+  // hands it its reads when the bus has one
+  get fifoPump() {
+    return this.protocol >= PROTOCOL_FIFO;
+  }
+
+  // dart reads the FIFO at address every periodMs: its count (2 bytes,
+  // big-endian) at register count, then the whole frames (frame bytes) it
+  // holds from register data, into dart's buffer; a count at full or over
+  // stops it (full: true from fifoTake())
+  async fifoStart(address, { count, data, frame, full, periodMs }) {
+    const { status } = await this.request(OP.FIFO_START, [address, count, data, frame, full & 0xff, full >> 8, periodMs & 0xff, periodMs >> 8]);
+    if (status) throw new DartError(status, address);
+    this.fifoAddress = address;
+  }
+
+  // the frames gathered (up to most bytes), oldest first: { running, full,
+  // error, data }; error a DartError when an I2C error stopped the pump
+  async fifoTake(most = READ_MAX) {
+    const { status, data } = await this.request(OP.FIFO_TAKE, [most & 0xff, most >> 8]);
+    if (status) throw new DartError(status);
+    const [flags, code] = data;
+    return {
+      running: !!(flags & FIFO_RUNNING),
+      full: !!(flags & FIFO_FULL),
+      error: flags & FIFO_ERROR ? new DartError((code << 24) >> 24, this.fifoAddress) : null,
+      data: data.slice(2),
+    };
+  }
+
+  async fifoStop() {
+    const { status } = await this.request(OP.FIFO_STOP);
+    if (status) throw new DartError(status);
   }
 }
 

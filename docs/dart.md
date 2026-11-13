@@ -98,6 +98,15 @@ The I2C itself takes under a millisecond of that, so fewer, larger
 transactions go faster: a sensor's FIFO read in blocks (`Mpu6050`'s
 `startFifo()`/`readFifo()`) kept 250 samples a second without a loss.
 
+A slower link loses them: an MPU-6500's FIFO holds 168 ms at 250 Hz, and on
+a BLE 4.0 Mac a plain read (the count, then the frames: two round trips)
+took about 76 ms, 150 ms and more at times (2026-11-13), the FIFO
+overflowing. From command set 1.2 dart reads the FIFO itself, every period,
+into its own RAM (4 KB), and the driver takes what it gathered in one round
+trip: on a dart that has it (`bus.fifoPump`), `Mpu6050`'s and `Mpu6500`'s
+`startFifo()` start it and `readFifo()` takes from it, nothing else to
+change; an older dart is read as before.
+
 `0xffff` is nobody's vendor ID, so `open()` tells a dart by its answer to
 INFO (the op and tag echoed, a command set it speaks), not by its name: a
 device that doesn't answer within a second, or answers something else, is
@@ -105,7 +114,8 @@ refused, and closed. The command set is dart's, the same whatever chip a dart is
 built on; `open()` reads its version from INFO and refuses a major it
 doesn't speak (this adapter: 1.x; a minor only adds). 1.1 added the speeds
 between 100 and 400 kHz and under 100 kHz, the lines in `BUS_BUSY`, and a
-scan's bus errors; a 1.0 dart takes 100 and 400 kHz only.
+scan's bus errors; a 1.0 dart takes 100 and 400 kHz only. 1.2 added the
+FIFO pump.
 
 ## The command set
 
@@ -121,10 +131,21 @@ time; numbers little-endian.
 
 | Op | Payload | Reply data |
 |---|---|---|
-| 0x01 INFO | none | the command set's version (uint16: major high byte, minor low; 1.1 = 0x0101), the firmware's version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID |
+| 0x01 INFO | none | the command set's version (uint16: major high byte, minor low; 1.1 = 0x0101), the firmware's version, speed (Hz), stretch limit (ms), largest payload and read, the chip's unique ID; the FIFO buffer's size (uint16, 1.2) |
 | 0x02 SPEED | Hz (uint32: 7327 to 400000; 1.0: 100000 or 400000), stretch limit (uint16 ms, past a byte's own time; optional) | none |
 | 0x10 I2C | address, read length (uint16), the bytes to write | the bytes read |
 | 0x11 SCAN | first, last address | the addresses that acknowledge; a bus error ends it with that status (1.1) |
+| 0x13 FIFO_START (1.2) | address, count register, data register, frame (bytes), full (uint16), period (uint16 ms, 1-1000) | none |
+| 0x14 FIFO_TAKE (1.2) | the most bytes wanted (uint16) | flags (bit 0 running, bit 1 full, bit 2 error), the error's status (int8), then whole frames, oldest first |
+| 0x15 FIFO_STOP (1.2) | none | none |
+
+The FIFO pump (1.2): every period dart reads the count register (two bytes,
+big-endian), then as many whole frames as it holds (and dart's buffer has
+room for) from the data register, into its buffer. A count at `full` or
+over stops it (the sensor's FIFO taken as overflowed: the host resets the
+sensor and starts the pump again); so does an I2C error, its status kept.
+The frames gathered before stay for FIFO_TAKE. Dart knows nothing of the
+sensor: the host sets it up and resets it; dart only reads where it's told.
 
 | Status | | |
 |---|---|---|
@@ -168,4 +189,7 @@ VL53L1X through this adapter at 10, 100 and 400 kHz, the same distance
 within 4 mm (its start-up and first reading 494, 155 and 181 ms: the 91
 bytes of configuration take longer at 10 kHz). An AGS10 module held SCL
 low from its power-up: `bus held low: SCL`, the bus free with its SCL
-unplugged.
+unplugged. The FIFO pump (1.2): `test/host/mpu-fifo-pump.test.js`, an MPU
+on a fake pump at 150-400 ms a take, every frame in order; the firmware's
+bench tests against its I2C slave as a FIFO, over USB and Bluetooth
+(2026-11-13).

@@ -35,6 +35,15 @@ const INT_FIFO_OFLOW = 0x10;
 // how much more than the FIFO could take in during a read's transfer is
 // allowed for before INT_STATUS is read after it
 const OFLOW_MARGIN = 2;
+// a bus with a FIFO pump (a dart, protocol 1.2: bus.fifoPump) reads the FIFO
+// itself every PUMP_PERIOD_MS, at most a PUMP_SHARE of the FIFO's time
+// (the MPU-6500's 512 bytes: 168 ms at 250 Hz), and keeps the frames until
+// readFifo() takes them; a count of PUMP_MARGIN periods' bytes under the
+// FIFO's size is taken as overflowed (it may fill during the pump's read)
+const PUMP_PERIOD_MS = 20;
+const PUMP_SHARE = 4;
+const PUMP_MARGIN = 2;
+const PUMP_TAKE = 1024; // bytes a take asks for: a dart's largest read
 const DLPF_OFF = 0x00; // DLPF_CFG 0: the gyro sampled at 8 kHz, the accel still at 1 kHz
 const GYRO_RATE_DLPF_OFF = 8000; // Hz, the sample rate before SMPLRT_DIV
 const GYRO_RATE_DLPF_ON = 1000;
@@ -135,15 +144,34 @@ class Mpu6050 {
     const enable = (accelerometers ? FIFO_EN_ACCEL : 0) | (temperature ? FIFO_EN_TEMP : 0) | (gyroscopes ? FIFO_EN_GYRO : 0);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, divider, filter ? DLPF_20HZ : DLPF_OFF]);
     await this.bus.write(this.address, [REG_FIFO_EN, enable]);
+    this.pumping = !!this.bus.fifoPump;
     await this.resetFifo();
   }
 
+  // the bus's FIFO pump on (a dart from protocol 1.2): it reads the count
+  // and whole frames every period; readFifo() takes them
+  async pumpStart() {
+    const { chip } = this.constructor;
+    const frames = chip.fifoSize / this.fifoFrame;
+    const fifoMs = (1000 * frames) / this.sampleRate;
+    const periodMs = Math.max(1, Math.min(PUMP_PERIOD_MS, Math.floor(fifoMs / PUMP_SHARE)));
+    const margin = Math.max(1, Math.ceil((PUMP_MARGIN * periodMs * this.sampleRate) / 1000)) * this.fifoFrame;
+    await this.bus.fifoStart(this.address, {
+      count: REG_FIFO_COUNT_H, data: REG_FIFO_R_W, frame: this.fifoFrame, full: chip.fifoSize - margin, periodMs,
+    });
+  }
+
   // the FIFO emptied and on again; INT_STATUS read, so an overflow from
-  // before isn't taken for a new one
+  // before isn't taken for a new one. With the bus's pump, the pump starts
+  // (its buffer emptied) while the FIFO is off and empty, then the FIFO on:
+  // on a slow link the round trips of a restart outlast the FIFO, and
+  // frames from before the reset (misaligned after an overflow) never reach
+  // the pump
   async resetFifo() {
     await this.bus.write(this.address, [REG_USER_CTRL, USER_CTRL_FIFO_RESET]);
+    if (this.pumping) await this.pumpStart();
     await this.bus.write(this.address, [REG_USER_CTRL, USER_CTRL_FIFO_EN]);
-    await this.bus.writeRead(this.address, [REG_INT_STATUS], 1);
+    if (!this.pumping) await this.bus.writeRead(this.address, [REG_INT_STATUS], 1);
   }
 
   // the whole frames queued, parsed; throws (and restarts the FIFO) when it
@@ -155,6 +183,7 @@ class Mpu6050 {
   // the FIFO's size, INT_STATUS is read after the bytes and an overflow
   // thrown; a fast link never reads it
   async readFifo() {
+    if (this.pumping) return this.takeFifo();
     const { chip } = this.constructor;
     const t0 = this.now();
     const [h, l] = await this.bus.writeRead(this.address, [REG_FIFO_COUNT_H], 2);
@@ -176,6 +205,27 @@ class Mpu6050 {
         throw new Error(`${chip.name} FIFO overflowed: samples lost`);
       }
     }
+    return this.frames(d, n);
+  }
+
+  // what the bus's pump gathered, in one transfer: its whole frames parsed.
+  // A count at its full mark (FULL) or an I2C error stops the pump: the
+  // FIFO restarted and an overflow thrown, as readFifo()'s own (the frames
+  // in that take go too), or the error thrown
+  async takeFifo() {
+    const { chip } = this.constructor;
+    const { running, full, error, data } = await this.bus.fifoTake(PUMP_TAKE - (PUMP_TAKE % this.fifoFrame));
+    if (full) {
+      await this.resetFifo();
+      throw new Error(`${chip.name} FIFO overflowed: samples lost`);
+    }
+    if (error) throw error;
+    if (!running) throw new Error(`${chip.name} FIFO: the bus's pump stopped`);
+    return this.frames(data, data.length - (data.length % this.fifoFrame));
+  }
+
+  // n bytes of whole frames parsed into samples
+  frames(d, n) {
     const v = new DataView(d.buffer, d.byteOffset, d.byteLength);
     const samples = [];
     for (let o = 0; o < n; o += this.fifoFrame) {
@@ -191,6 +241,8 @@ class Mpu6050 {
   }
 
   async stopFifo() {
+    if (this.pumping) await this.bus.fifoStop();
+    this.pumping = false;
     await this.bus.write(this.address, [REG_USER_CTRL, 0]);
     await this.bus.write(this.address, [REG_FIFO_EN, 0]);
     await this.bus.write(this.address, [REG_SMPLRT_DIV, SAMPLE_DIV, DLPF_20HZ]);

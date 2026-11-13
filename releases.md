@@ -1,5 +1,36 @@
 # Releases
 
+## 1.8.0
+
+- **The FIFO pump: a Dart reads a sensor's FIFO itself** (dart command set
+  1.2). On a slow link the MPU's FIFO overflowed between reads: an
+  MPU-6500's 512 bytes hold 168 ms at 250 Hz, and a plain `readFifo()` is
+  two round trips (the count, then the frames), about 76 ms on a BLE 4.0
+  Mac, 150 ms and more at times. A 1.2 dart reads the count and whole frames
+  every period (20 ms, at most a quarter of the FIFO's time) into 4 KB of
+  its RAM; `readFifo()` takes them in one round trip. On a bus with it
+  (`bus.fifoPump`) `Mpu6050`'s and `Mpu6500`'s `startFifo()` start it,
+  `readFifo()` takes from it, `stopFifo()` stops it; a 1.1 dart, a CH341
+  or a CH347 are read as before. A count two periods' bytes under the
+  FIFO's size stops the pump (dart's `full`): thrown as an overflow, the
+  FIFO and pump restarted. The restart starts the pump while the FIFO is
+  off and empty, then turns the FIFO on: frames from before (misaligned
+  after an overflow) never reach it, and a slow link's round trips during
+  the restart don't overflow it again.
+- The Dart adapter: `fifoPump`, `fifoStart(address, { count, data, frame,
+  full, periodMs })`, `fifoTake(most)` (`{ running, full, error, data }`),
+  `fifoStop()`; `info()` gives `fifoBuffer` from a 1.2 dart.
+- **Measured** (the user's Mac, an MPU-6500 on a Dart over Bluetooth, dart-ble
+  0.05, 250 Hz): reads 31 ms (p95 34-38, max 64) instead of 76 ms, 7.6
+  samples a read, 0 overflows and no gap in two 60 s runs; with the page's
+  main thread blocked 300 ms every 3 s, and 1 s every 3 s: 0 overflows, no
+  gap in the sensor time (1.7.2 lost samples at 300 ms).
+- Tests: `test/host/mpu-fifo-pump.test.js` (a fake pump at 150-400 ms a
+  take: every frame in order; a pump held off past the FIFO's time: the
+  overflow, the restart, frames in order after); `dart-protocol.test.js`
+  the ops' bytes on a fake 1.2 dart; `fake-mpu.js` queues nothing while
+  its FIFO is off. 226 host tests.
+
 ## 1.7.2
 
 - **The MPU FIFO's overflow during a slow read is caught** (found from a

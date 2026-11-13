@@ -8,6 +8,8 @@ const REG_FIFO_R_W = 0x74;
 const REG_WHO_AM_I = 0x75;
 const REG_INT_STATUS = 0x3a;
 const INT_FIFO_OFLOW = 0x10;
+const REG_USER_CTRL = 0x6a;
+const USER_CTRL_FIFO_EN = 0x40;
 
 class FakeMpu {
   constructor(whoAmI, { fifoSize = 1024 } = {}) {
@@ -37,6 +39,10 @@ class FakeMpu {
     const p = this.producing;
     if (!p) return;
     p.due += (ms / 1000) * p.rate;
+    if (!(this.regs[REG_USER_CTRL] & USER_CTRL_FIFO_EN)) { // the FIFO off: samples not queued
+      p.due %= 1;
+      return;
+    }
     for (; p.due >= 1; p.due--) {
       const frame = new Array(p.frameBytes).fill(0);
       frame[0] = (p.seq >> 8) & 0xff;

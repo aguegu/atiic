@@ -7,12 +7,24 @@ import { OP } from '../../src/adapters/dart/index.js';
 const SLAVE = 0x52;
 
 // a fake dart: the bytes of each request kept, replies built as the
-// firmware's main.c does (op, tag, status, 0, count; data on OK)
+// firmware's main.c does (op, tag, status, 0, count; data on OK); from
+// protocol 1.2 the FIFO pump, a period run at each take
 export function fakeDart({ productName = 'dart', writable = 0x100, stale = null, protocol = 0x0100, held = null } = {}) {
   const regs = new Uint8Array(256);
   let pointer = 0;
   let pending = null;
   const sent = [];
+  let fifo = null; // FIFO_START's job (1.2), its gathered bytes and flags
+  // one pump period (protocol 1.2), run when a take comes: the count
+  // (big-endian) at the job's count register, its whole frames from data
+  const pump = () => {
+    if (!(fifo.flags & 1)) return;
+    if (fifo.address !== SLAVE) { fifo.flags = 4; fifo.error = -1; return; }
+    const count = (regs[fifo.count] << 8) | regs[fifo.count + 1];
+    if (count >= fifo.full) { fifo.flags = 2; return; }
+    const n = count - (count % fifo.frame);
+    for (let i = 0; i < n; i++) fifo.bytes.push(regs[(fifo.data + i) & 0xff]);
+  };
   const reply = (q, status, data = [], count = data.length) => {
     const r = [q[0], q[1], status & 0xff, 0, count & 0xff, count >> 8];
     return Uint8Array.from(status ? r : [...r, ...data]);
@@ -21,7 +33,23 @@ export function fakeDart({ productName = 'dart', writable = 0x100, stale = null,
     const len = q[2] | (q[3] << 8);
     const p = q.slice(4);
     if (p.length !== len) return reply(q, -17);
-    if (q[0] === OP.INFO) return reply(q, 0, [protocol & 0xff, protocol >> 8, 1, 0, 0xa0, 0x86, 0x01, 0, 2, 0, 0, 4, 0, 4, 0x7f, 0x59, 0xcf, 0xcc, 0x52, 0x93, 0xd9, 0x46]);
+    if (q[0] === OP.INFO) return reply(q, 0, [protocol & 0xff, protocol >> 8, 1, 0, 0xa0, 0x86, 0x01, 0, 2, 0, 0, 4, 0, 4, 0x7f, 0x59, 0xcf, 0xcc, 0x52, 0x93, 0xd9, 0x46, ...(protocol >= 0x0102 ? [0, 0x10] : [])]);
+    if (protocol >= 0x0102 && q[0] === OP.FIFO_START) {
+      const [address, count, data, frame, fl, fh, pl, ph] = p;
+      fifo = { address, count, data, frame, full: fl | (fh << 8), periodMs: pl | (ph << 8), flags: 1, error: 0, bytes: [] };
+      return reply(q, p.length === 8 ? 0 : -17);
+    }
+    if (protocol >= 0x0102 && q[0] === OP.FIFO_TAKE) {
+      const most = p[0] | (p[1] << 8);
+      if (!fifo) return reply(q, 0, [0, 0]);
+      pump();
+      const n = Math.min(most, fifo.bytes.length) - (Math.min(most, fifo.bytes.length) % fifo.frame);
+      return reply(q, 0, [fifo.flags, fifo.error & 0xff, ...fifo.bytes.splice(0, n)]);
+    }
+    if (protocol >= 0x0102 && q[0] === OP.FIFO_STOP) {
+      fifo = null;
+      return reply(q, 0);
+    }
     if (q[0] === OP.SPEED) {
       const hz = p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
       const ok = protocol >= 0x0101 ? hz >= 7327 && hz <= 400000 : hz === 100000 || hz === 400000;
