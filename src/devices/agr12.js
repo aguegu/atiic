@@ -12,10 +12,16 @@
 //
 // The bus at 30 kHz at most (the 2026 manual: "通信速率最大为30kHz"; its 2024
 // edition said 100 kHz): the CH341's and CH347's 20 kHz, dart's 30 kHz or
-// under. Faster, r8845's AGP12 gives wrong readings its check passes: at
-// 100 kHz 27 of 50 read 25.5 kPa (0x00 0xFF 0xFF, the XOR matching) with its
-// port open to the room, 18 failed; at 400 kHz 49 of 50 failed (CH347F,
-// 2026-11-14). At 20 kHz 50 of 50 read -0.2 to 0.0 kPa.
+// under. Faster, r8845's AGP12 gives wrong readings its check passes: on the
+// CH347T at 3.3 V, port open to the room, at 100 kHz 6 of 50 read 25.5 kPa
+// (0x00 0xFF 0xFF, the XOR matching), 33 failed the check; at 400 kHz none of
+// 50 read (48 failed the check, 2 bus errors). At 20 kHz 48 of 50 read 0.0 or
+// -0.1 kPa, 2 failed the check (2026-11-14). The same on the CH347F EVT.
+//
+// Not on the CH347F EVT board: its own 24C02 (U4) sits at 0x50, so each
+// measurement also writes 0x12 at its 0xAC (found there after the first
+// runs, 2026-11-14), and both drive SDA on a read. The readings came out
+// right only because the EEPROM is blank (0xFF, a wired AND).
 //
 // No identify(): nothing tells it from an AT24C EEPROM at 0x50 without the
 // measurement command, and that command is a write of 0x12 at 0xAC to an
