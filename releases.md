@@ -1,5 +1,23 @@
 # Releases
 
+## 1.8.1
+
+- `Agr12`: ASAIR's (Aosong's) AGR12 / AGN12 / AGP12 gauge pressure sensors,
+  their I2C version, at 0x50, from the manual (2026-05, section 7): `0xAC
+  0x12` written, 80 ms, 3 bytes read: the pressure in 0.1 kPa, signed, and
+  DATA0 XOR DATA1 as its check (the manual's 0x0123 = 29.1 and 0xFEDD =
+  -29.1 kPa as host tests). The bus at 30 kHz at most (`chip.maxSclHz`):
+  the CH341's and CH347's 20 kHz, dart's 30 kHz or under. **No
+  `identify()`**: read alone it answers 0xFF, as an erased EEPROM does, and
+  its command would write 0x12 at 0xAC into an AT24C at 0x50, so it's never
+  looked for; a bench names it (`BENCH_AGR12=0x50`). On r8845, an AGP12
+  (+/-40 kPa) on the CH347F at 20 kHz: 0.0 or -0.1 kPa open to the room,
+  checks good; a result reads once (a second read 0xFF 0xFF 0xFF, refused by
+  the check, 8 of 8); ready as soon as readable (5-8 ms after the command,
+  24 of 24 up to 68 ms), the manual's 80 ms kept. Once, a first measurement
+  read 0xFF after 80 ms; not seen again in 9 board runs and ~50 more
+  (unexplained). Host tests (7), a board test (3, three runs green).
+
 ## 1.8.0
 
 - **The FIFO pump: a Dart reads a sensor's FIFO itself** (dart command set

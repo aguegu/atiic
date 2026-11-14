@@ -78,6 +78,10 @@ export const BMX055_SPI = lines(process.env.BENCH_BMX055_SPI);
 // .env.local or the environment. No ID register to look for it by; its
 // board test writes (and puts back) 24 bytes at 0x2F8
 export const AT24C08 = process.env.BENCH_AT24C08 ? Number(process.env.BENCH_AT24C08) : null;
+// an AGR12 / AGN12 / AGP12 pressure sensor on the I2C: its address ("0x50"),
+// from .env.local or the environment; never looked for (Agr12: no safe ID,
+// its command writes to an EEPROM at 0x50)
+export const AGR12 = process.env.BENCH_AGR12 ? Number(process.env.BENCH_AGR12) : null;
 
 async function probe() {
   const found = new Map(); // Driver -> address

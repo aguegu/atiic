@@ -45,6 +45,7 @@ sections and quirks are in the driver's source.
 | Sensirion SHT20 | `Sht20` | relative humidity, temperature | I2C 0x40 |
 | Sensirion SHT3x (SHT30, SHT31, SHT35) | `Sht3x` | relative humidity, temperature | I2C 0x44/0x45 |
 | Goertek SPL06-001 | `Spl06` | barometric pressure (300-1100 hPa), temperature | I2C 0x77/0x76 |
+| ASAIR (Aosong) AGR12 / AGN12 / AGP12, I2C version (C) | `Agr12` | gauge pressure, kPa (0-40 to 0-1000 kPa, vacuum, +/-40/100 kPa); not looked for: name it | I2C 0x50, 30 kHz at most |
 | Aosong AHT21B / AHT30 | `Aht21` | relative humidity, temperature (one protocol, not told apart) | I2C 0x38 |
 | ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
@@ -85,11 +86,15 @@ has had it. Addresses in **bold** are the ones board-tested.
 | MLX90614 | **0x5A** | its EEPROM (SMBus address, 0x0E); not changed by atiic | 0x5A |
 | INA231 | **0x40**-0x4F | A0, A1 pins | 0x40 |
 | AT24C08 | **0x50-0x53** (one per 256-byte block) | A2 pin (high: 0x54-0x57) | 0x50-0x53 |
+| AGR12 / AGN12 / AGP12 | **0x50** | fixed | 0x50 |
 
 Shared addresses to keep apart on one bus: 0x68/0x69 (the MPUs, the
 ITG-3200, the BMX055's gyro), 0x40 (the SHT20, an INA231 with A0 and A1
 low), 0x53 (the ADXL345 and an AT24C08's last block: on r8845 both
-answered, reads looked right, and the ADXL's writes landed in the EEPROM).
+answered, reads looked right, and the ADXL's writes landed in the EEPROM),
+0x50 (an AT24C and an AGR12: the AGR12's measurement command is a write
+of 0x12 at 0xAC to an AT24C01-16, and read alone each answers 0xFF, so
+`Agr12` is never looked for: a page or a bench names it).
 
 ### Displays
 

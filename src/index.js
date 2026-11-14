@@ -5,6 +5,7 @@ import Bmx055Gyro from './devices/bmx055-gyro.js';
 import Bmx055Mag from './devices/bmx055-mag.js';
 import Max30102 from './devices/max30102.js';
 import Sht20 from './devices/sht20.js';
+import Agr12 from './devices/agr12.js';
 import Sht3x from './devices/sht3x.js';
 import Spl06 from './devices/spl06.js';
 import Vl53l1x from './devices/vl53l1x.js';
@@ -33,6 +34,7 @@ export {
   Bmx055Mag,
   Max30102,
   Sht20,
+  Agr12,
   Sht3x,
   Spl06,
   Vl53l1x,
