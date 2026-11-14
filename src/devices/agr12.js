@@ -10,8 +10,12 @@
 // AGP: both (0-40 kPa to 0-1000 kPa; -40/-100 kPa; +-40/+-100 kPa); dry,
 // non-corrosive gas only; the die is light-sensitive (manual, notes).
 //
-// The bus at 30 kHz at most (the manual: "通信速率最大为30kHz"): the CH341's
-// and CH347's 20 kHz, dart's 30 kHz or under.
+// The bus at 30 kHz at most (the 2026 manual: "通信速率最大为30kHz"; its 2024
+// edition said 100 kHz): the CH341's and CH347's 20 kHz, dart's 30 kHz or
+// under. Faster, r8845's AGP12 gives wrong readings its check passes: at
+// 100 kHz 27 of 50 read 25.5 kPa (0x00 0xFF 0xFF, the XOR matching) with its
+// port open to the room, 18 failed; at 400 kHz 49 of 50 failed (CH347F,
+// 2026-11-14). At 20 kHz 50 of 50 read -0.2 to 0.0 kPa.
 //
 // No identify(): nothing tells it from an AT24C EEPROM at 0x50 without the
 // measurement command, and that command is a write of 0x12 at 0xAC to an
