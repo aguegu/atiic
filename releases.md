@@ -1,5 +1,24 @@
 # Releases
 
+## 1.8.2
+
+- `Ags2602`: ASAIR's (Aosong's) AGS2602 TVOC sensor at 0x1A, from its
+  manual (2026-04/05, section 4): a register written, a stop, 5 bytes read,
+  four data bytes and a CRC8 (initial 0xFF, polynomial 0x31; checked, a bad
+  one throws naming the register). `measure()` reads 0x00: `{ tvoc: ppb,
+  ready }` (Data2-4, 0-30000 ppb; `ready` false while RDY is set, not
+  updated or warming up); `resistance()` 0x20, x 10 ohm; `version()` 0x11,
+  its four bytes as read (no layout given). 100 kHz at most
+  (`chip.maxSclHz`), a reading every 2 s or slower (`SAMPLE_MS`), 120 s
+  warm-up (`WARMUP_S`); its supply is 5 V. **`identify()`**: the version
+  read with a good CRC, so a bench finds it; Aosong's AGS10 (also 0x1A,
+  the same registers and CRC) reads only at 15 kHz or under. Also
+  `Agr12`'s comment: its bus limit remeasured on a CH347T at 3.3 V, and not
+  on the CH347F EVT (its 24C02 at 0x50). On r8845, the AGS2602 on the CH347T
+  (5 V): version 19 09 0d 01, 647-742 kOhm, 100-218 ppb with RDY clear, CRCs
+  good at 20 and 100 kHz. Host tests (8), a board test (6, three runs
+  green).
+
 ## 1.8.1
 
 - `Agr12`: ASAIR's (Aosong's) AGR12 / AGN12 / AGP12 gauge pressure sensors,

@@ -46,6 +46,7 @@ sections and quirks are in the driver's source.
 | Sensirion SHT3x (SHT30, SHT31, SHT35) | `Sht3x` | relative humidity, temperature | I2C 0x44/0x45 |
 | Goertek SPL06-001 | `Spl06` | barometric pressure (300-1100 hPa), temperature | I2C 0x77/0x76 |
 | ASAIR (Aosong) AGR12 / AGN12 / AGP12, I2C version (C) | `Agr12` | gauge pressure, kPa (0-40 to 0-1000 kPa, vacuum, +/-40/100 kPa); not looked for: name it | I2C 0x50, 30 kHz at most |
+| ASAIR (Aosong) AGS2602 | `Ags2602` | TVOC, ppb (0-30000 ppb), the sensing film's resistance; 5 V supply, 2 s per reading, 120 s warm-up | I2C 0x1A, 100 kHz at most |
 | Aosong AHT21B / AHT30 | `Aht21` | relative humidity, temperature (one protocol, not told apart) | I2C 0x38 |
 | ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
