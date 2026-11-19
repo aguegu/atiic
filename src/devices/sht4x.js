@@ -114,7 +114,9 @@ class Sht4x {
 
   // the heater on (mw: 200, 110 or 20; long: 1 s, else 0.1 s), then the
   // high-repeatability measurement it ends with, heated: { temperature,
-  // humidity }. Keep it to 5 % of the time (4.8); not above 65 C ambient
+  // humidity }, outside the specifications (4.8: "not valid" while heating;
+  // 200 mW for 0.1 s took ours from 21.8 to 36.0 C, its RH 56.8 to 58.7 %).
+  // Keep it to 5 % of the time; not above 65 C ambient
   async heat(mw = 20, { long = false } = {}) {
     const h = HEATER[mw];
     if (!h) throw new Error(`SHT4x: no heater power ${mw} mW: ${Object.keys(HEATER).join(', ')}`);

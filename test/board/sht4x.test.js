@@ -51,12 +51,13 @@ describe('sht4x (board)', onlyWith(Sht4x), () => {
     }
   });
 
-  it('the heater, 200 mW for 0.1 s: warmer, drier, then back', async (t) => {
+  // the heated reading's RH is no guide: specifications "not valid" while
+  // heating (4.8); ours read higher, not lower (21.8 C 56.8 % -> 36.0 C 58.7 %)
+  it('the heater, 200 mW for 0.1 s: much warmer, then back', async (t) => {
     const base = await s.measure();
     const hot = await s.heat(200);
     t.diagnostic(`before ${base.temperature.toFixed(2)} C ${base.humidity.toFixed(1)} %, heated ${hot.temperature.toFixed(2)} C ${hot.humidity.toFixed(1)} %`);
-    assert.ok(hot.temperature > base.temperature, 'warmer');
-    assert.ok(hot.humidity < base.humidity, 'drier');
+    assert.ok(hot.temperature > base.temperature + 5, 'warmer by over 5 C');
     await new Promise((r) => setTimeout(r, 3000)); // 0.11 s on, then off 20x longer: under 5 %
     const after = await s.measure();
     assert.ok(Math.abs(after.temperature - base.temperature) < AGREE_C, `back: ${after.temperature} C`);
