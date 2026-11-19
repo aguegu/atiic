@@ -38,6 +38,14 @@ describe('lm75 (board)', onlyWith(Lm75), () => {
     assert.ok(Math.abs(a - b) <= AGREE_C, `${a} then ${b} C`);
   });
 
+  it('read as an LM75A (11 bits): the same air, 0.125 C steps', async (ctx) => {
+    const nine = await t.temperature();
+    const eleven = await new Lm75(bus, addressOf(Lm75), { bits: 11 }).temperature();
+    ctx.diagnostic(`9 bits ${nine} C, 11 bits ${eleven} C`);
+    assert.ok(Math.abs(eleven - nine) <= 0.5 + 0.125);
+    assert.equal(eleven * 8, Math.round(eleven * 8));
+  });
+
   it('the limits read back, negative too', async () => {
     await t.setLimits({ hysteresis: -10.5, overtemperature: 30 });
     assert.deepEqual(await t.limits(), { hysteresis: -10.5, overtemperature: 30 });

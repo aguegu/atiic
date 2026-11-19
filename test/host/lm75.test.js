@@ -28,6 +28,15 @@ describe('lm75 (host)', () => {
     assert.deepEqual(await new Lm75(new FakeLm75()).measure(), { temperature: 23 });
   });
 
+  it('an LM75A, { bits: 11 }: NXP\'s Table 10, 0.125 C steps; another width throws', async () => {
+    for (const [d, c] of [[0x3f8, 127], [0x3f7, 126.875], [0x3f1, 126.125], [0x3e8, 125], [0x0c8, 25], [0x001, 0.125], [0x000, 0], [0x7ff, -0.125], [0x738, -25], [0x649, -54.875], [0x648, -55]]) {
+      assert.equal(await new Lm75(new FakeLm75({ 0x00: d << 5 }), 0x48, { bits: 11 }).temperature(), c, `0x${d.toString(16)}`);
+    }
+    assert.equal(await new Lm75(new FakeLm75({ 0x00: 0x17a0 }), 0x48, { bits: 11 }).temperature(), 23.625); // ours
+    assert.equal(await new Lm75(new FakeLm75({ 0x00: 0x17a0 })).temperature(), 23.5); // read as 9 bits
+    assert.throws(() => new Lm75(new FakeLm75(), 0x48, { bits: 12 }), /no 12-bit temperature: 9, 11/);
+  });
+
   it('limits: the power-up 75 and 80 C; set both ways, to the 0.5 C step, negative too; out of range throws', async () => {
     const f = new FakeLm75();
     const t = new Lm75(f);

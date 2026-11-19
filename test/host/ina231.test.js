@@ -35,6 +35,11 @@ describe('ina231 (host)', () => {
     assert.throws(() => new Ina231(new FakeIna({}), 0x40, { shunt: 1, currentLsb: 1 }), /out of range/);
   });
 
+  it('chip.identify: an address that refuses the read is no INA231, not a throw', async () => {
+    const refusing = { writeRead: async () => { throw new Error('no ack from 0x4c'); } };
+    assert.equal(await Ina231.chip.identify(refusing, 0x4c), false);
+  });
+
   it('chip.identify: TI\'s ID at FEh', async () => {
     assert.equal(await Ina231.chip.identify(new FakeIna({ 0xfe: 0x5449 }), 0x40), true);
     assert.equal(await Ina231.chip.identify(new FakeIna({ 0xfe: 0x0000 }), 0x40), false);

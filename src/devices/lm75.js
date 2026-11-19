@@ -17,8 +17,13 @@
 // No ID register: chip.identify only checks what the datasheet guarantees
 // (D7-D5 of the configuration 0; temperature and both limits inside -55 to
 // 125 C), so a bench looks for it after every chip with an ID of its own.
-// Many "LM75" modules carry an LM75A or a clone with more bits in D6-D0:
-// this driver reads the datasheet's 9.
+// NXP's LM75A (Rev. 04, 10 July 2007, docs/), a pin-for-pin replacement:
+// the same registers, configuration and power-up state, but its temperature
+// in 11 bits, D15-D5, 0.125 C a step (7.4.3: "the 5 least significant bits
+// ... are zero and should be ignored"); its limits still 9. Nothing tells
+// the two apart on the bus: { bits: 11 } reads an LM75A's (on a 9-bit LM75
+// D6-D5 are don't care: 9, the default). Its pointer: the two low bits pick
+// the register, the other six 0 (7.4.1): so an SHT3x's 0xF3 is T_OS.
 // Measured on Dart-8346 at 100 kHz: 23.0 C; pointers 0x04-0x07, 0xFE, 0xFF
 // read 0xFFFF; an SHT3x's ID check (0xF3 0x2D) wrote 0x2D into T_OS.
 
@@ -34,13 +39,17 @@ const FAULT_SHIFT = 3;
 // Table 6: the fault queue's codes by number of faults
 export const FAULT_QUEUE = { 1: 0, 2: 1, 4: 2, 6: 3 };
 export const CONVERSION_MS = 300; // the longest conversion: a faster read repeats the last
-const STEP_C = 0.5;
+const STEP_C = 0.5; // the limits', and a 9-bit temperature's
+const STEP_11_C = 0.125; // an LM75A's temperature
+export const BITS = [9, 11];
 const MIN_C = -55; // the operating range
 const MAX_C = 125;
 const POWER_UP = { hysteresis: 75, overtemperature: 80 };
 
 // a register's 16 bits as degrees: D15-D7, two's complement, 0.5 C a step
 const degreesOf = (h, l) => ((((h << 8) | l) << 16) >> 23) * STEP_C;
+// an LM75A's 11 bits: D15-D5, 0.125 C a step
+const degrees11Of = (h, l) => ((((h << 8) | l) << 16) >> 21) * STEP_11_C;
 // degrees as a register's two bytes, to the 0.5 C step
 function bytesOf(c) {
   const v = (Math.round(c / STEP_C) << 7) & 0xffff;
@@ -67,9 +76,12 @@ class Lm75 {
     },
   };
 
-  constructor(bus, address = 0x48) {
+  // bits: 9 (an LM75) or 11 (NXP's LM75A)
+  constructor(bus, address = 0x48, { bits = 9 } = {}) {
+    if (!BITS.includes(bits)) throw new Error(`LM75: no ${bits}-bit temperature: ${BITS.join(', ')}`);
     this.bus = bus;
     this.address = address;
+    this.bits = bits;
   }
 
   // the power-up state back (no reset command): comparator, OS active low,
@@ -79,10 +91,10 @@ class Lm75 {
     await this.setLimits(POWER_UP);
   }
 
-  // degrees C, the last conversion
+  // degrees C, the last conversion, in 0.5 or (an LM75A) 0.125 C steps
   async temperature() {
     const [h, l] = await this.bus.writeRead(this.address, [REG_TEMPERATURE], 2);
-    return degreesOf(h, l);
+    return this.bits === 11 ? degrees11Of(h, l) : degreesOf(h, l);
   }
 
   // { temperature: C }, as the other sensors' measure()
@@ -130,5 +142,6 @@ class Lm75 {
 Lm75.addresses = [0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f];
 Lm75.CONVERSION_MS = CONVERSION_MS;
 Lm75.FAULT_QUEUE = FAULT_QUEUE;
+Lm75.BITS = BITS;
 
 export default Lm75;

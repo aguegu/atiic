@@ -46,7 +46,12 @@ class Ina231 {
     name: 'INA231',
     // TI's ID at FEh; not an HDC1080's device ID at FFh (TI's too, at 0x40)
     async identify(bus, address) {
-      const [h, l] = await bus.writeRead(address, [REG_MANUFACTURER_ID], 2);
+      let h, l;
+      try {
+        [h, l] = await bus.writeRead(address, [REG_MANUFACTURER_ID], 2);
+      } catch {
+        return false; // answered its address, not a read: not an INA231
+      }
       if (((h << 8) | l) !== TI) return false;
       try {
         const [dh, dl] = await bus.writeRead(address, [REG_DIE_ID], 2);
