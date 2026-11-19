@@ -9,6 +9,7 @@ import Htu21d from './devices/htu21d.js';
 import Agr12 from './devices/agr12.js';
 import Ags2602 from './devices/ags2602.js';
 import Sht3x from './devices/sht3x.js';
+import Sht4x from './devices/sht4x.js';
 import Spl06 from './devices/spl06.js';
 import Vl53l1x from './devices/vl53l1x.js';
 import Mlx90614 from './devices/mlx90614.js';
@@ -40,6 +41,7 @@ export {
   Agr12,
   Ags2602,
   Sht3x,
+  Sht4x,
   Spl06,
   Vl53l1x,
   Mlx90614,

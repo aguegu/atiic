@@ -54,10 +54,15 @@ function word(d, i, what) {
 class Sht3x {
   static chip = {
     name: 'SHT3x',
-    // no ID register: its status register, a word and a good CRC
+    // no ID register: its status register, a word and a good CRC (an SHT4x
+    // at the same addresses refuses the command's second byte: a no)
     async identify(bus, address) {
-      const d = await bus.writeRead(address, READ_STATUS, 3);
-      return crc8(d.slice(0, 2)) === d[2];
+      try {
+        const d = await bus.writeRead(address, READ_STATUS, 3);
+        return crc8(d.slice(0, 2)) === d[2];
+      } catch {
+        return false;
+      }
     },
   };
 
