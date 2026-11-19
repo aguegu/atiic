@@ -1,5 +1,27 @@
 # Releases
 
+## 1.8.3
+
+- `Htu21d`: TE Connectivity's (MEAS) HTU21D(F) humidity and temperature
+  sensor at 0x40, from its datasheet (HPC199_3, October 2013, in `docs/`).
+  An SHT20's commands, user register, soft reset, CRC-8 and formulas to the
+  bit, so it extends `Sht20`; what differs is its timing: the datasheet's
+  maximum measuring times, about half an SHT20's (T 50 ms and RH 16 at
+  14/12 bits; `Htu21d.RESOLUTIONS`), and `STRETCH_MS` 60 for hold master.
+  Board-tested on Dart-8346 at 100 kHz (r8845): every resolution, hold master
+  included; a reading 71 ms with no hold, 56 with hold (an SHT20: 117, 91).
+  Polled, T at 14 bits was ready after 38 ms and RH at 12 bits after 13.
+- Told apart from an SHT20 at the same 0x40 by the electronic ID's second
+  read (0xFC 0xC9; the HTU21D's datasheet gives no command for its ID, but
+  ours answers it with good CRCs): its second word is 0x4854, "HT", where
+  r8845's SHT20 says 0x0080. `Sht20.chip.identify` no longer takes an
+  HTU21D; `Htu21d.chip.identify` takes only "HT". `electronicId(bus,
+  address)` exported from `devices/sht20.js` (both words, or null on a bad
+  CRC).
+- `Sht20` reads its timing table and name from its class
+  (`this.constructor`), so a sensor differing only there extends it; errors
+  name the chip (`HTU21D CRC: ...`).
+
 ## 1.8.2
 
 - `Ags2602`: ASAIR's (Aosong's) AGS2602 TVOC sensor at 0x1A, from its
