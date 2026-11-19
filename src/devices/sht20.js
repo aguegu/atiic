@@ -56,9 +56,16 @@ const HUMIDITY_BIT = 0x02;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// the electronic ID's second read: its two words if both CRCs hold, else null
+// the electronic ID's second read: its two words if both CRCs hold, else
+// null (and null if refused: an HDC1080 at 0x40 takes 0xFC as a read-only
+// register's pointer and refuses the 0xC9 after it)
 export async function electronicId(bus, address) {
-  const d = await bus.writeRead(address, READ_ID_2, 6);
+  let d;
+  try {
+    d = await bus.writeRead(address, READ_ID_2, 6);
+  } catch {
+    return null;
+  }
   if (crc8(d.slice(0, 2)) !== d[2] || crc8(d.slice(3, 5)) !== d[5]) return null;
   return [(d[0] << 8) | d[1], (d[3] << 8) | d[4]];
 }

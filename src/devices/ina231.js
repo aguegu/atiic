@@ -25,6 +25,8 @@ const REG_POWER = 0x03;
 const REG_CURRENT = 0x04;
 const REG_CALIBRATION = 0x05;
 const REG_MANUFACTURER_ID = 0xfe; // not in the INA231's datasheet: the INA226's
+const REG_DIE_ID = 0xff; // the INA226's die ID (ours 0x2260); an HDC1080's device ID
+const HDC1080_DEVICE_ID = 0x1050;
 const TI = 0x5449;
 const RESET = 0x8000; // config bit 15, self-clearing
 // the power-on configuration (Table 8-4): averaging 1, 1.1 ms conversions,
@@ -42,9 +44,16 @@ const s16 = (h, l) => ((h << 24) >> 16) | l;
 class Ina231 {
   static chip = {
     name: 'INA231',
+    // TI's ID at FEh; not an HDC1080's device ID at FFh (TI's too, at 0x40)
     async identify(bus, address) {
       const [h, l] = await bus.writeRead(address, [REG_MANUFACTURER_ID], 2);
-      return ((h << 8) | l) === TI;
+      if (((h << 8) | l) !== TI) return false;
+      try {
+        const [dh, dl] = await bus.writeRead(address, [REG_DIE_ID], 2);
+        return ((dh << 8) | dl) !== HDC1080_DEVICE_ID;
+      } catch {
+        return true; // no FFh: not an HDC1080
+      }
     },
   };
 
