@@ -1,5 +1,28 @@
 # Releases
 
+## 1.8.7
+
+- `Lm75`: the LM75 (Analog Devices / Maxim) at 0x48-0x4F, from its datasheet
+  (19-4385 Rev 3, 02/24, in `docs/`). A pointer to four registers: the
+  temperature (9 bits, two's complement, 0.5 C, D15-D7; D6-D0 "don't care",
+  cleared), the configuration (one byte), T_HYST and T_OS. It converts on its
+  own (100 ms typical, 300 at most, `CONVERSION_MS`): `temperature()` and
+  `measure()` read the last conversion at any time. `limits()` /
+  `setLimits({ hysteresis, overtemperature })` (to the 0.5 C step, -55 to
+  125 C, negative too), `configure({ shutdown, interrupt, activeHigh,
+  faultQueue: 1 | 2 | 4 | 6 })`, `config()`, and `init()`: the power-up state
+  written back (it has no reset command): comparator, OS active low, 75 and
+  80 C. It reads the datasheet's 9 bits; an LM75A or a clone with more is
+  read to 0.5 C.
+- No ID register: `chip.identify` is what the datasheet guarantees, read
+  only (configuration D7-D5 clear; temperature and both limits inside -55 to
+  125 C), so a bench looks for it last, after every chip with an ID.
+- Board-tested on Dart-8346 at 100 kHz (r8845): 23.0 C, the power-up limits,
+  limits and configuration read back, shut down still answering with its
+  last conversion. Pointers 0x04-0x07, 0xFE and 0xFF read 0xFFFF on ours, so
+  the CHT8305C's and INA231's ID checks (0xFE, 0xFF) say no to it; an SHT3x's
+  check (never tried at 0x48-0x4F) would write 0x2D into its T_OS.
+
 ## 1.8.6
 
 - `Cht8305`: Sensylink's CHT8305C humidity and temperature sensor at 0x40,
