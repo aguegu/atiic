@@ -21,7 +21,11 @@
 //   RH = -6 + 125 S / 2^16 (%),  T = -46.85 + 175.72 S / 2^16 (C)
 // r8845's module reads its user register 0x3A (the datasheet's example:
 // 0x02): its reserved bits set. Its electronic ID (0xFC 0xC9) reads with
-// good CRCs, which is how a bench knows it (chip.identify).
+// good CRCs, its middle word 0x0080, which is how a bench knows it
+// (chip.identify); an HTU21D, the same commands (devices/htu21d.js), says
+// "HT" there and is left to its own driver.
+// The timing table and the name come from the class (this.constructor), so
+// a sensor that differs only there extends this one.
 
 const TRIGGER_T = 0xf3;
 const TRIGGER_RH = 0xf5;
@@ -45,11 +49,19 @@ const DEFAULT_RESOLUTION = '12/14';
 const MAX_ACTIVE = 0.1; // 2.3: active no more than 10 % of the time
 const SOFT_RESET = 0xfe;
 const READ_ID_2 = [0xfc, 0xc9]; // 6 bytes: two words, each with its CRC
+const HTU21D_WORD = 0x4854; // "HT": an HTU21D's electronic ID's second word (ours)
 const RESET_MS = 15; // "the soft reset takes less than 15 ms"
 const STATUS_BITS = 0x03;
 const HUMIDITY_BIT = 0x02;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// the electronic ID's second read: its two words if both CRCs hold, else null
+export async function electronicId(bus, address) {
+  const d = await bus.writeRead(address, READ_ID_2, 6);
+  if (crc8(d.slice(0, 2)) !== d[2] || crc8(d.slice(3, 5)) !== d[5]) return null;
+  return [(d[0] << 8) | d[1], (d[3] << 8) | d[4]];
+}
 
 // the datasheet's CRC-8: x8 + x5 + x4 + 1, from 0
 export function crc8(bytes) {
@@ -65,10 +77,10 @@ class Sht20 {
   static chip = {
     name: 'SHT20',
     // no ID register: an SHT2x answers its electronic ID's second read with
-    // two words and their CRCs
+    // two words and their CRCs; an HTU21D does too, its second word "HT"
     async identify(bus, address) {
-      const d = await bus.writeRead(address, READ_ID_2, 6);
-      return crc8(d.slice(0, 2)) === d[2] && crc8(d.slice(3, 5)) === d[5];
+      const id = await electronicId(bus, address);
+      return id !== null && id[1] !== HTU21D_WORD;
     },
   };
 
@@ -91,8 +103,8 @@ class Sht20 {
   // the resolution, 'RH/T' bits: '12/14', '8/12', '10/13' or '11/11'; the
   // user register read and only its bits 7 and 0 changed
   async setResolution(name) {
-    const r = RESOLUTIONS[name];
-    if (!r) throw new Error(`SHT20: no resolution ${name}: ${Object.keys(RESOLUTIONS).join(', ')}`);
+    const r = this.constructor.RESOLUTIONS[name];
+    if (!r) throw new Error(`${this.constructor.chip.name}: no resolution ${name}: ${Object.keys(this.constructor.RESOLUTIONS).join(', ')}`);
     const u = await this.userRegister();
     await this.bus.write(this.address, [WRITE_USER, (u & ~RESOLUTION_BITS) | r.code]);
     this.resolution = name;
@@ -101,7 +113,7 @@ class Sht20 {
   // the shortest period between measure()s that keeps it active no more
   // than 10 % of the time, ms (12/14 bits: 1140; 11/11: 260)
   periodMs() {
-    const r = RESOLUTIONS[this.resolution];
+    const r = this.constructor.RESOLUTIONS[this.resolution];
     return (r.rhMs + r.tMs) / MAX_ACTIVE;
   }
 
@@ -112,7 +124,7 @@ class Sht20 {
 
   // one measurement's raw 16 bits (status cleared), its CRC and type checked
   async raw(humidity) {
-    const r = RESOLUTIONS[this.resolution];
+    const r = this.constructor.RESOLUTIONS[this.resolution];
     let d;
     if (this.hold) {
       d = await this.bus.writeRead(this.address, [humidity ? TRIGGER_RH_HOLD : TRIGGER_T_HOLD], 3);
@@ -121,8 +133,9 @@ class Sht20 {
       await delay(humidity ? r.rhMs : r.tMs);
       d = await this.bus.read(this.address, 3);
     }
-    if (crc8(d.slice(0, 2)) !== d[2]) throw new Error(`SHT20 CRC: 0x${d[2].toString(16)} for ${d[0]}, ${d[1]}`);
-    if (Boolean(d[1] & HUMIDITY_BIT) !== humidity) throw new Error(`SHT20 sent a ${humidity ? 'temperature' : 'humidity'} for a ${humidity ? 'humidity' : 'temperature'}`);
+    const name = this.constructor.chip.name;
+    if (crc8(d.slice(0, 2)) !== d[2]) throw new Error(`${name} CRC: 0x${d[2].toString(16)} for ${d[0]}, ${d[1]}`);
+    if (Boolean(d[1] & HUMIDITY_BIT) !== humidity) throw new Error(`${name} sent a ${humidity ? 'temperature' : 'humidity'} for a ${humidity ? 'humidity' : 'temperature'}`);
     return ((d[0] << 8) | d[1]) & ~STATUS_BITS;
   }
 
