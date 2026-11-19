@@ -1,5 +1,19 @@
 # Releases
 
+## 1.8.8
+
+- `Lm75`: NXP's LM75A, from its datasheet (Rev. 04, 10 July 2007, in
+  `docs/`): `new Lm75(bus, address, { bits: 11 })` reads its temperature's
+  11 bits (D15-D5, 0.125 C a step; Table 10's examples in the tests); its
+  limits stay 9 bits, its registers, configuration and power-up state the
+  LM75's. Nothing on the bus tells the two apart, so 9 stays the default (a
+  9-bit LM75's D6-D0 are don't care). Its pointer's six high bits are 0
+  (7.4.1): an SHT3x check's 0xF3 is T_OS, as seen. Board-tested on the
+  user's LM75A (Dart-8346, r8845): 22.25 C at 11 bits, 22 at 9.
+- `Ina231.chip.identify`: an address that answers its probe but refuses the
+  read is a no, not a throw (the last check at 0x40-0x4F that could throw;
+  i2c.ninja's LM75 page met it at 0x4C).
+
 ## 1.8.7
 
 - `Lm75`: the LM75 (Analog Devices / Maxim) at 0x48-0x4F, from its datasheet
