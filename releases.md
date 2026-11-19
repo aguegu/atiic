@@ -1,5 +1,28 @@
 # Releases
 
+## 1.8.6
+
+- `Cht8305`: Sensylink's CHT8305C humidity and temperature sensor at 0x40,
+  0x44, 0x48 or 0x4C (its AD0 pin), from its datasheet (Rev. 2.5, October
+  2021, in `docs/`). 16-bit registers by a pointer: 0x00 written starts both
+  conversions, then 4 bytes, T first; `T = 165 S / 65535 - 40`, `RH = 100 S
+  / 65535`; no checksum, no serial number. 20 ms waited at every resolution,
+  its example code's "must greater than 20ms" (the only time given, 14 bits'
+  typical 11 ms). `setResolution({ temperature: 14 | 11, humidity: 14 | 11 |
+  8 })`, `setHeater(on)`, `lowBattery()` (under 2.8 V), `config()`, `init()`
+  (SRST, read back clear), `periodMs()` 1000 (its advice against
+  self-heating). The high limits: `alertLimits()`, `setAlert({ humidity,
+  temperature, mode })` (7 and 9 bits of the reading codes, 0.78 % and 0.32
+  C steps; mode 'either', 'temperature', 'humidity' or 'both' drives the
+  ALERT pin), `alertStatus()` (APS, HALT, TALT). `chip.identify`: 0x5959 at
+  0xFE and an 0x8XXX at 0xFF.
+- Board-tested on Dart-8346 at 100 kHz (r8845): ID 0x8305, the defaults (80
+  % and 60 C), every resolution, the alert set and cleared by limits under
+  and over the room's 22.1 C and 60.1 %; the heater for 5 s took it to 23.4
+  C and 58.3 %. Ready, polled, after 9.4-9.9 ms at 14/14 bits, 5.1-5.5 at
+  11/11, 4.3-4.9 at 11/8; a reset within 0.9 ms. The SHT20, HTU21D, HDC1080
+  and INA231 checks at 0x40 say no to it (none needed a change).
+
 ## 1.8.5
 
 - `Hdc1080`: TI's HDC1080 humidity and temperature sensor at 0x40, from its
