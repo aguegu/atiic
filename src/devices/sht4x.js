@@ -14,13 +14,16 @@
 // (4.8): 200, 110 or 20 mW for 1 s or 0.1 s, then a high-repeatability
 // measurement, the heater off; for at most 5 % of the time (its lifetime's
 // duty cycle). No ID register: the serial number (0x89, two words with their
-// CRCs) is how a bench knows it; ours answered the read at once, no time
-// given for it. Up to 1 MHz; 1.08 to 3.6 V.
+// CRCs) is how a bench knows it. The datasheet gives no time for it; read at
+// once, ours refused about every second read back to back (ready about 1 ms
+// on): SERIAL_MS waited, Sensirion's own driver's (embedded-i2c-sht4x,
+// sht4x_serial_number: 10 ms). Up to 1 MHz; 1.08 to 3.6 V.
 // Measured on Dart-8346 at 100 kHz: ready after 7.4, 4.4 and 2.0 ms
 // (polled, the bus's own time included); 23.0 C, 55.4 % RH.
 
 const ADDRESS = 0x44;
 const SERIAL = 0x89;
+const SERIAL_MS = 10; // Sensirion's embedded-i2c-sht4x: none in the datasheet
 const SOFT_RESET = 0x94;
 const RESET_MS = 1; // tSR, at most 1 ms (Table 4)
 // Table 7's commands and Table 4's longest durations, ms
@@ -70,6 +73,7 @@ class Sht4x {
     async identify(bus, address) {
       try {
         await bus.write(address, [SERIAL]);
+        await delay(SERIAL_MS);
         const d = await bus.read(address, 6);
         return crc8(d.slice(0, 2)) === d[2] && crc8(d.slice(3, 5)) === d[5];
       } catch {
@@ -95,6 +99,7 @@ class Sht4x {
   // its serial number (4.6), 32 bits
   async serialNumber() {
     await this.bus.write(this.address, [SERIAL]);
+    await delay(SERIAL_MS);
     const d = await this.bus.read(this.address, 6);
     return ((word(d, 0, 'serial') << 16) | word(d, 3, 'serial')) >>> 0;
   }
