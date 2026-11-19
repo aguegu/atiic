@@ -1,5 +1,30 @@
 # Releases
 
+## 1.8.4
+
+- `Sht4x`: Sensirion's SHT4x (SHT40, SHT41, SHT45) at 0x44 (-AD1B) or 0x45
+  (-BD1B), from its datasheet (Version 2, July 2021, in `docs/`). 8-bit
+  commands: a measurement at high, medium or low repeatability (0xFD, 0xF6,
+  0xE0; Table 4's longest, 8.2, 4.5 and 1.7 ms, waited), 6 bytes, T first,
+  each word's CRC-8 the SHT3x's (0x31 from 0xFF); `T = -45 + 175 S / 65535`,
+  `RH = -6 + 125 S / 65535`, RH left uncropped (4.5 advises cropping to
+  0-100 %, the caller's choice). `serialNumber()` (0x89), `init()` (soft
+  reset 0x94), and `heat(mw, { long })`: the heater at 200, 110 or 20 mW for
+  0.1 or 1 s, then the measurement it ends with (outside the specifications
+  while heating; at most 5 % of the time). No clock stretching, so no hold
+  mode.
+- Its serial number is read 10 ms after the command, as Sensirion's own driver
+  (embedded-i2c-sht4x) does: the datasheet gives no time, and read at once,
+  ours refused about every second read back to back (ready about 1 ms on).
+  `chip.identify` is that serial number's two CRCs.
+- `Sht3x.chip.identify` says no to an SHT4x instead of throwing: an SHT4x
+  refuses the second byte of the SHT3x's 16-bit status command, which threw
+  out of a bench's detection at the shared 0x44.
+- Board-tested on Dart-8346 at 100 kHz (r8845), its SHT40-AD1B: serial
+  0x179FE768, every repeatability, a room's 21.6 C and 58.6 %; 200 mW for
+  0.1 s read 35.0 C and 60.4 % (warmer by 13 C; its RH higher, not lower:
+  "not valid" while heating, 4.8). Ready, polled, after 7.4, 4.4 and 2.0 ms.
+
 ## 1.8.3
 
 - `Htu21d`: TE Connectivity's (MEAS) HTU21D(F) humidity and temperature
