@@ -1,5 +1,30 @@
 # Releases
 
+## 1.8.5
+
+- `Hdc1080`: TI's HDC1080 humidity and temperature sensor at 0x40, from its
+  datasheet (ZHCSET2A / SNAS672, January 2016, in `docs/`). 16-bit registers
+  by a pointer: the pointer written to 0x00 starts both conversions,
+  temperature first, then 4 bytes; `T = S / 2^16 x 165 - 40`, `RH = S / 2^16
+  x 100`; no checksum. `setResolution({ temperature: 14 | 11, humidity: 14 |
+  11 | 8 })`, `setHeater(on)` (it heats only while measuring), `lowBattery()`
+  (BTST, under 2.8 V), `serialNumber()` (0xFB-0xFD), `config()`, `init()`
+  (RST, then tSTART's 15 ms: no soft-reset time given), `periodMs()` 1000
+  (TI's advice against self-heating, 9.2.1). Its conversion times are
+  typical only: their sum waited, then a read NACKed while not ready (as
+  8.5.1.3 describes) tried again every 1 ms, at most as long again.
+  `chip.identify`: TI's 0x5449 at 0xFE and its 0x1050 at 0xFF.
+- Shared 0x40, two checks fixed: the SHT20's and HTU21D's (`electronicId`)
+  wrote 0xFC 0xC9, a read-only register's pointer on an HDC1080, which
+  refuses the data byte: they threw; now null, a no. The INA231's read only
+  TI's 0x5449 at 0xFE, which an HDC1080 has too: it now also turns away
+  0x1050 at 0xFF (r8845's INA part reads 0x2260 there; none at all is still
+  an INA231).
+- Board-tested on Dart-8346 at 100 kHz (r8845): serial 0x4F32E0EF5, every
+  resolution, 21.1 C and 64.8 %; the heater with 338 readings back to back
+  for 5 s took it to 24.1 C and 62.0 %. Both at 14 bits ready, polled, after
+  12.3 to 13.1 ms (their typical sum 12.85).
+
 ## 1.8.4
 
 - `Sht4x`: Sensirion's SHT4x (SHT40, SHT41, SHT45) at 0x44 (-AD1B) or 0x45
