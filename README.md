@@ -56,6 +56,7 @@ sections and quirks are in the driver's source.
 | ASAIR (Aosong) AGS2602 | `Ags2602` | TVOC, ppb (0-30000 ppb), the sensing film's resistance; 5 V supply, 2 s per reading, 120 s warm-up | I2C 0x1A, 100 kHz at most |
 | Aosong AHT21B / AHT30 / AHT20 | `Aht21` | relative humidity, temperature (one protocol, not told apart) | I2C 0x38 |
 | Maxim MAX30100 | `Max30100` | the MAX30102's elder: red and IR light through a fingertip (16-bit FIFO samples), the die temperature | I2C 0x57 |
+| Sensirion SGP30 | `Sgp30` | air quality worked out on the chip: CO2eq (ppm), TVOC (ppb); its raw H2 and ethanol signals, baseline, humidity compensation, a self test | I2C 0x58 |
 | Sensirion SGP40 | `Sgp40` | VOCs: its raw signal (the VOC Index is Sensirion's algorithm, on the host), humidity compensation, a self test | I2C 0x59 |
 | ScioSense ENS160 | `Ens160` | air quality: the UBA's AQI (1-5), TVOC (ppb), eCO2 (ppm); temperature and humidity compensation | I2C 0x52/0x53 |
 | ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
@@ -97,6 +98,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | SPL06 | **0x77**, 0x76 | SDO pin (to GND: 0x76) | 0x77 |
 | AHT21B / AHT30 / AHT20 | **0x38** | fixed | 0x38 |
 | MAX30100 | **0x57** | fixed | 0x57 |
+| SGP30 | **0x58** | fixed | 0x58 |
 | SGP40 | **0x59** | fixed | 0x59 |
 | ENS160 | 0x52, 0x53 | MISO/ADDR pin at power-up (low: 0x52) | - |
 | BH1745NUC | **0x38**, 0x39 | ADDR pin (low: 0x38) | 0x38 |
