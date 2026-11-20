@@ -1,5 +1,14 @@
 # Releases
 
+## 1.8.16
+
+- On npm again (the registry held 0.5.1 from 2025): `files` limits the
+  package to `src/` and this file, with README, LICENSE and package.json,
+  129 kB, without `docs/`' datasheets or the tests.
+- package.json: the keywords name every board-tested chip and the sensor
+  kinds (70); the description the CH347 and the Dart bridge.
+- GitHub: the description and 20 topics updated to match.
+
 ## 1.8.15
 
 - `Vl6180x`: ST's VL6180X proximity sensor (time of flight, 0-100 mm) and
