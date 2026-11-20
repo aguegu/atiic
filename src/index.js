@@ -18,6 +18,7 @@ import Ens160 from './devices/ens160.js';
 import Ap3216c from './devices/ap3216c.js';
 import Sgp40 from './devices/sgp40.js';
 import Sgp30 from './devices/sgp30.js';
+import As7341 from './devices/as7341.js';
 import Max30100 from './devices/max30100.js';
 import Spl06 from './devices/spl06.js';
 import Vl53l1x from './devices/vl53l1x.js';
@@ -60,6 +61,7 @@ export {
   Ap3216c,
   Sgp40,
   Sgp30,
+  As7341,
   Max30100,
   Spl06,
   Vl53l1x,
