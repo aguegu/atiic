@@ -1,5 +1,44 @@
 # Releases
 
+## 1.8.11
+
+- `Max30100`: Maxim's MAX30100 pulse oximeter at 0x57, the MAX30102's elder,
+  from its datasheet (19-7065 Rev 0, in `docs/`). Not the MAX30102's
+  register map: a 16-sample FIFO at 0x05, IR then red, 16 bits each;
+  `init({ mode, sampleRate, pulseWidth, red, ir })` as the `Max30102`'s, its
+  own tables (sample rates to 1000 a second, pulse widths 200-1600 us,
+  Table 6's LED currents, the nearest taken), refusing the pairs Tables 8
+  and 9 don't allow; heart-rate mode is IR alone (the MAX30102's: red);
+  `readFifo()`, `temperature()`, `sleep()`. Part ID 0x11 (the MAX30102's
+  0x15). Board-tested on Dart-8346 at 400 kHz (r8845): revision 0x05, 100
+  samples a second in both modes, its die 20.6 C.
+- `Sgp40`: Sensirion's SGP40 VOC sensor at 0x59, from its datasheet
+  (version 1.2, in `docs/`): `measure()` its raw signal (SRAW_VOC ticks),
+  with a humidity and temperature for its on-chip compensation or without
+  (off); `selfTest()`, `serial()`, `sleep()` (heater off); each word's
+  CRC-8 checked. The VOC Index (Sensirion's Gas Index Algorithm, on the
+  host) isn't here. `chip.identify` by its serial number's three CRCs.
+  Board-tested on Dart-8346 (r8845): self test passed; the first raw signal
+  after the hotplate comes on reads 0, then about 24200 rising to 25600 over
+  10 s as it heats.
+- `Ap3216c`: Lite-On's AP3216C ambient light, proximity and IR at 0x1E,
+  from its datasheet (Rev0.86, Rev0.80 beside it, in `docs/`): four ALS
+  ranges, `measure()` `{ lux, als, ir, proximity, near, irOverflow }`,
+  `sleep()`. Lux at the scale both revisions give (0.36 lux a count on the
+  widest; Rev0.86's register section says otherwise): a level, not checked
+  against a reference. No ID: `chip.identify` by its reserved bits (an
+  HMC5883L at 0x1E fails them). On ours a burst read wraps within its
+  register pair: each pair read on its own. Board-tested on Dart-8346
+  (r8845), a CJMCU-3216: about 1 lux in a dim room, all four ranges
+  agreeing; proximity not tried.
+- `Ens160`: ScioSense's ENS160 air quality sensor at 0x52/0x53, from its
+  datasheet (v1.3, in `docs/`): `init()` (standard mode, its first data),
+  `measure()` `{ aqi, tvoc, eco2, validity, fresh }`, `compensate()` and
+  `compensation()`, `sleep()`. **Not board-tested**: the bench's module
+  holds its own SDA low (on a Dart, a CH341T and a CH347T's SPI alike).
+- The AHT20 is read by `Aht21` (its datasheet, in `docs/`, the AHT21B's
+  protocol); `chip.name` kept.
+
 ## 1.8.10
 
 - `Opt3001`: TI's OPT3001 ambient light sensor at 0x44-0x47 (its ADDR pin),
