@@ -19,7 +19,11 @@
 // with every pulse width (Tables 8, 9): init() refuses the rest, as the
 // chip would quietly pick another. This driver gives the samples; heart
 // rate and SpO2 are what a page makes of them.
-// On ours: revision 0x05.
+// On ours: revision 0x05. Any write to its mode register, the same value
+// rewritten too, spoils the sample then being taken (IR 27100 with a
+// fingertip read 14100, the next 22500): temperature() (TEMP_EN is there)
+// spoils one or two samples each time; read it now and then, between runs
+// of samples, or drop the ones after it.
 
 const REG_INT_STATUS = 0x00;
 const REG_INT_ENABLE = 0x01;
@@ -123,7 +127,7 @@ class Max30100 {
   }
 
   // the die's temperature, C: one reading (29 ms), done when TEMP_RDY sets
-  // (init() enables it); the mode kept
+  // (init() enables it); the mode kept. Spoils the next sample or two (above)
   async temperature() {
     await this.bus.writeRead(this.address, [REG_INT_STATUS], 1); // an old flag cleared
     const [m] = await this.bus.writeRead(this.address, [REG_MODE_CONFIG], 1);
