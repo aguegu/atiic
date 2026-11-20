@@ -1,5 +1,25 @@
 # Releases
 
+## 1.8.12
+
+- `Sgp30`: Sensirion's SGP30 at 0x58, air quality worked out on the chip,
+  from its datasheet (Version 1.0, May 2020, in `docs/`): `init()`, then
+  `measure()` `{ co2eq, tvoc }` (ppm, ppb) once a second, 400 ppm and 0 ppb
+  for its first 15 s; `raw()` `{ h2, ethanol }`; `baseline()` and
+  `setBaseline()` (TVOC's word first, its order); `setHumidity()` (g/m3,
+  8.8 fixed point) with `absoluteHumidity()`, the datasheet's formula (its
+  example's 11.8 g/m3 is 11.48 by it); `selfTest()` (before `init()`),
+  `serial()`, `featureSet()`. Each word's CRC-8 checked. No stop command
+  but the general-call reset, not sent. `chip.identify` by its feature
+  set's CRC and product type 0. Board-tested on Dart-8346 (r8845): feature
+  set 0x0022, self test passed; 400/0 for 16 s, then 405 ppm and 5 ppb.
+- `Max30100`: any write to its mode register spoils the sample being taken
+  (measured: IR 27100 with a fingertip read 14100, the next 22500), and
+  `temperature()` writes there (TEMP_EN): noted, for callers to read it now
+  and then or drop the samples after it.
+- `Ap3216c`: proximity seen working once VLED is fed (the CJMCU-3216's two
+  back pads bridge it to VCC).
+
 ## 1.8.11
 
 - `Max30100`: Maxim's MAX30100 pulse oximeter at 0x57, the MAX30102's elder,
