@@ -80,4 +80,19 @@ describe('as7341 (host)', () => {
     await new As7341(f).sleep();
     assert.deepEqual(f.log.at(-1), [0x80, 0x00]);
   });
+
+  it('led: REG_BANK set around LED_SEL and LED (LED_ACT, 4 mA + 2 mA a step), cleared after; 0 off; out of range throws', async () => {
+    const f = new FakeAs();
+    f.regs[0xa9] = 0x40; // ours, at power-up
+    const a = new As7341(f);
+    await a.led(10);
+    assert.deepEqual(f.log, [[0xa9, 0x50], [0x70, 0x08], [0x74, 0x83], [0xa9, 0x40]]);
+    f.log = [];
+    await a.led(0);
+    assert.deepEqual(f.log, [[0xa9, 0x50], [0x70, 0x08], [0x74, 0x00], [0xa9, 0x40]]);
+    await a.led(11); // the nearest step
+    assert.equal(f.regs[0x74], 0x84); // 11 mA: 3.5 steps, rounded to 4 (12 mA)
+    await assert.rejects(a.led(300), /LED 300 mA: 4-258/);
+    await assert.rejects(a.led(2), /LED 2 mA/);
+  });
 });

@@ -22,10 +22,11 @@
 // read, in proportion to the gain (Clear 110 at 256x, 8 at 16x, a dim
 // room), 134 ms for both halves. Not yet checked: that coloured light lands
 // in its bands (the tables' routing), for i2c.ninja's page.
-// Its board (the black "AS734x") wires its white LED to the chip's LED
-// driver, pin LDR: off at power-up; REG_BANK (CFG0 0xA9 bit 4), LED_SEL
-// (CONFIG 0x70 bit 3) and LED_ACT with its drive (LED 0x74: 4 mA + 2 mA
-// a step, to 258) light it (tried at 4 mA). This driver leaves it off.
+// Its LED driver (pin LDR, an external LED; the black "AS734x" board's white
+// one): led(mA) sets it, REG_BANK (CFG0 0xA9 bit 4: 1 reaches 0x60-0x74, 0
+// the registers from 0x80, which measuring uses) set around LED_SEL (CONFIG
+// 0x70 bit 3) and LED (0x74: LED_ACT bit 7, the drive 4 mA + 2 mA a step to
+// 258 mA). Off at power-up; sleep() turns it off. On ours: lit at 4 mA.
 
 const REG_SMUX_RAM = 0x00;
 const REG_ENABLE = 0x80;
@@ -36,6 +37,13 @@ const REG_STATUS2 = 0xa3;
 const REG_CFG1 = 0xaa; // AGAIN
 const REG_CFG6 = 0xaf; // SMUX_CMD
 const REG_ASTEP = 0xca;
+const REG_CONFIG = 0x70; // in the bank REG_BANK selects
+const REG_LED = 0x74; // in the bank too
+const REG_CFG0 = 0xa9;
+const REG_BANK = 0x10; // CFG0 bit 4
+const LED_SEL = 0x08; // CONFIG bit 3
+const LED_ACT = 0x80;
+export const LED_MA = { min: 4, max: 258, step: 2 }; // its drive
 export const ID = 0x24; // bits 7-2: 001001
 const ID_MASK = 0xfc;
 const PON = 0x01;
@@ -135,8 +143,27 @@ class As7341 {
     return { f1, f2, f3, f4, f5, f6, f7, f8, clear, nir, saturated: a.saturated || b.saturated };
   }
 
-  // powered down
+  // its LED driver (pin LDR): mA, 4 to 258 in steps of 2 (the nearest
+  // taken), or 0 (or null) for off. Between measurements: it switches the
+  // register bank they need back after
+  async led(mA) {
+    const on = Boolean(mA);
+    if (on && !(mA >= LED_MA.min && mA <= LED_MA.max)) throw new Error(`AS7341: LED ${mA} mA: ${LED_MA.min}-${LED_MA.max}, or 0 for off`);
+    const drive = on ? Math.round((mA - LED_MA.min) / LED_MA.step) : 0;
+    const cfg0 = await this.reg(REG_CFG0);
+    await this.bus.write(this.address, [REG_CFG0, cfg0 | REG_BANK]);
+    try {
+      const config = await this.reg(REG_CONFIG);
+      await this.bus.write(this.address, [REG_CONFIG, config | LED_SEL]);
+      await this.bus.write(this.address, [REG_LED, (on ? LED_ACT : 0) | drive]);
+    } finally {
+      await this.bus.write(this.address, [REG_CFG0, cfg0 & ~REG_BANK]);
+    }
+  }
+
+  // its LED off, powered down
   async sleep() {
+    await this.led(0);
     await this.bus.write(this.address, [REG_ENABLE, 0]);
   }
 }
@@ -144,5 +171,6 @@ class As7341 {
 As7341.addresses = [0x39];
 As7341.GAINS = GAINS;
 As7341.BANDS = BANDS;
+As7341.LED_MA = LED_MA;
 
 export default As7341;
