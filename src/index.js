@@ -16,6 +16,7 @@ import Lm75 from './devices/lm75.js';
 import Opt3001 from './devices/opt3001.js';
 import Ens160 from './devices/ens160.js';
 import Ap3216c from './devices/ap3216c.js';
+import Sgp40 from './devices/sgp40.js';
 import Spl06 from './devices/spl06.js';
 import Vl53l1x from './devices/vl53l1x.js';
 import Mlx90614 from './devices/mlx90614.js';
@@ -55,6 +56,7 @@ export {
   Opt3001,
   Ens160,
   Ap3216c,
+  Sgp40,
   Spl06,
   Vl53l1x,
   Mlx90614,
