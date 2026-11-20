@@ -1,5 +1,25 @@
 # Releases
 
+## 1.8.13
+
+- `Tcs34725`: ams's TCS3472 colour sensor at 0x29, the TCS34725 (its I2C at
+  VDD) and the TCS34727 (at 1.8 V), from its datasheet (DS000390, in
+  `docs/`): every access a command byte (bit 7; auto-increment for bursts);
+  `init()` (PON, 2.4 ms, the integration in 2.4 ms steps, gain 1x/4x/16x/60x,
+  its first integration), `measure()` `{ clear, red, green, blue, saturated }`,
+  `ready()`, `part()` by its ID (0x44, 0x4D), `sleep()`. Asked before the
+  VL53L1X, which shares 0x29. Board-tested on Dart-8346 (r8845): a TCS34727,
+  clear 73 at 4x and 1119 at 60x; ENABLE 0x0F and ATIME 0x00 at power-up,
+  not the datasheet's 0x00 and 0xFF (written by `init()` either way).
+- `As7341`: ams's AS7341 11-channel spectral sensor at 0x39, from its
+  datasheet (DS000504 v3-00, in `docs/`): eight visible bands (415-680 nm),
+  Clear and NIR in two measurements through its SMUX; gain 0.5x-512x and
+  the integration. The SMUX tables, which the datasheet leaves to ams's
+  application note AN000666, from Adafruit's AS7341 library (BSD),
+  credited. Tried on Dart-8346: ID 0x24, all ten channels in proportion to
+  the gain. **Not yet checked**: that coloured light lands in its bands
+  (the tables' routing), for i2c.ninja's page to do.
+
 ## 1.8.12
 
 - `Sgp30`: Sensirion's SGP30 at 0x58, air quality worked out on the chip,
