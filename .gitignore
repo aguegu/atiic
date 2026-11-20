@@ -5,4 +5,7 @@ node_modules/
 docs/*.pdf
 docs/*.PDF
 docs/*.H
+docs/*.zip
+docs/*.ZIP
+docs/*.webp
 docs/parked/
