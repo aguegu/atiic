@@ -1,4 +1,4 @@
-// Aosong's AHT21B and AHT30: relative humidity and temperature, at 0x38.
+// Aosong's AHT21B, AHT20 and AHT30: relative humidity and temperature, at 0x38.
 // Adapter-free:
 // any I2C bus with write(address, bytes), read(address, n) and
 // writeRead(address, bytes, n).
@@ -20,6 +20,10 @@
 // driver, named for both. The AHT30 differs in its power-up (5 ms, not
 // 100) and its pace: a reading every second or more (2.3), the AHT21B every
 // 2 s. On r8845's dart (2026-11-10), an AHT30 module: 21.9 C, 44.1 % RH.
+//
+// The AHT20 (its datasheet, docs/AHT20-datasheet.pdf, 5.4 and 6) is read
+// the same way too: status 0x71 with 0x18 set, 0xAC 0x33 0x00, 80 ms, the 7
+// bytes, CRC-8 and formulas; a reading every 2 s, as the AHT21B.
 
 const ADDRESS = 0x38;
 const STATUS = 0x71;

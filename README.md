@@ -53,7 +53,8 @@ sections and quirks are in the driver's source.
 | Goertek SPL06-001 | `Spl06` | barometric pressure (300-1100 hPa), temperature | I2C 0x77/0x76 |
 | ASAIR (Aosong) AGR12 / AGN12 / AGP12, I2C version (C) | `Agr12` | gauge pressure, kPa (0-40 to 0-1000 kPa, vacuum, +/-40/100 kPa); not looked for: name it | I2C 0x50, 30 kHz at most |
 | ASAIR (Aosong) AGS2602 | `Ags2602` | TVOC, ppb (0-30000 ppb), the sensing film's resistance; 5 V supply, 2 s per reading, 120 s warm-up | I2C 0x1A, 100 kHz at most |
-| Aosong AHT21B / AHT30 | `Aht21` | relative humidity, temperature (one protocol, not told apart) | I2C 0x38 |
+| Aosong AHT21B / AHT30 / AHT20 | `Aht21` | relative humidity, temperature (one protocol, not told apart) | I2C 0x38 |
+| ScioSense ENS160 | `Ens160` | air quality: the UBA's AQI (1-5), TVOC (ppb), eCO2 (ppm); temperature and humidity compensation | I2C 0x52/0x53 |
 | ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
 | Melexis MLX90614 | `Mlx90614` | non-contact infrared temperature, ambient temperature | I2C 0x5A (SMBus, 100 kHz) |
@@ -90,7 +91,8 @@ has had it. Addresses in **bold** are the ones board-tested.
 | SHT20 | **0x40** | fixed | 0x40 |
 | SHT3x | **0x44**, 0x45 | ADDR pin (low: 0x44; never floating) | 0x44 |
 | SPL06 | **0x77**, 0x76 | SDO pin (to GND: 0x76) | 0x77 |
-| AHT21B / AHT30 | **0x38** | fixed | 0x38 |
+| AHT21B / AHT30 / AHT20 | **0x38** | fixed | 0x38 |
+| ENS160 | 0x52, 0x53 | MISO/ADDR pin at power-up (low: 0x52) | - |
 | BH1745NUC | **0x38**, 0x39 | ADDR pin (low: 0x38) | 0x38 |
 | VL53L1X | **0x29** | 0x29 at power-up; software can move it (ST's driver; not in atiic) | 0x29 |
 | MLX90614 | **0x5A** | its EEPROM (SMBus address, 0x0E); not changed by atiic | 0x5A |
@@ -100,7 +102,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 
 Shared addresses to keep apart on one bus: 0x68/0x69 (the MPUs, the
 ITG-3200, the BMX055's gyro), 0x40 (the SHT20, an INA231 with A0 and A1
-low), 0x53 (the ADXL345 and an AT24C08's last block: on r8845 both
+low), 0x53 (the ADXL345, an ENS160 with ADDR high and an AT24C08's last block: on r8845 both
 answered, reads looked right, and the ADXL's writes landed in the EEPROM),
 0x50 (an AT24C and an AGR12: the AGR12's measurement command is a write
 of 0x12 at 0xAC to an AT24C01-16, and read alone each answers 0xFF, so
