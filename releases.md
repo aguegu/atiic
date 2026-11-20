@@ -1,5 +1,26 @@
 # Releases
 
+## 1.8.9
+
+- `Qmc5883l`: QST's QMC5883L 3-axis magnetometer at 0x0D (what many "GY-271 /
+  HMC5883L" modules carry now), from its datasheet (QST-PD-B002-22 Rev. B,
+  in `docs/`). Set up as its continuous-mode example (a soft reset, the
+  set/reset period 0x01, OSR 512, continuous), at ±8 G (3000 LSB/G, the
+  default) or ±2 G (12000 LSB/G), 10, 50 (the default), 100 or 200 Hz; its
+  first data waited for by DRDY. `measure()` as the HMC5883L's: `{
+  magnetometers: { x, y, z } }` in microtesla, null for an axis at its
+  saturation (-32768 or 32767); all seven bytes read at once (a data read
+  locks them until 0x05). `temperature()`: relative (100 LSB/C, its offset
+  uncalibrated). `sleep()`: standby. `chip.identify`: 0xFF at 0x0D, its only
+  ID (weak: an absent register reads 0xFF too; nothing else here sits at
+  0x0D).
+- The QMC5883P's datasheet kept beside it (`docs/QMC5883P-RevE.pdf`): a
+  different chip at 0x2C, its registers moved; no driver yet (no module).
+- Board-tested on Dart-8346 at 100 kHz (r8845): both ranges read the same
+  field; turned flat a full round, X and Y swung 80 uT (twice Earth's level
+  field), its own offset about (-15, -38, -7) uT; a magnet near had held X
+  at 312 uT, past the ±2 G range (null there).
+
 ## 1.8.8
 
 - `Lm75`: NXP's LM75A, from its datasheet (Rev. 04, 10 July 2007, in
