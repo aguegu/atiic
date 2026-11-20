@@ -50,6 +50,7 @@ sections and quirks are in the driver's source.
 | Sensylink CHT8305C | `Cht8305` | relative humidity, temperature, high-limit alerts, a heater | I2C 0x40, 0x44, 0x48, 0x4C |
 | Analog Devices (Maxim) LM75 | `Lm75` | temperature, a thermal watchdog (OS) | I2C 0x48-0x4F |
 | TI OPT3001 | `Opt3001` | ambient light, lux (0.01-83k, the eye's response) | I2C 0x44-0x47 |
+| Lite-On AP3216C | `Ap3216c` | ambient light (four ranges, a level more than exact lux), proximity by its IR LED, IR | I2C 0x1E |
 | Goertek SPL06-001 | `Spl06` | barometric pressure (300-1100 hPa), temperature | I2C 0x77/0x76 |
 | ASAIR (Aosong) AGR12 / AGN12 / AGP12, I2C version (C) | `Agr12` | gauge pressure, kPa (0-40 to 0-1000 kPa, vacuum, +/-40/100 kPa); not looked for: name it | I2C 0x50, 30 kHz at most |
 | ASAIR (Aosong) AGS2602 | `Ags2602` | TVOC, ppb (0-30000 ppb), the sensing film's resistance; 5 V supply, 2 s per reading, 120 s warm-up | I2C 0x1A, 100 kHz at most |
@@ -87,6 +88,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | HMC5883L | **0x1E** | fixed | 0x1E |
 | QMC5883L | **0x0D** | fixed | 0x0D |
 | OPT3001 | **0x44**, 0x45, 0x46, 0x47 | ADDR pin (GND, VDD, SDA, SCL) | 0x44 |
+| AP3216C | **0x1E** | fixed | 0x1E (CJMCU-3216) |
 | MAX30102 | **0x57** | fixed | 0x57 |
 | SHT20 | **0x40** | fixed | 0x40 |
 | SHT3x | **0x44**, 0x45 | ADDR pin (low: 0x44; never floating) | 0x44 |
