@@ -22,8 +22,8 @@
 // the next. Not checked against a reference: read it as a level that rises
 // and falls with the light, not an exact lux.
 // On the CJMCU-3216 module: VCC (3.3 V, no regulator), and VLED, its IR
-// LED's own supply: unwired, no proximity. Proximity not tried on our
-// bench yet (it read 0 with nothing near).
+// LED's own supply (its two back pads bridge it to VCC): unwired, no
+// proximity. Proximity seen working with VLED fed, a finger near raising it.
 // No ID register: chip.identify checks the bits its datasheet reserves as 0
 // (an HMC5883L, also at 0x1E, reads "H43" from 0x0A: 0x48 has bit 6 set).
 const REG_SYSTEM = 0x00;
