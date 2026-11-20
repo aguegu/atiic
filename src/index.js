@@ -20,6 +20,7 @@ import Aht21 from './devices/aht21.js';
 import Bh1745 from './devices/bh1745.js';
 import Ina231 from './devices/ina231.js';
 import Hmc5883l from './devices/hmc5883l.js';
+import Qmc5883l from './devices/qmc5883l.js';
 import Adxl345 from './devices/adxl345.js';
 import Itg3200 from './devices/itg3200.js';
 import At24c from './devices/at24c.js';
@@ -55,6 +56,7 @@ export {
   Bh1745,
   Ina231,
   Hmc5883l,
+  Qmc5883l,
   Adxl345,
   Itg3200,
   At24c,

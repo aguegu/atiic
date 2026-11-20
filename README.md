@@ -59,6 +59,7 @@ sections and quirks are in the driver's source.
 | TI INA231 (INA226) | `Ina231` | current, bus voltage, power (shunt monitor) | I2C 0x40-0x4F |
 | Analog Devices ADXL345 | `Adxl345` | 3-axis accelerometer (+/-16 g, full resolution), self test | I2C 0x53/0x1D |
 | Honeywell HMC5883L | `Hmc5883l` | 3-axis magnetometer (compass), self test | I2C 0x1E |
+| QST QMC5883L | `Qmc5883l` | 3-axis magnetometer (compass), a relative temperature | I2C 0x0D |
 | InvenSense ITG-3200 | `Itg3200` | 3-axis gyroscope (+/-2000 deg/s), temperature | I2C 0x68/0x69 |
 
 ### Memory
@@ -82,6 +83,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | ITG-3200 | **0x68**, 0x69 | AD0 pin | 0x68 |
 | ADXL345 | **0x53**, 0x1D | SDO/ALT ADDRESS pin (low: 0x53) | 0x53 |
 | HMC5883L | **0x1E** | fixed | 0x1E |
+| QMC5883L | **0x0D** | fixed | 0x0D |
 | MAX30102 | **0x57** | fixed | 0x57 |
 | SHT20 | **0x40** | fixed | 0x40 |
 | SHT3x | **0x44**, 0x45 | ADDR pin (low: 0x44; never floating) | 0x44 |
