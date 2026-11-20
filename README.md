@@ -50,6 +50,7 @@ sections and quirks are in the driver's source.
 | Sensylink CHT8305C | `Cht8305` | relative humidity, temperature, high-limit alerts, a heater | I2C 0x40, 0x44, 0x48, 0x4C |
 | Analog Devices (Maxim) LM75 | `Lm75` | temperature, a thermal watchdog (OS) | I2C 0x48-0x4F |
 | TI OPT3001 | `Opt3001` | ambient light, lux (0.01-83k, the eye's response) | I2C 0x44-0x47 |
+| ams TCS34725 / TCS34727 | `Tcs34725` | colour: clear, red, green, blue (counts); gain, integration | I2C 0x29 |
 | ams AS7341 | `As7341` | 11-channel spectrum: eight visible bands (415-680 nm), Clear, NIR; gain, integration | I2C 0x39 |
 | Lite-On AP3216C | `Ap3216c` | ambient light (four ranges, a level more than exact lux), proximity by its IR LED, IR | I2C 0x1E |
 | Goertek SPL06-001 | `Spl06` | barometric pressure (300-1100 hPa), temperature | I2C 0x77/0x76 |
@@ -94,6 +95,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | OPT3001 | **0x44**, 0x45, 0x46, 0x47 | ADDR pin (GND, VDD, SDA, SCL) | 0x44 |
 | AP3216C | **0x1E** | fixed | 0x1E (CJMCU-3216) |
 | AS7341 | **0x39** | fixed | 0x39 |
+| TCS34725 / TCS34727 | **0x29** | fixed | 0x29 (a TCS34727) |
 | MAX30102 | **0x57** | fixed | 0x57 |
 | SHT20 | **0x40** | fixed | 0x40 |
 | SHT3x | **0x44**, 0x45 | ADDR pin (low: 0x44; never floating) | 0x44 |
