@@ -62,6 +62,7 @@ sections and quirks are in the driver's source.
 | Sensirion SGP40 | `Sgp40` | VOCs: its raw signal (the VOC Index is Sensirion's algorithm, on the host), humidity compensation, a self test | I2C 0x59 |
 | ScioSense ENS160 | `Ens160` | air quality: the UBA's AQI (1-5), TVOC (ppb), eCO2 (ppm); temperature and humidity compensation | I2C 0x52/0x53 |
 | ROHM BH1745NUC | `Bh1745` | colour: red, green, blue and clear light (counts) | I2C 0x38/0x39 |
+| ST VL6180X | `Vl6180x` | proximity by time of flight (0-100 mm), ambient light (lux); ST's AN4545 settings | I2C 0x29 |
 | ST VL53L1X | `Vl53l1x` | time-of-flight distance (to ~4 m) | I2C 0x29 |
 | Melexis MLX90614 | `Mlx90614` | non-contact infrared temperature, ambient temperature | I2C 0x5A (SMBus, 100 kHz) |
 | TI INA231 (INA226) | `Ina231` | current, bus voltage, power (shunt monitor) | I2C 0x40-0x4F |
@@ -106,6 +107,7 @@ has had it. Addresses in **bold** are the ones board-tested.
 | SGP40 | **0x59** | fixed | 0x59 |
 | ENS160 | 0x52, 0x53 | MISO/ADDR pin at power-up (low: 0x52) | - |
 | BH1745NUC | **0x38**, 0x39 | ADDR pin (low: 0x38) | 0x38 |
+| VL6180X | **0x29** | 0x29 at power-up; software can move it (not in atiic) | 0x29 |
 | VL53L1X | **0x29** | 0x29 at power-up; software can move it (ST's driver; not in atiic) | 0x29 |
 | MLX90614 | **0x5A** | its EEPROM (SMBus address, 0x0E); not changed by atiic | 0x5A |
 | INA231 | **0x40**-0x4F | A0, A1 pins | 0x40 |
