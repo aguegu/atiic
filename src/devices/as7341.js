@@ -22,6 +22,10 @@
 // read, in proportion to the gain (Clear 110 at 256x, 8 at 16x, a dim
 // room), 134 ms for both halves. Not yet checked: that coloured light lands
 // in its bands (the tables' routing), for i2c.ninja's page.
+// Its board (the black "AS734x") wires its white LED to the chip's LED
+// driver, pin LDR: off at power-up; REG_BANK (CFG0 0xA9 bit 4), LED_SEL
+// (CONFIG 0x70 bit 3) and LED_ACT with its drive (LED 0x74: 4 mA + 2 mA
+// a step, to 258) light it (tried at 4 mA). This driver leaves it off.
 
 const REG_SMUX_RAM = 0x00;
 const REG_ENABLE = 0x80;
