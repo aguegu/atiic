@@ -1,5 +1,13 @@
 # Releases
 
+## 1.8.14
+
+- `As7341.led(mA)`: its LED driver (pin LDR), 4 to 258 mA in 2 mA steps, or
+  0 for off. The LED registers sit in the bank REG_BANK selects, so it's set
+  around them and cleared again for measuring. `sleep()` turns it off first.
+  The black AS734x board wires its white LED there: on r8845's, 8 mA between
+  two measurements raised clear from 39 to 47, and it fell back after.
+
 ## 1.8.13
 
 - `Tcs34725`: ams's TCS3472 colour sensor at 0x29, the TCS34725 (its I2C at
