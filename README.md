@@ -37,7 +37,8 @@ console.log(await imu.measure()); // { accelerometers, gyroscopes, temperature }
 ## Devices
 
 Each one board-tested (`npm run test:board`) on the bench; its datasheet's
-sections and quirks are in the driver's source.
+sections and quirks are in the driver's source, the datasheets themselves
+listed in [docs/datasheets.md](docs/datasheets.md).
 
 ### Sensors
 

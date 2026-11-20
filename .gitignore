@@ -1,2 +1,8 @@
 node_modules/
 .env.local
+
+# the makers' documents: listed in docs/datasheets.md, not kept here
+docs/*.pdf
+docs/*.PDF
+docs/*.H
+docs/parked/
