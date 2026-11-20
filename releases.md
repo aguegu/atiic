@@ -1,5 +1,25 @@
 # Releases
 
+## 1.8.15
+
+- `Vl6180x`: ST's VL6180X proximity sensor (time of flight, 0-100 mm) and
+  ambient light at 0x29, from its datasheet (DocID026171 Rev 7) and ST's
+  application note AN4545 (Rev 1), both in `docs/`. `init()` loads AN4545's
+  30 mandatory private and 4 recommended public settings when the chip is
+  fresh out of reset, then clears the flag; it always sets the new-sample
+  interrupt config (0x014 = 0x24: AN4545 calls it optional, but its polling
+  needs it), the ALS gain and the integration (16 bits, MSB first, where
+  AN4545 Rev 1 writes one byte at 0x040). `range()` `{ mm, error, near }`,
+  single-shot, its error codes named ('max convergence' and 'no target':
+  nothing in reach); `als()` `{ lux, count }` by the datasheet's formula;
+  `measure()`. `chip.identify`: MODEL_ID 0xB4 at the 16-bit 0x000, asked
+  between the TCS3472 and the VL53L1X, which share 0x29.
+- Board-tested on Dart-8346 at 400 kHz (r8845), a black VL6180X board:
+  37-41 mm to a board above it, 97-98 mm to a phone, 255 mm (max
+  convergence) with nothing above. Its ALS reads 0 in every mode and gain,
+  under a torch, with no film and no error code; its chip is unmarked:
+  perhaps a VL6180 (ranging only, the same ID) on a board printed VL6180X.
+
 ## 1.8.14
 
 - `As7341.led(mA)`: its LED driver (pin LDR), 4 to 258 mA in 2 mA steps, or
