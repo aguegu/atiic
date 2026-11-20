@@ -8,6 +8,11 @@ your desktop in a modern language, with unit tests, instead of reflashing a
 microcontroller; or chart the readings in a web app, such as
 [i2c.ninja](https://i2c.ninja).
 
+> **See it live:** [i2c.ninja](https://i2c.ninja) runs these drivers in the
+> browser. Nearly every sensor below has a page there with its wiring drawn,
+> its readings charted live, and the physics behind it. Plug a sensor into a
+> USB-to-I2C bridge and try it before writing a line of code.
+
 - **Adapter-free drivers:** a driver takes any bus with `write`, `read`,
   `writeRead` (I2C), or `spi` and `pins` (SPI); the CH341 and the CH347
   are such buses.

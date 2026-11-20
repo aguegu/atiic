@@ -1,5 +1,11 @@
 # Releases
 
+## 1.8.17
+
+- README: a "See it live" note near the top: i2c.ninja runs these drivers
+  in the browser, nearly every sensor with a page (its wiring, live
+  readings, the physics). The version that goes to npm.
+
 ## 1.8.16
 
 - On npm again (the registry held 0.5.1 from 2025): `files` limits the
