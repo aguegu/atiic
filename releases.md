@@ -1,5 +1,22 @@
 # Releases
 
+## 1.8.10
+
+- `Opt3001`: TI's OPT3001 ambient light sensor at 0x44-0x47 (its ADDR pin),
+  from its datasheet (SBOS681C, November 2017, in `docs/`). Its result a
+  4-bit exponent and a 12-bit mantissa, `lux = 0.01 x 2^E x R` (Equation 3;
+  Table 9's examples in the tests), 0.01 to 83865.6 lux. Set up automatic-
+  ranging and continuous, at 800 ms (the default, its specified resolution)
+  or 100 ms; `init()` waits for the first conversion by CRF, `lux()` and
+  `measure()` (`{ lux, overflow }`) read the last; `config()`, `sleep()`
+  (shutdown, the read-only flags not written back). `chip.identify`: TI's
+  0x5449 at 0x7E and its 0x3001 at 0x7F.
+- `Ina231.chip.identify` turns away an OPT3001: ours ignores the pointer's
+  bit 7, so 0xFE and 0xFF read its IDs, TI's 0x5449 among them.
+- Board-tested on Dart-8346 at 100 kHz (r8845), at 0x44: a dim room's 10.2
+  lux, 800 and 100 ms alike (10.14, 10.58); its first conversion ready in
+  825 ms. The SHT3x, SHT4x and CHT8305C checks at 0x44 say no to it.
+
 ## 1.8.9
 
 - `Qmc5883l`: QST's QMC5883L 3-axis magnetometer at 0x0D (what many "GY-271 /
